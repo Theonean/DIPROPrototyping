@@ -1,0 +1,78 @@
+using System.Collections;
+using UnityEngine;
+
+public class PlayerBlobInteraction : MonoBehaviour
+{
+    [Header("Grab")]
+    public Transform holdPosition;
+    public Transform throwPosition;
+    public Transform cameraObj;
+    public float grabRange;
+    public LayerMask grabbable;
+    public KeyCode grabKey = KeyCode.Mouse0;
+
+    private RaycastHit objectHit;
+
+    [Header("Throw")]
+    public float throwForce;
+    public float throwUpwardForce;
+    public KeyCode throwKey = KeyCode.Mouse2;
+
+    private GameObject heldObject;
+    private Rigidbody rb;
+
+    private void Start()
+    {
+        rb = GetComponent<Rigidbody>();
+    }
+
+    private void Update()
+    {
+        MyInput();
+    }
+
+    private void MyInput()
+    {
+        if (heldObject == null && Input.GetKey(grabKey))
+        {
+            GrabObject();
+        }
+        else if (heldObject != null && Input.GetKey(throwKey))
+        {
+            ThrowObject();
+        }
+    }
+
+    private void GrabObject()
+    {
+        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        {
+            heldObject = objectHit.transform.gameObject;
+            if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
+                blob.InitiateGrab(holdPosition);
+                Physics.IgnoreCollision(heldObject.GetComponent<Collider>(), GetComponentInChildren<Collider>(), true);
+            }
+        }
+    }
+
+    private void ThrowObject()
+    {
+        if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob))
+        {
+            blob.EndGrab(throwPosition);
+            Vector3 forceToAdd = cameraObj.forward * throwForce + transform.up * throwUpwardForce + rb.velocity;
+            if (blob.TryGetComponent<Rigidbody>(out Rigidbody blobRb))
+            {
+                blobRb.AddForce(forceToAdd, ForceMode.Impulse);
+            }
+            StartCoroutine(ReenableCollision(heldObject));
+        }
+        heldObject = null;
+    }
+
+    IEnumerator ReenableCollision(GameObject blob)
+    {
+        yield return new WaitForSeconds(1f);
+        Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);
+    }
+}
