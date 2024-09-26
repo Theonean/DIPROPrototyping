@@ -16,7 +16,10 @@ public class PlayerBlobInteraction : MonoBehaviour
     [Header("Throw")]
     public float throwForce;
     public float throwUpwardForce;
-    public KeyCode throwKey = KeyCode.Mouse2;
+    public KeyCode throwKey = KeyCode.Mouse0;
+
+    [Header("Split")]
+    public KeyCode splitKey = KeyCode.Mouse1;
 
     private GameObject heldObject;
     private Rigidbody rb;
@@ -33,11 +36,19 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void MyInput()
     {
-        if (heldObject == null && Input.GetKey(grabKey))
+        if (heldObject == null)
         {
-            GrabObject();
+            if (Input.GetKeyDown(grabKey))
+            {
+                GrabObject();
+            }
+            else if (Input.GetKeyUp(splitKey))
+            {
+                SplitObject();
+            }
+            
         }
-        else if (heldObject != null && Input.GetKey(throwKey))
+        else if (heldObject != null && Input.GetKeyDown(throwKey))
         {
             ThrowObject();
         }
@@ -70,9 +81,23 @@ public class PlayerBlobInteraction : MonoBehaviour
         heldObject = null;
     }
 
+    private void SplitObject()
+    {
+        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        {
+            if (objectHit.collider.TryGetComponent<BlobMathHandler>(out BlobMathHandler blob))
+            {
+                blob.Split();
+            }
+        }
+    }
+
     IEnumerator ReenableCollision(GameObject blob)
     {
         yield return new WaitForSeconds(1f);
-        Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);
+        if (blob != null)
+        {
+            Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);
+        }
     }
 }
