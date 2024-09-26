@@ -7,6 +7,8 @@ public class BlobMathHandler : MonoBehaviour
 {
     [Header("Value")]
     public int value;
+    public int targetValue;
+    public GameManager gameManager;
 
     [Header("Value Display")]
     public TextMeshPro displayText;
@@ -16,7 +18,11 @@ public class BlobMathHandler : MonoBehaviour
     Rigidbody rb;
     private bool hasSplit = false;
 
-    private void Start()
+    private void Awake()
+    {
+        Initiate();
+    }
+    public void Initiate()
     {
         rb = GetComponent<Rigidbody>();
         UpdateValueDisplay();
@@ -24,6 +30,7 @@ public class BlobMathHandler : MonoBehaviour
 
     private void UpdateValueDisplay()
     {
+        Debug.Log("UpdateValueDisplay");
         displayText.text = value.ToString();
         float scale = 1 + (value - 1) * scaleFactor;
         transform.localScale = new Vector3(scale, scale, scale);
@@ -40,24 +47,33 @@ public class BlobMathHandler : MonoBehaviour
             {
                 if (velocitySelf > velocityOther)
                 {
-                    Combine(otherBlobMathHandler.value);
-                    otherBlobMathHandler.Destroy();
+                    Combine(otherBlobMathHandler);
                 }
                 else if (velocitySelf == velocityOther)
                 {
                     if (GetInstanceID() > rbOther.GetInstanceID())
                     {
-                        Combine(otherBlobMathHandler.value);
-                        otherBlobMathHandler.Destroy();
+                        Combine(otherBlobMathHandler);
                     }
                 }
             } 
         }
     }
-    private void Combine(int otherValue)
+    private void Combine(BlobMathHandler otherBlobMathHandler)
     {
-        value += otherValue;
-        UpdateValueDisplay();
+        if (value + otherBlobMathHandler.value <= targetValue)
+        {
+            value += otherBlobMathHandler.value;
+            otherBlobMathHandler.Destroy();
+            UpdateValueDisplay();
+
+
+            if (value == targetValue)
+            {
+                gameManager.AddProgress();
+                Destroy();
+            }
+        }
     }
 
     public void Split()
@@ -76,6 +92,7 @@ public class BlobMathHandler : MonoBehaviour
             if (newBlob.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler))
             {
                 otherBlobMathHandler.value = otherValue;
+                otherBlobMathHandler.targetValue = targetValue;
                 otherBlobMathHandler.UpdateValueDisplay();
                 otherBlobMathHandler.hasSplit = true;
                 otherBlobMathHandler.Invoke(nameof(EndHasSplit), 1f);
