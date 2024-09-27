@@ -29,7 +29,11 @@ public class LegHandler : MonoBehaviour
     {
         //Find parent "core" object and subscribe to the return event
         core = FindObjectOfType<PlayerCore>();
-        core.returnLegs.AddListener(ReturnToCore);
+        core.returnLegs.AddListener(() =>
+        {
+            isSpinning = false;
+            m_LegState = LegState.RETURNING;
+        });
 
         m_Camera = Camera.main;
         m_DistanceToCore = transform.position - core.transform.position;
@@ -96,6 +100,9 @@ public class LegHandler : MonoBehaviour
                         m_LegState = LegState.FLYING;
                         m_mouseTarget.SetActive(false);
                         m_TargetPosition = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z); //Keep leg height
+
+                        //Reparent leg to be on the same level as the player so it doesn't move with it
+                        transform.SetParent(null);
                     }
                 }
             }
@@ -145,17 +152,12 @@ public class LegHandler : MonoBehaviour
                 if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.01f)
                 {
                     m_LegState = LegState.ATTACHED;
+                    transform.SetParent(core.transform);
                     Debug.Log("Leg " + gameObject.name + " has returned to player.");
                 }
                 break;
 
         }
-    }
-
-    private void ReturnToCore()
-    {
-        isSpinning = false;
-        m_LegState = LegState.RETURNING;
     }
 
     private IEnumerator SpinningCoroutine()

@@ -7,6 +7,7 @@ public class PlayerCore : MonoBehaviour
 {
     public float moveSpeed = 10f;
     public UnityEvent returnLegs;
+    
 
     //When spacebar is pressed in update, call the returnLegs event
     void Update()
