@@ -10907,6 +10907,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4817411986308552213, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
+      propertyPath: wallrunSpeed
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4817411986308552213, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
       propertyPath: airMultiplier
       value: 0.2
       objectReference: {fileID: 0}
@@ -10993,8 +10998,45 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 7187052155009606073, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
+      insertIndex: 4
+      addedObject: {fileID: 2859496584418108110}
   m_SourcePrefab: {fileID: 100100000, guid: a2d5245b80101f5429e51cb95a5d436e, type: 3}
+--- !u!1 &2859496584418108105 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7187052155009606073, guid: a2d5245b80101f5429e51cb95a5d436e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2859496584418108104}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2859496584418108110
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2859496584418108105}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5574d89d466b5469feed1aee1aca55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  wallRunForce: 200
+  wallJumpUpForce: 7
+  wallJumpSideForce: 12
+  maxWallRunTime: 0.7
+  jumpKey: 32
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
+  exitWallTime: 0.2
+  orientation: {fileID: 1177684729}
 --- !u!1001 &3113394118536036865
 PrefabInstance:
   m_ObjectHideFlags: 0
