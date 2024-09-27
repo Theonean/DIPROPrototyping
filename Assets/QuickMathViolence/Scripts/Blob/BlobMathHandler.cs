@@ -30,7 +30,6 @@ public class BlobMathHandler : MonoBehaviour
 
     private void UpdateValueDisplay()
     {
-        Debug.Log("UpdateValueDisplay");
         displayText.text = value.ToString();
         float scale = 1 + (value - 1) * scaleFactor;
         transform.localScale = new Vector3(scale, scale, scale);

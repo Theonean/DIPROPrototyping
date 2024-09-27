@@ -17,8 +17,12 @@ public class GameManager : MonoBehaviour
     public GameObject blobPrefab;
     public float range = 10.0f;
 
+    [Header("Timer")]
+    private LevelTimer levelTimer;
+
     private void Start()
     {
+        levelTimer = GetComponent<LevelTimer>();
         // initiate UI
         uiManager.SetTarget(targetValue);
         uiManager.progressGoal = amountOfPairs;
@@ -44,6 +48,7 @@ public class GameManager : MonoBehaviour
 
             CreateBlob(triangulation, vertexIndex2, blobValue2);
         }
+        levelTimer.SetActive(true);
     }
 
     private void CreateBlob(NavMeshTriangulation triangulation, int vertexIndex, int value)
@@ -85,6 +90,10 @@ public class GameManager : MonoBehaviour
     {
         playerProgress++;
         uiManager.SetProgress(playerProgress);
+        if (playerProgress >= amountOfPairs)
+        {
+            levelTimer.SetActive(false);
+        }
     }
         
 }

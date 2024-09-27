@@ -17,6 +17,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public float throwForce;
     public float throwUpwardForce;
     public KeyCode throwKey = KeyCode.Mouse0;
+    public float throwRecoil;
 
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
@@ -72,6 +73,10 @@ public class PlayerBlobInteraction : MonoBehaviour
         {
             blob.EndGrab(throwPosition);
             Vector3 forceToAdd = cameraObj.forward * throwForce + transform.up * throwUpwardForce + rb.velocity;
+
+            // recoil 
+            rb.AddForce(cameraObj.forward*-1*throwRecoil, ForceMode.Impulse);
+
             if (blob.TryGetComponent<Rigidbody>(out Rigidbody blobRb))
             {
                 blobRb.AddForce(forceToAdd, ForceMode.Impulse);
@@ -94,7 +99,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     IEnumerator ReenableCollision(GameObject blob)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         if (blob != null)
         {
             Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);
