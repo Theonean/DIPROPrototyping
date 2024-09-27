@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerBlobInteraction : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public Transform throwPosition;
     public Transform cameraObj;
     public float grabRange;
+    public float sphereCastRadius;
     public LayerMask grabbable;
     public KeyCode grabKey = KeyCode.Mouse0;
 
@@ -17,6 +19,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public float throwForce;
     public float throwUpwardForce;
     public KeyCode throwKey = KeyCode.Mouse0;
+    public float throwRecoil;
 
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
@@ -56,7 +59,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void GrabObject()
     {
-        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        if (Physics.SphereCast(cameraObj.position,sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
             heldObject = objectHit.transform.gameObject;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
@@ -72,6 +75,10 @@ public class PlayerBlobInteraction : MonoBehaviour
         {
             blob.EndGrab(throwPosition);
             Vector3 forceToAdd = cameraObj.forward * throwForce + transform.up * throwUpwardForce + rb.velocity;
+
+            // recoil 
+            rb.AddForce(cameraObj.forward*-1*throwRecoil, ForceMode.Impulse);
+
             if (blob.TryGetComponent<Rigidbody>(out Rigidbody blobRb))
             {
                 blobRb.AddForce(forceToAdd, ForceMode.Impulse);
@@ -83,7 +90,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void SplitObject()
     {
-        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        if (Physics.SphereCast(cameraObj.position, sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
             if (objectHit.collider.TryGetComponent<BlobMathHandler>(out BlobMathHandler blob))
             {
@@ -94,7 +101,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     IEnumerator ReenableCollision(GameObject blob)
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(2f);
         if (blob != null)
         {
             Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);

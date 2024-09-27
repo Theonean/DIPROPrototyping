@@ -7,6 +7,8 @@ public class BlobMathHandler : MonoBehaviour
 {
     [Header("Value")]
     public int value;
+    public int targetValue;
+    public GameManager gameManager;
 
     [Header("Value Display")]
     public TextMeshPro displayText;
@@ -14,9 +16,14 @@ public class BlobMathHandler : MonoBehaviour
     
     BoxCollider boxCollider;
     Rigidbody rb;
+    public bool isHeld = false;
     private bool hasSplit = false;
 
-    private void Start()
+    private void Awake()
+    {
+        Initiate();
+    }
+    public void Initiate()
     {
         rb = GetComponent<Rigidbody>();
         UpdateValueDisplay();
@@ -33,31 +40,40 @@ public class BlobMathHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Blob") && 
             collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rbOther)
-            && !hasSplit) {
+            && !hasSplit && !isHeld) {
             float velocitySelf = rb.velocity.magnitude;
             float velocityOther = rbOther.velocity.magnitude;
-            if (collision.gameObject.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler))
+            if (collision.gameObject.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler) && !otherBlobMathHandler.isHeld)
             {
                 if (velocitySelf > velocityOther)
                 {
-                    Combine(otherBlobMathHandler.value);
-                    otherBlobMathHandler.Destroy();
+                    Combine(otherBlobMathHandler);
                 }
                 else if (velocitySelf == velocityOther)
                 {
                     if (GetInstanceID() > rbOther.GetInstanceID())
                     {
-                        Combine(otherBlobMathHandler.value);
-                        otherBlobMathHandler.Destroy();
+                        Combine(otherBlobMathHandler);
                     }
                 }
             } 
         }
     }
-    private void Combine(int otherValue)
+    private void Combine(BlobMathHandler otherBlobMathHandler)
     {
-        value += otherValue;
-        UpdateValueDisplay();
+        if (value + otherBlobMathHandler.value <= targetValue)
+        {
+            value += otherBlobMathHandler.value;
+            otherBlobMathHandler.Destroy();
+            UpdateValueDisplay();
+
+
+            if (value == targetValue)
+            {
+                gameManager.AddProgress();
+                Destroy();
+            }
+        }
     }
 
     public void Split()
@@ -76,6 +92,7 @@ public class BlobMathHandler : MonoBehaviour
             if (newBlob.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler))
             {
                 otherBlobMathHandler.value = otherValue;
+                otherBlobMathHandler.targetValue = targetValue;
                 otherBlobMathHandler.UpdateValueDisplay();
                 otherBlobMathHandler.hasSplit = true;
                 otherBlobMathHandler.Invoke(nameof(EndHasSplit), 1f);
