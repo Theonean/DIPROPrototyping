@@ -16,6 +16,7 @@ public class BlobMathHandler : MonoBehaviour
     
     BoxCollider boxCollider;
     Rigidbody rb;
+    public bool isHeld = false;
     private bool hasSplit = false;
 
     private void Awake()
@@ -39,10 +40,10 @@ public class BlobMathHandler : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Blob") && 
             collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rbOther)
-            && !hasSplit) {
+            && !hasSplit && !isHeld) {
             float velocitySelf = rb.velocity.magnitude;
             float velocityOther = rbOther.velocity.magnitude;
-            if (collision.gameObject.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler))
+            if (collision.gameObject.TryGetComponent<BlobMathHandler>(out BlobMathHandler otherBlobMathHandler) && !otherBlobMathHandler.isHeld)
             {
                 if (velocitySelf > velocityOther)
                 {

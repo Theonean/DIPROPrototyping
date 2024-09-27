@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerBlobInteraction : MonoBehaviour
@@ -8,6 +9,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public Transform throwPosition;
     public Transform cameraObj;
     public float grabRange;
+    public float sphereCastRadius;
     public LayerMask grabbable;
     public KeyCode grabKey = KeyCode.Mouse0;
 
@@ -57,7 +59,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void GrabObject()
     {
-        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        if (Physics.SphereCast(cameraObj.position,sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
             heldObject = objectHit.transform.gameObject;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
@@ -88,7 +90,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void SplitObject()
     {
-        if (Physics.Raycast(cameraObj.position, cameraObj.forward, out objectHit, grabRange, grabbable))
+        if (Physics.SphereCast(cameraObj.position, sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
             if (objectHit.collider.TryGetComponent<BlobMathHandler>(out BlobMathHandler blob))
             {

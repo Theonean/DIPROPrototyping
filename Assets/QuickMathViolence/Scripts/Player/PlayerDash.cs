@@ -80,6 +80,7 @@ public class PlayerDash : MonoBehaviour
     {
         if (resetVel)
             rb.velocity = Vector3.zero;
+
         rb.AddForce(delayedForceToApply, ForceMode.Impulse);
     }
 

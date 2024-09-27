@@ -7,12 +7,19 @@ public class BlobInteractable : MonoBehaviour
     Rigidbody rb;
     SphereCollider myCollider;
     private bool isGrabbed;
+    private bool isBeingThrown = false;
     private Transform holdPosition;
+    private Transform throwPosition;
+    private BlobMathHandler blobMathHandler;
 
-    private void Start()
+    public float throwDelay;
+    public float scaleDelay;
+
+    private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         myCollider = GetComponent<SphereCollider>();
+        blobMathHandler = GetComponent<BlobMathHandler>();
     }
 
     private void Update()
@@ -20,6 +27,10 @@ public class BlobInteractable : MonoBehaviour
         if (isGrabbed)
         {
             transform.position = holdPosition.position;
+        }
+        else if (isBeingThrown)
+        {
+            transform.position = throwPosition.position;
         }
     }
 
@@ -31,16 +42,28 @@ public class BlobInteractable : MonoBehaviour
         transform.parent = _holdPosition;
 
         myCollider.radius = myCollider.radius/2;
+
+        blobMathHandler.isHeld = true;
     }
 
-    public void EndGrab(Transform throwPosition)
+    public void EndGrab(Transform _throwPosition)
     {
-        rb.isKinematic = false;
         isGrabbed = false;
+        isBeingThrown = true;
+        transform.position = _throwPosition.position;
+        throwPosition = _throwPosition;
         transform.parent = null;
-        transform.position = throwPosition.position;
+        rb.isKinematic = false;
 
-        Invoke(nameof(ScaleCollider), 0.1f);
+        Invoke(nameof(ScaleCollider), scaleDelay);
+        Invoke(nameof(EndThrow), throwDelay);
+
+        blobMathHandler.isHeld = false;
+    }
+
+    public void EndThrow()
+    {
+        isBeingThrown = false;
     }
 
     private void ScaleCollider()

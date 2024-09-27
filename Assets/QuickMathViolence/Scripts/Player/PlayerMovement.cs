@@ -25,6 +25,9 @@ public class PlayerMovement : MonoBehaviour
     [Header("Ground Check")]
     public float playerHeight;
     public LayerMask whatIsGround;
+    public float coyoteCd;
+    private float coyoteCdTimer;
+    private bool coyoteTime;
     bool grounded;
 
     [Header("Slope Handling")]
@@ -63,7 +66,11 @@ public class PlayerMovement : MonoBehaviour
     private void Update()
     {
         // ground check
-        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        grounded = IsGrounded();
+        if (coyoteCdTimer >= 0)
+        {
+            coyoteCdTimer -= Time.deltaTime;
+        }
 
         MyInput();
         SpeedControl();
@@ -79,6 +86,16 @@ public class PlayerMovement : MonoBehaviour
             rb.drag = 0;
         }
     }
+    private bool IsGrounded()
+    {
+        bool currentlyGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        bool isGrounded = currentlyGrounded;
+        if (isGrounded)
+        {
+            coyoteCdTimer = coyoteCd;
+        }
+        return isGrounded;
+    }
 
     private void MyInput()
     {
@@ -86,11 +103,14 @@ public class PlayerMovement : MonoBehaviour
         verticalInput = Input.GetAxisRaw("Vertical");
 
         // when to jump
-        if (Input.GetKey(jumpKey) && readyToJump && grounded)
+        if (Input.GetKey(jumpKey) && readyToJump)
         {
-            readyToJump = false;
-            Jump();
-            Invoke(nameof(ResetJump), jumpCooldown);
+            if (grounded || coyoteCdTimer > 0)
+            {
+                readyToJump = false;
+                Jump();
+                Invoke(nameof(ResetJump), jumpCooldown);
+            }
         }
     }
 
@@ -214,6 +234,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void Jump()
     {
+        if (coyoteCdTimer <= 0)
+        {
+            return;
+        }
+        coyoteCdTimer = 0;
         exitingSlope = true;
         // reset y velocity
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
