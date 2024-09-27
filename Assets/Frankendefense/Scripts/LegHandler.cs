@@ -19,8 +19,6 @@ public class LegHandler : MonoBehaviour
     Quaternion m_InitialRotation; //local rotation the leg spawned in, used for returning the leg to the player.
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
     GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
-    float m_InteractionCooldown = 0.5f; //Cooldown for the leg to be interacted with again after being clicked NOT the attack cooldown
-    float m_InteractionTimer = 0f; //Timer for the cooldown -> should fix bug where during one click four clicks are registered on a leg 
     float m_SpinAttackDuration = 3f; //Duration of the spin attack
     float m_SpinAttackSpeed = 2000000f; //rotation Speed of the spin attack
     Camera m_Camera;
@@ -36,6 +34,8 @@ public class LegHandler : MonoBehaviour
         });
 
         m_Camera = Camera.main;
+
+
         m_DistanceToCore = transform.position - core.transform.position;
         m_InitialRotation = transform.rotation;
 
@@ -51,13 +51,9 @@ public class LegHandler : MonoBehaviour
         Vector3 mousePosition = Input.mousePosition;
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
 
-        if (m_InteractionTimer > 0)
-        {
-            m_InteractionTimer -= Time.deltaTime;
-        }
         //Handle Input ~ MOVE TO HANDLER LATER
         //Leftclick to interact with the leg
-        else if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0))
         {
             //Check if raycast even hits anything
             if (Physics.Raycast(ray, out RaycastHit hit))
@@ -65,7 +61,6 @@ public class LegHandler : MonoBehaviour
                 //Checkk for SELF-HIT
                 if (hit.collider.gameObject == gameObject)
                 {
-                    m_InteractionTimer = m_InteractionCooldown;
                     switch (m_LegState)
                     {
                         case LegState.ATTACHED:
@@ -163,7 +158,6 @@ public class LegHandler : MonoBehaviour
     private IEnumerator SpinningCoroutine()
     {
         isSpinning = true;
-        Debug.Log("Leg " + gameObject.name + " is spinning.");
         //Spin the leg around y axis for a duration with designated speed, slowly ramp up at start and down at end with animationcurve
         float timer = 0;
         AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
@@ -173,15 +167,14 @@ public class LegHandler : MonoBehaviour
             float t = timer / m_SpinAttackDuration;
             float speed = m_SpinAttackSpeed * curve.Evaluate(t);
             transform.RotateAround(transform.position, Vector3.forward, speed * Time.deltaTime);
-            Debug.Log("Leg " + gameObject.name + " is spinning at speed " + speed * Time.deltaTime);
+            //Debug.Log("Leg " + gameObject.name + " is spinning at speed " + speed * Time.deltaTime);
             yield return null;
         }
-        Debug.Log("Leg " + gameObject.name + " has stopped spinning.");
         isSpinning = false;
     }
 
     public bool isAttacking()
     {
-        return isSpinning || m_LegState == LegState.FLYING;
+        return isSpinning || m_LegState == LegState.FLYING || m_LegState == LegState.RETURNING;
     }
 }
