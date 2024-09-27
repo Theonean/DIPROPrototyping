@@ -5,11 +5,13 @@ public class PlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float walkSpeed;
-    public float dashSpeed;
-    public float dashSpeedChangeFactor;
     private float moveSpeed;
 
+    public float dashSpeed;
+    public float dashSpeedChangeFactor;
     public bool dashing;
+
+    public float maxYSpeed;
 
     public float groundDrag;
 
@@ -230,6 +232,10 @@ public class PlayerMovement : MonoBehaviour
                 rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
             }
         }
+
+        // limit y vel
+        if (maxYSpeed != 0 && rb.velocity.y > maxYSpeed)
+            rb.velocity = new Vector3(rb.velocity.x, maxYSpeed, rb.velocity.z);
     }
 
     private void Jump()

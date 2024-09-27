@@ -13,7 +13,13 @@ public class PlayerDash : MonoBehaviour
     [Header("Dashing")]
     public float dashForce;
     public float dashUpwardForce;
+    public float maxDashYSpeed;
     public float dashDuration;
+
+    [Header("CameraEffects")]
+    public PlayerCam cam;
+    public float dashFOV;
+    private float defaultFOV;
 
     [Header("Settings")]
     public bool useCameraForward = true;
@@ -32,6 +38,7 @@ public class PlayerDash : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         pm = GetComponent<PlayerMovement>();
+        defaultFOV = cam.GetComponent<Camera>().fieldOfView;
     }
 
     private void Update()
@@ -49,6 +56,9 @@ public class PlayerDash : MonoBehaviour
         else dashCdTimer = dashCd;
 
         pm.dashing = true;
+        pm.maxYSpeed = maxDashYSpeed;
+
+        cam.DoFov(dashFOV);
 
         Transform forwardT;
 
@@ -87,6 +97,10 @@ public class PlayerDash : MonoBehaviour
     private void ResetDash()
     {
         pm.dashing = false;
+        pm.maxYSpeed = 0;
+
+        cam.DoFov(defaultFOV);
+
         if(disableGravity)
             rb.useGravity = true;
     }
