@@ -62,6 +62,22 @@ public class PlayerCore : MonoBehaviour
             {
                 //Inform to all listeners that the player has died to allow for a manual resetting of scene instead of reloading the scene
                 PlayerDeath.Invoke();
+
+                //Create a huge physics overlap sphere and destroy all Enemy Objects within the sphere
+                Collider[] colliders = Physics.OverlapSphere(transform.position, 100f);
+                foreach (Collider collider in colliders)
+                {
+                    if (collider.gameObject.tag == "Enemy")
+                    {
+                        //Set a timer to destroy the parent object of the collider after a second
+                        Destroy(collider.gameObject.transform.parent.gameObject, 1f);
+                        //This way the enemies fall through the ground visually and are then destroyed, I like the simple visual for now
+                        Destroy(collider);
+                    }
+                }
+                
+                //Return health back to full
+                healthSlider.value = 3;
             }
         }
     }

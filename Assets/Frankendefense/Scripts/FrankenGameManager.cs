@@ -40,6 +40,9 @@ public class FrankenGameManager : MonoBehaviour
                 m_PlayerInZone = false;
             });
         }
+
+        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
+        playerCore.PlayerDeath.AddListener(() => m_Points = 0f);
     }
 
     private void Update()
