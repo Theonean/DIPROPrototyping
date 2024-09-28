@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+[System.Serializable]
+public class ValueMaterial
+{
+    public Color color;
+}
+
 public class BlobMathHandler : MonoBehaviour
 {
     [Header("Value")]
@@ -13,6 +19,9 @@ public class BlobMathHandler : MonoBehaviour
     [Header("Value Display")]
     public TextMeshPro displayText;
     public float scaleFactor = 1.0f;
+
+    public List<ValueMaterial> valueMaterials = new();
+    private Renderer rend;
     
     BoxCollider boxCollider;
     Rigidbody rb;
@@ -21,6 +30,7 @@ public class BlobMathHandler : MonoBehaviour
 
     private void Awake()
     {
+        rend = GetComponent<Renderer>();
         Initiate();
     }
     public void Initiate()
@@ -34,6 +44,11 @@ public class BlobMathHandler : MonoBehaviour
         displayText.text = value.ToString();
         float scale = 1 + (value - 1) * scaleFactor;
         transform.localScale = new Vector3(scale, scale, scale);
+        Color color = valueMaterials[value].color;
+        if (color != null)
+        {
+            rend.material.SetColor("_BaseColor", color);
+        }
     }
 
     private void OnCollisionEnter(Collision collision)
