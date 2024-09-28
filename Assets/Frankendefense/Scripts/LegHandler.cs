@@ -7,6 +7,7 @@ public class LegHandler : MonoBehaviour
     /*
     IDEA CORNER:
         maybe scale up leg when it's flying away so it has more effect or range
+        maybe add rightclick on leg when the leg is on floor to make a leg manually return to player
     */
 
     enum LegState
@@ -26,6 +27,9 @@ public class LegHandler : MonoBehaviour
     GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
     float m_SpinAttackDuration = 3f; //Duration of the spin attack
     float m_SpinAttackSpeed = 2000000f; //rotation Speed of the spin attack
+    float m_LegFlySpeed = 25f; //Speed of the leg when flying away.
+    Vector3 m_LegOriginalScale; //Original scale of the leg.
+    float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
     Camera m_Camera;
     PlayerCore core;
     void Awake()
@@ -43,6 +47,7 @@ public class LegHandler : MonoBehaviour
 
         m_DistanceToCore = transform.position - core.transform.position;
         m_InitialRotation = transform.rotation;
+        m_LegOriginalScale = transform.localScale;
 
         //Generate mouseTarget object
         m_mouseTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -130,30 +135,28 @@ public class LegHandler : MonoBehaviour
                 break;
             case LegState.FLYING:
                 //Update position to move towards target position
-                transform.position = Vector3.MoveTowards(transform.position, m_TargetPosition, 0.1f);
+                transform.position = Vector3.MoveTowards(transform.position, m_TargetPosition, 0.1f * Time.deltaTime * m_LegFlySpeed);
+                //Lerp scale by how close leg is to final position
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale * m_ScaleMultiplierToFly, 0.1f * Time.deltaTime * m_LegFlySpeed);
 
                 //Check for arrival at target position
                 if (Vector3.Distance(transform.position, m_TargetPosition) < 0.1f)
                 {
                     m_LegState = LegState.DETACHED;
-                    Debug.Log("Leg " + gameObject.name + " has reached target position.");
                 }
                 break;
             case LegState.DETACHED:
                 break;
             case LegState.RETURNING:
                 //Move the leg back to the player core
-                transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, 0.1f);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f);
-
-                //Draw a debug line between the two positions
-                Debug.DrawLine(transform.position, core.transform.position + m_DistanceToCore, Color.green);
+                transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, 0.1f * Time.deltaTime * m_LegFlySpeed * 1.5f);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f * Time.deltaTime);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * m_LegFlySpeed * 1.5f);
 
                 if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.01f)
                 {
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
-                    Debug.Log("Leg " + gameObject.name + " has returned to player.");
                 }
                 break;
 
