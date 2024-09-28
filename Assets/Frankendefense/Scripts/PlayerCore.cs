@@ -69,13 +69,10 @@ public class PlayerCore : MonoBehaviour
                 {
                     if (collider.gameObject.tag == "Enemy")
                     {
-                        //Set a timer to destroy the parent object of the collider after a second
-                        Destroy(collider.gameObject.transform.parent.gameObject, 1f);
-                        //This way the enemies fall through the ground visually and are then destroyed, I like the simple visual for now
-                        Destroy(collider);
+                        Destroy(collider.gameObject.transform.parent.gameObject);
                     }
                 }
-                
+
                 //Return health back to full
                 healthSlider.value = 3;
             }
