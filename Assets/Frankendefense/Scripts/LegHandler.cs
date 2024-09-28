@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class LegHandler : MonoBehaviour
 {
+    /*
+    IDEA CORNER:
+        maybe scale up leg when it's flying away so it has more effect or range
+    */
+
     enum LegState
     {
         ATTACHED, // The leg is attached to the player.
