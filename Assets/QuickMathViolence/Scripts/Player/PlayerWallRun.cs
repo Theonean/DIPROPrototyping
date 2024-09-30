@@ -31,8 +31,13 @@ public class PlayerWallRun : MonoBehaviour
     public float exitWallTime;
     private float exitWallTimer;
 
+    [Header("Camera Effects")]
+    public float fov = 90f;
+    public float tilt = 5f;
+
     [Header("References")]
     public Transform orientation;
+    public PlayerCam cam;
     private PlayerMovement pm;
     private Rigidbody rb;
 
@@ -126,6 +131,11 @@ public class PlayerWallRun : MonoBehaviour
         pm.wallrunning = true;
 
         wallRunTimer = maxWallRunTime;
+
+        // apply camera effects
+        cam.DoFov(fov);
+        if (wallLeft) cam.DoTilt(-tilt);
+        if (wallRight) cam.DoTilt(tilt);
     }
 
     private void WallRunningMovement()
@@ -145,13 +155,18 @@ public class PlayerWallRun : MonoBehaviour
 
         // push to wall force
         if(!(wallLeft && horizontalInput > 0) && !(wallRight && horizontalInput < 0))
-            rb.AddForce(-wallNormal * 100, ForceMode.Force);
+            rb.AddForce(-wallNormal * 200, ForceMode.Force);
     }
 
     private void StopWallRun()
     {
         pm.wallrunning = false;
         rb.useGravity = true;
+
+        // reset camera effects
+        cam.ResetFov();
+        cam.DoTilt(0f);
+
     }
 
     private void WallJump()
@@ -162,7 +177,7 @@ public class PlayerWallRun : MonoBehaviour
 
         Vector3 wallNormal = wallRight ? rightWallHit.normal : leftWallHit.normal;
 
-        Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce;
+        Vector3 forceToApply = transform.up * wallJumpUpForce + wallNormal * wallJumpSideForce/2 + orientation.forward * wallJumpSideForce/2;
 
         rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
         rb.AddForce(forceToApply, ForceMode.Impulse);

@@ -150,6 +150,7 @@ GameObject:
   - component: {fileID: 6435285076910164823}
   - component: {fileID: 4817411986308552213}
   - component: {fileID: 2153629533257255965}
+  - component: {fileID: 83284610583181349}
   - component: {fileID: 3399656356176813269}
   m_Layer: 0
   m_Name: Player
@@ -217,20 +218,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   walkSpeed: 7
   dashSpeed: 20
-  dashSpeedChangeFactor: 50
-  dashing: 0
+  dashSpeedChangeFactor: 30
+  wallrunSpeed: 8.5
+  maxYSpeed: 0
   groundDrag: 5
   jumpForce: 12
   jumpCooldown: 0.25
-  airMultiplier: 0.4
+  airMultiplier: 0.2
   jumpKey: 32
   playerHeight: 2
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
+  coyoteCd: 0.2
   maxSlopeAngle: 40
   orientation: {fileID: 3487897461072717135}
   state: 0
+  dashing: 0
+  wallrunning: 0
 --- !u!114 &2153629533257255965
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -246,14 +251,47 @@ MonoBehaviour:
   orientation: {fileID: 3487897461072717135}
   playerCam: {fileID: 0}
   dashForce: 20
-  dashUpwardForce: 1
+  dashUpwardForce: 0
+  maxDashYSpeed: 15
   dashDuration: 0.25
+  cam: {fileID: 0}
+  dashFOV: 95
   useCameraForward: 1
   allowAllDirections: 1
   disableGravity: 0
   resetVel: 1
-  dashCd: 1.5
+  dashCd: 1
   dashKey: 101
+--- !u!114 &83284610583181349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187052155009606073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5574d89d466b5469feed1aee1aca55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 1024
+  wallRunForce: 200
+  wallJumpUpForce: 15
+  wallJumpSideForce: 12
+  maxWallRunTime: 0.7
+  jumpKey: 32
+  wallCheckDistance: 0.7
+  minJumpHeight: 2
+  exitWallTime: 0.2
+  fov: 90
+  tilt: 5
+  orientation: {fileID: 3487897461072717135}
+  cam: {fileID: 0}
 --- !u!114 &3399656356176813269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -270,6 +308,7 @@ MonoBehaviour:
   throwPosition: {fileID: 0}
   cameraObj: {fileID: 0}
   grabRange: 3
+  sphereCastRadius: 0.8
   grabbable:
     serializedVersion: 2
     m_Bits: 2048

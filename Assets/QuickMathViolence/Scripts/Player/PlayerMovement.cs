@@ -38,6 +38,13 @@ public class PlayerMovement : MonoBehaviour
     private RaycastHit slopeHit;
     private bool exitingSlope;
 
+    [Header("Camera Effects")]
+    public PlayerCam cam;
+    public float runFov = 85f;
+    public float yHunchThresh;
+    public float yHunch;
+    private bool isHunching = false;
+
     public Transform orientation;
 
     float horizontalInput;
@@ -82,6 +89,7 @@ public class PlayerMovement : MonoBehaviour
         MyInput();
         SpeedControl();
         StateHandler();
+        DoCameraEffects();
 
         // handle drag
         if (state == MovementState.walking)
@@ -220,7 +228,23 @@ public class PlayerMovement : MonoBehaviour
         // in air
         else if (!grounded)
             rb.AddForce(10f * moveSpeed * moveDirection.normalized * airMultiplier, ForceMode.Force);
-        
+    }
+
+    private void DoCameraEffects()
+    {
+        // apply camera effects
+        if (state == MovementState.walking && !isHunching && rb.velocity.magnitude > yHunchThresh)
+        {
+            cam.DoHunch(-yHunch);
+            //cam.DoFov(runFov);
+            isHunching = true;
+        }
+        else if (isHunching && rb.velocity.magnitude < yHunchThresh || isHunching && state != MovementState.walking)
+        {
+            cam.DoHunch(yHunch);
+            //cam.ResetFov();
+            isHunching = false;
+        }
     }
 
     private void SpeedControl()

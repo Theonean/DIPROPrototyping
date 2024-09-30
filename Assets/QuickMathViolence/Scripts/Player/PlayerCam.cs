@@ -7,14 +7,18 @@ public class PlayerCam : MonoBehaviour
     public float sensY;
 
     public Transform orientation;
+    public Transform camHolder;
 
     float xRotation;
     float yRotation;
+
+    float defaultFov;
 
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        defaultFov = GetComponent<Camera>().fieldOfView;
     }
 
     private void Update()
@@ -28,13 +32,28 @@ public class PlayerCam : MonoBehaviour
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
 
         // rotate cam and orientation
-        transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
+        camHolder.transform.rotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.rotation = Quaternion.Euler(0, yRotation, 0);
     }
 
     public void DoFov(float endValue)
     {
-        GetComponent<Camera>().DOFieldOfView(endValue, 0.25f);
+        GetComponent<Camera>().DOFieldOfView(endValue, 0.2f);
+    }
+
+    public void ResetFov()
+    {
+        GetComponent<Camera>().DOFieldOfView(defaultFov, 0.25f);
+    }
+
+    public void DoTilt(float zTilt)
+    {
+        transform.DOLocalRotate(new Vector3(0, 0, zTilt), 0.25f);
+    }
+
+    public void DoHunch(float yValue)
+    {
+        transform.DOLocalMoveY(yValue, 0.4f);
     }
 
 }
