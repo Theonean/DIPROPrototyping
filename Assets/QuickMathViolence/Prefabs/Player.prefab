@@ -152,6 +152,7 @@ GameObject:
   - component: {fileID: 2153629533257255965}
   - component: {fileID: 83284610583181349}
   - component: {fileID: 3399656356176813269}
+  - component: {fileID: 9083203474657892173}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -232,6 +233,10 @@ MonoBehaviour:
     m_Bits: 1024
   coyoteCd: 0.2
   maxSlopeAngle: 40
+  cam: {fileID: 0}
+  runFov: 85
+  yHunchThresh: 0.1
+  yHunch: 0.2
   orientation: {fileID: 3487897461072717135}
   state: 0
   dashing: 0
@@ -288,7 +293,7 @@ MonoBehaviour:
   wallCheckDistance: 0.7
   minJumpHeight: 2
   exitWallTime: 0.2
-  fov: 90
+  fov: 95
   tilt: 5
   orientation: {fileID: 3487897461072717135}
   cam: {fileID: 0}
@@ -318,6 +323,27 @@ MonoBehaviour:
   throwKey: 323
   throwRecoil: 0
   splitKey: 324
+--- !u!114 &9083203474657892173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187052155009606073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7aeddc17fb731145a0863472feb2f0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bottomOffset: 0.3
+  topOffset: 0.1
+  ledgeCheckDistance: 1
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 1024
+  upwardForce: 30
+  forwardForce: 8
+  orientation: {fileID: 3487897461072717135}
 --- !u!1 &7803867444268332549
 GameObject:
   m_ObjectHideFlags: 0
