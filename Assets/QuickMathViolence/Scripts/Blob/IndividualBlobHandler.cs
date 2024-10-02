@@ -12,6 +12,8 @@ public class IndividualBlobHandler : MonoBehaviour
     public Color colorSad = Color.gray;
     private Renderer rend;
 
+    public BlobInteractable parentInteractable;
+
     private void Awake()
     {
         rend = GetComponent<Renderer>();

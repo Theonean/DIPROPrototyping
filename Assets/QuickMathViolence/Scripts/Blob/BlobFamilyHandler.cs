@@ -8,6 +8,7 @@ public class BlobFamilyHandler : MonoBehaviour
     public int targetValue;
     public GameManager gameManager;
     private bool familyComplete = false;
+    public bool initiateOnAwake = false;
 
     [Header("Blob Display")]
     public GameObject blobPrefab;
@@ -15,6 +16,10 @@ public class BlobFamilyHandler : MonoBehaviour
     public List<GameObject> childBlobs = new List<GameObject>();
     public List<Color> stackColors;
     public int colorIncrement;
+
+    [Header("Blob Physics")]
+    public float regularBlobMass;
+    public float topBlobMass;
 
     BoxCollider boxCollider;
     Rigidbody rb;
@@ -24,32 +29,64 @@ public class BlobFamilyHandler : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        if (initiateOnAwake)
+        {
+            Initiate();
+        }
+    }
+
+    public void Initiate()
+    {
+        CountChildren();
         UpdateFamilyDisplay();
+    }
+
+    public void CountChildren()
+    {
+        childBlobs.Clear();
+        IndividualBlobHandler[] children = GetComponentsInChildren<IndividualBlobHandler>();
+        foreach (var child in children)
+        {
+            childBlobs.Add(child.gameObject);
+        }
     }
 
     public void UpdateFamilyDisplay()
     {
-        IndividualBlobHandler[] children = GetComponentsInChildren<IndividualBlobHandler>();
-        int childDifference = value - children.Length;
+        int childDifference = value - childBlobs.Count;
+        int initialCount = childBlobs.Count;
         if (childDifference > 0)
         {
-            AddChildren(children.Length, childDifference);
+            if (childBlobs.Count == 0)
+                AddChildren(initialCount, childDifference, true);
+            else 
+                AddChildren(initialCount, childDifference, false);
         }
         else if (childDifference < 0)
         {
             RemoveChildren(-childDifference);
         }
 
+        UpdateBlobWeights();
+
         UpdateBlobColors();
     }
 
-    private void AddChildren(int childCount, int difference)
+    private void AddChildren(int childCount, int difference, bool firstChild)
     {
-        float childYOffset = childCount * yOffset;
         for (int i = 0; i < difference; i++)
         {
-            GameObject newChild = Instantiate(blobPrefab, new Vector3(transform.position.x, transform.position.y + childYOffset, transform.position.z), Quaternion.identity, transform);
-            childYOffset += yOffset;
+            Vector3 childPos = childBlobs[childBlobs.Count - 1].transform.position + yOffset * childBlobs[childBlobs.Count - 1].transform.up;
+            if (firstChild && i == 0)
+                childPos = Vector3.zero;
+                
+
+            GameObject newChild = Instantiate(blobPrefab, childPos, Quaternion.identity);
+            newChild.GetComponent<IndividualBlobHandler>().parentInteractable = GetComponent<BlobInteractable>();
+            Rigidbody otherRb = childBlobs.Count > 0 ? childBlobs[childBlobs.Count - 1].GetComponent<Rigidbody>() : rb;
+            if (otherRb == null)
+                otherRb = rb;
+            newChild.GetComponent<Joint>().connectedBody = otherRb;
             childBlobs.Add(newChild);
         }
     }
@@ -77,6 +114,19 @@ public class BlobFamilyHandler : MonoBehaviour
         UpdateBlobColors();
     }
 
+    private void UpdateBlobWeights()
+    {
+        for (int i = 0; i < childBlobs.Count; i++)
+        {
+            if (childBlobs[i].GetComponent<Rigidbody>() != null)
+            {
+                if (i == childBlobs.Count - 1)
+                    childBlobs[i].GetComponent<Rigidbody>().mass = topBlobMass;
+                else
+                    childBlobs[i].GetComponent<Rigidbody>().mass = regularBlobMass;
+            }
+        }
+    }
     private void UpdateBlobColors()
     {
         for (int i = 0; i < childBlobs.Count; i++)
@@ -92,7 +142,10 @@ public class BlobFamilyHandler : MonoBehaviour
         {
             float velocitySelf = rb.velocity.magnitude;
             float velocityOther = rbOther.velocity.magnitude;
-            if (collision.gameObject.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler) && !otherBlobFamilyHandler.isHeld && !familyComplete && !otherBlobFamilyHandler.familyComplete)
+            BlobFamilyHandler otherBlobFamilyHandler = collision.gameObject.GetComponent<BlobFamilyHandler>();
+            if (otherBlobFamilyHandler == null)
+                otherBlobFamilyHandler = collision.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.GetComponent<BlobFamilyHandler>();
+            if (!otherBlobFamilyHandler.isHeld && !familyComplete && !otherBlobFamilyHandler.familyComplete)
             {
                 if (velocitySelf > velocityOther)
                 {
@@ -135,7 +188,7 @@ public class BlobFamilyHandler : MonoBehaviour
                 otherBlobFamilyHandler.value = otherValue;
                 otherBlobFamilyHandler.hasSplit = true;
                 otherBlobFamilyHandler.Invoke(nameof(EndHasSplit), 1f);
-                otherBlobFamilyHandler.UpdateFamilyDisplay();
+                otherBlobFamilyHandler.Initiate();
 
                 value = newValue;
                 UpdateFamilyDisplay();
@@ -154,6 +207,10 @@ public class BlobFamilyHandler : MonoBehaviour
 
     public void Destroy()
     {
+        for (int i = 0; i < childBlobs.Count; i++)
+        {
+            Destroy(childBlobs[i].gameObject);
+        }
         Destroy(gameObject);
     }
 }

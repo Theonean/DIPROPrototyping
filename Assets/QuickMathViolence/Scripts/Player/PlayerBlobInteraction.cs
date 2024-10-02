@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerBlobInteraction : MonoBehaviour
@@ -28,7 +29,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
 
-    private GameObject heldObject;
+    private BlobInteractable heldObject;
     private Rigidbody rb;
 
     private void Start()
@@ -86,7 +87,10 @@ public class PlayerBlobInteraction : MonoBehaviour
     {
         if (Physics.SphereCast(cameraObj.position,sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
-            heldObject = objectHit.transform.gameObject;
+            if (objectHit.transform.gameObject.TryGetComponent<BlobInteractable>(out BlobInteractable blobInt))
+                heldObject = blobInt;
+            else
+                heldObject = objectHit.transform.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
                 blob.InitiateGrab(holdPosition);
                 blob.IgnorePlayerCollision(GetComponentInChildren<Collider>(), true);
@@ -96,21 +100,18 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void ThrowObject()
     {
-        if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob))
+        heldObject.EndGrab(throwPosition);
+        heldObject.GetComponent<Rigidbody>().isKinematic = false;
+        Vector3 forceToAdd = cameraObj.forward * ejectForce + transform.up * ejectUpwardForce + rb.velocity;
+
+        // recoil 
+        rb.AddForce(cameraObj.forward*-1*throwRecoil, ForceMode.Impulse);
+
+        if (heldObject.TryGetComponent<Rigidbody>(out Rigidbody blobRb))
         {
-            blob.EndGrab(throwPosition);
-            blob.GetComponent<Rigidbody>().isKinematic = false;
-            Vector3 forceToAdd = cameraObj.forward * ejectForce + transform.up * ejectUpwardForce + rb.velocity;
-
-            // recoil 
-            rb.AddForce(cameraObj.forward*-1*throwRecoil, ForceMode.Impulse);
-
-            if (blob.TryGetComponent<Rigidbody>(out Rigidbody blobRb))
-            {
-                blobRb.AddForce(forceToAdd, ForceMode.Impulse);
-            }
-            StartCoroutine(ReenableCollision(blob));
+            blobRb.AddForce(forceToAdd, ForceMode.Impulse);
         }
+        StartCoroutine(ReenableCollision(heldObject));
         heldObject = null;
     }
 
@@ -118,7 +119,11 @@ public class PlayerBlobInteraction : MonoBehaviour
     {
         if (Physics.SphereCast(cameraObj.position, sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
-            if (objectHit.collider.transform.parent.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blob))
+            if (objectHit.transform.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blobFamily))
+            {
+                blobFamily.Split();
+            }
+            else if (objectHit.transform.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blob))
             {
                 blob.Split();
             }

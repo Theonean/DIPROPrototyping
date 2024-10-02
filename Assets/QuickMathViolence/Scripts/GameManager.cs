@@ -78,7 +78,7 @@ public class GameManager : MonoBehaviour
                     blobFamilyHandler.value = value;
                     blobFamilyHandler.targetValue = targetValue;
                     blobFamilyHandler.gameManager = this;
-                    blobFamilyHandler.UpdateFamilyDisplay();
+                    blobFamilyHandler.Initiate();
                 }
             }
         }

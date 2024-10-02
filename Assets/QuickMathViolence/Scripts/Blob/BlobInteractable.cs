@@ -8,12 +8,18 @@ public class BlobInteractable : MonoBehaviour
     private Transform holdPosition;
     private BlobFamilyHandler blobFamilyHandler;
     public float scaleDelay;
+    public bool isBeingThrown = false;
+
+    [Header("Physics")]
+    public Vector3 groundedCOM = Vector3.zero;
+    public Vector3 ariborneCOM = Vector3.zero;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         //myCollider = GetComponent<SphereCollider>();
         blobFamilyHandler = GetComponent<BlobFamilyHandler>();
+        rb.centerOfMass = groundedCOM;
     }
 
     private void Update()
@@ -21,6 +27,17 @@ public class BlobInteractable : MonoBehaviour
         if (isGrabbed)
         {
             transform.localPosition = Vector3.zero;
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == 10 || collision.gameObject.CompareTag("Blob"))
+        {
+            if (isBeingThrown)
+            {
+                rb.centerOfMass = groundedCOM;
+            }
         }
     }
 
@@ -42,6 +59,10 @@ public class BlobInteractable : MonoBehaviour
         isGrabbed = false;
         transform.parent = null;
 
+        // set COM
+        isBeingThrown = true;
+        rb.centerOfMass = ariborneCOM;
+
         // Optionally set position once at the moment of throw if needed:
         transform.position = _throwPosition.position;
 
@@ -57,8 +78,8 @@ public class BlobInteractable : MonoBehaviour
 
     public void IgnorePlayerCollision(Collider playerCollider, bool enable)
     {
-        IndividualBlobHandler[] children = GetComponentsInChildren<IndividualBlobHandler>();
-        foreach (IndividualBlobHandler child in children)
+        GameObject[] children = GetComponent<BlobFamilyHandler>().childBlobs.ToArray();
+        foreach (GameObject child in children)
         {
             Physics.IgnoreCollision(child.GetComponent<Collider>(), playerCollider, enable);
         }
