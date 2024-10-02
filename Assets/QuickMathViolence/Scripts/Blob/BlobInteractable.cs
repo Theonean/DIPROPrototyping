@@ -54,4 +54,14 @@ public class BlobInteractable : MonoBehaviour
     {
         //myCollider.radius = myCollider.radius * 2;
     }
+
+    public void IgnorePlayerCollision(Collider playerCollider, bool enable)
+    {
+        IndividualBlobHandler[] children = GetComponentsInChildren<IndividualBlobHandler>();
+        foreach (IndividualBlobHandler child in children)
+        {
+            Physics.IgnoreCollision(child.GetComponent<Collider>(), playerCollider, enable);
+        }
+        
+    }
 }
