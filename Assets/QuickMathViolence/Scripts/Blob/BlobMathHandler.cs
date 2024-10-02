@@ -26,7 +26,7 @@ public class BlobMathHandler : MonoBehaviour
     BoxCollider boxCollider;
     Rigidbody rb;
     public bool isHeld = false;
-    private bool hasSplit = false;
+    public bool hasSplit = false;
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class BlobMathHandler : MonoBehaviour
         UpdateValueDisplay();
     }
 
-    private void UpdateValueDisplay()
+    public void UpdateValueDisplay()
     {
         displayText.text = value.ToString();
         float scale = 1 + (value - 1) * scaleFactor;

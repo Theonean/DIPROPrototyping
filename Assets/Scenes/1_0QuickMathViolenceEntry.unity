@@ -9196,11 +9196,11 @@ MonoBehaviour:
   amountOfPairs: 8
   randomTargetAndPairs: 1
   minValue: 5
-  maxValue: 10
+  maxValue: 7
   minPairs: 5
   maxPairs: 10
   uiManager: {fileID: 218553588}
-  blobPrefab: {fileID: 7986716280046928172, guid: 8038ad93611ef5449a9ae9dd7a9d6587,
+  blobPrefab: {fileID: 7986716280046928172, guid: a4e6ba82748856d4d9fdefb9c681f2fe,
     type: 3}
   range: 25
 --- !u!114 &1970555542
@@ -10134,11 +10134,31 @@ PrefabInstance:
       propertyPath: playerCam
       value: 
       objectReference: {fileID: 3113394118536036866}
+    - target: {fileID: 2703163135245173056, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
+      propertyPath: m_ExcludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: cameraObj
       value: 
       objectReference: {fileID: 3113394118536036866}
+    - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
+      propertyPath: dropForce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
+      propertyPath: grabRange
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
+        type: 3}
+      propertyPath: throwForce
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: holdPosition

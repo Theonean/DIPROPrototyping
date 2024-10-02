@@ -148,10 +148,10 @@ GameObject:
   m_Component:
   - component: {fileID: 7616932215216280034}
   - component: {fileID: 6435285076910164823}
+  - component: {fileID: 3399656356176813269}
   - component: {fileID: 4817411986308552213}
   - component: {fileID: 2153629533257255965}
   - component: {fileID: 83284610583181349}
-  - component: {fileID: 3399656356176813269}
   - component: {fileID: 9083203474657892173}
   m_Layer: 6
   m_Name: Player
@@ -205,6 +205,32 @@ Rigidbody:
   m_Interpolate: 1
   m_Constraints: 80
   m_CollisionDetection: 1
+--- !u!114 &3399656356176813269
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7187052155009606073}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b292890dcdc424241833a0c028209f13, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  holdPosition: {fileID: 0}
+  throwPosition: {fileID: 0}
+  cameraObj: {fileID: 0}
+  grabRange: 3
+  sphereCastRadius: 0.8
+  grabbable:
+    serializedVersion: 2
+    m_Bits: 2048
+  grabKey: 323
+  throwForce: 20
+  throwUpwardForce: 1
+  throwKey: 323
+  throwRecoil: 0
+  splitKey: 324
 --- !u!114 &4817411986308552213
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -297,32 +323,6 @@ MonoBehaviour:
   tilt: 5
   orientation: {fileID: 3487897461072717135}
   cam: {fileID: 0}
---- !u!114 &3399656356176813269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7187052155009606073}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b292890dcdc424241833a0c028209f13, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  holdPosition: {fileID: 0}
-  throwPosition: {fileID: 0}
-  cameraObj: {fileID: 0}
-  grabRange: 3
-  sphereCastRadius: 0.8
-  grabbable:
-    serializedVersion: 2
-    m_Bits: 2048
-  grabKey: 323
-  throwForce: 20
-  throwUpwardForce: 1
-  throwKey: 323
-  throwRecoil: 0
-  splitKey: 324
 --- !u!114 &9083203474657892173
 MonoBehaviour:
   m_ObjectHideFlags: 0

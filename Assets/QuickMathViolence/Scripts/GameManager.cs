@@ -73,12 +73,12 @@ public class GameManager : MonoBehaviour
             if (RandomPoint(transform.position, range, out point))
             {
                 GameObject blob = Instantiate(blobPrefab, point, Quaternion.identity);
-                if (blob.TryGetComponent<BlobMathHandler>(out BlobMathHandler blobMathHandler))
+                if (blob.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blobFamilyHandler))
                 {
-                    blobMathHandler.value = value;
-                    blobMathHandler.targetValue = targetValue;
-                    blobMathHandler.gameManager = this;
-                    blobMathHandler.Initiate();
+                    blobFamilyHandler.value = value;
+                    blobFamilyHandler.targetValue = targetValue;
+                    blobFamilyHandler.gameManager = this;
+                    blobFamilyHandler.UpdateFamilyDisplay();
                 }
             }
         }
