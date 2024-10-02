@@ -6,16 +6,14 @@ public class BlobInteractable : MonoBehaviour
     SphereCollider myCollider;
     private bool isGrabbed;
     private Transform holdPosition;
-    private BlobMathHandler blobMathHandler;
-
-    public float throwDelay;
+    private BlobFamilyHandler blobFamilyHandler;
     public float scaleDelay;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
-        myCollider = GetComponent<SphereCollider>();
-        blobMathHandler = GetComponent<BlobMathHandler>();
+        //myCollider = GetComponent<SphereCollider>();
+        blobFamilyHandler = GetComponent<BlobFamilyHandler>();
     }
 
     private void Update()
@@ -34,9 +32,9 @@ public class BlobInteractable : MonoBehaviour
         transform.localPosition = Vector3.zero;
         transform.parent = _holdPosition;
 
-        myCollider.radius = myCollider.radius / 2;
+        //myCollider.radius = myCollider.radius / 2;
 
-        blobMathHandler.isHeld = true;
+        blobFamilyHandler.isHeld = true;
     }
 
     public void EndGrab(Transform _throwPosition)
@@ -49,11 +47,11 @@ public class BlobInteractable : MonoBehaviour
 
         Invoke(nameof(ScaleCollider), scaleDelay);
 
-        blobMathHandler.isHeld = false;
+        blobFamilyHandler.isHeld = false;
     }
 
     private void ScaleCollider()
     {
-        myCollider.radius = myCollider.radius * 2;
+        //myCollider.radius = myCollider.radius * 2;
     }
 }

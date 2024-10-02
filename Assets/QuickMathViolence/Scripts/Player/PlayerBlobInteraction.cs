@@ -16,10 +16,14 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     [Header("Throw")]
     public float throwForce;
+    public float dropForce;
     public float throwUpwardForce;
+    public float dropUpwardForce;
+    private float ejectForce;
+    private float ejectUpwardForce;
     public KeyCode throwKey = KeyCode.Mouse0;
     public float throwRecoil;
-    private bool willBeThrown = false;
+    private bool willThrow = false;
 
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
@@ -39,16 +43,16 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (willBeThrown)
+        if (willThrow)
         {
             ThrowObject();
-            willBeThrown = false;
+            willThrow = false;
         }
     }
 
     private void MyInput()
     {
-        if (heldObject == null)
+        if (heldObject == null && !willThrow)
         {
             if (Input.GetKeyDown(grabKey))
             {
@@ -60,9 +64,21 @@ public class PlayerBlobInteraction : MonoBehaviour
             }
             
         }
-        else if (heldObject != null && Input.GetKeyDown(throwKey))
+        else if (heldObject != null)
         {
-            willBeThrown = true;
+            if (Input.GetKeyDown(throwKey))
+            {
+                willThrow = true;
+                ejectForce = throwForce;
+                ejectUpwardForce = throwUpwardForce;
+            }
+            else if (Input.GetKeyDown(splitKey))
+            {
+                willThrow = true;
+                ejectForce = dropForce;
+                ejectUpwardForce = dropUpwardForce;
+            }
+            
         }
     }
 
@@ -73,7 +89,7 @@ public class PlayerBlobInteraction : MonoBehaviour
             heldObject = objectHit.transform.gameObject;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
                 blob.InitiateGrab(holdPosition);
-                Physics.IgnoreCollision(heldObject.GetComponent<Collider>(), GetComponentInChildren<Collider>(), true);
+                Physics.IgnoreCollision(heldObject.GetComponentInChildren<Collider>(), GetComponentInChildren<Collider>(), true);
             }
         }
     }
@@ -84,7 +100,7 @@ public class PlayerBlobInteraction : MonoBehaviour
         {
             blob.EndGrab(throwPosition);
             blob.GetComponent<Rigidbody>().isKinematic = false;
-            Vector3 forceToAdd = cameraObj.forward * throwForce + transform.up * throwUpwardForce + rb.velocity;
+            Vector3 forceToAdd = cameraObj.forward * ejectForce + transform.up * ejectUpwardForce + rb.velocity;
 
             // recoil 
             rb.AddForce(cameraObj.forward*-1*throwRecoil, ForceMode.Impulse);
@@ -102,7 +118,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     {
         if (Physics.SphereCast(cameraObj.position, sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
-            if (objectHit.collider.TryGetComponent<BlobMathHandler>(out BlobMathHandler blob))
+            if (objectHit.collider.transform.parent.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blob))
             {
                 blob.Split();
             }
@@ -114,7 +130,7 @@ public class PlayerBlobInteraction : MonoBehaviour
         yield return new WaitForSeconds(2f);
         if (blob != null)
         {
-            Physics.IgnoreCollision(blob.GetComponent<Collider>(), GetComponentInChildren<Collider>(), false);
+            Physics.IgnoreCollision(blob.GetComponentInChildren<Collider>(), GetComponentInChildren<Collider>(), false);
         }
     }
 }
