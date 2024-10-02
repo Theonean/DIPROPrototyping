@@ -53,6 +53,7 @@ public class LegHandler : MonoBehaviour
         m_mouseTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         Destroy(m_mouseTarget.GetComponent<SphereCollider>());
         m_mouseTarget.GetComponent<MeshRenderer>().material.color = Color.red;
+        m_mouseTarget.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
         m_mouseTarget.SetActive(false);
     }
 
@@ -60,64 +61,6 @@ public class LegHandler : MonoBehaviour
     {
         Vector3 mousePosition = Input.mousePosition;
         Ray ray = m_Camera.ScreenPointToRay(mousePosition);
-
-        //Handle Input ~ MOVE TO HANDLER LATER
-        //Leftclick to interact with the leg
-        if (Input.GetMouseButtonDown(0))
-        {
-            //Check if raycast even hits anything
-            if (Physics.Raycast(ray, out RaycastHit hit))
-            {
-                //Checkk for SELF-HIT
-                if (hit.collider.gameObject == gameObject)
-                {
-                    switch (m_LegState)
-                    {
-                        case LegState.ATTACHED:
-                            //Leg starts waiting for next click to fly away and starts highlighting current mouse position, rightclick to cancel.
-                            m_LegState = LegState.CLICKED;
-                            m_mouseTarget.SetActive(true);
-                            break;
-                        case LegState.CLICKED:
-                            //If the leg is clicked again while waiting for next click, treat it as a cancel and revert to attached state.
-                            m_LegState = LegState.ATTACHED;
-                            m_mouseTarget.SetActive(false);
-                            break;
-                        case LegState.FLYING:
-                        case LegState.DETACHED:
-                            //If clicked when lying on the floor and not alread spinning, do a spin attack
-                            if (!isSpinning) { StartCoroutine(SpinningCoroutine()); }
-                            break;
-                    }
-                }
-                //If this leg is waiting for a click and click is somewhere else, start flying to the clicked position.
-                else if (m_LegState == LegState.CLICKED) //also don't allow clicking on other legs so they wont stack
-                {
-                    //If another "Leg" is clicked, return to avoid stacking legs
-                    if (hit.collider.gameObject.tag == "Leg")
-                    {
-                        m_LegState = LegState.ATTACHED;
-                        m_mouseTarget.SetActive(false);
-                    }
-                    else
-                    {
-                        //If a "safe" position is clicked while waiting for next click, start flying to the mouse position.
-                        m_LegState = LegState.FLYING;
-                        m_mouseTarget.SetActive(false);
-                        m_TargetPosition = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z); //Keep leg height
-
-                        //Reparent leg to be on the same level as the player so it doesn't move with it
-                        transform.SetParent(null);
-                    }
-                }
-            }
-        }
-        //Rightclick to cancel the leg away from clicked state
-        else if (m_LegState == LegState.CLICKED && Input.GetMouseButtonDown(1))
-        {
-            m_LegState = LegState.ATTACHED;
-            m_mouseTarget.SetActive(false);
-        }
 
         //Decide on action based on current leg state.
         switch (m_LegState)
@@ -160,6 +103,53 @@ public class LegHandler : MonoBehaviour
                 }
                 break;
 
+        }
+    }
+
+    public void LegClicked()
+    {
+        if (m_LegState == LegState.ATTACHED)
+        {
+            //Leg starts waiting for mouse release to fly away and starts highlighting current mouse position, rightclick to cancel.
+            m_LegState = LegState.CLICKED;
+            m_mouseTarget.SetActive(true);
+
+            //Colour mesh blue for selected
+            GetComponent<MeshRenderer>().material.color = Color.blue;
+        }
+    }
+
+    public void LegReleased()
+    {
+        if (m_LegState == LegState.CLICKED)
+        {
+            //Recolor to gray
+            GetComponent<MeshRenderer>().material.color = Color.gray;
+
+            //If a "safe" position is clicked while waiting for next click, start flying to the mouse position.
+            m_LegState = LegState.FLYING;
+            m_mouseTarget.SetActive(false);
+
+            //Raycast to find the position to fly to
+            Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
+            Physics.Raycast(ray, out RaycastHit hit);
+            m_TargetPosition = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z); //Keep leg height
+
+            //Reparent leg to be on the same level as the player so it doesn't move with it
+            transform.SetParent(null);
+        }
+    }
+
+    private void OnMouseDown()
+    {
+
+        switch (m_LegState)
+        {
+            case LegState.FLYING:
+            case LegState.DETACHED:
+                //If clicked when lying on the floor and not alread spinning, do a spin attack
+                if (!isSpinning) { StartCoroutine(SpinningCoroutine()); }
+                break;
         }
     }
 
