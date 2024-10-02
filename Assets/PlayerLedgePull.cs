@@ -46,13 +46,14 @@ public class PlayerLedgePull : MonoBehaviour
         bottom = Physics.Raycast(new Vector3(transform.position.x, transform.position.y - playerHeight * bottomOffset, transform.position.z), orientation.forward, out bottomHit, ledgeCheckDistance, whatIsWall);
         top = Physics.Raycast(new Vector3(transform.position.x, transform.position.y - playerHeight * topOffset, transform.position.z), orientation.forward, out topHit, ledgeCheckDistance, whatIsWall);
 
+        /*
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - playerHeight * bottomOffset, transform.position.z), orientation.forward * ledgeCheckDistance, Color.green);
         Debug.DrawRay(new Vector3(transform.position.x, transform.position.y - playerHeight * topOffset, transform.position.z), orientation.forward * ledgeCheckDistance, Color.red);
+        */
     }
 
     private void DoLedgeJump()
     {
-        Debug.Log("pulling");
         Vector3 forceToApply = orientation.forward * forwardForce + orientation.up * upwardForce;
         rb.AddForce(forceToApply, ForceMode.Force);
     }

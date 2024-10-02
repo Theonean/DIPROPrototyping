@@ -862,12 +862,6 @@ MonoBehaviour:
   progressGoal: 0
   levelTimer: {fileID: 1970555542}
   timerText: {fileID: 250944489}
---- !u!1 &245775717 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7187052155009606073, guid: a2d5245b80101f5429e51cb95a5d436e,
-    type: 3}
-  m_PrefabInstance: {fileID: 2859496584418108104}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &250944487
 GameObject:
   m_ObjectHideFlags: 0
@@ -7845,27 +7839,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2859496584418108104}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1746745592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 245775717}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a7aeddc17fb731145a0863472feb2f0b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bottomOffset: 0.3
-  topOffset: 0.1
-  ledgeCheckDistance: 1
-  whatIsWall:
-    serializedVersion: 2
-    m_Bits: 1024
-  upwardForce: 30
-  forwardForce: 8
-  orientation: {fileID: 1177684729}
 --- !u!1 &1792066245
 GameObject:
   m_ObjectHideFlags: 0
@@ -9221,6 +9194,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   targetValue: 9
   amountOfPairs: 8
+  randomTargetAndPairs: 1
+  minValue: 5
+  maxValue: 10
+  minPairs: 5
+  maxPairs: 10
   uiManager: {fileID: 218553588}
   blobPrefab: {fileID: 7986716280046928172, guid: 8038ad93611ef5449a9ae9dd7a9d6587,
     type: 3}
@@ -10146,26 +10124,11 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 3113394118536036867}
-    - target: {fileID: 83284610583181349, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: fov
-      value: 95
-      objectReference: {fileID: 0}
-    - target: {fileID: 83284610583181349, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2153629533257255965, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: cam
       value: 
       objectReference: {fileID: 3113394118536036867}
-    - target: {fileID: 2153629533257255965, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: dashFOV
-      value: 95
-      objectReference: {fileID: 0}
     - target: {fileID: 2153629533257255965, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: playerCam
@@ -10176,11 +10139,6 @@ PrefabInstance:
       propertyPath: cameraObj
       value: 
       objectReference: {fileID: 3113394118536036866}
-    - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: throwRecoil
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3399656356176813269, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: holdPosition
@@ -10196,21 +10154,6 @@ PrefabInstance:
       propertyPath: cam
       value: 
       objectReference: {fileID: 3113394118536036867}
-    - target: {fileID: 4817411986308552213, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: runFov
-      value: 85
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817411986308552213, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: yHunch
-      value: 0.2
-      objectReference: {fileID: 0}
-    - target: {fileID: 4817411986308552213, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      propertyPath: yHunchThresh
-      value: 0.1
-      objectReference: {fileID: 0}
     - target: {fileID: 7187052155009606073, guid: a2d5245b80101f5429e51cb95a5d436e,
         type: 3}
       propertyPath: m_Name
@@ -10269,11 +10212,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7187052155009606073, guid: a2d5245b80101f5429e51cb95a5d436e,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1746745592}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a2d5245b80101f5429e51cb95a5d436e, type: 3}
 --- !u!1001 &3113394118536036865
 PrefabInstance:
