@@ -14,11 +14,13 @@ public class FrankenGameManager : MonoBehaviour
 
     public TextMeshProUGUI ScoreText;
     public TextMeshProUGUI BestScoreText;
+    public GameObject YouDiedUIOverlay;
     Vector3[] m_BoundaryPositions;
     bool m_PlayerInZone = false;
     float m_Points = 0f;
     static float k_BestScore = 0f;
     float m_ContinuousTimeInZone = 0f;
+    bool gameActive = true;
 
     private void Start()
     {
@@ -42,7 +44,14 @@ public class FrankenGameManager : MonoBehaviour
         }
 
         PlayerCore playerCore = FindObjectOfType<PlayerCore>();
-        playerCore.PlayerDeath.AddListener(() => m_Points = 0f);
+        playerCore.PlayerDeath.AddListener(() => PlayerDied());
+
+        //Instantly move zone at start of game
+        m_zoneTimer = zoneWaitTime;
+
+        //Prepare the UI Overlay so it's not dependent on editor state
+        YouDiedUIOverlay.SetActive(false);
+        YouDiedUIOverlay.transform.localScale = Vector3.zero;
     }
 
     private void Update()
@@ -68,6 +77,15 @@ public class FrankenGameManager : MonoBehaviour
                 BestScoreText.text = "Best Score: " + k_BestScore.ToString("F2");
             }
         }
+
+        if (!gameActive)
+        {
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                Debug.LogWarning("Properly reset game without jarring reload");
+                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            }
+        }
     }
 
     void MoveZone()
@@ -79,5 +97,25 @@ public class FrankenGameManager : MonoBehaviour
             Random.Range(m_BoundaryPositions[0].z, m_BoundaryPositions[1].z)
         );
         playerDetector.transform.position = newPosition;
+    }
+
+    void PlayerDied()
+    {
+        m_Points = 0f;
+        YouDiedUIOverlay.SetActive(true);
+        gameActive = false;
+
+        StartCoroutine(ShowYouDiedUI());
+    }
+
+    IEnumerator ShowYouDiedUI()
+    {
+        float time = 0f;
+        while (time < 1f)
+        {
+            time += Time.deltaTime;
+            YouDiedUIOverlay.transform.localScale = Vector3.one * time;
+            yield return null;
+        }
     }
 }
