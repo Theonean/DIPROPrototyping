@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 public class PlayerBlobInteraction : MonoBehaviour
@@ -20,6 +19,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public float throwUpwardForce;
     public KeyCode throwKey = KeyCode.Mouse0;
     public float throwRecoil;
+    private bool willBeThrown = false;
 
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
@@ -35,6 +35,15 @@ public class PlayerBlobInteraction : MonoBehaviour
     private void Update()
     {
         MyInput();
+    }
+
+    private void FixedUpdate()
+    {
+        if (willBeThrown)
+        {
+            ThrowObject();
+            willBeThrown = false;
+        }
     }
 
     private void MyInput()
@@ -53,7 +62,7 @@ public class PlayerBlobInteraction : MonoBehaviour
         }
         else if (heldObject != null && Input.GetKeyDown(throwKey))
         {
-            ThrowObject();
+            willBeThrown = true;
         }
     }
 
@@ -74,6 +83,7 @@ public class PlayerBlobInteraction : MonoBehaviour
         if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob))
         {
             blob.EndGrab(throwPosition);
+            blob.GetComponent<Rigidbody>().isKinematic = false;
             Vector3 forceToAdd = cameraObj.forward * throwForce + transform.up * throwUpwardForce + rb.velocity;
 
             // recoil 

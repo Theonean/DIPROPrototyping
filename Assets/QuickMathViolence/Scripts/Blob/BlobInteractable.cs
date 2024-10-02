@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class BlobInteractable : MonoBehaviour
@@ -7,9 +5,7 @@ public class BlobInteractable : MonoBehaviour
     Rigidbody rb;
     SphereCollider myCollider;
     private bool isGrabbed;
-    private bool isBeingThrown = false;
     private Transform holdPosition;
-    private Transform throwPosition;
     private BlobMathHandler blobMathHandler;
 
     public float throwDelay;
@@ -26,11 +22,7 @@ public class BlobInteractable : MonoBehaviour
     {
         if (isGrabbed)
         {
-            transform.position = holdPosition.position;
-        }
-        else if (isBeingThrown)
-        {
-            transform.position = throwPosition.position;
+            transform.localPosition = Vector3.zero;
         }
     }
 
@@ -39,9 +31,10 @@ public class BlobInteractable : MonoBehaviour
         rb.isKinematic = true;
         isGrabbed = true;
         holdPosition = _holdPosition;
+        transform.localPosition = Vector3.zero;
         transform.parent = _holdPosition;
 
-        myCollider.radius = myCollider.radius/2;
+        myCollider.radius = myCollider.radius / 2;
 
         blobMathHandler.isHeld = true;
     }
@@ -49,25 +42,18 @@ public class BlobInteractable : MonoBehaviour
     public void EndGrab(Transform _throwPosition)
     {
         isGrabbed = false;
-        isBeingThrown = true;
-        transform.position = _throwPosition.position;
-        throwPosition = _throwPosition;
         transform.parent = null;
-        rb.isKinematic = false;
+
+        // Optionally set position once at the moment of throw if needed:
+        transform.position = _throwPosition.position;
 
         Invoke(nameof(ScaleCollider), scaleDelay);
-        Invoke(nameof(EndThrow), throwDelay);
 
         blobMathHandler.isHeld = false;
     }
 
-    public void EndThrow()
-    {
-        isBeingThrown = false;
-    }
-
     private void ScaleCollider()
     {
-        myCollider.radius = myCollider.radius*2;
+        myCollider.radius = myCollider.radius * 2;
     }
 }

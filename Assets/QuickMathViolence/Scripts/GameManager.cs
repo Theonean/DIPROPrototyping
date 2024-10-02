@@ -2,12 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [Header("Win Condition")]
     public int targetValue;
     public int amountOfPairs;
+
+    public bool randomTargetAndPairs = false;
+    public int minValue = 5;
+    public int maxValue = 10;
+    public int minPairs = 5;
+    public int maxPairs = 10;
+    
 
     private int playerProgress;
 
@@ -23,6 +31,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         levelTimer = GetComponent<LevelTimer>();
+        // generate random values and pairs
+        if (randomTargetAndPairs)
+        {
+            targetValue = Random.Range(minValue, maxValue);
+            amountOfPairs = Random.Range(minPairs, maxPairs);
+        }
         // initiate UI
         uiManager.SetTarget(targetValue);
         uiManager.progressGoal = amountOfPairs;
@@ -94,6 +108,11 @@ public class GameManager : MonoBehaviour
         {
             levelTimer.SetActive(false);
         }
+    }
+
+    private void ResetGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
         
 }
