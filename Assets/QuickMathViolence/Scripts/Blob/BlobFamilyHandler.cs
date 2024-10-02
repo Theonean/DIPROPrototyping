@@ -13,6 +13,8 @@ public class BlobFamilyHandler : MonoBehaviour
     public GameObject blobPrefab;
     public float yOffset;
     public List<GameObject> childBlobs = new List<GameObject>();
+    public List<Color> stackColors;
+    public int colorIncrement;
 
     BoxCollider boxCollider;
     Rigidbody rb;
@@ -37,6 +39,8 @@ public class BlobFamilyHandler : MonoBehaviour
         {
             RemoveChildren(-childDifference);
         }
+
+        UpdateBlobColors();
     }
 
     private void AddChildren(int childCount, int difference)
@@ -69,6 +73,16 @@ public class BlobFamilyHandler : MonoBehaviour
         {
             IndividualBlobHandler indBlobHandler = childBlob.GetComponent<IndividualBlobHandler>();
             indBlobHandler.SetState(IndividualBlobHandler.Emotion.happy);
+        }
+        UpdateBlobColors();
+    }
+
+    private void UpdateBlobColors()
+    {
+        for (int i = 0; i < childBlobs.Count; i++)
+        {
+            int colorIndex = (i / colorIncrement) % stackColors.Count;
+            childBlobs[i].GetComponent<Renderer>().material.SetColor("_BaseColor", stackColors[colorIndex]);
         }
     }
 

@@ -89,7 +89,7 @@ public class PlayerBlobInteraction : MonoBehaviour
             heldObject = objectHit.transform.gameObject;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
                 blob.InitiateGrab(holdPosition);
-                Physics.IgnoreCollision(heldObject.GetComponentInChildren<Collider>(), GetComponentInChildren<Collider>(), true);
+                blob.IgnorePlayerCollision(GetComponentInChildren<Collider>(), true);
             }
         }
     }
@@ -109,7 +109,7 @@ public class PlayerBlobInteraction : MonoBehaviour
             {
                 blobRb.AddForce(forceToAdd, ForceMode.Impulse);
             }
-            StartCoroutine(ReenableCollision(heldObject));
+            StartCoroutine(ReenableCollision(blob));
         }
         heldObject = null;
     }
@@ -125,12 +125,12 @@ public class PlayerBlobInteraction : MonoBehaviour
         }
     }
 
-    IEnumerator ReenableCollision(GameObject blob)
+    IEnumerator ReenableCollision(BlobInteractable blob)
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(0.5f);
         if (blob != null)
         {
-            Physics.IgnoreCollision(blob.GetComponentInChildren<Collider>(), GetComponentInChildren<Collider>(), false);
+            blob.IgnorePlayerCollision(GetComponentInChildren<Collider>(), false);
         }
     }
 }
