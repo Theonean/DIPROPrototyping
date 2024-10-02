@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerCore : MonoBehaviour
 {
-    public float moveSpeed = 10f;
+    public float moveSpeed;
     public UnityEvent returnLegs;
     Camera m_Camera;
     Vector3 m_OriginalCameraPosition;
@@ -67,7 +67,7 @@ public class PlayerCore : MonoBehaviour
 
             if (m_damageEffectCoroutine != null)
                 StopCoroutine(m_damageEffectCoroutine);
-                
+
             m_damageEffectCoroutine = StartCoroutine(DamageEffect());
 
             healthSlider.value -= 1;
