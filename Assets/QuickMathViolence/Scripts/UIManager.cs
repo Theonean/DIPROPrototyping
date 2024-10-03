@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI target;
     public TextMeshProUGUI progress;
     public int progressGoal = 0;
+    public GameObject winScreen;
 
     [Header("Timer")]
     public LevelTimer levelTimer;
@@ -34,5 +35,10 @@ public class UIManager : MonoBehaviour
     private void UpdateTimer()
     {
         timerText.text = levelTimer.GetTime();
+    }
+
+    public void DisplayWin()
+    {
+        winScreen.SetActive(true);
     }
 }

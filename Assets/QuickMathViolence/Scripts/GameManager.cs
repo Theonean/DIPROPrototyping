@@ -123,6 +123,7 @@ public class GameManager : MonoBehaviour
         if (playerProgress >= amountOfPairs)
         {
             levelTimer.SetActive(false);
+            uiManager.DisplayWin();
         }
     }
 
