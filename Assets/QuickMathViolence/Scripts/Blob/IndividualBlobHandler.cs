@@ -40,7 +40,6 @@ public class IndividualBlobHandler : MonoBehaviour
 
     public void ScaleCollider(float endValue)
     {
-        Debug.Log("scaling");
         GetComponent<SphereCollider>().radius = endValue;
     }
 }

@@ -7,7 +7,7 @@ public class BlobFamilyHandler : MonoBehaviour
     public int value;
     public int targetValue;
     public GameManager gameManager;
-    private bool familyComplete = false;
+    public bool familyComplete = false;
     public bool initiateOnAwake = false;
 
     [Header("Blob Display")]
@@ -176,7 +176,7 @@ public class BlobFamilyHandler : MonoBehaviour
         if (value + otherBlobFamilyHandler.value <= targetValue)
         {
             value += otherBlobFamilyHandler.value;
-            otherBlobFamilyHandler.Destroy();
+            otherBlobFamilyHandler.DestroyFamily();
             UpdateFamilyDisplay();
 
             audioHandler.PlayAudioAction("Merge");
@@ -189,7 +189,8 @@ public class BlobFamilyHandler : MonoBehaviour
         if (value == targetValue)
         {
             CompleteFamily();
-            gameManager.AddProgress();
+            if (!gameManager.enableDiegeticTarget)
+                gameManager.AddProgress();
             audioHandler.PlayAudioAction("Family");
         }
     }
@@ -226,7 +227,7 @@ public class BlobFamilyHandler : MonoBehaviour
         hasSplit = false;
     }
 
-    public void Destroy()
+    public void DestroyFamily()
     {
         for (int i = 0; i < childBlobs.Count; i++)
         {

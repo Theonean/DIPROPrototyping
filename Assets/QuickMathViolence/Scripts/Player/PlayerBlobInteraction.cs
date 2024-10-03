@@ -63,7 +63,7 @@ public class PlayerBlobInteraction : MonoBehaviour
             {
                 GrabObject();
             }
-            else if (Input.GetKeyUp(splitKey))
+            else if (Input.GetKeyDown(splitKey))
             {
                 SplitObject();
             }

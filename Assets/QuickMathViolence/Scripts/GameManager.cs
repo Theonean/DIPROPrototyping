@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.SceneManagement;
@@ -15,6 +13,10 @@ public class GameManager : MonoBehaviour
     public int maxValue = 10;
     public int minPairs = 5;
     public int maxPairs = 10;
+
+    [Header("diegetic target")]
+    public bool enableDiegeticTarget = false;
+    public GameObject diegeticTarget;
     
 
     private int playerProgress;
@@ -42,6 +44,10 @@ public class GameManager : MonoBehaviour
         uiManager.SetTarget(targetValue);
         uiManager.progressGoal = amountOfPairs;
         uiManager.SetProgress(playerProgress);
+
+        diegeticTarget.SetActive(enableDiegeticTarget);
+        if (enableDiegeticTarget)
+            diegeticTarget.GetComponent<DiegeticTarget>().Initiate(targetValue, amountOfPairs);
 
         SpawnBlobs();
     }
@@ -112,6 +118,8 @@ public class GameManager : MonoBehaviour
     {
         playerProgress++;
         uiManager.SetProgress(playerProgress);
+        if (enableDiegeticTarget)
+            diegeticTarget.GetComponent<DiegeticTarget>().SetProgress(playerProgress);
         if (playerProgress >= amountOfPairs)
         {
             levelTimer.SetActive(false);
