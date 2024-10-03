@@ -6,38 +6,49 @@ public class BlobFamilyHandler : MonoBehaviour
     [Header("Value")]
     public int value;
     public int targetValue;
-    public GameManager gameManager;
     public bool familyComplete = false;
     public bool initiateOnAwake = false;
+    public GameManager gameManager;
+
+    [Header("Blob Physics")]
+    public float regularBlobMass;
+    public float topBlobMass;
+    public float mergeCooldown = 0.2f;
+    public float mergeTimer = 0f;
+
+    BoxCollider boxCollider;
+    Rigidbody rb;
 
     [Header("Blob Display")]
     public GameObject blobPrefab;
-    public float yOffset;
     public List<GameObject> childBlobs = new List<GameObject>();
+    public float yOffset;
+
+    [Header("Blob Colors & Other Effects")]
     public List<Color> stackColors;
     public Color winColor;
     public int colorIncrement;
     private ParticleSystem particles;
 
-    [Header("Blob Physics")]
-    public float regularBlobMass;
-    public float topBlobMass;
-
     private BlobAudioHandler audioHandler;
-
-    BoxCollider boxCollider;
-    Rigidbody rb;
-    public bool isHeld = false;
-    private bool hasSplit = false;
 
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
         audioHandler = GetComponentInChildren<BlobAudioHandler>();
         particles = GetComponentInChildren<ParticleSystem>();
+
         if (initiateOnAwake)
         {
             Initiate();
+        }
+    }
+
+    private void Update()
+    {
+        if (mergeTimer > 0f)
+        {
+            mergeTimer -= Time.deltaTime;
         }
     }
 
@@ -82,17 +93,20 @@ public class BlobFamilyHandler : MonoBehaviour
     {
         for (int i = 0; i < difference; i++)
         {
+            // Calculate new child position
             Vector3 childPos = childBlobs[childBlobs.Count - 1].transform.position + yOffset * childBlobs[childBlobs.Count - 1].transform.up;
             if (firstChild && i == 0)
                 childPos = Vector3.zero;
                 
-
             GameObject newChild = Instantiate(blobPrefab, childPos, Quaternion.identity);
             newChild.GetComponent<IndividualBlobHandler>().parentInteractable = GetComponent<BlobInteractable>();
+
+            // Find Rigidbody to attach joint to, if its the first child, connect to Family Rigidbody
             Rigidbody otherRb = childBlobs.Count > 0 ? childBlobs[childBlobs.Count - 1].GetComponent<Rigidbody>() : rb;
             if (otherRb == null)
                 otherRb = rb;
             newChild.GetComponent<Joint>().connectedBody = otherRb;
+
             childBlobs.Add(newChild);
         }
     }
@@ -122,6 +136,7 @@ public class BlobFamilyHandler : MonoBehaviour
 
     private void UpdateBlobWeights()
     {
+        // Make top blob a bit heavier for bendy action
         for (int i = 0; i < childBlobs.Count; i++)
         {
             if (childBlobs[i].GetComponent<Rigidbody>() != null)
@@ -144,35 +159,49 @@ public class BlobFamilyHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Blob") && !hasSplit && !isHeld)
+        if (collision.gameObject.CompareTag("Blob") && mergeTimer <= 0)
         {
+            // get parent Interactable RB if collider hit was on individual blob
             if (!collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rbOther))
                 rbOther = collision.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.GetComponent<Rigidbody>();
-            float velocitySelf = rb.velocity.magnitude;
-            float velocityOther = rbOther.velocity.magnitude;
+
             BlobFamilyHandler otherBlobFamilyHandler = collision.gameObject.GetComponent<BlobFamilyHandler>();
             if (otherBlobFamilyHandler == null)
                 otherBlobFamilyHandler = collision.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.GetComponent<BlobFamilyHandler>();
-            if (!otherBlobFamilyHandler.isHeld && !familyComplete && !otherBlobFamilyHandler.familyComplete)
+
+            // compare velocity to determine where the merge happens
+            float velocitySelf = rb.velocity.magnitude;
+            float velocityOther = rbOther.velocity.magnitude;
+
+            if (!familyComplete && otherBlobFamilyHandler.mergeTimer <= 0 && !otherBlobFamilyHandler.familyComplete)
             {
                 if (velocitySelf > velocityOther)
                 {
-                    Combine(otherBlobFamilyHandler);
+                    Merge(otherBlobFamilyHandler);
                 }
                 else if (velocitySelf == velocityOther && GetInstanceID() > rbOther.GetInstanceID())
                 {
-                    Combine(otherBlobFamilyHandler);
+                    Merge(otherBlobFamilyHandler);
                 }
             }
         }
+        // play impact sound when hitting ground
         else if (collision.gameObject.layer == 10)
         {
             audioHandler.PlayAudioAction("Impact");
         }
     }
 
-    private void Combine(BlobFamilyHandler otherBlobFamilyHandler)
+    private void Merge(BlobFamilyHandler otherBlobFamilyHandler)
     {
+        // Cancel merge when colliding with itself
+        if (GetInstanceID() == otherBlobFamilyHandler.GetInstanceID())
+        {
+            Debug.Log("self merge attempt");
+            return;
+        }
+
+        // Merge
         if (value + otherBlobFamilyHandler.value <= targetValue)
         {
             value += otherBlobFamilyHandler.value;
@@ -182,15 +211,21 @@ public class BlobFamilyHandler : MonoBehaviour
             audioHandler.PlayAudioAction("Merge");
             particles.Play();
         }
+        // Play Impact sound when merge fails
         else
         {
             audioHandler.PlayAudioAction("Impact");
         }
+
+        // Complete Family when target is reached
         if (value == targetValue)
         {
             CompleteFamily();
+
+            // If diegetic target not active, add progress directly
             if (!gameManager.enableDiegeticTarget)
                 gameManager.AddProgress();
+
             audioHandler.PlayAudioAction("Family");
         }
     }
@@ -202,29 +237,24 @@ public class BlobFamilyHandler : MonoBehaviour
             int newValue = value / 2;
             int otherValue = value - newValue;
 
-            GameObject newBlob = Instantiate(gameObject, transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
-            if (newBlob.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler) && !otherBlobFamilyHandler.familyComplete)
+            // Create new Family with otherValue
+            GameObject newFamily = Instantiate(gameObject, transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
+
+            if (newFamily.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler))
             {
                 otherBlobFamilyHandler.value = otherValue;
-                otherBlobFamilyHandler.hasSplit = true;
-                otherBlobFamilyHandler.Invoke(nameof(EndHasSplit), 1f);
                 otherBlobFamilyHandler.Initiate();
+
+                // Refresh merge timer to avoid instant re-merge
+                mergeTimer = mergeCooldown;
+                otherBlobFamilyHandler.mergeTimer = mergeCooldown;
 
                 value = newValue;
                 UpdateFamilyDisplay();
 
-                hasSplit = true;
-                Invoke(nameof(EndHasSplit), 1f);
-
                 audioHandler.PlayAudioAction("Split");
             }
         }
-    }
-
-
-    public void EndHasSplit()
-    {
-        hasSplit = false;
     }
 
     public void DestroyFamily()

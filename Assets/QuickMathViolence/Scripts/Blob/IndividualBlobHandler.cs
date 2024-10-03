@@ -7,7 +7,6 @@ public class IndividualBlobHandler : MonoBehaviour
     public Renderer face;
     public Material happy;
     public Material sad;
-    
 
     public BlobInteractable parentInteractable;
 

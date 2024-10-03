@@ -93,10 +93,10 @@ public class PlayerBlobInteraction : MonoBehaviour
     {
         if (Physics.SphereCast(cameraObj.position,sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
-            if (objectHit.transform.gameObject.TryGetComponent<BlobInteractable>(out BlobInteractable blobInt))
+            if (objectHit.transform.TryGetComponent<BlobInteractable>(out BlobInteractable blobInt))
                 heldObject = blobInt;
             else
-                heldObject = objectHit.transform.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable;
+                heldObject = objectHit.transform.GetComponent<IndividualBlobHandler>().parentInteractable;
             if (heldObject.TryGetComponent<BlobInteractable>(out BlobInteractable blob)) {
                 blob.InitiateGrab(holdPosition);
                 blob.IgnorePlayerCollision(GetComponentInChildren<Collider>(), true);
