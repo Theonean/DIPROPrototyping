@@ -6,21 +6,32 @@ using UnityEngine.UI;
 
 public class FrankenGameManager : MonoBehaviour
 {
-    public float zoneRadius = 10f;
-    public float zoneWaitTime = 5f;
-    float m_zoneTimer = 0f;
-    public GameObject MapBoundaries;
-    public PlayerDetector playerDetector;
+    enum GameState
+    {
+        BETWEENWAVES,
+        WAVEONGOING,
+        ENDOFWAVE, //Wait until all enemies are cleared
+        GAMEOVER
+    }
 
-    public TextMeshProUGUI ScoreText;
-    public TextMeshProUGUI BestScoreText;
+    public float waveTime = 5f;
+    float m_WaveTimer = 0f;
+    public GameObject controlZone;
+    public GameObject MapBoundaries;
+    public TextMeshProUGUI TimeToNextWaveText;
+    public TextMeshProUGUI TimeNeededToSurviveText;
+    public Slider gameProgressSlider;
+    int m_MaxWaves = 5;
+    int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
+    public GameObject YouWonUIOverlay;
+    public EnemySpawner[] spawners = new EnemySpawner[4];
+    int m_SpawnersNoEnemyLeftCount = 0;
+    private GameState m_GameState = GameState.BETWEENWAVES;
     Vector3[] m_BoundaryPositions;
-    bool m_PlayerInZone = false;
-    float m_Points = 0f;
-    static float k_BestScore = 0f;
-    float m_ContinuousTimeInZone = 0f;
-    bool gameActive = true;
+    float m_TimeBetweenWaves = 3f;
+    float m_TimeBetweenWavesLeft = 0f;
+    float m_TotalGameTime = 0f;
 
     private void Start()
     {
@@ -29,56 +40,94 @@ public class FrankenGameManager : MonoBehaviour
         m_BoundaryPositions[0] = MapBoundaries.transform.GetChild(0).position;
         m_BoundaryPositions[1] = MapBoundaries.transform.GetChild(1).position;
 
-        if (playerDetector != null)
-        {
-            playerDetector.OnPlayerDetected.AddListener(() =>
-            {
-                m_PlayerInZone = true;
-                m_ContinuousTimeInZone = 0f;
-            });
-
-            playerDetector.OnPlayerLost.AddListener(() =>
-            {
-                m_PlayerInZone = false;
-            });
-        }
-
-        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
-        playerCore.PlayerDeath.AddListener(() => PlayerDied());
-
         //Instantly move zone at start of game
-        m_zoneTimer = zoneWaitTime;
+        m_WaveTimer = waveTime;
+
+        m_TimeBetweenWavesLeft = m_TimeBetweenWaves;
 
         //Prepare the UI Overlay so it's not dependent on editor state
         YouDiedUIOverlay.SetActive(false);
         YouDiedUIOverlay.transform.localScale = Vector3.zero;
+
+        gameProgressSlider.maxValue = m_MaxWaves;
+        gameProgressSlider.value = 0;
+
+        //Connect the spawners all enemy died event to the variable
+        foreach (EnemySpawner spawner in spawners)
+        {
+            spawner.AllEnemiesDead.AddListener(() =>
+            {
+                m_SpawnersNoEnemyLeftCount++;
+                if (m_SpawnersNoEnemyLeftCount == spawners.Length)
+                {
+                    m_GameState = GameState.BETWEENWAVES;
+                    m_SpawnersNoEnemyLeftCount = 0;
+
+                    MoveZone();
+                    StartCoroutine(ScaleUpDownUI(gameProgressSlider.gameObject, 1.2f));
+
+                    m_wavesSurvived++;
+                    gameProgressSlider.value = m_wavesSurvived;
+
+                    if (m_wavesSurvived >= m_MaxWaves)
+                    {
+                        TimeToNextWaveText.enabled = false;
+                        PlayerWon();
+                    }
+                    else
+                    {
+                        TimeToNextWaveText.enabled = true;
+                    }
+                }
+            });
+        }
+
+        //Move zone to a random spot on the map at the start
+        MoveZone();
     }
 
     private void Update()
     {
-        m_zoneTimer += Time.deltaTime;
-        if (m_zoneTimer >= zoneWaitTime)
+        //Count how long player needed to survive
+        if (m_GameState != GameState.GAMEOVER)
+            m_TotalGameTime += Time.deltaTime;
+
+        //Countdown to next wave and display it on the UI
+        if (m_GameState == GameState.BETWEENWAVES)
         {
-            m_zoneTimer = 0f;
-            MoveZone();
-        }
+            //Reduce time between waves and put it on TimeToNextWaveText
+            m_TimeBetweenWavesLeft -= Time.deltaTime;
+            TimeToNextWaveText.text = "Next wave in: " + m_TimeBetweenWavesLeft.ToString("0.00");
 
-        if (m_PlayerInZone)
-        {
-            m_ContinuousTimeInZone += Time.deltaTime;
-
-            m_Points += Time.deltaTime * Mathf.Sqrt(m_ContinuousTimeInZone);
-            ScoreText.text = "Score: " + m_Points.ToString("F2");
-
-            //This is hacky, but it works for now
-            if (m_Points > k_BestScore)
+            //If time between waves is over, start a new wave
+            if (m_TimeBetweenWavesLeft <= 0f)
             {
-                k_BestScore = m_Points;
-                BestScoreText.text = "Best Score: " + k_BestScore.ToString("F2");
+                TimeToNextWaveText.enabled = false;
+                m_TimeBetweenWavesLeft = m_TimeBetweenWaves;
+                m_GameState = GameState.WAVEONGOING;
+                foreach (EnemySpawner spawner in spawners)
+                {
+                    spawner.StartWave();
+                }
+            }
+        }
+        //Stop spawners from spawning enemies after wave is done
+        else if (m_GameState == GameState.WAVEONGOING)
+        {
+            m_WaveTimer -= Time.deltaTime;
+            if (m_WaveTimer <= 0f)
+            {
+                m_WaveTimer = waveTime;
+                m_GameState = GameState.ENDOFWAVE;
+                foreach (EnemySpawner spawner in spawners)
+                {
+                    spawner.StopWave();
+                }
             }
         }
 
-        if (!gameActive)
+
+        if (m_GameState == GameState.GAMEOVER)
         {
             if (Input.GetKeyDown(KeyCode.R))
             {
@@ -96,26 +145,68 @@ public class FrankenGameManager : MonoBehaviour
             Random.Range(m_BoundaryPositions[0].y, m_BoundaryPositions[1].y),
             Random.Range(m_BoundaryPositions[0].z, m_BoundaryPositions[1].z)
         );
-        playerDetector.transform.position = newPosition;
+
+        controlZone.transform.position = newPosition;
     }
 
     void PlayerDied()
     {
-        m_Points = 0f;
         YouDiedUIOverlay.SetActive(true);
-        gameActive = false;
+        m_GameState = GameState.GAMEOVER;
+        TimeNeededToSurviveText.text = "You survived for " + m_TotalGameTime.ToString("0.0") + " seconds!";
 
-        StartCoroutine(ShowYouDiedUI());
+        StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
     }
 
-    IEnumerator ShowYouDiedUI()
+    void PlayerWon()
+    {
+        YouWonUIOverlay.SetActive(true);
+        m_GameState = GameState.GAMEOVER;
+        StartCoroutine(ScaleUpUI(YouWonUIOverlay));
+    }
+
+    IEnumerator ScaleUpUI(GameObject uiOverlay)
     {
         float time = 0f;
         while (time < 1f)
         {
             time += Time.deltaTime;
-            YouDiedUIOverlay.transform.localScale = Vector3.one * time;
+            uiOverlay.transform.localScale = Vector3.one * time;
             yield return null;
         }
     }
+    
+    // Scale an element up by a certain percentage amount (smoothly with AnimationCurve) and down again.
+    // The target scale after scaling up should be current scale * scaleMultiplier.
+    IEnumerator ScaleUpDownUI(GameObject uiOverlay, float scaleMultiplier)
+    {
+        // Duration for a complete up and down cycle.
+        float duration = 2.0f;
+        // The original scale of the UI element.
+        Vector3 originalScale = uiOverlay.transform.localScale;
+        // The target scale after scaling up.
+        Vector3 targetScale = originalScale * scaleMultiplier;
+
+        // You can customize this AnimationCurve as needed.
+        AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+        // Track elapsed time.
+        float elapsedTime = 0f;
+
+        // Loop for the duration of the scale animation.
+        while (elapsedTime < duration)
+        {
+            // Increase elapsed time.
+            elapsedTime += Time.deltaTime;
+            // Use Mathf.PingPong to smoothly oscillate between 0 and 1.
+            float curveTime = Mathf.PingPong(elapsedTime / (duration / 2), 1);
+            // Evaluate the curve and interpolate between original and target scales.
+            uiOverlay.transform.localScale = Vector3.Lerp(originalScale, targetScale, curve.Evaluate(curveTime));
+            yield return null; // Wait for the next frame.
+        }
+
+        // Ensure the final scale is exactly the original scale after the animation.
+        uiOverlay.transform.localScale = originalScale;
+    }
+    
 }

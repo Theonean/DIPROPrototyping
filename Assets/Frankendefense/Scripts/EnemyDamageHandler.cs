@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EnemyDamageHandler : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class EnemyDamageHandler : MonoBehaviour
     bool m_IsInLeg = false;
     LegHandler m_Leg;
     public ParticleSystem m_Explosion;
+    public UnityEvent enemyDestroyed;
 
     //When collision happens, check if object has the right tag and if it does, destroy this object
     void OnTriggerEnter(Collider other)
@@ -47,8 +49,11 @@ public class EnemyDamageHandler : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    public void OnDestroy()
     {
+        //Invoke the enemyDestroyed event
+        enemyDestroyed.Invoke();
+        
         //Instantiate explosion particle system and destroy after 4 seconds
         m_Explosion.Play();
         Destroy(m_Explosion, 4f);
