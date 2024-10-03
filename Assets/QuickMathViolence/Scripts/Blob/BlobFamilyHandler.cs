@@ -15,6 +15,7 @@ public class BlobFamilyHandler : MonoBehaviour
     public float yOffset;
     public List<GameObject> childBlobs = new List<GameObject>();
     public List<Color> stackColors;
+    public Color winColor;
     public int colorIncrement;
     private ParticleSystem particles;
 
@@ -115,6 +116,7 @@ public class BlobFamilyHandler : MonoBehaviour
         {
             IndividualBlobHandler indBlobHandler = childBlob.GetComponent<IndividualBlobHandler>();
             indBlobHandler.SetState(IndividualBlobHandler.Emotion.happy);
+            indBlobHandler.GetComponent<Renderer>().material.SetColor("_BaseColor", winColor);
         }
     }
 
