@@ -16,6 +16,7 @@ public class BlobFamilyHandler : MonoBehaviour
     public List<GameObject> childBlobs = new List<GameObject>();
     public List<Color> stackColors;
     public int colorIncrement;
+    private ParticleSystem particles;
 
     [Header("Blob Physics")]
     public float regularBlobMass;
@@ -32,6 +33,7 @@ public class BlobFamilyHandler : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         audioHandler = GetComponentInChildren<BlobAudioHandler>();
+        particles = GetComponentInChildren<ParticleSystem>();
         if (initiateOnAwake)
         {
             Initiate();
@@ -176,6 +178,7 @@ public class BlobFamilyHandler : MonoBehaviour
             UpdateFamilyDisplay();
 
             audioHandler.PlayAudioAction("Merge");
+            particles.Play();
         }
         else
         {
