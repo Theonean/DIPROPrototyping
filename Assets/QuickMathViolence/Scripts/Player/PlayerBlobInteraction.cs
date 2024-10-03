@@ -25,6 +25,7 @@ public class PlayerBlobInteraction : MonoBehaviour
     public KeyCode throwKey = KeyCode.Mouse0;
     public float throwRecoil;
     private bool willThrow = false;
+    private bool bigThrow = false;
 
     [Header("Split")]
     public KeyCode splitKey = KeyCode.Mouse1;
@@ -32,9 +33,12 @@ public class PlayerBlobInteraction : MonoBehaviour
     private BlobInteractable heldObject;
     private Rigidbody rb;
 
+    BlobAudioHandler blobAudioHandler;
+
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        blobAudioHandler = GetComponentInChildren<BlobAudioHandler>();
     }
 
     private void Update()
@@ -72,12 +76,14 @@ public class PlayerBlobInteraction : MonoBehaviour
                 willThrow = true;
                 ejectForce = throwForce;
                 ejectUpwardForce = throwUpwardForce;
+                bigThrow = true;
             }
             else if (Input.GetKeyDown(splitKey))
             {
                 willThrow = true;
                 ejectForce = dropForce;
                 ejectUpwardForce = dropUpwardForce;
+                bigThrow = false;
             }
             
         }
@@ -100,7 +106,7 @@ public class PlayerBlobInteraction : MonoBehaviour
 
     private void ThrowObject()
     {
-        heldObject.EndGrab(throwPosition);
+        heldObject.EndGrab(throwPosition, bigThrow);
         heldObject.GetComponent<Rigidbody>().isKinematic = false;
         Vector3 forceToAdd = cameraObj.forward * ejectForce + transform.up * ejectUpwardForce + rb.velocity;
 

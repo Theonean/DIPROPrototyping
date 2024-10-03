@@ -9,6 +9,9 @@ public class LevelTimer : MonoBehaviour
     public float seconds = 0f;
     private bool timerActive = false;
 
+    public PlayerMovement pm;
+    private bool gameStarted = false;
+
     private void Update()
     {
         if (timerActive)
@@ -17,6 +20,12 @@ public class LevelTimer : MonoBehaviour
             minutes = Mathf.FloorToInt(levelTime/60);
             seconds = Mathf.FloorToInt(levelTime%60);
         }
+        if ((pm.horizontalInput > 0 || pm.verticalInput > 0) && !gameStarted)
+        {
+            gameStarted = true;
+            SetActive(true);
+        }
+
     }
 
     public void SetActive(bool toggle)
