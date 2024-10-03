@@ -77,9 +77,16 @@ public class EnemySpawner : MonoBehaviour
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
     }
 
-    public void StartWave()
+    public void StartWave(int waveNumber)
     {
         m_SpawnState = SpawnState.SPAWNING;
+
+        //tighten randomSpawnRateRange for each wave and lower it
+        randomSpawnRateRange.x = randomSpawnRateRange.x - (waveNumber * 0.1f);
+        randomSpawnRateRange.y = randomSpawnRateRange.y - (waveNumber * 0.4f);
+
+
+        
     }
 
     public void StopWave()

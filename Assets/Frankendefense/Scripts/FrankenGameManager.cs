@@ -21,6 +21,7 @@ public class FrankenGameManager : MonoBehaviour
     public TextMeshProUGUI TimeToNextWaveText;
     public TextMeshProUGUI TimeNeededToSurviveText;
     public Slider gameProgressSlider;
+    public Slider waveProgressSlider;
     int m_MaxWaves = 5;
     int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
@@ -51,6 +52,13 @@ public class FrankenGameManager : MonoBehaviour
 
         gameProgressSlider.maxValue = m_MaxWaves;
         gameProgressSlider.value = 0;
+
+        waveProgressSlider.maxValue = waveTime;
+        waveProgressSlider.value = waveTime;
+
+        //Connect player died to healthmanager died event on control zone
+        HealthManager healthManager = controlZone.GetComponent<HealthManager>();
+        healthManager.died.AddListener(() => PlayerDied());
 
         //Connect the spawners all enemy died event to the variable
         foreach (EnemySpawner spawner in spawners)
@@ -107,7 +115,7 @@ public class FrankenGameManager : MonoBehaviour
                 m_GameState = GameState.WAVEONGOING;
                 foreach (EnemySpawner spawner in spawners)
                 {
-                    spawner.StartWave();
+                    spawner.StartWave(m_wavesSurvived);
                 }
             }
         }
@@ -115,6 +123,7 @@ public class FrankenGameManager : MonoBehaviour
         else if (m_GameState == GameState.WAVEONGOING)
         {
             m_WaveTimer -= Time.deltaTime;
+            waveProgressSlider.value = m_WaveTimer;
             if (m_WaveTimer <= 0f)
             {
                 m_WaveTimer = waveTime;
@@ -153,6 +162,18 @@ public class FrankenGameManager : MonoBehaviour
     {
         YouDiedUIOverlay.SetActive(true);
         m_GameState = GameState.GAMEOVER;
+
+        //Get all Follow player scripts and disable them
+        FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
+        foreach (FollowPlayer followPlayer in followPlayers)
+        {
+            followPlayer.enabled = false;
+        }
+
+        //Disable playercore
+        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
+        playerCore.enabled = false;
+
         TimeNeededToSurviveText.text = "You survived for " + m_TotalGameTime.ToString("0.0") + " seconds!";
 
         StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
@@ -162,6 +183,18 @@ public class FrankenGameManager : MonoBehaviour
     {
         YouWonUIOverlay.SetActive(true);
         m_GameState = GameState.GAMEOVER;
+
+        //Get all Follow player scripts and disable them
+        FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
+        foreach (FollowPlayer followPlayer in followPlayers)
+        {
+            followPlayer.enabled = false;
+        }
+
+        //Disable playercore
+        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
+        playerCore.enabled = false;
+
         StartCoroutine(ScaleUpUI(YouWonUIOverlay));
     }
 
@@ -175,7 +208,7 @@ public class FrankenGameManager : MonoBehaviour
             yield return null;
         }
     }
-    
+
     // Scale an element up by a certain percentage amount (smoothly with AnimationCurve) and down again.
     // The target scale after scaling up should be current scale * scaleMultiplier.
     IEnumerator ScaleUpDownUI(GameObject uiOverlay, float scaleMultiplier)
@@ -208,5 +241,5 @@ public class FrankenGameManager : MonoBehaviour
         // Ensure the final scale is exactly the original scale after the animation.
         uiOverlay.transform.localScale = originalScale;
     }
-    
+
 }

@@ -25,6 +25,23 @@ public class FollowPlayer : MonoBehaviour
     void Update()
     {
         transform.LookAt(m_ControlZone.transform);
-        transform.position = Vector3.MoveTowards(transform.position, m_ControlZone.transform.position, m_MoveSpeed * Time.deltaTime);
+
+        //If enemy is seen by camera.main move normal speed otherwise move 5x speed
+        if (IsVisibleToCamera())
+        {
+            transform.position += transform.forward * m_MoveSpeed * Time.deltaTime;
+        }
+        else
+        {
+            transform.position += transform.forward * (m_MoveSpeed * 5f) * Time.deltaTime;
+        }
+
+
+        //transform.position = Vector3.MoveTowards(transform.position, m_ControlZone.transform.position, m_MoveSpeed * Time.deltaTime);
+    }
+    bool IsVisibleToCamera()
+    {
+        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
+        return GeometryUtility.TestPlanesAABB(planes, GetComponentInChildren<Collider>().bounds);
     }
 }
