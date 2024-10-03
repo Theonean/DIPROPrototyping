@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class IndividualBlobHandler : MonoBehaviour
 {
@@ -37,5 +36,11 @@ public class IndividualBlobHandler : MonoBehaviour
                 face.material = sad;
                 break;
         }
+    }
+
+    public void ScaleCollider(float endValue)
+    {
+        Debug.Log("scaling");
+        GetComponent<SphereCollider>().radius = endValue;
     }
 }
