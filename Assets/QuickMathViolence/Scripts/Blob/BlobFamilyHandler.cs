@@ -21,6 +21,8 @@ public class BlobFamilyHandler : MonoBehaviour
     public float regularBlobMass;
     public float topBlobMass;
 
+    private BlobAudioHandler audioHandler;
+
     BoxCollider boxCollider;
     Rigidbody rb;
     public bool isHeld = false;
@@ -29,6 +31,7 @@ public class BlobFamilyHandler : MonoBehaviour
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioHandler = GetComponentInChildren<BlobAudioHandler>();
         if (initiateOnAwake)
         {
             Initiate();
@@ -111,7 +114,6 @@ public class BlobFamilyHandler : MonoBehaviour
             IndividualBlobHandler indBlobHandler = childBlob.GetComponent<IndividualBlobHandler>();
             indBlobHandler.SetState(IndividualBlobHandler.Emotion.happy);
         }
-        UpdateBlobColors();
     }
 
     private void UpdateBlobWeights()
@@ -138,8 +140,10 @@ public class BlobFamilyHandler : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Blob") && collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rbOther) && !hasSplit && !isHeld)
+        if (collision.gameObject.CompareTag("Blob") && !hasSplit && !isHeld)
         {
+            if (!collision.gameObject.TryGetComponent<Rigidbody>(out Rigidbody rbOther))
+                rbOther = collision.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.GetComponent<Rigidbody>();
             float velocitySelf = rb.velocity.magnitude;
             float velocityOther = rbOther.velocity.magnitude;
             BlobFamilyHandler otherBlobFamilyHandler = collision.gameObject.GetComponent<BlobFamilyHandler>();
@@ -157,6 +161,10 @@ public class BlobFamilyHandler : MonoBehaviour
                 }
             }
         }
+        else if (collision.gameObject.layer == 10)
+        {
+            audioHandler.PlayAudioAction("Impact");
+        }
     }
 
     private void Combine(BlobFamilyHandler otherBlobFamilyHandler)
@@ -167,11 +175,17 @@ public class BlobFamilyHandler : MonoBehaviour
             otherBlobFamilyHandler.Destroy();
             UpdateFamilyDisplay();
 
-            if (value == targetValue)
-            {
-                CompleteFamily();
-                gameManager.AddProgress();
-            }
+            audioHandler.PlayAudioAction("Merge");
+        }
+        else
+        {
+            audioHandler.PlayAudioAction("Impact");
+        }
+        if (value == targetValue)
+        {
+            CompleteFamily();
+            gameManager.AddProgress();
+            audioHandler.PlayAudioAction("Family");
         }
     }
 
@@ -183,7 +197,7 @@ public class BlobFamilyHandler : MonoBehaviour
             int otherValue = value - newValue;
 
             GameObject newBlob = Instantiate(gameObject, transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
-            if (newBlob.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler))
+            if (newBlob.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler) && !otherBlobFamilyHandler.familyComplete)
             {
                 otherBlobFamilyHandler.value = otherValue;
                 otherBlobFamilyHandler.hasSplit = true;
@@ -195,6 +209,8 @@ public class BlobFamilyHandler : MonoBehaviour
 
                 hasSplit = true;
                 Invoke(nameof(EndHasSplit), 1f);
+
+                audioHandler.PlayAudioAction("Split");
             }
         }
     }

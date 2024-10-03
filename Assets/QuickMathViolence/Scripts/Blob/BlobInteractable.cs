@@ -14,9 +14,12 @@ public class BlobInteractable : MonoBehaviour
     public Vector3 groundedCOM = Vector3.zero;
     public Vector3 ariborneCOM = Vector3.zero;
 
+    private BlobAudioHandler audioHandler;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        audioHandler = GetComponentInChildren<BlobAudioHandler>();
         //myCollider = GetComponent<SphereCollider>();
         blobFamilyHandler = GetComponent<BlobFamilyHandler>();
         rb.centerOfMass = groundedCOM;
@@ -52,9 +55,11 @@ public class BlobInteractable : MonoBehaviour
         //myCollider.radius = myCollider.radius / 2;
 
         blobFamilyHandler.isHeld = true;
+
+        audioHandler.PlayAudioAction("Grab");
     }
 
-    public void EndGrab(Transform _throwPosition)
+    public void EndGrab(Transform _throwPosition, bool bigThrow)
     {
         isGrabbed = false;
         transform.parent = null;
@@ -69,6 +74,11 @@ public class BlobInteractable : MonoBehaviour
         Invoke(nameof(ScaleCollider), scaleDelay);
 
         blobFamilyHandler.isHeld = false;
+
+        if (bigThrow)
+            audioHandler.PlayAudioAction("Throw Long");
+        else
+            audioHandler.PlayAudioAction("Throw Short");
     }
 
     private void ScaleCollider()

@@ -27,6 +27,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Timer")]
     private LevelTimer levelTimer;
+    
 
     private void Start()
     {
@@ -43,6 +44,14 @@ public class GameManager : MonoBehaviour
         uiManager.SetProgress(playerProgress);
 
         SpawnBlobs();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ResetGame();
+        }
     }
 
     private void SpawnBlobs()
@@ -62,7 +71,6 @@ public class GameManager : MonoBehaviour
 
             CreateBlob(triangulation, vertexIndex2, blobValue2);
         }
-        levelTimer.SetActive(true);
     }
 
     private void CreateBlob(NavMeshTriangulation triangulation, int vertexIndex, int value)
