@@ -47,20 +47,23 @@ public class BlobInteractable : MonoBehaviour
 
     private void Update()
     {
-        if (state == BlobInteractableState.Grabbed)
+        switch(state)
         {
-            transform.localPosition = Vector3.zero;
-        }
-        else if (state == BlobInteractableState.None)
-        {
-            if (currentCOMY > groundedCOMY)
-            {
-                currentCOMY -= 0.1f;
-                Debug.Log("tweening COM");
-            }
-                
-            
-            rb.centerOfMass = new(0, currentCOMY, 0);
+            case BlobInteractableState.None:
+                if (currentCOMY > groundedCOMY)
+                {
+                    currentCOMY -= 0.1f;
+                }
+                rb.centerOfMass = new(0, currentCOMY, 0);
+                break;
+
+            case BlobInteractableState.Grabbed:
+                transform.localPosition = Vector3.zero;
+                rb.centerOfMass = new(0, airborneCOMY, 0); ;
+                break;
+
+            case BlobInteractableState.Tweening:
+                break;
         }
     }
 
@@ -104,6 +107,7 @@ public class BlobInteractable : MonoBehaviour
         // set COM
         state = BlobInteractableState.Thrown;
         rb.centerOfMass = new(0, airborneCOMY, 0); ;
+        currentCOMY = airborneCOMY;
 
         // scale collider
         foreach (var child in GetComponent<BlobFamilyHandler>().childBlobs)

@@ -125,11 +125,11 @@ public class PlayerBlobInteraction : MonoBehaviour
     {
         if (Physics.SphereCast(cameraObj.position, sphereCastRadius, cameraObj.forward, out objectHit, grabRange, grabbable))
         {
-            if (objectHit.transform.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blobFamily))
+            if (objectHit.transform.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blobFamily) && !blobFamily.familyComplete)
             {
                 blobFamily.Split();
             }
-            else if (objectHit.transform.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blob))
+            else if (objectHit.transform.gameObject.GetComponent<IndividualBlobHandler>().parentInteractable.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler blob) && !blob.familyComplete)
             {
                 blob.Split();
             }

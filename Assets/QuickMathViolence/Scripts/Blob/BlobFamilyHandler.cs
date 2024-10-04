@@ -177,9 +177,10 @@ public class BlobFamilyHandler : MonoBehaviour
             {
                 if (velocitySelf > velocityOther)
                 {
+                    //Debug.Log(rb.gameObject.name + " " + velocitySelf + rbOther.gameObject.name + " " + velocityOther + " " + otherBlobFamilyHandler.name);
                     Merge(otherBlobFamilyHandler);
                 }
-                else if (velocitySelf == velocityOther && GetInstanceID() > rbOther.GetInstanceID())
+                else if (velocitySelf == velocityOther && rb.GetInstanceID() > rbOther.GetInstanceID() && rb.GetInstanceID() != rbOther.GetInstanceID())
                 {
                     Merge(otherBlobFamilyHandler);
                 }
@@ -200,6 +201,14 @@ public class BlobFamilyHandler : MonoBehaviour
             Debug.Log("self merge attempt");
             return;
         }
+
+        if (otherBlobFamilyHandler.GetComponent<BlobInteractable>().state == BlobInteractable.BlobInteractableState.Tweening)
+        {
+            return;
+        }
+
+        mergeTimer = mergeCooldown/2;
+        otherBlobFamilyHandler.mergeTimer = mergeCooldown/2;
 
         // Merge
         if (value + otherBlobFamilyHandler.value <= targetValue)
