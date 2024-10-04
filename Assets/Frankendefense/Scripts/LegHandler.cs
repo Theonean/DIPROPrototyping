@@ -137,7 +137,7 @@ public class LegHandler : MonoBehaviour
             case LegState.REGROWING:
                 //Regrow the leg to original scale, when there change to attached state
                 transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, 1f * Time.deltaTime);
-                if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.01f)
+                if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
                     //Flash leg white for 0.2 sec after fully regrown
@@ -242,7 +242,7 @@ public class LegHandler : MonoBehaviour
         float elapsedTime = 0f;
         Material material = GetComponent<MeshRenderer>().material;
         Color startColor = Color.white;
-        Color endColor = new Color(1f, 1f, 1f, 0f);
+        Color endColor = material.color;
         Color currentColor = startColor;
         while (elapsedTime < flashTime)
         {
