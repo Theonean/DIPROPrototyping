@@ -2,6 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum LegState
+{
+    ATTACHED, // The leg is attached to the player.
+    CLICKED, // The leg is clicked on and is waiting for next click to fly away.
+    FLYING, // The leg is flying away.
+    DETACHED, // The leg is detached from the player and lying on the floor (could be clicked again for attack).
+    RETURNING, // The leg is returning to the player.
+    REGROWING
+}
+
 public class LegHandler : MonoBehaviour
 {
     /*
@@ -10,17 +20,7 @@ public class LegHandler : MonoBehaviour
         maybe add rightclick on leg when the leg is on floor to make a leg manually return to player
     */
 
-    enum LegState
-    {
-        ATTACHED, // The leg is attached to the player.
-        CLICKED, // The leg is clicked on and is waiting for next click to fly away.
-        FLYING, // The leg is flying away.
-        DETACHED, // The leg is detached from the player and lying on the floor (could be clicked again for attack).
-        RETURNING, // The leg is returning to the player.
-        REGROWING
-    }
-
-    LegState m_LegState = LegState.ATTACHED;
+    public LegState m_LegState = LegState.ATTACHED;
     private bool isSpinning = false; //If the leg is currently spinning (one form of attack). to see all forms of attack, go to public function isAttacking
     Vector3 m_DistanceToCore; //local position the leg spawned in, used for returning the leg to the player.
     Quaternion m_InitialRotation; //local rotation the leg spawned in, used for returning the leg to the player.
@@ -136,11 +136,15 @@ public class LegHandler : MonoBehaviour
                 break;
             case LegState.REGROWING:
                 //Regrow the leg to original scale, when there change to attached state
-                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, 0.25f * Time.deltaTime);
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, 1f * Time.deltaTime);
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.01f)
                 {
                     m_LegState = LegState.ATTACHED;
+                    //Flash leg white for 0.2 sec after fully regrown
+                    StartCoroutine(FlashLegWhite());
                 }
+
+
                 break;
 
         }
@@ -231,6 +235,26 @@ public class LegHandler : MonoBehaviour
                 transform.localScale = Vector3.zero;
                 break;
         }
+    }
+    private IEnumerator FlashLegWhite()
+    {
+        float flashTime = 0.2f;
+        float elapsedTime = 0f;
+        Material material = GetComponent<MeshRenderer>().material;
+        Color startColor = Color.white;
+        Color endColor = new Color(1f, 1f, 1f, 0f);
+        Color currentColor = startColor;
+        while (elapsedTime < flashTime)
+        {
+            float t = elapsedTime / flashTime;
+            currentColor = Color.Lerp(startColor, endColor, t);
+            material.color = currentColor;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        material.color = endColor;
+        transform.localScale = m_LegOriginalScale;
+        GetComponent<MeshRenderer>().material.color = Color.white;
     }
 
     private IEnumerator ExplosionFadeOut(GameObject sphere)

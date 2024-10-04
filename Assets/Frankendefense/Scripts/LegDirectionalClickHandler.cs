@@ -31,27 +31,49 @@ public class LegDirectionalClickHandler : MonoBehaviour
             direction.Normalize();
 
             Debug.Log(direction);
+            //Select random number between one and including four to determine leg to shoot
+            //if the leg is in attached state shoot it, otherwise select another leg
+            int selectedLeg;
+            GameObject legToShoot;
+            bool validLegFound = false;
+              int attempts = 0;
+              int maxAttempts = 4;
+              while (!validLegFound && attempts < maxAttempts)
+              {
+                  selectedLeg = attempts + 1;
+                  switch (selectedLeg)
+                  {
+                      case 1:
+                          legToShoot = leg1;
+                          break;
+                      case 2:
+                          legToShoot = leg2;
+                          break;
+                      case 3:
+                          legToShoot = leg3;
+                          break;
+                      case 4:
+                          legToShoot = leg4;
+                          break;
+                      default:
+                          legToShoot = null;
+                          break;
+                  }
 
-            if (direction.x > 0 && direction.z > 0)
-            {
-                leg2.GetComponent<LegHandler>().LegClicked();
-                lastLegClicked = leg2;
-            }
-            else if (direction.x > 0 && direction.z < 0)
-            {
-                leg3.GetComponent<LegHandler>().LegClicked();
-                lastLegClicked = leg3;
-            }
-            else if (direction.x < 0 && direction.z < 0)
-            {
-                leg4.GetComponent<LegHandler>().LegClicked();
-                lastLegClicked = leg4;
-            }
-            else if (direction.x < 0 && direction.z > 0)
-            {
-                leg1.GetComponent<LegHandler>().LegClicked();
-                lastLegClicked = leg1;
-            }
+                  if (legToShoot != null && legToShoot.GetComponent<LegHandler>().m_LegState == LegState.ATTACHED)
+                  {
+                      validLegFound = true;
+                      lastLegClicked = legToShoot;
+                      lastLegClicked.GetComponent<LegHandler>().LegClicked();
+                  }
+                  attempts++;
+              }
+
+              if (!validLegFound)
+              {
+                  Debug.Log("No attached legs found after " + maxAttempts + " attempts.");
+              }
+
         }
 
         if (Input.GetMouseButtonUp(0) && lastLegClicked != null)

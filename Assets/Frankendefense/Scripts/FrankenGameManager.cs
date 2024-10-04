@@ -89,9 +89,6 @@ public class FrankenGameManager : MonoBehaviour
                 }
             });
         }
-
-        //Move zone to a random spot on the map at the start
-        MoveZone();
     }
 
     private void Update()
