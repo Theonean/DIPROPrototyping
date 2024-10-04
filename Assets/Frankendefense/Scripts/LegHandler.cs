@@ -254,7 +254,6 @@ public class LegHandler : MonoBehaviour
         }
         material.color = endColor;
         transform.localScale = m_LegOriginalScale;
-        GetComponent<MeshRenderer>().material.color = Color.white;
     }
 
     private IEnumerator ExplosionFadeOut(GameObject sphere)
