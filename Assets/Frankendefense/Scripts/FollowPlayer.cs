@@ -26,8 +26,8 @@ public class FollowPlayer : MonoBehaviour
     {
         transform.LookAt(m_ControlZone.transform);
 
-        //If enemy is seen by camera.main move normal speed otherwise move 5x speed
-        if (IsVisibleToCamera())
+        //If enemy is seen by camera.main or close to zone move normal speed otherwise move 5x speed
+        if (IsVisibleToCamera() || Vector3.Distance(transform.position, m_ControlZone.transform.position) < 35f)
         {
             transform.position += transform.forward * m_MoveSpeed * Time.deltaTime;
         }
