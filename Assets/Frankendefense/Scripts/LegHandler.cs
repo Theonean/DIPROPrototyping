@@ -16,7 +16,8 @@ public class LegHandler : MonoBehaviour
         CLICKED, // The leg is clicked on and is waiting for next click to fly away.
         FLYING, // The leg is flying away.
         DETACHED, // The leg is detached from the player and lying on the floor (could be clicked again for attack).
-        RETURNING // The leg is returning to the player.
+        RETURNING, // The leg is returning to the player.
+        REGROWING
     }
 
     LegState m_LegState = LegState.ATTACHED;
@@ -33,6 +34,7 @@ public class LegHandler : MonoBehaviour
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
+    private float legRegrowTime = 1f; //Time it takes for the leg to regrow
     Camera m_Camera;
     PlayerCore core;
     void Awake()
@@ -41,9 +43,12 @@ public class LegHandler : MonoBehaviour
         core = FindObjectOfType<PlayerCore>();
         core.returnLegs.AddListener(() =>
         {
-            isSpinning = false;
-            m_LegState = LegState.RETURNING;
-            m_StartingPosition = transform.position;
+            if (m_LegState == LegState.DETACHED || m_LegState == LegState.FLYING)
+            {
+                isSpinning = false;
+                m_LegState = LegState.RETURNING;
+                m_StartingPosition = transform.position;
+            }
         });
 
         m_Camera = Camera.main;
@@ -127,6 +132,14 @@ public class LegHandler : MonoBehaviour
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
                     transform.position = core.transform.position + m_DistanceToCore;
+                }
+                break;
+            case LegState.REGROWING:
+                //Regrow the leg to original scale, when there change to attached state
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, 0.25f * Time.deltaTime);
+                if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.01f)
+                {
+                    m_LegState = LegState.ATTACHED;
                 }
                 break;
 
@@ -214,8 +227,8 @@ public class LegHandler : MonoBehaviour
                 isSpinning = false;
                 transform.position = core.transform.position + m_DistanceToCore;
                 transform.SetParent(core.transform);
-                m_LegState = LegState.ATTACHED;
-                transform.localScale = m_LegOriginalScale;
+                m_LegState = LegState.REGROWING;
+                transform.localScale = Vector3.zero;
                 break;
         }
     }
