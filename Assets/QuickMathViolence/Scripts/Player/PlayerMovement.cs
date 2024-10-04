@@ -232,19 +232,10 @@ public class PlayerMovement : MonoBehaviour
 
     private void DoCameraEffects()
     {
-        // apply camera effects
-        if (state == MovementState.walking && !isHunching && rb.velocity.magnitude > yHunchThresh)
-        {
-            cam.DoHunch(-yHunch);
-            //cam.DoFov(runFov);
-            isHunching = true;
-        }
-        else if (isHunching && rb.velocity.magnitude < yHunchThresh || isHunching && state != MovementState.walking)
-        {
-            cam.DoHunch(yHunch);
-            //cam.ResetFov();
-            isHunching = false;
-        }
+        float speed = moveSpeed;
+        if (verticalInput < 1 && horizontalInput < 1 && rb.velocity.magnitude < yHunchThresh)
+            speed = 0;
+        cam.DoDynamicFov(speed, dashSpeed);
     }
 
     private void SpeedControl()
