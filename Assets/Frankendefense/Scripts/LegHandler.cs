@@ -30,6 +30,7 @@ public class LegHandler : MonoBehaviour
     float m_SpinAttackSpeed = 2000000f; //rotation Speed of the spin attack
     float m_LegFlySpeed = 40; //MaxSpeed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
+    public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
     Camera m_Camera;
@@ -184,8 +185,20 @@ public class LegHandler : MonoBehaviour
 
                 sphere.transform.position = transform.position;
                 sphere.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
-                sphere.GetComponent<MeshRenderer>().material.color = Color.red;
+                //set material to transparent
+                sphere.GetComponent<Renderer>().material = explosionMaterial;
+
                 StartCoroutine(ExplosionFadeOut(sphere));
+
+                //Spawn a light at the explosion position
+                GameObject light = new GameObject("ExplosionLight");
+                light.transform.position = transform.position;
+                light.AddComponent<Light>();
+                light.GetComponent<Light>().color = Color.red;
+                light.GetComponent<Light>().intensity = 50f;
+                light.GetComponent<Light>().range = explosionRadius * 2f;
+
+                StartCoroutine(FadeOutLight(light.GetComponent<Light>()));
 
                 //Destroy all Enemies within the red sphere
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
@@ -211,14 +224,39 @@ public class LegHandler : MonoBehaviour
     {
         float fadeTime = 1f;
         float elapsedTime = 0f;
+        Material material = sphere.GetComponent<Renderer>().material;
+        Color startColor = new Color(1f, 0f, 0f, 1f);
+        Color endColor = new Color(1f, 0f, 0f, 0f);
+
         while (elapsedTime < fadeTime)
         {
-            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
-            sphere.GetComponent<MeshRenderer>().material.color = new Color(1f, 0f, 0f, alpha);
+            float t = elapsedTime / fadeTime;
+            material.color = Color.Lerp(startColor, endColor, t);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+
+        material.color = endColor;
         Destroy(sphere);
+    }
+
+    private IEnumerator FadeOutLight(Light light)
+    {
+        float fadeTime = 0.2f;
+        float elapsedTime = 0f;
+        Color startColor = light.color;
+        Color endColor = new Color(1f, 0.8f, 0f, 0f);
+
+        while (elapsedTime < fadeTime)
+        {
+            float t = elapsedTime / fadeTime;
+            light.color = Color.Lerp(startColor, endColor, t);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        light.color = endColor;
+        Destroy(light.gameObject);
     }
 
     public bool isAttacking()

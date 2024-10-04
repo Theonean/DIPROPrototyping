@@ -34,7 +34,7 @@ public class CameraTracker : MonoBehaviour
             arrowRotator.transform.LookAt(controlZone.transform.position);
 
             //When near the control zone, make the arrow invisible
-            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < 1f)
+            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < 20f)
             {
                 arrowSprite.enabled = false;
             }
