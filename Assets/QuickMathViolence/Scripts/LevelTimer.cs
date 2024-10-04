@@ -4,21 +4,33 @@ using UnityEngine;
 
 public class LevelTimer : MonoBehaviour
 {
-    public float levelTime = 0f;
+    public float levelMaxTime = 0f;
+    public float levelTimer;
     public float minutes = 0f;
     public float seconds = 0f;
-    private bool timerActive = false;
+    public bool timerActive = false;
 
     public PlayerMovement pm;
+    public UIManager uiManager;
     private bool gameStarted = false;
 
+    private void Awake()
+    {
+        levelTimer = levelMaxTime;
+    }
     private void Update()
     {
         if (timerActive)
         {
-            levelTime += Time.deltaTime;
-            minutes = Mathf.FloorToInt(levelTime/60);
-            seconds = Mathf.FloorToInt(levelTime%60);
+            levelTimer -= Time.deltaTime;
+            minutes = Mathf.FloorToInt(levelTimer/60);
+            seconds = Mathf.FloorToInt(levelTimer%60);
+
+            if (levelTimer <= 0)
+            {
+                uiManager.DisplayLose();
+                SetActive(false);
+            }
         }
         if ((pm.horizontalInput > 0 || pm.verticalInput > 0) && !gameStarted)
         {
@@ -36,7 +48,7 @@ public class LevelTimer : MonoBehaviour
     public void Reset()
     {
         timerActive = false;
-        levelTime = 0f;
+        levelTimer = levelMaxTime;
     }
 
     public string GetTime()

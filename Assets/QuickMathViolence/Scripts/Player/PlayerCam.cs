@@ -14,11 +14,16 @@ public class PlayerCam : MonoBehaviour
 
     float defaultFov;
 
+    public float fovMin;
+    public float fovMax;
+
     private void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         defaultFov = GetComponent<Camera>().fieldOfView;
+
+        DOTween.SetTweensCapacity(500, 50);
     }
 
     private void Update()
@@ -38,7 +43,19 @@ public class PlayerCam : MonoBehaviour
 
     public void DoFov(float endValue)
     {
-        GetComponent<Camera>().DOFieldOfView(endValue, 0.2f);
+        //GetComponent<Camera>().DOFieldOfView(endValue, 0.2f);
+    }
+
+    private float prevValue;
+    public void DoDynamicFov(float value, float maxValue)
+    {
+        float relFov = (value / maxValue) * (fovMax - fovMin);
+        float fov = fovMin + relFov;
+        float tweenTime = 0.2f;
+        if (value == 0)
+            tweenTime = 2f;
+        GetComponent<Camera>().DOFieldOfView(fov, tweenTime);
+        prevValue = value;
     }
 
     public void ResetFov()
