@@ -129,7 +129,9 @@ public class GameManager : MonoBehaviour
 
     private void ResetGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene("0_0MainMenu");
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
         
 }
