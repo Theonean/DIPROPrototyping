@@ -22,6 +22,11 @@ public class IndividualBlobHandler : MonoBehaviour
         sad
     }
 
+    private void OnJointBreak(float breakForce)
+    {
+        GetComponent<Joint>().connectedBody = null;
+    }
+
     public void SetState(Emotion emotion)
     {
         state = emotion;

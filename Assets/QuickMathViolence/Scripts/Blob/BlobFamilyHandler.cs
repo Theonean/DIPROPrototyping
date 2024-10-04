@@ -246,8 +246,11 @@ public class BlobFamilyHandler : MonoBehaviour
             int newValue = value / 2;
             int otherValue = value - newValue;
 
+            // Do caveman raycast to check for walls
+            Vector3 spawnPos = GetSpawnPos();
+
             // Create new Family with otherValue
-            GameObject newFamily = Instantiate(gameObject, transform.position + new Vector3(0.5f, 0, 0), Quaternion.identity);
+            GameObject newFamily = Instantiate(gameObject, spawnPos, Quaternion.identity);
 
             if (newFamily.TryGetComponent<BlobFamilyHandler>(out BlobFamilyHandler otherBlobFamilyHandler))
             {
@@ -264,6 +267,28 @@ public class BlobFamilyHandler : MonoBehaviour
                 audioHandler.PlayAudioAction("Split");
             }
         }
+    }
+
+    private Vector3 GetSpawnPos()
+    {
+        Vector3 pos;
+        if (!Physics.Raycast(transform.position, transform.forward, 0.7f))
+        {
+            pos = transform.position + transform.forward * 0.7f;
+        }
+        else if (!Physics.Raycast(transform.position, transform.right, 0.7f))
+        {
+            pos = transform.position + transform.right * 0.7f;
+        }
+        else if (!Physics.Raycast(transform.position, -transform.forward, 0.7f))
+        {
+            pos = transform.position -transform.forward * 0.7f;
+        }
+        else
+        {
+            pos = transform.position -transform.right * 0.7f;
+        }
+        return pos;
     }
 
     public void DestroyFamily()

@@ -97,6 +97,8 @@ public class PlayerWallRun : MonoBehaviour
             // wall jump
             if (Input.GetKeyDown(jumpKey))
             {
+                if (pm.wallrunning)
+                    StopWallRun();
                 WallJump();
             }
         }

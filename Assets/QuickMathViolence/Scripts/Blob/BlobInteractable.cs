@@ -59,6 +59,7 @@ public class BlobInteractable : MonoBehaviour
 
             case BlobInteractableState.Grabbed:
                 transform.localPosition = Vector3.zero;
+                transform.localRotation = holdPosition.localRotation;
                 rb.centerOfMass = new(0, airborneCOMY, 0); ;
                 break;
 
