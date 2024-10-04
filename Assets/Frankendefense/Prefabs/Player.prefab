@@ -58,10 +58,6 @@ MonoBehaviour:
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
-  healthSlider: {fileID: 0}
-  PlayerDeath:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!33 &4940386805522729210
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -351,6 +347,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2657404939992042329}
     m_Modifications:
+    - target: {fileID: 562755067352527454, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: flySpeedCurve.m_Curve.Array.data[0].time
+      value: -0.02298852
+      objectReference: {fileID: 0}
+    - target: {fileID: 562755067352527454, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: flySpeedCurve.m_Curve.Array.data[0].value
+      value: 0.25193685
+      objectReference: {fileID: 0}
     - target: {fileID: 601932258058907427, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}
       propertyPath: m_Enabled
@@ -360,16 +366,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Leg1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 0.45999992
-      objectReference: {fileID: 0}
-    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 0.45999995
       objectReference: {fileID: 0}
     - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}
@@ -450,6 +446,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Leg2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.46000004
       objectReference: {fileID: 0}
     - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}
@@ -543,6 +544,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.46000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
       propertyPath: m_LocalScale.y
       value: 0.45999992
       objectReference: {fileID: 0}
@@ -630,6 +636,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Leg4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.46000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.46000004
+      objectReference: {fileID: 0}
+    - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.46000007
       objectReference: {fileID: 0}
     - target: {fileID: 5194158723973317335, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}

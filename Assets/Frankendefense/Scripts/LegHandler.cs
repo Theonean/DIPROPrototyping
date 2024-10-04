@@ -99,12 +99,29 @@ public class LegHandler : MonoBehaviour
                 break;
             case LegState.RETURNING:
                 //Move the leg back to the player core using animation curve and t
-                float tReturn = Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) / Vector3.Distance(m_StartingPosition, core.transform.position + m_DistanceToCore);
-                transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed * 1.5f);
+                float distanceToTarget = Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore);
+                float totalDistance = Vector3.Distance(m_StartingPosition, core.transform.position + m_DistanceToCore);
+                float tReturn = 1f - (distanceToTarget / totalDistance);
+
+                if (tReturn < 0.8f)
+                {
+                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed * 1.5f);
+                }
+                else
+                {
+                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed * 2f);
+                }
+
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f * Time.deltaTime);
+
+                if (distanceToTarget < 0.01f)
+                {
+                    transform.position = core.transform.position + m_DistanceToCore;
+                    m_LegState = LegState.ATTACHED;
+                }
                 transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * m_LegFlySpeed * 1.5f);
 
-                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.5f)
+                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.01f)
                 {
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
@@ -150,6 +167,8 @@ public class LegHandler : MonoBehaviour
         }
     }
 
+    //If clicked when lying on floor or flying, explode the leg, create a sphere and destroy all enemies within the sphere
+    //After that return the leg to the player and reattach it.
     private void OnMouseDown()
     {
 
@@ -157,28 +176,49 @@ public class LegHandler : MonoBehaviour
         {
             case LegState.FLYING:
             case LegState.DETACHED:
-                //If clicked when lying on the floor and not alread spinning, do a spin attack
-                if (!isSpinning) { StartCoroutine(SpinningCoroutine()); }
+                float explosionRadius = 5f;
+                //create a red sphere at explosion position which slowly fades away
+                GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                //Destroy collider to avoid collision with the enemies
+                Destroy(sphere.GetComponent<Collider>());
+
+                sphere.transform.position = transform.position;
+                sphere.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
+                sphere.GetComponent<MeshRenderer>().material.color = Color.red;
+                StartCoroutine(ExplosionFadeOut(sphere));
+
+                //Destroy all Enemies within the red sphere
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+                foreach (var hitCollider in hitColliders)
+                {
+                    if (hitCollider.gameObject.CompareTag("Enemy"))
+                    {
+                        Destroy(hitCollider.gameObject);
+                    }
+                }
+
+                //Return the leg
+                isSpinning = false;
+                transform.position = core.transform.position + m_DistanceToCore;
+                transform.SetParent(core.transform);
+                m_LegState = LegState.ATTACHED;
+                transform.localScale = m_LegOriginalScale;
                 break;
         }
     }
 
-    private IEnumerator SpinningCoroutine()
+    private IEnumerator ExplosionFadeOut(GameObject sphere)
     {
-        isSpinning = true;
-        //Spin the leg around y axis for a duration with designated speed, slowly ramp up at start and down at end with animationcurve
-        float timer = 0;
-        AnimationCurve curve = AnimationCurve.EaseInOut(0, 0, 1, 1);
-        while (timer < m_SpinAttackDuration && isSpinning)
+        float fadeTime = 1f;
+        float elapsedTime = 0f;
+        while (elapsedTime < fadeTime)
         {
-            timer += Time.deltaTime;
-            float t = timer / m_SpinAttackDuration;
-            float speed = m_SpinAttackSpeed * curve.Evaluate(t);
-            transform.RotateAround(transform.position, Vector3.forward, speed * Time.deltaTime);
-            //Debug.Log("Leg " + gameObject.name + " is spinning at speed " + speed * Time.deltaTime);
+            float alpha = Mathf.Lerp(1f, 0f, elapsedTime / fadeTime);
+            sphere.GetComponent<MeshRenderer>().material.color = new Color(1f, 0f, 0f, alpha);
+            elapsedTime += Time.deltaTime;
             yield return null;
         }
-        isSpinning = false;
+        Destroy(sphere);
     }
 
     public bool isAttacking()

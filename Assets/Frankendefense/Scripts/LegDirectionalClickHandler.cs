@@ -15,11 +15,17 @@ public class LegDirectionalClickHandler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            
+
             //Raycast to find the position to fly to
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out RaycastHit hit);
-            
+
+            //Check if a leg was hit, if yes return
+            if (hit.collider.gameObject.CompareTag("Leg"))
+            {
+                return;
+            }
+
             Vector3 direction = hit.point - transform.position;
 
             direction.Normalize();
@@ -52,6 +58,6 @@ public class LegDirectionalClickHandler : MonoBehaviour
         {
             lastLegClicked.GetComponent<LegHandler>().LegReleased();
             lastLegClicked = null;
-        }        
+        }
     }
 }
