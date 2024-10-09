@@ -16,9 +16,9 @@ public class LegDirectionalClickHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
 
-            //Raycast to find the position to fly to
+            //Raycast to find the position to fly to, and if nothing is hit return
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out RaycastHit hit);
+            if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
             //Check if a leg was hit, if yes return
             if (hit.collider.gameObject.CompareTag("Leg"))
@@ -36,43 +36,43 @@ public class LegDirectionalClickHandler : MonoBehaviour
             int selectedLeg;
             GameObject legToShoot;
             bool validLegFound = false;
-              int attempts = 0;
-              int maxAttempts = 4;
-              while (!validLegFound && attempts < maxAttempts)
-              {
-                  selectedLeg = attempts + 1;
-                  switch (selectedLeg)
-                  {
-                      case 1:
-                          legToShoot = leg1;
-                          break;
-                      case 2:
-                          legToShoot = leg2;
-                          break;
-                      case 3:
-                          legToShoot = leg3;
-                          break;
-                      case 4:
-                          legToShoot = leg4;
-                          break;
-                      default:
-                          legToShoot = null;
-                          break;
-                  }
+            int attempts = 0;
+            int maxAttempts = 4;
+            while (!validLegFound && attempts < maxAttempts)
+            {
+                selectedLeg = attempts + 1;
+                switch (selectedLeg)
+                {
+                    case 1:
+                        legToShoot = leg1;
+                        break;
+                    case 2:
+                        legToShoot = leg2;
+                        break;
+                    case 3:
+                        legToShoot = leg3;
+                        break;
+                    case 4:
+                        legToShoot = leg4;
+                        break;
+                    default:
+                        legToShoot = null;
+                        break;
+                }
 
-                  if (legToShoot != null && legToShoot.GetComponent<LegHandler>().m_LegState == LegState.ATTACHED)
-                  {
-                      validLegFound = true;
-                      lastLegClicked = legToShoot;
-                      lastLegClicked.GetComponent<LegHandler>().LegClicked();
-                  }
-                  attempts++;
-              }
+                if (legToShoot != null && legToShoot.GetComponent<LegHandler>().m_LegState == LegState.ATTACHED)
+                {
+                    validLegFound = true;
+                    lastLegClicked = legToShoot;
+                    lastLegClicked.GetComponent<LegHandler>().LegClicked();
+                }
+                attempts++;
+            }
 
-              if (!validLegFound)
-              {
-                  Debug.Log("No attached legs found after " + maxAttempts + " attempts.");
-              }
+            if (!validLegFound)
+            {
+                Debug.Log("No attached legs found after " + maxAttempts + " attempts.");
+            }
 
         }
 
