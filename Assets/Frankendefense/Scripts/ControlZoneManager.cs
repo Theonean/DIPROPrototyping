@@ -17,12 +17,12 @@ public class ControlZoneManager : MonoBehaviour
     public Slider healthSlider;
     public UnityEvent died;
     float m_WaveTime = 30f;
-    float m_MoveSpeed = 10f;
+    float m_MoveSpeed = 6f;
     public GameObject MapBoundaries;
     Vector3[] m_BoundaryPositions;
     Vector3 m_TargetPosition;
     ZoneState m_ZoneState = ZoneState.MOVING;
-    float m_m_WaveTimer = 0f;
+    float m_WaveTimer = 0f;
     public Slider waveProgressSlider;
     public UnityEvent<ZoneState> changedState;
     Color m_OriginalColor;
@@ -34,7 +34,7 @@ public class ControlZoneManager : MonoBehaviour
         healthSlider.value = health;
         m_OriginalColor = GetComponent<Renderer>().material.color;
 
-        m_m_WaveTimer = m_WaveTime;
+        m_WaveTimer = m_WaveTime;
 
         waveProgressSlider.maxValue = m_WaveTime;
         waveProgressSlider.value = m_WaveTime;
@@ -56,11 +56,11 @@ public class ControlZoneManager : MonoBehaviour
             //Show wave progress while harvesting
             waveProgressSlider.enabled = true;
 
-            m_m_WaveTimer -= Time.deltaTime;
-            waveProgressSlider.value = m_m_WaveTimer;
-            if (m_m_WaveTimer <= 0f)
+            m_WaveTimer -= Time.deltaTime;
+            waveProgressSlider.value = m_WaveTimer;
+            if (m_WaveTimer <= 0f)
             {
-                m_m_WaveTimer = m_WaveTime;
+                m_WaveTimer = m_WaveTime;
                 m_ZoneState = ZoneState.MOVING;
                 CalculateTargetPosition();
                 changedState.Invoke(m_ZoneState);
