@@ -4937,6 +4937,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Explosion: {fileID: 1960545287712346156}
+  enemyDestroyed:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!33 &7044526746933747233
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -5046,7 +5049,7 @@ GameObject:
   - component: {fileID: 9185269845558177096}
   - component: {fileID: 5907739434522909747}
   m_Layer: 0
-  m_Name: Enemy
+  m_Name: FastEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5081,4 +5084,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7633870c3fd94804fa2d0448f11ac533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 2
+  m_MoveSpeed: 8
+  knockbackCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: -3.1143298
+      outSlope: -3.1143298
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.036123347
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

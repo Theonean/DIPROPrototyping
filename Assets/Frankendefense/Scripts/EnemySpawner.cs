@@ -13,7 +13,9 @@ public class EnemySpawner : MonoBehaviour
         FINISHED //No more enemies to spawn and idle
     }
     public UnityEvent AllEnemiesDead = new UnityEvent();
-    public GameObject EnemyPrefab;
+    public GameObject RegularEnemyPrefab;
+    public GameObject FastEnemyPrefab;
+    public bool AutoSpawnOverride = false;
     public float spawnRate = 1f;
     public bool randomizeSpawn = false;
     public Vector2 randomSpawnRateRange = new Vector2(1f, 5f);
@@ -28,6 +30,11 @@ public class EnemySpawner : MonoBehaviour
         if (randomizeSpawn)
         {
             spawnRate = Random.Range(randomSpawnRateRange.x, randomSpawnRateRange.y);
+        }
+
+        if (AutoSpawnOverride)
+        {
+            StartWave(1);
         }
     }
 
@@ -55,7 +62,7 @@ public class EnemySpawner : MonoBehaviour
                     AllEnemiesDead.Invoke();
                 }
                 break;
-                //Idle when finished
+            //Idle when finished
             case SpawnState.FINISHED:
                 break;
         }
@@ -71,7 +78,11 @@ public class EnemySpawner : MonoBehaviour
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = 0.5f;
-        GameObject enemy = Instantiate(EnemyPrefab, spawnPosition, Quaternion.identity);
+
+        //Randomly choose between Regular and Fast enemy
+        bool random = Random.value > 0.5f;
+        GameObject enemyPrefab = random ? RegularEnemyPrefab : FastEnemyPrefab;
+        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         enemy.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
@@ -84,9 +95,6 @@ public class EnemySpawner : MonoBehaviour
         //tighten randomSpawnRateRange for each wave and lower it
         randomSpawnRateRange.x = randomSpawnRateRange.x - (waveNumber * 0.1f);
         randomSpawnRateRange.y = randomSpawnRateRange.y - (waveNumber * 0.4f);
-
-
-        
     }
 
     public void StopWave()
