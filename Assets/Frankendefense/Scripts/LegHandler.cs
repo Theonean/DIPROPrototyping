@@ -27,14 +27,12 @@ public class LegHandler : MonoBehaviour
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
     GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
-    float m_SpinAttackDuration = 3f; //Duration of the spin attack
-    float m_SpinAttackSpeed = 2000000f; //rotation Speed of the spin attack
     float m_LegFlySpeed = 40; //MaxSpeed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
-    private float legRegrowTime = 1f; //Time it takes for the leg to regrow
+    private float m_LegRegrowTime = 1f; //Time it takes for the leg to regrow
     Camera m_Camera;
     PlayerCore core;
     void Awake()
@@ -136,7 +134,7 @@ public class LegHandler : MonoBehaviour
                 break;
             case LegState.REGROWING:
                 //Regrow the leg to original scale, when there change to attached state
-                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, 1f * Time.deltaTime);
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_LegRegrowTime * Time.deltaTime);
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
