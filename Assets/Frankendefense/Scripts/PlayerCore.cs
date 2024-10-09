@@ -25,7 +25,8 @@ public class PlayerCore : MonoBehaviour
     //When spacebar is pressed in update, call the returnLegs event
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        //If rightclick is pressed, return all legs to the player
+        if (Input.GetMouseButtonDown(1))
         {
             returnLegs.Invoke();
         }
