@@ -13,7 +13,7 @@ public class FollowPlayer : MonoBehaviour
 
     GameObject m_ControlZone;
     [SerializeField]
-    float m_MoveSpeed = 5f;
+    float m_MoveSpeed = 16f;
 
     // Start is called before the first frame update
     void Start()
