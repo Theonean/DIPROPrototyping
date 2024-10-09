@@ -8,44 +8,24 @@ public class FrankenGameManager : MonoBehaviour
 {
     enum GameState
     {
-        BETWEENWAVES,
-        WAVEONGOING,
-        ENDOFWAVE, //Wait until all enemies are cleared
+        HARVESTER_MOVING, //Moving from resource point to resource point
+        HARVESTER_VULNERABLE, //"Gathering" Resources and vulnerable to enemy attacks
         GAMEOVER
     }
 
-    public float waveTime = 5f;
-    float m_WaveTimer = 0f;
     public GameObject controlZone;
-    public GameObject MapBoundaries;
-    public TextMeshProUGUI TimeToNextWaveText;
     public TextMeshProUGUI TimeNeededToSurviveText;
     public Slider gameProgressSlider;
-    public Slider waveProgressSlider;
     int m_MaxWaves = 5;
     int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
     public GameObject YouWonUIOverlay;
     public EnemySpawner[] spawners = new EnemySpawner[4];
-    int m_SpawnersNoEnemyLeftCount = 0;
-    private GameState m_GameState = GameState.BETWEENWAVES;
-    Vector3[] m_BoundaryPositions;
-    float m_TimeBetweenWaves = 3f;
-    float m_TimeBetweenWavesLeft = 0f;
+    private GameState m_GameState = GameState.HARVESTER_MOVING;
     float m_TotalGameTime = 0f;
 
     private void Start()
     {
-        //Load the two corners of the map boundaries
-        m_BoundaryPositions = new Vector3[2];
-        m_BoundaryPositions[0] = MapBoundaries.transform.GetChild(0).position;
-        m_BoundaryPositions[1] = MapBoundaries.transform.GetChild(1).position;
-
-        //Instantly move zone at start of game
-        m_WaveTimer = waveTime;
-
-        m_TimeBetweenWavesLeft = m_TimeBetweenWaves;
-
         //Prepare the UI Overlay so it's not dependent on editor state
         YouDiedUIOverlay.SetActive(false);
         YouDiedUIOverlay.transform.localScale = Vector3.zero;
@@ -53,42 +33,11 @@ public class FrankenGameManager : MonoBehaviour
         gameProgressSlider.maxValue = m_MaxWaves;
         gameProgressSlider.value = 0;
 
-        waveProgressSlider.maxValue = waveTime;
-        waveProgressSlider.value = waveTime;
-
         //Connect player died to healthmanager died event on control zone
-        HealthManager healthManager = controlZone.GetComponent<HealthManager>();
-        healthManager.died.AddListener(() => PlayerDied());
+        ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
+        zoneManager.died.AddListener(() => PlayerDied());
+        zoneManager.changedState.AddListener((ZoneState state) => ManageWave(state));
 
-        //Connect the spawners all enemy died event to the variable
-        foreach (EnemySpawner spawner in spawners)
-        {
-            spawner.AllEnemiesDead.AddListener(() =>
-            {
-                m_SpawnersNoEnemyLeftCount++;
-                if (m_SpawnersNoEnemyLeftCount == spawners.Length)
-                {
-                    m_GameState = GameState.BETWEENWAVES;
-                    m_SpawnersNoEnemyLeftCount = 0;
-
-                    MoveZone();
-                    StartCoroutine(ScaleUpDownUI(gameProgressSlider.gameObject, 1.2f));
-
-                    m_wavesSurvived++;
-                    gameProgressSlider.value = m_wavesSurvived;
-
-                    if (m_wavesSurvived >= m_MaxWaves)
-                    {
-                        TimeToNextWaveText.enabled = false;
-                        PlayerWon();
-                    }
-                    else
-                    {
-                        TimeToNextWaveText.enabled = true;
-                    }
-                }
-            });
-        }
     }
 
     private void Update()
@@ -96,42 +45,6 @@ public class FrankenGameManager : MonoBehaviour
         //Count how long player needed to survive
         if (m_GameState != GameState.GAMEOVER)
             m_TotalGameTime += Time.deltaTime;
-
-        //Countdown to next wave and display it on the UI
-        if (m_GameState == GameState.BETWEENWAVES)
-        {
-            //Reduce time between waves and put it on TimeToNextWaveText
-            m_TimeBetweenWavesLeft -= Time.deltaTime;
-            TimeToNextWaveText.text = "Next wave in: " + m_TimeBetweenWavesLeft.ToString("0.00");
-
-            //If time between waves is over, start a new wave
-            if (m_TimeBetweenWavesLeft <= 0f)
-            {
-                TimeToNextWaveText.enabled = false;
-                m_TimeBetweenWavesLeft = m_TimeBetweenWaves;
-                m_GameState = GameState.WAVEONGOING;
-                foreach (EnemySpawner spawner in spawners)
-                {
-                    spawner.StartWave(m_wavesSurvived);
-                }
-            }
-        }
-        //Stop spawners from spawning enemies after wave is done
-        else if (m_GameState == GameState.WAVEONGOING)
-        {
-            m_WaveTimer -= Time.deltaTime;
-            waveProgressSlider.value = m_WaveTimer;
-            if (m_WaveTimer <= 0f)
-            {
-                m_WaveTimer = waveTime;
-                m_GameState = GameState.ENDOFWAVE;
-                foreach (EnemySpawner spawner in spawners)
-                {
-                    spawner.StopWave();
-                }
-            }
-        }
-
 
         if (m_GameState == GameState.GAMEOVER)
         {
@@ -143,16 +56,33 @@ public class FrankenGameManager : MonoBehaviour
         }
     }
 
-    void MoveZone()
+    void ManageWave(ZoneState zoneState)
     {
-        //Move the zone to a random position within the map boundaries
-        Vector3 newPosition = new Vector3(
-            Random.Range(m_BoundaryPositions[0].x, m_BoundaryPositions[1].x),
-            Random.Range(m_BoundaryPositions[0].y, m_BoundaryPositions[1].y),
-            Random.Range(m_BoundaryPositions[0].z, m_BoundaryPositions[1].z)
-        );
+        switch (zoneState)
+        {
+            case ZoneState.MOVING:
+                m_wavesSurvived++;
+                gameProgressSlider.value = m_wavesSurvived;
 
-        controlZone.transform.position = newPosition;
+                if (m_wavesSurvived >= m_MaxWaves)
+                {
+                    PlayerWon();
+                }
+
+                foreach (EnemySpawner spawner in spawners)
+                {
+                    spawner.StopWave();
+                }
+                break;
+            case ZoneState.HARVESTING:
+                Debug.Log("Harvesting with wave difficulty: " + m_wavesSurvived);
+                //Start a new wave
+                foreach (EnemySpawner spawner in spawners)
+                {
+                    spawner.StartWave(m_wavesSurvived);
+                }
+                break;
+        }
     }
 
     void PlayerDied()
