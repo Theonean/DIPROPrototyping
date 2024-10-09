@@ -30,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask whatIsGround;
     public float coyoteCd;
     private float coyoteCdTimer;
-    private bool coyoteTime;
+    //private bool coyoteTime;
     bool grounded;
 
     [Header("Slope Handling")]
@@ -42,8 +42,8 @@ public class PlayerMovement : MonoBehaviour
     public PlayerCam cam;
     public float runFov = 85f;
     public float yHunchThresh;
-    public float yHunch;
-    private bool isHunching = false;
+    //public float yHunch;
+    //private bool isHunching = false;
 
     public Transform orientation;
 
