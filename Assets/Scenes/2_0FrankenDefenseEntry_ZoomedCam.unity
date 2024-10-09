@@ -155,8 +155,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -314,8 +317,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -623,8 +629,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -692,8 +701,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -731,8 +743,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -1069,8 +1084,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -1907,8 +1925,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -2366,8 +2387,11 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  EnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 0
   spawnRate: 1
   randomizeSpawn: 1
   randomSpawnRateRange: {x: 2, y: 10}
@@ -2383,6 +2407,63 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -218, y: 0, z: 158}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1824972591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1824972593}
+  - component: {fileID: 1824972592}
+  m_Layer: 0
+  m_Name: DebugSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1824972592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824972591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01c0bf5446f7da34cabd931fa8f747bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllEnemiesDead:
+    m_PersistentCalls:
+      m_Calls: []
+  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
+    type: 3}
+  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+    type: 3}
+  AutoSpawnOverride: 1
+  spawnRate: 0.24
+  randomizeSpawn: 1
+  randomSpawnRateRange: {x: 0.75, y: 1.28}
+  spawnRadius: 13.39
+  enemyScale: 1
+--- !u!4 &1824972593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1824972591}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.1, y: 0, z: -2.1}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3188,9 +3269,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
+      propertyPath: moveSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: DashDoesDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: transparentMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 79f9db06d60667747a33956fa6977522, type: 2}
     - target: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3544,6 +3640,7 @@ SceneRoots:
   - {fileID: 1582699638}
   - {fileID: 1045776794}
   - {fileID: 569007329}
+  - {fileID: 1824972593}
   - {fileID: 1909661526}
   - {fileID: 1880681787}
   - {fileID: 1850718606}
