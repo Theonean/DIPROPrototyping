@@ -10,6 +10,7 @@ public class CameraTracker : MonoBehaviour
     public GameObject arrowRotator;
     public GameObject controlZone;
     public SpriteRenderer arrowSprite;
+    public bool allowCameraScroll = false;
 
     void Update()
     {
@@ -17,14 +18,17 @@ public class CameraTracker : MonoBehaviour
         {
             Camera.main.transform.position = objectToTrack.transform.position + Vector3.up * cameraHeight;
 
-            //Scroll wheel to zoom in and out
-            if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+            if (allowCameraScroll)
             {
-                cameraHeight -= 0.3f;
-            }
-            else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-            {
-                cameraHeight += 0.3f;
+                //Scroll wheel to zoom in and out
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
+                {
+                    cameraHeight -= 0.3f;
+                }
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
+                {
+                    cameraHeight += 0.3f;
+                }
             }
         }
 
