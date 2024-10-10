@@ -77,7 +77,7 @@ public class EnemySpawner : MonoBehaviour
     void SpawnEnemy()
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-        spawnPosition.y = 0.5f;
+        spawnPosition.y = -0.12f;
 
         //Randomly choose between Regular and Fast enemy
         bool random = Random.value > 0.5f;
