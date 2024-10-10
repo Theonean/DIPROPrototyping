@@ -2408,8 +2408,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
-  resourcesHarvestedText: {fileID: 0}
-  gameProgressSlider: {fileID: 843843079}
+  resourcesHarvestedText: {fileID: 889989454}
   YouDiedUIOverlay: {fileID: 849772363}
   spawners:
   - {fileID: 461090786}
@@ -2558,7 +2557,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 400, y: 50}
+  m_SizeDelta: {x: 500, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2019951893
 MonoBehaviour:
@@ -2580,7 +2579,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Yore Dead ay
+  m_text: Mission Complete
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -3231,6 +3230,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1165763585586794766, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1366253836466587694, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -3242,6 +3246,16 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2160337663840352705, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2210394328511690833, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2210394328511690833, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -3265,6 +3279,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847105557005535999, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8847105557005535999, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
