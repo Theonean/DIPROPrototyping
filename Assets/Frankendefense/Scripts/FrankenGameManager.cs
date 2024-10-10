@@ -15,8 +15,6 @@ public class FrankenGameManager : MonoBehaviour
 
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
-    public Slider gameProgressSlider;
-    int m_MaxWaves = 5;
     int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
     public EnemySpawner[] spawners = new EnemySpawner[4];
@@ -28,9 +26,6 @@ public class FrankenGameManager : MonoBehaviour
         //Prepare the UI Overlay so it's not dependent on editor state
         YouDiedUIOverlay.SetActive(false);
         YouDiedUIOverlay.transform.localScale = Vector3.zero;
-
-        gameProgressSlider.maxValue = m_MaxWaves;
-        gameProgressSlider.value = 0;
 
         //Connect player died to healthmanager died event on control zone
         ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
@@ -61,7 +56,6 @@ public class FrankenGameManager : MonoBehaviour
         {
             case ZoneState.MOVING:
                 m_wavesSurvived++;
-                gameProgressSlider.value = m_wavesSurvived;
 
                 foreach (EnemySpawner spawner in spawners)
                 {
