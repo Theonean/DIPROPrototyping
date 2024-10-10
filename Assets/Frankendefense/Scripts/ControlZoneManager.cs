@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 public enum ZoneState
 {
@@ -15,9 +16,9 @@ public class ControlZoneManager : MonoBehaviour
 {
     [Tooltip("Hits needed until this object signals death")]
     public int health;
-    public Slider healthSlider;
+    public List<Slider> healthSliders = new List<Slider>();
     public UnityEvent died;
-    float m_WaveTime = 30f;
+    public float waveTime = 30f;
     float m_MoveSpeed = 6f;
     public GameObject MapBoundaries;
     Vector3[] m_BoundaryPositions;
@@ -28,17 +29,23 @@ public class ControlZoneManager : MonoBehaviour
     public UnityEvent<ZoneState> changedState;
     Color m_OriginalColor;
     public GameObject resourcePoint;
+    public float minTravelTime = 20f;
+    public float maxTravelTime = 30f;
 
     void Start()
     {
-        healthSlider.maxValue = health;
-        healthSlider.value = health;
+        foreach (Slider slider in healthSliders)
+        {
+            slider.maxValue = health;
+            slider.value = health;
+        }
+
         m_OriginalColor = GetComponent<Renderer>().material.color;
 
-        m_WaveTimer = m_WaveTime;
+        m_WaveTimer = 0f;
 
-        waveProgressSlider.maxValue = m_WaveTime;
-        waveProgressSlider.value = m_WaveTime;
+        waveProgressSlider.maxValue = waveTime;
+        waveProgressSlider.value = 0f;
 
 
         //Load the two corners of the map boundaries
@@ -57,13 +64,14 @@ public class ControlZoneManager : MonoBehaviour
             //Show wave progress while harvesting
             waveProgressSlider.enabled = true;
 
-            m_WaveTimer -= Time.deltaTime;
+            m_WaveTimer += Time.deltaTime;
             waveProgressSlider.value = m_WaveTimer;
-            if (m_WaveTimer <= 0f)
+            if (m_WaveTimer >= waveTime)
             {
-                m_WaveTimer = m_WaveTime;
+                m_WaveTimer = 0f;
                 m_ZoneState = ZoneState.MOVING;
                 CalculateTargetPosition();
+                StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Finished Harvesting, moving to new position");
             }
@@ -106,20 +114,40 @@ public class ControlZoneManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            health--;
-            healthSlider.value = health;
+            ModifyHealth(-1);
             Destroy(other.gameObject);
-
             StartCoroutine(TakeDamageEffect());
-            if (health <= 0)
-            {
-                m_ZoneState = ZoneState.DIED;
-                died.Invoke();
-            }
         }
     }
 
+    void ModifyHealth(int amount)
+    {
+        health += amount;
+        foreach (Slider slider in healthSliders)
+        {
+            slider.value = health;
+        }
 
+        if (health <= 0)
+        {
+            m_ZoneState = ZoneState.DIED;
+            died.Invoke();
+            StartCoroutine(FlyAway());
+        }
+    }
+
+    IEnumerator FlyAway()
+    {
+        float timer = 0f;
+        AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 2f, 1f);
+        while (timer < 4f)
+        {
+            transform.position += Vector3.up * 10f * Time.deltaTime * curve.Evaluate(timer);
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        Destroy(gameObject);
+    }
 
     //Turn material red and quickly fade back to normal
     IEnumerator TakeDamageEffect()
@@ -149,8 +177,8 @@ public class ControlZoneManager : MonoBehaviour
 
             // Calculate a random distance between 20 and 30 seconds of travel
             float travelSpeed = m_MoveSpeed;
-            float minDistance = travelSpeed * 20f;
-            float maxDistance = travelSpeed * 30f;
+            float minDistance = travelSpeed * minTravelTime;
+            float maxDistance = travelSpeed * maxTravelTime;
             float randomDistance = Random.Range(minDistance, maxDistance);
 
             // Calculate the new position
@@ -169,9 +197,20 @@ public class ControlZoneManager : MonoBehaviour
 
             m_TargetPosition = newPosition;
         }
-        
+
         resourcePoint.transform.position = m_TargetPosition;
+    }
 
+    IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
+    {
+        float timer = 0f;
+        while (timer < time)
+        {
+            timer += Time.deltaTime;
 
+            //Lerp wave timer slider to 0 over given time
+            waveProgressSlider.value = Mathf.Lerp(waveTime, 0f, timer / time);
+            yield return null;
+        }
     }
 }
