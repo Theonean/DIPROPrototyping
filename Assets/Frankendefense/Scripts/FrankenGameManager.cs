@@ -14,12 +14,11 @@ public class FrankenGameManager : MonoBehaviour
     }
 
     public GameObject controlZone;
-    public TextMeshProUGUI TimeNeededToSurviveText;
+    public TextMeshProUGUI resourcesHarvestedText;
     public Slider gameProgressSlider;
     int m_MaxWaves = 5;
     int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
-    public GameObject YouWonUIOverlay;
     public EnemySpawner[] spawners = new EnemySpawner[4];
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     float m_TotalGameTime = 0f;
@@ -64,11 +63,6 @@ public class FrankenGameManager : MonoBehaviour
                 m_wavesSurvived++;
                 gameProgressSlider.value = m_wavesSurvived;
 
-                if (m_wavesSurvived >= m_MaxWaves)
-                {
-                    PlayerWon();
-                }
-
                 foreach (EnemySpawner spawner in spawners)
                 {
                     spawner.StopWave();
@@ -101,28 +95,9 @@ public class FrankenGameManager : MonoBehaviour
         PlayerCore playerCore = FindObjectOfType<PlayerCore>();
         playerCore.enabled = false;
 
-        TimeNeededToSurviveText.text = "You survived for " + m_TotalGameTime.ToString("0.0") + " seconds!";
+        resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
 
         StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
-    }
-
-    void PlayerWon()
-    {
-        YouWonUIOverlay.SetActive(true);
-        m_GameState = GameState.GAMEOVER;
-
-        //Get all Follow player scripts and disable them
-        FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
-        foreach (FollowPlayer followPlayer in followPlayers)
-        {
-            followPlayer.enabled = false;
-        }
-
-        //Disable playercore
-        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
-        playerCore.enabled = false;
-
-        StartCoroutine(ScaleUpUI(YouWonUIOverlay));
     }
 
     IEnumerator ScaleUpUI(GameObject uiOverlay)
