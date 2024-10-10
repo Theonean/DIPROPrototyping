@@ -59,8 +59,10 @@ public class EnemyDamageHandler : MonoBehaviour
         Destroy(m_Explosion, 4f);
         Destroy(transform.parent.gameObject, 4f);
 
-        //Get the followplayer component from parent and disable
+        //Get the followplayer and navmeshagent component from parent and disable
         FollowPlayer followPlayer = transform.parent.gameObject.GetComponent<FollowPlayer>();
+        UnityEngine.AI.NavMeshAgent navMeshAgent = transform.parent.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         followPlayer.enabled = false;
+        navMeshAgent.enabled = false;
     }
 }
