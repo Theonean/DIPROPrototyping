@@ -49,7 +49,7 @@ public class CameraTracker : MonoBehaviour
         }
 
         //Rotate arrow to face the control zone
-        if (arrowRotator != null)
+        if (arrowRotator != null && controlZone != null)
         {
             arrowRotator.transform.LookAt(controlZone.transform.position);
 

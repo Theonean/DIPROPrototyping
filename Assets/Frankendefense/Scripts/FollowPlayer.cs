@@ -25,7 +25,7 @@ public class FollowPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (m_IsMoving)
+        if (m_IsMoving && m_ControlZone != null)
         {
             transform.LookAt(m_ControlZone.transform);
 
@@ -39,10 +39,8 @@ public class FollowPlayer : MonoBehaviour
                 transform.position += transform.forward * (m_MoveSpeed * 2f) * Time.deltaTime;
             }
         }
-
-
-        //transform.position = Vector3.MoveTowards(transform.position, m_ControlZone.transform.position, m_MoveSpeed * Time.deltaTime);
     }
+
     bool IsVisibleToCamera()
     {
         Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
