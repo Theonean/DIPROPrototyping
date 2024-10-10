@@ -12,6 +12,10 @@ public class PlayerCore : MonoBehaviour
     float m_DashTime = 1f;
     float m_DashSpeed = 30f;
     public float moveSpeed;
+    public float maxHealth; //Number of hits drone can take until it dies
+    float m_Health; //Number of hits drone can take until it dies
+    public float respawnTime; //Time until drone respawns
+    float m_RespawnTimer;
     public UnityEvent returnLegs;
     public Material transparentMaterial;
     Camera m_Camera;
@@ -21,6 +25,7 @@ public class PlayerCore : MonoBehaviour
     public AnimationCurve accelerationCurve;
     public AnimationCurve dashCurve;
     float m_AccelerationTime;
+    bool m_IsDead = false; //When dead, track the ControlZoneManager to respawn the drone
 
     MeshRenderer m_Renderer;
 
@@ -30,35 +35,56 @@ public class PlayerCore : MonoBehaviour
         m_OriginalCameraPosition = m_Camera.transform.localPosition;
         m_Renderer = GetComponent<MeshRenderer>();
         m_Renderer.material.color = Color.white;
+        m_Health = maxHealth;
+        m_RespawnTimer = 0f;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        //No Input when dead
+        if (!m_IsDead)
         {
-            returnLegs.Invoke();
+            if (Input.GetMouseButtonDown(1))
+            {
+                returnLegs.Invoke();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Dash();
+            }
+
+            Vector3 input = Vector3.zero;
+            if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
+            if (Input.GetKey(KeyCode.S)) input += Vector3.back;
+            if (Input.GetKey(KeyCode.A)) input += Vector3.left;
+            if (Input.GetKey(KeyCode.D)) input += Vector3.right;
+
+            if (input != Vector3.zero)
+            {
+                m_MoveDirection = input.normalized;
+                m_AccelerationTime += Time.deltaTime;
+            }
+            else
+            {
+                m_MoveDirection = Vector3.zero;
+                m_AccelerationTime = 0f;
+            }
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        //Count down respawn timer and respawn drone when player has no health
+        if (m_IsDead)
         {
-            Dash();
-        }
+            m_RespawnTimer += Time.deltaTime;
+            transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
 
-        Vector3 input = Vector3.zero;
-        if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
-        if (Input.GetKey(KeyCode.S)) input += Vector3.back;
-        if (Input.GetKey(KeyCode.A)) input += Vector3.left;
-        if (Input.GetKey(KeyCode.D)) input += Vector3.right;
-
-        if (input != Vector3.zero)
-        {
-            m_MoveDirection = input.normalized;
-            m_AccelerationTime += Time.deltaTime;
-        }
-        else
-        {
-            m_MoveDirection = Vector3.zero;
-            m_AccelerationTime = 0f;
+            if (m_RespawnTimer >= respawnTime)
+            {
+                m_RespawnTimer = 0f;
+                m_Health = maxHealth;
+                m_Renderer.material.color = Color.white;
+                m_IsDead = false;
+            }
         }
     }
 
@@ -86,19 +112,37 @@ public class PlayerCore : MonoBehaviour
     //When the player collides with an object, check if the object is an enemy and apply knockback or damage when dashing
     void OnTriggerEnter(Collider other)
     {
-        if (m_IsDashing && other.CompareTag("Enemy"))
+        if (other.CompareTag("Enemy"))
         {
-            if (DashDoesDamage)
+            if (m_IsDashing)
             {
-                // Damage the enemy
-                Debug.Log("Dealt damage to enemy");
-                Destroy(other.gameObject);
+                if (DashDoesDamage)
+                {
+                    // Damage the enemy
+                    Debug.Log("Dealt damage to enemy");
+                    Destroy(other.gameObject);
+                }
+                else
+                {
+                    // Knockback the enemy
+                    Debug.Log("Knocked back enemy");
+                    StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
+                }
             }
-            else
+            else if(!m_IsDead) //Only take damage when not dead
             {
-                // Knockback the enemy
-                Debug.Log("Knocked back enemy");
-                StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
+                Destroy(other.gameObject);
+
+                // Player is not dashing, so take damage
+                m_Health--;
+                if (m_Health <= 0)
+                {
+                    //Make drone invisible when dead
+                    m_Renderer.material.color = new Color(1, 1, 1, 0);
+                    transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
+                    m_IsDead = true;
+                    m_RespawnTimer = 0f;
+                }
             }
         }
     }
