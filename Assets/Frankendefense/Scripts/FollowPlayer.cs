@@ -36,7 +36,7 @@ public class FollowPlayer : MonoBehaviour
             }
             else
             {
-                transform.position += transform.forward * (m_MoveSpeed * 10f) * Time.deltaTime;
+                transform.position += transform.forward * (m_MoveSpeed * 5f) * Time.deltaTime;
             }
         }
 

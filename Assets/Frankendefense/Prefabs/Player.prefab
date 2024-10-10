@@ -55,11 +55,59 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   DashDoesDamage: 0
-  moveSpeed: 20
+  moveSpeed: 15
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
-  transparentMaterial: {fileID: 0}
+  transparentMaterial: {fileID: 2100000, guid: 79f9db06d60667747a33956fa6977522, type: 2}
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 3.2994187
+      outSlope: 3.2994187
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.03788546
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 6.366186
+      outSlope: 6.366186
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.03436232
+    - serializedVersion: 3
+      time: 0.99996835
+      value: 0.050001524
+      inSlope: -0.2897178
+      outSlope: -0.2897178
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04314154
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!33 &4940386805522729210
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -129,7 +177,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
+  m_Radius: 3
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &112550862925735040
 Rigidbody:
@@ -174,8 +222,6 @@ MonoBehaviour:
   leg2: {fileID: 7053222935867857053}
   leg3: {fileID: 9144144946512909694}
   leg4: {fileID: 4728428973485192558}
-  leg5: {fileID: 0}
-  leg6: {fileID: 0}
 --- !u!1 &495566588549675944
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,6 +357,12 @@ MonoBehaviour:
   arrowRotator: {fileID: 3069283202996589018}
   controlZone: {fileID: 0}
   arrowSprite: {fileID: 787017369456715182}
+  cameraFollowCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   allowCameraScroll: 0
 --- !u!1 &3069283202996589018
 GameObject:

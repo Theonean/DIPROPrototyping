@@ -411,6 +411,7 @@ GameObject:
   - component: {fileID: 5263345730309789157}
   - component: {fileID: 706314438526691804}
   - component: {fileID: 3181088379567748915}
+  - component: {fileID: 2763409130280046790}
   m_Layer: 0
   m_Name: ControlZone
   m_TagString: Untagged
@@ -501,6 +502,12 @@ MonoBehaviour:
   died:
     m_PersistentCalls:
       m_Calls: []
+  MapBoundaries: {fileID: 0}
+  waveProgressSlider: {fileID: 0}
+  changedState:
+    m_PersistentCalls:
+      m_Calls: []
+  resourcePoint: {fileID: 0}
 --- !u!65 &3181088379567748915
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -522,6 +529,33 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 7.8598175, y: 0, z: 6.8344097}
   m_Center: {x: -0.09844208, y: 0, z: -0.0053682327}
+--- !u!54 &2763409130280046790
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113327578232574430}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 0
+  m_ImplicitTensor: 0
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &8527363333521682898
 GameObject:
   m_ObjectHideFlags: 0

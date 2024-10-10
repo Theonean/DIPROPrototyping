@@ -3257,6 +3257,31 @@ PrefabInstance:
       propertyPath: trackObjectWithCamera
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: cameraFollowCurve.m_Curve.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: cameraFollowCurve.m_Curve.Array.data[1].time
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: cameraFollowCurve.m_Curve.Array.data[1].value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: cameraFollowCurve.m_Curve.Array.data[1].inSlope
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: cameraFollowCurve.m_Curve.Array.data[1].outSlope
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2296985718229705978, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_LocalPosition.z
@@ -3269,24 +3294,44 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
-      propertyPath: moveSpeed
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
-      propertyPath: DashDoesDamage
-      value: 0
+      propertyPath: dashCurve.m_Curve.Array.data[0].time
+      value: -0.0070542577
       objectReference: {fileID: 0}
     - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
-      propertyPath: transparentMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 79f9db06d60667747a33956fa6977522, type: 2}
+      propertyPath: dashCurve.m_Curve.Array.data[1].time
+      value: 1.0008228
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].value
+      value: 0.4381872
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[1].value
+      value: 0.5269455
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].inSlope
+      value: 5.227212
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].outSlope
+      value: 5.227212
+      objectReference: {fileID: 0}
+    - target: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: dashCurve.m_Curve.Array.data[0].outWeight
+      value: 0.040528636
+      objectReference: {fileID: 0}
     - target: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_LocalPosition.y
@@ -3336,16 +3381,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3251671137233043117, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: m_Radius
-      value: 0.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 3251671137233043117, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: m_Center.x
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3251671137233043117, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}

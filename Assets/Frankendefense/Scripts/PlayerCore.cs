@@ -9,14 +9,18 @@ public class PlayerCore : MonoBehaviour
     public bool DashDoesDamage; //true = dash damages enemies, false = dash knocks enemies back
     bool m_IsDashing = false;
     float m_DashKnockback = 50f;
-    float m_DashTime = 0.5f;
-    float m_DashSpeed = 15f;
+    float m_DashTime = 1f;
+    float m_DashSpeed = 30f;
     public float moveSpeed;
     public UnityEvent returnLegs;
     public Material transparentMaterial;
     Camera m_Camera;
     Vector3 m_OriginalCameraPosition;
     Vector3 m_MoveDirection;
+    Vector3 m_CurrentVelocity;
+    public AnimationCurve accelerationCurve;
+    public AnimationCurve dashCurve;
+    float m_AccelerationTime;
 
     MeshRenderer m_Renderer;
 
@@ -28,43 +32,55 @@ public class PlayerCore : MonoBehaviour
         m_Renderer.material.color = Color.white;
     }
 
-
-    //When spacebar is pressed in update, call the returnLegs event
     void Update()
     {
-        //If rightclick is pressed, return all legs to the player
         if (Input.GetMouseButtonDown(1))
         {
             returnLegs.Invoke();
         }
 
-        //If spacebar is pressed, make the player Dash
         if (Input.GetKeyDown(KeyCode.Space))
         {
             Dash();
         }
 
-        // Update m_MoveDirection based on input
-        Vector3 tempDirection = Vector3.zero;
+        Vector3 input = Vector3.zero;
+        if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
+        if (Input.GetKey(KeyCode.S)) input += Vector3.back;
+        if (Input.GetKey(KeyCode.A)) input += Vector3.left;
+        if (Input.GetKey(KeyCode.D)) input += Vector3.right;
 
-        if (Input.GetKey(KeyCode.W)) m_MoveDirection += Vector3.forward;
-        if (Input.GetKey(KeyCode.S)) m_MoveDirection += Vector3.back;
-        if (Input.GetKey(KeyCode.A)) m_MoveDirection += Vector3.left;
-        if (Input.GetKey(KeyCode.D)) m_MoveDirection += Vector3.right;
-
-        //Lerp movedirection to 0
-        m_MoveDirection = Vector3.Lerp(m_MoveDirection, Vector3.zero, 20f * Time.deltaTime); 
-
-        //Clamp the move direction to maxspeed
-        if (m_MoveDirection.magnitude > moveSpeed)
-            m_MoveDirection = m_MoveDirection.normalized * moveSpeed;
-
-
+        if (input != Vector3.zero)
+        {
+            m_MoveDirection = input.normalized;
+            m_AccelerationTime += Time.deltaTime;
+        }
+        else
+        {
+            m_MoveDirection = Vector3.zero;
+            m_AccelerationTime = 0f;
+        }
     }
 
     void FixedUpdate()
     {
-        if (!m_IsDashing) transform.position += m_MoveDirection * moveSpeed * Time.fixedDeltaTime;
+        if (!m_IsDashing)
+        {
+            float currentSpeed = moveSpeed * accelerationCurve.Evaluate(m_AccelerationTime);
+
+            //If current speed is 0, start applying drag
+            if (currentSpeed == 0)
+            {
+                m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, Vector3.zero, 0.3f);
+            }
+            //Otherwise move towards the target velocity based on the current speed
+            else
+            {
+                Vector3 targetVelocity = m_MoveDirection * currentSpeed;
+                m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
+            }
+            transform.position += m_CurrentVelocity * Time.fixedDeltaTime;
+        }
     }
 
     //When the player collides with an object, check if the object is an enemy and apply knockback or damage when dashing
@@ -84,7 +100,6 @@ public class PlayerCore : MonoBehaviour
                 Debug.Log("Knocked back enemy");
                 StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
             }
-
         }
     }
 
@@ -94,6 +109,27 @@ public class PlayerCore : MonoBehaviour
 
         m_IsDashing = true;
         m_Renderer.material.color = Color.red; // Change color to indicate dash
+
+        //Check if there are alreay enemies inside thewd players collider, knockback or damage them
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Enemy"))
+            {
+                if (DashDoesDamage)
+                {
+                    // Damage the enemy
+                    Debug.Log("Dealt damage to enemy");
+                    Destroy(hitCollider.gameObject);
+                }
+                else
+                {
+                    // Knockback the enemy
+                    Debug.Log("Knocked back enemy");
+                    StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
+                }
+            }
+        }
 
         StartCoroutine(DashMovement());
         StartCoroutine(DashEffect());
@@ -106,7 +142,7 @@ public class PlayerCore : MonoBehaviour
         while (elapsedTime < m_DashTime)
         {
             // Move the player in the current move direction at the specified dash speed
-            transform.position += m_MoveDirection * m_DashSpeed * Time.deltaTime;
+            transform.position += m_MoveDirection * m_DashSpeed * Time.deltaTime * dashCurve.Evaluate(elapsedTime / m_DashTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

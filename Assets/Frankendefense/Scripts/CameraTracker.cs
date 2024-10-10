@@ -10,13 +10,31 @@ public class CameraTracker : MonoBehaviour
     public GameObject arrowRotator;
     public GameObject controlZone;
     public SpriteRenderer arrowSprite;
+    public AnimationCurve cameraFollowCurve;
     public bool allowCameraScroll = false;
+    float m_MaxDistance = 2f;
+
+    private void Start()
+    {
+        //Set camera position
+        Camera.main.transform.position = objectToTrack.transform.position + Vector3.up * cameraHeight;
+    }
 
     void Update()
     {
         if (trackObjectWithCamera)
         {
-            Camera.main.transform.position = objectToTrack.transform.position + Vector3.up * cameraHeight;
+            float distance = Vector3.Distance(Camera.main.transform.position, objectToTrack.transform.position + Vector3.up * cameraHeight);
+            float t = Mathf.Clamp(distance / m_MaxDistance, 0, 1);
+
+            //Move camera towards object
+            Camera.main.transform.position = Vector3.MoveTowards(
+                Camera.main.transform.position,
+                objectToTrack.transform.position + Vector3.up * cameraHeight,
+                20f * Time.deltaTime * cameraFollowCurve.Evaluate(t));
+
+
+
 
             if (allowCameraScroll)
             {
@@ -38,7 +56,7 @@ public class CameraTracker : MonoBehaviour
             arrowRotator.transform.LookAt(controlZone.transform.position);
 
             //When near the control zone, make the arrow invisible
-            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < 20f)
+            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < 30f)
             {
                 arrowSprite.enabled = false;
             }
