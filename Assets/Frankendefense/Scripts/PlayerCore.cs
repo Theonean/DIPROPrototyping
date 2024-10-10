@@ -9,8 +9,8 @@ public class PlayerCore : MonoBehaviour
     public bool DashDoesDamage; //true = dash damages enemies, false = dash knocks enemies back
     bool m_IsDashing = false;
     float m_DashKnockback = 50f;
-    float m_DashTime = 1f;
-    float m_DashSpeed = 30f;
+    float m_DashTime = 1.5f;
+    float m_DashSpeed = 35f;
     public float moveSpeed;
     public float maxHealth; //Number of hits drone can take until it dies
     float m_Health; //Number of hits drone can take until it dies
