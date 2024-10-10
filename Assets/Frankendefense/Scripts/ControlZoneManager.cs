@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -78,13 +79,13 @@ public class ControlZoneManager : MonoBehaviour
 
             // Move towards the target position with sinus wave
             Vector3 newPosition = Vector3.MoveTowards(transform.position, offsetPosition, m_MoveSpeed * Time.deltaTime);
-            
+
             // Calculate the movement direction
             Vector3 moveDirection = (newPosition - transform.position).normalized;
-            
+
             // Update position
             transform.position = newPosition;
-            
+
             // Rotate to face the movement direction
             if (moveDirection != Vector3.zero)
             {
@@ -137,14 +138,40 @@ public class ControlZoneManager : MonoBehaviour
 
     void CalculateTargetPosition()
     {
-        //Move the zone to a random position within the map boundaries
-        Vector3 newPosition = new Vector3(
-            Random.Range(m_BoundaryPositions[0].x, m_BoundaryPositions[1].x),
-            Random.Range(m_BoundaryPositions[0].y, m_BoundaryPositions[1].y),
-            Random.Range(m_BoundaryPositions[0].z, m_BoundaryPositions[1].z)
-        );
+        bool legalPosition = false;
 
-        m_TargetPosition = newPosition;
+        while (!legalPosition)
+        {
+            // Calculate a random direction
+            Vector3 randomDirection = Random.insideUnitSphere;
+            randomDirection.y = 0; // Keep it on the same y-level
+            randomDirection.Normalize();
+
+            // Calculate a random distance between 20 and 30 seconds of travel
+            float travelSpeed = m_MoveSpeed;
+            float minDistance = travelSpeed * 20f;
+            float maxDistance = travelSpeed * 30f;
+            float randomDistance = Random.Range(minDistance, maxDistance);
+
+            // Calculate the new position
+            Vector3 newPosition = transform.position + (randomDirection * randomDistance);
+
+            //Check if position is reachable reachable for navmesh
+            NavMesh.SamplePosition(newPosition, out NavMeshHit hit, 100f, NavMesh.AllAreas);
+            if (hit.hit)
+            {
+                legalPosition = true;
+            }
+
+            //calculate travel time for the new position
+            float travelTime = Vector3.Distance(transform.position, newPosition) / travelSpeed;
+            Debug.Log("Travel time: " + travelTime);
+
+            m_TargetPosition = newPosition;
+        }
+        
         resourcePoint.transform.position = m_TargetPosition;
+
+
     }
 }
