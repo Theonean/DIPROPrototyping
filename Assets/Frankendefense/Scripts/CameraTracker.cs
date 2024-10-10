@@ -5,7 +5,6 @@ using UnityEngine;
 public class CameraTracker : MonoBehaviour
 {
     public bool trackObjectWithCamera = false;
-    public float cameraHeight = 7f;
     public GameObject objectToTrack;
     public GameObject arrowRotator;
     public GameObject controlZone;
@@ -13,39 +12,38 @@ public class CameraTracker : MonoBehaviour
     public AnimationCurve cameraFollowCurve;
     public bool allowCameraScroll = false;
     float m_MaxDistance = 2f;
+    private Vector3 cameraOffset;
 
     private void Start()
     {
-        //Set camera position
-        Camera.main.transform.position = objectToTrack.transform.position + Vector3.up * cameraHeight;
+        // Save the initial offset between camera and object
+        cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
     }
 
     void Update()
     {
         if (trackObjectWithCamera)
         {
-            float distance = Vector3.Distance(Camera.main.transform.position, objectToTrack.transform.position + Vector3.up * cameraHeight);
+            Vector3 targetPosition = objectToTrack.transform.position + cameraOffset;
+            float distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
             float t = Mathf.Clamp(distance / m_MaxDistance, 0, 1);
 
             //Move camera towards object
             Camera.main.transform.position = Vector3.MoveTowards(
                 Camera.main.transform.position,
-                objectToTrack.transform.position + Vector3.up * cameraHeight,
+                targetPosition,
                 20f * Time.deltaTime * cameraFollowCurve.Evaluate(t));
-
-
-
 
             if (allowCameraScroll)
             {
                 //Scroll wheel to zoom in and out
                 if (Input.GetAxis("Mouse ScrollWheel") > 0f)
                 {
-                    cameraHeight -= 0.3f;
+                    cameraOffset.y -= 0.3f;
                 }
                 else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
                 {
-                    cameraHeight += 0.3f;
+                    cameraOffset.y += 0.3f;
                 }
             }
         }
