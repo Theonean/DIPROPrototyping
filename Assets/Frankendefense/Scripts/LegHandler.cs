@@ -107,13 +107,13 @@ public class LegHandler : MonoBehaviour
                 float totalDistance = Vector3.Distance(m_StartingPosition, core.transform.position + m_DistanceToCore);
                 float tReturn = 1f - (distanceToTarget / totalDistance);
 
-                if (tReturn < 0.8f)
+                if (tReturn < 0.95f)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed * 1.5f);
+                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed);
                 }
                 else
                 {
-                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed * 2f);
+                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed);
                 }
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f * Time.deltaTime);
