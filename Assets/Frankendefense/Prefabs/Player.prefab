@@ -56,6 +56,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DashDoesDamage: 0
   moveSpeed: 15
+  maxHealth: 2
+  respawnTime: 0.5
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
@@ -88,17 +90,17 @@ MonoBehaviour:
     serializedVersion: 2
     m_Curve:
     - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 6.366186
-      outSlope: 6.366186
+      time: -0.0070542577
+      value: 0.4381872
+      inSlope: 5.227212
+      outSlope: 5.227212
       tangentMode: 0
       weightedMode: 0
       inWeight: 0
-      outWeight: 0.03436232
+      outWeight: 0.040528636
     - serializedVersion: 3
-      time: 0.99996835
-      value: 0.050001524
+      time: 1.0008228
+      value: 0.5269455
       inSlope: -0.2897178
       outSlope: -0.2897178
       tangentMode: 0
@@ -173,7 +175,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -351,15 +353,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a7e9af5da3430047b8ec4f75f84f6dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trackObjectWithCamera: 0
-  cameraHeight: 7
+  trackObjectWithCamera: 1
   objectToTrack: {fileID: 156741973787977113}
   arrowRotator: {fileID: 3069283202996589018}
   controlZone: {fileID: 0}
   arrowSprite: {fileID: 787017369456715182}
   cameraFollowCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
