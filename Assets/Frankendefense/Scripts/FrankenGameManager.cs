@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,6 +19,8 @@ public class FrankenGameManager : MonoBehaviour
     int m_wavesSurvived = 0;
     public GameObject YouDiedUIOverlay;
     public EnemySpawner[] spawners = new EnemySpawner[4];
+    Queue<EnemySpawner> m_InactiveSpawners = new Queue<EnemySpawner>();
+    Queue<EnemySpawner> m_ActiveSpawners = new Queue<EnemySpawner>();
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     float m_TotalGameTime = 0f;
 
@@ -32,6 +35,16 @@ public class FrankenGameManager : MonoBehaviour
         zoneManager.died.AddListener(() => PlayerDied());
         zoneManager.changedState.AddListener((ZoneState state) => ManageWave(state));
 
+        //Randomize spawners array
+        spawners = spawners.OrderBy(x => Random.value).ToArray();
+
+        //Add all spawners in a random order to the inactive spawners queue
+        foreach (EnemySpawner spawner in spawners)
+        {
+            m_InactiveSpawners.Enqueue(spawner);
+        }
+
+        ActivateSpawners(2);
     }
 
     private void Update()
@@ -54,21 +67,21 @@ public class FrankenGameManager : MonoBehaviour
     {
         switch (zoneState)
         {
+            //When moving have 1 + wavesSurvived/2 spawners active
             case ZoneState.MOVING:
                 m_wavesSurvived++;
+                DeactivateSpawners();
+                int waveDifficulty = Mathf.Clamp(2 + m_wavesSurvived / 2, 1, spawners.Length);
+                ActivateSpawners(waveDifficulty);
+                Debug.Log("Moving with wave difficulty: " + waveDifficulty);
 
-                foreach (EnemySpawner spawner in spawners)
-                {
-                    spawner.StopWave();
-                }
                 break;
+            //When Harvesting have 1 + wavesSurvived spawners active
             case ZoneState.HARVESTING:
-                Debug.Log("Harvesting with wave difficulty: " + m_wavesSurvived);
-                //Start a new wave
-                foreach (EnemySpawner spawner in spawners)
-                {
-                    spawner.StartWave(m_wavesSurvived);
-                }
+                DeactivateSpawners();
+                int harvestWaveDifficulty = Mathf.Clamp(1 + m_wavesSurvived, 1, spawners.Length);
+                ActivateSpawners(harvestWaveDifficulty);
+                Debug.Log("Harvesting with wave difficulty: " + harvestWaveDifficulty);
                 break;
         }
     }
@@ -102,6 +115,27 @@ public class FrankenGameManager : MonoBehaviour
             time += Time.deltaTime;
             uiOverlay.transform.localScale = Vector3.one * time;
             yield return null;
+        }
+    }
+
+    void DeactivateSpawners()
+    {
+        //Deactivate all spawners
+        foreach (EnemySpawner spawner in m_ActiveSpawners)
+        {
+            spawner.StopWave();
+            m_InactiveSpawners.Enqueue(spawner);
+        }
+    }
+
+    void ActivateSpawners(int numberOfSpawners)
+    {
+        //Activate the specified number of spawners
+        for (int i = 0; i < numberOfSpawners; i++)
+        {
+            EnemySpawner spawner = m_InactiveSpawners.Dequeue();
+            spawner.StartWave(m_wavesSurvived);
+            m_ActiveSpawners.Enqueue(spawner);
         }
     }
 
