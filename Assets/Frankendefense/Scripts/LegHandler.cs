@@ -27,7 +27,7 @@ public class LegHandler : MonoBehaviour
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
     GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
-    float m_LegFlySpeed = 40; //MaxSpeed of the leg when flying away.
+    float m_LegFlySpeed = 50; //MaxSpeed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
@@ -107,13 +107,13 @@ public class LegHandler : MonoBehaviour
                 float totalDistance = Vector3.Distance(m_StartingPosition, core.transform.position + m_DistanceToCore);
                 float tReturn = 1f - (distanceToTarget / totalDistance);
 
-                if (tReturn < 0.95f)
+                if (tReturn < 0.90f)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed);
+                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed * 2f);
                 }
                 else
                 {
-                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed);
+                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed * 2f);
                 }
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f * Time.deltaTime);
@@ -125,7 +125,7 @@ public class LegHandler : MonoBehaviour
                 }
                 transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * m_LegFlySpeed * 1.5f);
 
-                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.01f)
+                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
