@@ -30,7 +30,6 @@ public class LegDirectionalClickHandler : MonoBehaviour
 
             direction.Normalize();
 
-            Debug.Log(direction);
             //Select random number between one and including four to determine leg to shoot
             //if the leg is in attached state shoot it, otherwise select another leg
             int selectedLeg;
