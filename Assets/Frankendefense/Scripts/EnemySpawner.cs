@@ -13,8 +13,7 @@ public class EnemySpawner : MonoBehaviour
         FINISHED //No more enemies to spawn and idle
     }
     public UnityEvent AllEnemiesDead = new UnityEvent();
-    public GameObject RegularEnemyPrefab;
-    public GameObject FastEnemyPrefab;
+    public GameObject enemyPrefab;
     public bool AutoSpawnOverride = false;
     public float spawnRate = 1f;
     public bool randomizeSpawn = false;
@@ -79,9 +78,6 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = -0.12f;
 
-        //Randomly choose between Regular and Fast enemy
-        bool random = Random.value > 0.5f;
-        GameObject enemyPrefab = random ? RegularEnemyPrefab : FastEnemyPrefab;
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
