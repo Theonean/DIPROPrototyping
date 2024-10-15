@@ -13,8 +13,7 @@ using UnityEngine.AI;
 public class FollowPlayer : MonoBehaviour
 {
     GameObject m_ControlZone;
-    [SerializeField]
-    float m_MoveSpeed = 20f;
+    public float m_MoveSpeed = 20f;
     bool m_IsMoving = true;
     public AnimationCurve knockbackCurve;
     public NavMeshAgent agent;

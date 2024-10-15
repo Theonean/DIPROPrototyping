@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.17425346, g: 0.21791592, b: 0.3001302, a: 1}
+  m_IndirectSpecularColor: {r: 0.1742532, g: 0.21791545, b: 0.3001296, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -155,9 +155,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -173,12 +171,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 43567847}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -1.7, y: 52.6, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.45355192, y: -1.3633895, z: 13.928964}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &113785261
 GameObject:
@@ -317,9 +315,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -335,12 +331,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261875099}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -73.9, y: -3.7, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -16.234974, y: -1.363388, z: 1.6229508}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &330585543
 GameObject:
@@ -629,9 +625,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -647,12 +641,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423548562}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 1.2, y: -60.1, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.18032786, y: -1.3633862, z: -10.704921}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &461090784
 GameObject:
@@ -679,12 +673,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 461090784}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -65.3, y: -58, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.355192, y: -1.3633862, z: -10.245904}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &461090786
 MonoBehaviour:
@@ -701,9 +695,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -743,9 +735,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -761,12 +751,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 475637076}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 66.3, y: 47, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 14.409839, y: -1.3633888, z: 12.704919}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &487030906
 GameObject:
@@ -980,9 +970,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -998,12 +986,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 569007327}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 73.5, y: -51.8, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 15.983607, y: -1.3633862, z: -8.890713}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &647233315
 GameObject:
@@ -1687,9 +1675,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -1705,12 +1691,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1045776792}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 75, y: -4.7, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 16.311476, y: -1.363388, z: 1.4043715}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1054828938
 GameObject:
@@ -2209,9 +2195,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
+  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
     type: 3}
   AutoSpawnOverride: 0
   spawnRate: 1
@@ -2227,12 +2211,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582699636}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: -0, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: -72.2, y: 50.8, z: 0.8}
-  m_LocalScale: {x: 0.1, y: 0.09999998, z: 0.09999998}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -15.863388, y: -1.3633895, z: 13.535521}
+  m_LocalScale: {x: 0.021857927, y: 0.021857927, z: 0.021857927}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 3500538115137141687}
+  m_Father: {fileID: 2128871943}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1824972591
 GameObject:
@@ -2266,10 +2250,7 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  RegularEnemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
-  FastEnemyPrefab: {fileID: 6235206037039435799, guid: f85724cba4360d24894c7ce70db21d9a,
-    type: 3}
+  enemyPrefab: {fileID: 0}
   AutoSpawnOverride: 0
   spawnRate: 0.24
   randomizeSpawn: 1
@@ -2405,6 +2386,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   resourcesHarvestedText: {fileID: 889989454}
+  MinMaxAmbushesPerMove: {x: 1, y: 3}
   YouDiedUIOverlay: {fileID: 849772363}
   spawners:
   - {fileID: 461090786}
@@ -2826,7 +2808,15 @@ Transform:
   m_LocalPosition: {x: -1.4, y: 5, z: -7.6}
   m_LocalScale: {x: 3.66, y: 3.66, z: 3.66}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 461090785}
+  - {fileID: 423548564}
+  - {fileID: 475637078}
+  - {fileID: 43567849}
+  - {fileID: 261875101}
+  - {fileID: 1582699638}
+  - {fileID: 1045776794}
+  - {fileID: 569007329}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2133194225
@@ -3135,47 +3125,9 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 108171301924961812, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 461090785}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 423548564}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 475637078}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 43567849}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 261875101}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1582699638}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1045776794}
-    - targetCorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 569007329}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
---- !u!4 &3500538115137141687 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2657404939992042329, guid: f0349d52a2037ba4993444b4b04754a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3500538115137141686}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6443427340868869809
 PrefabInstance:
   m_ObjectHideFlags: 0
