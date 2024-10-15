@@ -19,7 +19,7 @@ public class ControlZoneManager : MonoBehaviour
     public List<Slider> healthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
-    float m_MoveSpeed = 6f;
+    float m_MoveSpeed = 4f;
     public GameObject MapBoundaries;
     Vector3[] m_BoundaryPositions;
     Vector3 m_TargetPosition;

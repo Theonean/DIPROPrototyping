@@ -27,12 +27,12 @@ public class LegHandler : MonoBehaviour
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
     GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
-    float m_LegFlySpeed = 40; //MaxSpeed of the leg when flying away.
+    float m_LegFlySpeed = 50; //MaxSpeed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
-    private float m_LegRegrowTime = 1f; //Time it takes for the leg to regrow
+    private float m_LegRegrowSpeed = 2.5f; //Speed with which leg regrows to original scale
     Camera m_Camera;
     PlayerCore core;
     void Awake()
@@ -107,13 +107,13 @@ public class LegHandler : MonoBehaviour
                 float totalDistance = Vector3.Distance(m_StartingPosition, core.transform.position + m_DistanceToCore);
                 float tReturn = 1f - (distanceToTarget / totalDistance);
 
-                if (tReturn < 0.95f)
+                if (tReturn < 0.90f)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed);
+                    transform.position = Vector3.MoveTowards(transform.position, core.transform.position + m_DistanceToCore, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_LegFlySpeed * 2f);
                 }
                 else
                 {
-                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed);
+                    transform.position = Vector3.Lerp(transform.position, core.transform.position + m_DistanceToCore, Time.deltaTime * m_LegFlySpeed * 2f);
                 }
 
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialRotation, 1f * Time.deltaTime);
@@ -125,7 +125,7 @@ public class LegHandler : MonoBehaviour
                 }
                 transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * m_LegFlySpeed * 1.5f);
 
-                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.01f)
+                if (Vector3.Distance(transform.position, core.transform.position + m_DistanceToCore) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
@@ -134,7 +134,7 @@ public class LegHandler : MonoBehaviour
                 break;
             case LegState.REGROWING:
                 //Regrow the leg to original scale, when there change to attached state
-                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_LegRegrowTime * Time.deltaTime);
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_LegRegrowSpeed * Time.deltaTime);
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
@@ -192,7 +192,7 @@ public class LegHandler : MonoBehaviour
         {
             case LegState.FLYING:
             case LegState.DETACHED:
-                float explosionRadius = 5f;
+                float explosionRadius = 10f;
                 //create a red sphere at explosion position which slowly fades away
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 //Destroy collider to avoid collision with the enemies

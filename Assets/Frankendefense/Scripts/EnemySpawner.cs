@@ -83,7 +83,6 @@ public class EnemySpawner : MonoBehaviour
         bool random = Random.value > 0.5f;
         GameObject enemyPrefab = random ? RegularEnemyPrefab : FastEnemyPrefab;
         GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        enemy.transform.localScale = new Vector3(enemyScale, enemyScale, enemyScale);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
     }
@@ -94,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
 
         //tighten randomSpawnRateRange for each wave and lower it
         randomSpawnRateRange.x = randomSpawnRateRange.x - (waveNumber * 0.1f);
-        randomSpawnRateRange.y = randomSpawnRateRange.y - (waveNumber * 0.4f);
+        randomSpawnRateRange.y = randomSpawnRateRange.y - (waveNumber * 0.3f);
     }
 
     public void StopWave()
