@@ -32,7 +32,8 @@ public class LegHandler : MonoBehaviour
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier which slowly acts until the leg has reached the target position.
-    private float m_LegRegrowSpeed = 2.5f; //Speed with which leg regrows to original scale
+    private float m_LegRegrowSpeed = 1.5f; //Speed with which leg regrows to original scale
+    public float explosionRadius = 10f;
     Camera m_Camera;
     PlayerCore core;
     void Awake()
@@ -187,12 +188,10 @@ public class LegHandler : MonoBehaviour
     //After that return the leg to the player and reattach it.
     private void OnMouseDown()
     {
-
         switch (m_LegState)
         {
             case LegState.FLYING:
             case LegState.DETACHED:
-                float explosionRadius = 10f;
                 //create a red sphere at explosion position which slowly fades away
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 //Destroy collider to avoid collision with the enemies

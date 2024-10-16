@@ -28,6 +28,7 @@ public class PlayerCore : MonoBehaviour
     bool m_IsDead = false; //When dead, track the ControlZoneManager to respawn the drone
 
     MeshRenderer m_Renderer;
+    private LegHandler[] m_Legs = new LegHandler[4];
 
     private void Awake()
     {
@@ -37,6 +38,8 @@ public class PlayerCore : MonoBehaviour
         m_Renderer.material.color = Color.white;
         m_Health = maxHealth;
         m_RespawnTimer = 0f;
+
+        m_Legs = GetComponentsInChildren<LegHandler>();
     }
 
     void Update()
@@ -239,5 +242,14 @@ public class PlayerCore : MonoBehaviour
         }
 
         shadowRenderer.material.color = endColor; // Ensure the color is fully transparent at the end
+    }
+
+    public void IncreaseLegExplosionRadius(float radiusIncrease)
+    {
+        //Increase explosion radius on all legs
+        foreach (var leg in m_Legs)
+        {
+            leg.explosionRadius += radiusIncrease;
+        }
     }
 }
