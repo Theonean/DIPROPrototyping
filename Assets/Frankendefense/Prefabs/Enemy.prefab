@@ -4898,6 +4898,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7606478691321387734}
   - component: {fileID: 8939018676203692738}
+  - component: {fileID: 1677295457117298359}
   - component: {fileID: 1463122662569889129}
   - component: {fileID: 2071173317959762149}
   m_Layer: 3
@@ -4939,7 +4940,34 @@ MonoBehaviour:
   m_Explosion: {fileID: 1960545287712346156}
   enemyDestroyed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1677295457117298359}
+        m_TargetAssemblyTypeName: CollectibleDropper, Assembly-CSharp
+        m_MethodName: DropCollectible
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1677295457117298359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4386438438834597638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cf0be8ee59839c47b8feed4e505a7dc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollectiblePrefab: {fileID: 8008676224856840013, guid: 7818fbeebdb7c9f46b0a111050caa204,
+    type: 3}
+  dropChance: 1
 --- !u!65 &1463122662569889129
 BoxCollider:
   m_ObjectHideFlags: 0

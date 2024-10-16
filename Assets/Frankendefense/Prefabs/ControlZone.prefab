@@ -645,7 +645,7 @@ GameObject:
   - component: {fileID: 2763409130280046790}
   m_Layer: 0
   m_Name: ControlZone
-  m_TagString: Untagged
+  m_TagString: Harvester
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -744,6 +744,8 @@ MonoBehaviour:
   resourcePoint: {fileID: 0}
   minTravelTime: 20
   maxTravelTime: 30
+  travelTimeLeft: 0
+  EnemyPrefab: {fileID: 0}
 --- !u!65 &3181088379567748915
 BoxCollider:
   m_ObjectHideFlags: 0

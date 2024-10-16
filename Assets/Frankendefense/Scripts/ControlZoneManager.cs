@@ -14,6 +14,9 @@ public enum ZoneState
 
 public class ControlZoneManager : MonoBehaviour
 {
+
+    public static ControlZoneManager Instance { get; private set; }
+
     [Tooltip("Hits needed until this object signals death")]
     public int health;
     public List<Slider> healthSliders = new List<Slider>();
@@ -33,6 +36,19 @@ public class ControlZoneManager : MonoBehaviour
     public float maxTravelTime = 30f;
     public float travelTimeLeft;
     public GameObject EnemyPrefab;
+
+    private void Awake()
+    {
+        // Ensure there's only one instance of the FrankenGameManager
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {
@@ -141,6 +157,12 @@ public class ControlZoneManager : MonoBehaviour
             died.Invoke();
             StartCoroutine(FlyAway());
         }
+    }
+
+    public void FullHeal()
+    {
+        int healthNeededToFull = 10 - health;
+        ModifyHealth(healthNeededToFull);
     }
 
     IEnumerator FlyAway()
