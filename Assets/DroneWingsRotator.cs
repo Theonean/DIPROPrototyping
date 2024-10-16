@@ -26,7 +26,7 @@ public class DroneWingsRotator : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float lerpRotation = Mathf.Lerp(0, maxAngle, m_playerCore.currentSpeed / m_playerCore.moveSpeed);
 
@@ -40,8 +40,8 @@ public class DroneWingsRotator : MonoBehaviour
         else
         {
             // Return to original rotation
-            wingTop.transform.localRotation = Quaternion.Lerp(wingTop.transform.localRotation, originalRotationTop, Time.deltaTime * 2);
-            wingBottom.transform.localRotation = Quaternion.Lerp(wingBottom.transform.localRotation, originalRotationBottom, Time.deltaTime * 2);
+            wingTop.transform.localRotation = Quaternion.Lerp(wingTop.transform.localRotation, originalRotationTop, Time.fixedDeltaTime * 2);
+            wingBottom.transform.localRotation = Quaternion.Lerp(wingBottom.transform.localRotation, originalRotationBottom, Time.fixedDeltaTime * 2);
         }
 
         // Rotate left and right wings for up-down movement
@@ -54,8 +54,8 @@ public class DroneWingsRotator : MonoBehaviour
         else
         {
             // Return to original rotation
-            wingLeft.transform.localRotation = Quaternion.Lerp(wingLeft.transform.localRotation, originalRotationLeft, Time.deltaTime * 2);
-            wingRight.transform.localRotation = Quaternion.Lerp(wingRight.transform.localRotation, originalRotationRight, Time.deltaTime * 2);
+            wingLeft.transform.localRotation = Quaternion.Lerp(wingLeft.transform.localRotation, originalRotationLeft, Time.fixedDeltaTime * 2);
+            wingRight.transform.localRotation = Quaternion.Lerp(wingRight.transform.localRotation, originalRotationRight, Time.fixedDeltaTime * 2);
         }
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -57,7 +58,7 @@ public class WaveManager : MonoBehaviour
                 FrankenGameManager.Instance.IncrementWavesSurvived();
                 DeactivateSpawners();
                 PrepareAmbushes();
-                TriggerAmbushes();
+                StartCoroutine(TriggerAmbushes());  // Coroutine to trigger ambushes over time
                 break;
             case ZoneState.HARVESTING:
                 ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived / 2, 1, spawners.Length));
@@ -76,7 +77,7 @@ public class WaveManager : MonoBehaviour
         }
 
         float totalTravelTime = controlZone.GetComponent<ControlZoneManager>().travelTimeLeft;
-        float ambushOffset = totalTravelTime / difficultySettings.ambushOffsetFactor; //Guarantees that ambush will happen before the zone reaches the end and not immediately at beginning of move
+        float ambushOffset = totalTravelTime / difficultySettings.ambushOffsetFactor;
         float ambushPossibleTimeFrame = totalTravelTime - (totalTravelTime / 4);
 
         // Center events around the middle of the possible ambush timeframe
@@ -95,16 +96,32 @@ public class WaveManager : MonoBehaviour
             m_ambushTimes.Enqueue(ambushTime);
         }
 
-        // Debug the information
         Debug.Log($"Ambushes This Move: {m_AmbushesThisMove}, Ambush Offset: {ambushOffset}, Ambush Times: {string.Join(", ", m_ambushTimes)}, Total Travel Time: {totalTravelTime}");
     }
 
 
-    void TriggerAmbushes()
+    IEnumerator TriggerAmbushes()
     {
-        for (int i = 0; i < m_AmbushesThisMove; i++)
+        while (m_ambushTimes.Count > 0 && m_SurpriseAttacksQueuedThisMove.Count > 0)
         {
-            Invoke(m_SurpriseAttacksQueuedThisMove.Dequeue().ToString(), m_ambushTimes.Dequeue());
+            float ambushTime = m_ambushTimes.Dequeue();
+            SurpriseAttackTypes attackType = m_SurpriseAttacksQueuedThisMove.Dequeue();
+
+            yield return new WaitForSeconds(ambushTime);  // Wait for the appropriate ambush time
+
+            // Call the appropriate ambush method
+            switch (attackType)
+            {
+                case SurpriseAttackTypes.AMBUSH_CIRCLE:
+                    AMBUSH_CIRCLE();
+                    break;
+                case SurpriseAttackTypes.BIG_SINGLE_WAVE:
+                    BIG_SINGLE_WAVE();
+                    break;
+                case SurpriseAttackTypes.SMALL_TRIPPLE_WAVE:
+                    SMALL_TRIPPLE_WAVE();
+                    break;
+            }
         }
     }
 

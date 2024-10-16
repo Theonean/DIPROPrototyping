@@ -18,7 +18,7 @@ public class CameraTracker : MonoBehaviour
         cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (trackObjectWithCamera)
         {
@@ -30,7 +30,7 @@ public class CameraTracker : MonoBehaviour
             Camera.main.transform.position = Vector3.MoveTowards(
                 Camera.main.transform.position,
                 targetPosition,
-                20f * Time.deltaTime * cameraFollowCurve.Evaluate(t));
+                20f * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
 
             if (allowCameraScroll)
             {
