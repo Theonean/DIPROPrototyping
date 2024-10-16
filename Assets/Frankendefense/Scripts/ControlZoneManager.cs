@@ -31,6 +31,8 @@ public class ControlZoneManager : MonoBehaviour
     public GameObject resourcePoint;
     public float minTravelTime = 20f;
     public float maxTravelTime = 30f;
+    public float travelTimeLeft;
+    public GameObject EnemyPrefab;
 
     void Start()
     {
@@ -54,6 +56,7 @@ public class ControlZoneManager : MonoBehaviour
         m_BoundaryPositions[1] = MapBoundaries.transform.GetChild(1).position;
 
         CalculateTargetPosition();
+        changedState.Invoke(m_ZoneState);
     }
 
     private void Update()
@@ -78,6 +81,10 @@ public class ControlZoneManager : MonoBehaviour
         }
         else if (m_ZoneState == ZoneState.MOVING)
         {
+            travelTimeLeft -= Time.deltaTime;
+            if (travelTimeLeft <= 0)
+                Debug.Log("Harvester should have arrived?");
+
             //Hide wave progress while harvesting
             waveProgressSlider.enabled = false;
 
@@ -192,8 +199,8 @@ public class ControlZoneManager : MonoBehaviour
             }
 
             //calculate travel time for the new position
-            float travelTime = Vector3.Distance(transform.position, newPosition) / travelSpeed;
-            Debug.Log("Travel time: " + travelTime);
+            travelTimeLeft = Vector3.Distance(transform.position, newPosition) / travelSpeed;
+            Debug.Log("Travel time: " + travelTimeLeft);
 
             m_TargetPosition = newPosition;
         }
