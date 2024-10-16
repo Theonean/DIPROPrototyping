@@ -130,6 +130,7 @@ public class LegHandler : MonoBehaviour
                 {
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(core.transform);
+                    transform.rotation = m_InitialRotation;
                     transform.position = core.transform.position + m_DistanceToCore;
                 }
                 break;
@@ -181,6 +182,9 @@ public class LegHandler : MonoBehaviour
 
             //Reparent leg to be on the same level as the player so it doesn't move with it
             transform.SetParent(null);
+
+            //Make the object look at the target
+            transform.LookAt(m_TargetPosition);
         }
     }
 
