@@ -57,12 +57,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DashDoesDamage: 0
   moveSpeed: 15
+  currentSpeed: 0
   maxHealth: 2
   respawnTime: 0.5
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
   transparentMaterial: {fileID: 2100000, guid: 79f9db06d60667747a33956fa6977522, type: 2}
+  moveDirection: {x: 0, y: 0, z: 0}
   accelerationCurve:
     serializedVersion: 2
     m_Curve:
@@ -425,6 +427,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7819549236545548656}
+  - component: {fileID: 1370159208359607777}
   m_Layer: 6
   m_Name: Drone_Core
   m_TagString: Untagged
@@ -452,6 +455,24 @@ Transform:
   - {fileID: 5333933622796606563}
   m_Father: {fileID: 2657404939992042329}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1370159208359607777
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4284575246778931578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d786a97fc46451642a38345294af4ec6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_playerCore: {fileID: 2502590638920620081}
+  maxAngle: 45
+  wingTop: {fileID: 286189833434784094}
+  wingBottom: {fileID: 1948573758752555984}
+  wingLeft: {fileID: 4705734884419536601}
+  wingRight: {fileID: 673941746802141286}
 --- !u!1001 &403982164279924023
 PrefabInstance:
   m_ObjectHideFlags: 0

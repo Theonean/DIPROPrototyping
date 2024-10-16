@@ -1,8 +1,6 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
-using UnityEngine.UI;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -14,6 +12,7 @@ public class PlayerCore : MonoBehaviour
     float m_DashCooldown = 1f;
     float m_DashCooldownTimer;
     public float moveSpeed;
+    public float currentSpeed;
     public float maxHealth; //Number of hits drone can take until it dies
     float m_Health; //Number of hits drone can take until it dies
     public float respawnTime; //Time until drone respawns
@@ -22,7 +21,7 @@ public class PlayerCore : MonoBehaviour
     public Material transparentMaterial;
     Camera m_Camera;
     Vector3 m_OriginalCameraPosition;
-    Vector3 m_MoveDirection;
+    public Vector3 moveDirection;
     Vector3 m_CurrentVelocity;
     public AnimationCurve accelerationCurve;
     public AnimationCurve dashCurve;
@@ -75,12 +74,12 @@ public class PlayerCore : MonoBehaviour
 
                 if (input != Vector3.zero)
                 {
-                    m_MoveDirection = input.normalized;
+                    moveDirection = input.normalized;
                     m_AccelerationTime += Time.deltaTime;
                 }
                 else
                 {
-                    m_MoveDirection = Vector3.zero;
+                    moveDirection = Vector3.zero;
                     m_AccelerationTime = 0f;
                 }
             }
@@ -106,7 +105,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (!m_IsDashing)
         {
-            float currentSpeed = moveSpeed * accelerationCurve.Evaluate(m_AccelerationTime);
+            currentSpeed = moveSpeed * accelerationCurve.Evaluate(m_AccelerationTime);
 
             //If current speed is 0, start applying drag
             if (currentSpeed == 0)
@@ -116,7 +115,7 @@ public class PlayerCore : MonoBehaviour
             //Otherwise move towards the target velocity based on the current speed
             else
             {
-                Vector3 targetVelocity = m_MoveDirection * currentSpeed;
+                Vector3 targetVelocity = moveDirection * currentSpeed;
                 m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
             }
             transform.position += m_CurrentVelocity * Time.fixedDeltaTime;
@@ -140,7 +139,7 @@ public class PlayerCore : MonoBehaviour
                 {
                     // Knockback the enemy
                     Debug.Log("Knocked back enemy");
-                    StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
+                    StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
                 }
             }
             else if (!m_IsDead) //Only take damage when not dead
@@ -185,7 +184,7 @@ public class PlayerCore : MonoBehaviour
                 {
                     // Knockback the enemy
                     Debug.Log("Knocked back enemy");
-                    StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
+                    StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
                 }
             }
         }
@@ -201,7 +200,7 @@ public class PlayerCore : MonoBehaviour
         while (elapsedTime < m_DashTime)
         {
             // Move the player in the current move direction at the specified dash speed
-            transform.position += m_MoveDirection * m_DashSpeed * Time.deltaTime * dashCurve.Evaluate(elapsedTime / m_DashTime);
+            transform.position += moveDirection * m_DashSpeed * Time.deltaTime * dashCurve.Evaluate(elapsedTime / m_DashTime);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
