@@ -8,9 +8,11 @@ public class PlayerCore : MonoBehaviour
 {
     public bool DashDoesDamage; //true = dash damages enemies, false = dash knocks enemies back
     bool m_IsDashing = false;
-    float m_DashKnockback = 50f;
-    float m_DashTime = 1.5f;
-    float m_DashSpeed = 35f;
+    float m_DashKnockback = 150f;
+    float m_DashTime = 0.3f;
+    float m_DashSpeed = 60f;
+    float m_DashCooldown = 1f;
+    float m_DashCooldownTimer;
     public float moveSpeed;
     public float maxHealth; //Number of hits drone can take until it dies
     float m_Health; //Number of hits drone can take until it dies
@@ -44,6 +46,11 @@ public class PlayerCore : MonoBehaviour
 
     void Update()
     {
+        if (m_DashCooldownTimer > 0f)
+        {
+            m_DashCooldownTimer -= Time.deltaTime;
+        }
+
         //No Input when dead
         if (!m_IsDead)
         {
@@ -52,26 +59,30 @@ public class PlayerCore : MonoBehaviour
                 returnLegs.Invoke();
             }
 
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (Input.GetKeyDown(KeyCode.Space) && m_DashCooldownTimer <= 0f)
             {
                 Dash();
             }
 
-            Vector3 input = Vector3.zero;
-            if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
-            if (Input.GetKey(KeyCode.S)) input += Vector3.back;
-            if (Input.GetKey(KeyCode.A)) input += Vector3.left;
-            if (Input.GetKey(KeyCode.D)) input += Vector3.right;
+            //Disallows steering while dashig
+            if (!m_IsDashing)
+            {
+                Vector3 input = Vector3.zero;
+                if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
+                if (Input.GetKey(KeyCode.S)) input += Vector3.back;
+                if (Input.GetKey(KeyCode.A)) input += Vector3.left;
+                if (Input.GetKey(KeyCode.D)) input += Vector3.right;
 
-            if (input != Vector3.zero)
-            {
-                m_MoveDirection = input.normalized;
-                m_AccelerationTime += Time.deltaTime;
-            }
-            else
-            {
-                m_MoveDirection = Vector3.zero;
-                m_AccelerationTime = 0f;
+                if (input != Vector3.zero)
+                {
+                    m_MoveDirection = input.normalized;
+                    m_AccelerationTime += Time.deltaTime;
+                }
+                else
+                {
+                    m_MoveDirection = Vector3.zero;
+                    m_AccelerationTime = 0f;
+                }
             }
         }
 
@@ -132,7 +143,7 @@ public class PlayerCore : MonoBehaviour
                     StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(m_MoveDirection, m_DashKnockback));
                 }
             }
-            else if(!m_IsDead) //Only take damage when not dead
+            else if (!m_IsDead) //Only take damage when not dead
             {
                 Destroy(other.gameObject);
 
@@ -154,6 +165,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (m_IsDashing) return; // Prevent multiple dashes at the same time
 
+        m_DashCooldownTimer = m_DashCooldown;
         m_IsDashing = true;
         m_Renderer.material.color = Color.red; // Change color to indicate dash
 
