@@ -35,7 +35,8 @@ public class ControlZoneManager : MonoBehaviour
     public float minTravelTime = 20f;
     public float maxTravelTime = 30f;
     public float travelTimeLeft;
-    public GameObject EnemyPrefab;
+    LineRenderer m_LineRenderer;
+    private Animator m_HarvesterAnimator;
 
     private void Awake()
     {
@@ -59,6 +60,9 @@ public class ControlZoneManager : MonoBehaviour
         }
 
         m_OriginalColor = GetComponent<Renderer>().material.color;
+        m_LineRenderer = GetComponent<LineRenderer>();
+        m_HarvesterAnimator = GetComponentInChildren<Animator>();
+        //m_HarvesterAnimator.Play("Convoy|Start_Harvesting");
 
         m_WaveTimer = 0f;
 
@@ -100,6 +104,9 @@ public class ControlZoneManager : MonoBehaviour
             travelTimeLeft -= Time.deltaTime;
             if (travelTimeLeft <= 0)
                 Debug.Log("Harvester should have arrived?");
+
+
+            DrawLineToTarget();
 
             //Hide wave progress while harvesting
             waveProgressSlider.enabled = false;
@@ -227,6 +234,14 @@ public class ControlZoneManager : MonoBehaviour
             m_TargetPosition = newPosition;
         }
 
+        //Delete points in line renderer
+        m_LineRenderer.SetPositions(new Vector3[0]);
+
+        //Add two points to line renderer
+        m_LineRenderer.positionCount = 2;
+        m_LineRenderer.SetPosition(0, transform.position);
+        m_LineRenderer.SetPosition(1, m_TargetPosition);
+
         resourcePoint.transform.position = m_TargetPosition;
     }
 
@@ -240,6 +255,15 @@ public class ControlZoneManager : MonoBehaviour
             //Lerp wave timer slider to 0 over given time
             waveProgressSlider.value = Mathf.Lerp(waveTime, 0f, timer / time);
             yield return null;
+        }
+    }
+
+    void DrawLineToTarget()
+    {
+        if (m_TargetPosition != Vector3.zero && m_LineRenderer != null)
+        {
+            m_LineRenderer.SetPosition(0, transform.position);
+            m_LineRenderer.SetPosition(1, m_TargetPosition);
         }
     }
 }

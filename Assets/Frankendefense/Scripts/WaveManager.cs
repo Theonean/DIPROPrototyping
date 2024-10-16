@@ -54,6 +54,7 @@ public class WaveManager : MonoBehaviour
         {
             case ZoneState.MOVING:
                 m_wavesSurvived++;
+                FrankenGameManager.Instance.IncrementWavesSurvived();
                 DeactivateSpawners();
                 PrepareAmbushes();
                 TriggerAmbushes();
@@ -141,8 +142,11 @@ public class WaveManager : MonoBehaviour
 
     void BIG_SINGLE_WAVE()
     {
-        Vector3 spawnPosition = controlZone.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * difficultySettings.ambushRangeScale;
-        spawnPosition.y = 0f;
+        Vector3 direction = (Vector3)UnityEngine.Random.insideUnitCircle;
+        direction.y = 0f;
+        direction.Normalize();
+        direction *= difficultySettings.ambushRangeScale;
+        Vector3 spawnPosition = controlZone.transform.position + direction;
 
         for (int x = 0; x < 3; x++)
         {
@@ -158,8 +162,11 @@ public class WaveManager : MonoBehaviour
     {
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPosition = controlZone.transform.position + (Vector3)UnityEngine.Random.insideUnitCircle * difficultySettings.ambushRangeScale;
-            spawnPosition.y = 0f;
+            Vector3 direction = (Vector3)UnityEngine.Random.insideUnitCircle;
+            direction.y = 0f;
+            direction.Normalize();
+            direction *= difficultySettings.ambushRangeScale;
+            Vector3 spawnPosition = controlZone.transform.position + direction;
 
             for (int x = 0; x < m_wavesSurvived + 1; x++)
             {

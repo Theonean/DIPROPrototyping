@@ -13,6 +13,7 @@ public class FrankenGameManager : MonoBehaviour
         GAMEOVER
     }
 
+    public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
     public GameObject YouDiedUIOverlay;
@@ -23,6 +24,16 @@ public class FrankenGameManager : MonoBehaviour
 
     private void Awake()
     {
+        // Ensure there's only one instance of the FrankenGameManager
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         YouDiedUIOverlay.SetActive(false);
         YouDiedUIOverlay.transform.localScale = Vector3.zero;
 
