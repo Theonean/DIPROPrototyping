@@ -8,7 +8,9 @@ using System.Collections.Generic;
 public enum ZoneState
 {
     MOVING, //Moving from resource point to resource point
+    START_HARVESTING, //Starting to harvest resources, animation
     HARVESTING, //"Gathering" Resources and vulnerable to enemy attacks
+    END_HARVESTING, //Ending harvest, animation
     DIED //Dead, no longer doing anything
 }
 
@@ -36,7 +38,13 @@ public class ControlZoneManager : MonoBehaviour
     public float maxTravelTime = 30f;
     public float travelTimeLeft;
     LineRenderer m_LineRenderer;
+
+    //Animator stuff
     private Animator m_HarvesterAnimator;
+    private static readonly int m_StartHarvesting = Animator.StringToHash("Convoy|Start_Harvesting");
+    private static readonly int m_Harvesting = Animator.StringToHash("Convoy|Harvesting");
+    private static readonly int m_StopHarvesting = Animator.StringToHash("Convoy|Stop_Harvesting");
+    private static readonly int m_Idle = Animator.StringToHash("Convoy|Idle");
 
     private void Awake()
     {
@@ -63,7 +71,6 @@ public class ControlZoneManager : MonoBehaviour
         m_LineRenderer = GetComponent<LineRenderer>();
 
         m_HarvesterAnimator = GetComponentInChildren<Animator>();
-        //m_HarvesterAnimator.Play("Convoy|Start_Harvesting");
 
         m_WaveTimer = 0f;
 
@@ -93,11 +100,10 @@ public class ControlZoneManager : MonoBehaviour
             if (m_WaveTimer >= waveTime)
             {
                 m_WaveTimer = 0f;
-                m_ZoneState = ZoneState.MOVING;
-                CalculateTargetPosition();
-                StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
+                m_ZoneState = ZoneState.END_HARVESTING;
                 changedState.Invoke(m_ZoneState);
-                Debug.Log("Finished Harvesting, moving to new position");
+                m_HarvesterAnimator.Play(m_StopHarvesting, 0, 0f);
+                Debug.Log("Finished Harvesting, starting end harvest animation");
             }
         }
         else if (m_ZoneState == ZoneState.MOVING)
@@ -134,9 +140,32 @@ public class ControlZoneManager : MonoBehaviour
             //If we are close enough to the target position, change state to harvesting
             if (Vector3.Distance(transform.position, m_TargetPosition) < 0.5f)
             {
-                m_ZoneState = ZoneState.HARVESTING;
+                m_ZoneState = ZoneState.START_HARVESTING;
+                m_HarvesterAnimator.Play(m_StartHarvesting, 0, 0f);
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Arrived at position, starting to harvest");
+            }
+        }
+        else if (m_ZoneState == ZoneState.START_HARVESTING)
+        {
+            if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                m_ZoneState = ZoneState.HARVESTING;
+                CalculateTargetPosition();
+                StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
+                m_HarvesterAnimator.Play(m_Harvesting, 0, 0f);
+                changedState.Invoke(m_ZoneState);
+                Debug.Log("Started Harvesting");
+            }
+        }
+        else if (m_ZoneState == ZoneState.END_HARVESTING)
+        {
+            if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
+            {
+                m_ZoneState = ZoneState.MOVING;
+                m_HarvesterAnimator.Play(m_Idle, 0, 0f);
+                changedState.Invoke(m_ZoneState);
+                Debug.Log("Finished Harvesting, moving to new position");
             }
         }
     }
@@ -230,7 +259,6 @@ public class ControlZoneManager : MonoBehaviour
 
             //calculate travel time for the new position
             travelTimeLeft = Vector3.Distance(transform.position, newPosition) / travelSpeed;
-            Debug.Log("Travel time: " + travelTimeLeft);
 
             m_TargetPosition = newPosition;
         }

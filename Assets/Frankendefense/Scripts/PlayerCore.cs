@@ -125,8 +125,6 @@ public class PlayerCore : MonoBehaviour
     //When the player collides with an object, check if the object is an enemy and apply knockback or damage when dashing
     void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Player collided with " + other.gameObject.name);
-        
         if (other.CompareTag("Enemy"))
         {
             if (m_IsDashing)

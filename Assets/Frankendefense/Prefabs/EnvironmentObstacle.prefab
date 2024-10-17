@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 9184494493253215623}
   - component: {fileID: 2468931357627319789}
   - component: {fileID: 7069397567193743126}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EnvironmentObstacle
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -133,6 +133,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destructiveTags:
   - Harvester
+  - Leg
 --- !u!65 &2468931357627319789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -148,7 +149,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3

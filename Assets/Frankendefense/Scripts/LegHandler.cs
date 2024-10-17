@@ -25,7 +25,6 @@ public class LegHandler : MonoBehaviour
     Quaternion m_InitialRotation; //local rotation the leg spawned in, used for returning the leg to the player.
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
-    GameObject m_mouseTarget; //Tracker for the mouse position when the leg is in clicked state to show the player where the leg will fly to.
     float m_LegFlySpeed = 50; //MaxSpeed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
@@ -55,13 +54,6 @@ public class LegHandler : MonoBehaviour
         m_DistanceToCore = transform.position - core.transform.position;
         m_InitialRotation = transform.rotation;
         m_LegOriginalScale = transform.localScale;
-
-        //Generate mouseTarget object
-        m_mouseTarget = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        Destroy(m_mouseTarget.GetComponent<SphereCollider>());
-        m_mouseTarget.GetComponent<MeshRenderer>().material.color = Color.red;
-        m_mouseTarget.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
-        m_mouseTarget.SetActive(false);
     }
 
     void Update()
@@ -76,12 +68,6 @@ public class LegHandler : MonoBehaviour
                 //Do Nothing while simply attached to body
                 break;
             case LegState.CLICKED:
-                //track the mouse for the currently clicked leg with the red sphere
-                if (Physics.Raycast(ray, out RaycastHit hit))
-                {
-                    m_mouseTarget.transform.position = hit.point;
-                }
-
                 break;
             case LegState.FLYING:
                 //Calculate progress t of the leg flying away based on distance to target position
@@ -139,8 +125,6 @@ public class LegHandler : MonoBehaviour
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
-                    //Flash leg white for 0.2 sec after fully regrown
-                    StartCoroutine(FlashLegWhite());
                 }
 
 
@@ -155,10 +139,6 @@ public class LegHandler : MonoBehaviour
         {
             //Leg starts waiting for mouse release to fly away and starts highlighting current mouse position, rightclick to cancel.
             m_LegState = LegState.CLICKED;
-            m_mouseTarget.SetActive(true);
-
-            //Colour mesh blue for selected
-            GetComponent<MeshRenderer>().material.color = Color.blue;
         }
     }
 
@@ -166,12 +146,8 @@ public class LegHandler : MonoBehaviour
     {
         if (m_LegState == LegState.CLICKED)
         {
-            //Recolor to gray
-            GetComponent<MeshRenderer>().material.color = Color.gray;
-
             //If a "safe" position is clicked while waiting for next click, start flying to the mouse position.
             m_LegState = LegState.FLYING;
-            m_mouseTarget.SetActive(false);
 
             //Raycast to find the position to fly to
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
@@ -194,6 +170,7 @@ public class LegHandler : MonoBehaviour
         switch (m_LegState)
         {
             case LegState.FLYING:
+            case LegState.RETURNING:
             case LegState.DETACHED:
                 //create a red sphere at explosion position which slowly fades away
                 GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
@@ -236,25 +213,7 @@ public class LegHandler : MonoBehaviour
                 break;
         }
     }
-    private IEnumerator FlashLegWhite()
-    {
-        float flashTime = 0.2f;
-        float elapsedTime = 0f;
-        Material material = GetComponent<MeshRenderer>().material;
-        Color startColor = Color.white;
-        Color endColor = material.color;
-        Color currentColor = startColor;
-        while (elapsedTime < flashTime)
-        {
-            float t = elapsedTime / flashTime;
-            currentColor = Color.Lerp(startColor, endColor, t);
-            material.color = currentColor;
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-        material.color = endColor;
-        transform.localScale = m_LegOriginalScale;
-    }
+    public void ExplodeLeg() => OnMouseDown();
 
     private IEnumerator ExplosionFadeOut(GameObject sphere)
     {
