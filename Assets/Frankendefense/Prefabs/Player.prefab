@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2502590638920620081}
   - component: {fileID: 4940386805522729210}
   - component: {fileID: 8578161595264917502}
-  - component: {fileID: 3251671137233043117}
+  - component: {fileID: 2374802726820007231}
   - component: {fileID: 112550862925735040}
   - component: {fileID: 2781782475434888494}
   m_Layer: 6
@@ -59,7 +59,7 @@ MonoBehaviour:
   moveSpeed: 15
   currentSpeed: 0
   maxHealth: 2
-  respawnTime: 0.5
+  respawnTime: 0.3
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
@@ -163,8 +163,8 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!135 &3251671137233043117
-SphereCollider:
+--- !u!65 &2374802726820007231
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -178,12 +178,12 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 7, y: 7, z: 3}
+  m_Center: {x: 0, y: -0.000000029802322, z: -0.0000009536743}
 --- !u!54 &112550862925735040
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -209,8 +209,8 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &2781782475434888494
 MonoBehaviour:
   m_ObjectHideFlags: 0

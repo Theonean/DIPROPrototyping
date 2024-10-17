@@ -4900,7 +4900,7 @@ GameObject:
   - component: {fileID: 8939018676203692738}
   - component: {fileID: 1677295457117298359}
   - component: {fileID: 1463122662569889129}
-  - component: {fileID: 2071173317959762149}
+  - component: {fileID: 497536192867358013}
   m_Layer: 3
   m_Name: Sphere
   m_TagString: Enemy
@@ -4983,13 +4983,13 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1.5, y: 1.5, z: 1.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &2071173317959762149
+--- !u!54 &497536192867358013
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -5011,7 +5011,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 0
   m_ImplicitTensor: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
   m_Constraints: 0
