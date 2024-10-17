@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Enemy_Slow
+  m_Name: Enemy_Slow_Blockout
   m_Shader: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -44,11 +44,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _1st_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: 3c825d0bd1c445f4884f48f07a0f1f45, type: 3}
+        m_Texture: {fileID: 2800000, guid: 197d3c63e1ea53e4fb95f3dbd30ffbbb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _2nd_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: 3c825d0bd1c445f4884f48f07a0f1f45, type: 3}
+        m_Texture: {fileID: 2800000, guid: 197d3c63e1ea53e4fb95f3dbd30ffbbb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AngelRing_Sampler:
@@ -120,7 +120,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Emissive_Tex:
-        m_Texture: {fileID: 2800000, guid: 26baedd100a54eb40ba25ca2a85ad505, type: 3}
+        m_Texture: {fileID: 2800000, guid: 39b0db60177cb844f9c7273cb63e4f16, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _HeightMap:
@@ -140,7 +140,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 3c825d0bd1c445f4884f48f07a0f1f45, type: 3}
+        m_Texture: {fileID: 2800000, guid: 197d3c63e1ea53e4fb95f3dbd30ffbbb, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
