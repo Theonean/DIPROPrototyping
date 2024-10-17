@@ -61,6 +61,7 @@ public class ControlZoneManager : MonoBehaviour
 
         m_OriginalColor = GetComponent<Renderer>().material.color;
         m_LineRenderer = GetComponent<LineRenderer>();
+
         m_HarvesterAnimator = GetComponentInChildren<Animator>();
         //m_HarvesterAnimator.Play("Convoy|Start_Harvesting");
 
@@ -234,14 +235,6 @@ public class ControlZoneManager : MonoBehaviour
             m_TargetPosition = newPosition;
         }
 
-        //Delete points in line renderer
-        m_LineRenderer.SetPositions(new Vector3[0]);
-
-        //Add two points to line renderer
-        m_LineRenderer.positionCount = 2;
-        m_LineRenderer.SetPosition(0, transform.position);
-        m_LineRenderer.SetPosition(1, m_TargetPosition);
-
         resourcePoint.transform.position = m_TargetPosition;
     }
 
@@ -262,8 +255,8 @@ public class ControlZoneManager : MonoBehaviour
     {
         if (m_TargetPosition != Vector3.zero && m_LineRenderer != null)
         {
-            m_LineRenderer.SetPosition(0, transform.position);
-            m_LineRenderer.SetPosition(1, m_TargetPosition);
+            m_LineRenderer.SetPosition(0, m_TargetPosition);
+            m_LineRenderer.SetPosition(1, transform.position);
         }
     }
 }
