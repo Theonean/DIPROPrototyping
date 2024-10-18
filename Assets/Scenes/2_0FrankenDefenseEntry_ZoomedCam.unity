@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.1742532, g: 0.21791545, b: 0.3001296, a: 1}
+  m_IndirectSpecularColor: {r: 0.17425346, g: 0.21791592, b: 0.3001302, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -814,7 +814,7 @@ MonoBehaviour:
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -5571,10 +5571,25 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 849553703815311033, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 849553703815311033, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 22152286a5dabde47b814b189c0a254d, type: 2}
     - target: {fileID: 1195966803986443936, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1209995948922031980, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: m_Layer
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 1479744973899506545, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
@@ -5921,6 +5936,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2590722853256387529, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Layer
+      value: 22
+      objectReference: {fileID: 0}
     - target: {fileID: 6405927489624070714, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -5941,6 +5961,41 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.6
       objectReference: {fileID: 0}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd48cabc497c0fb4a9fe26ac75fe45c6, type: 2}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd48cabc497c0fb4a9fe26ac75fe45c6, type: 2}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd48cabc497c0fb4a9fe26ac75fe45c6, type: 2}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd48cabc497c0fb4a9fe26ac75fe45c6, type: 2}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 22152286a5dabde47b814b189c0a254d, type: 2}
+    - target: {fileID: 8104520536728785199, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_Materials.Array.data[5]
+      value: 
+      objectReference: {fileID: 2100000, guid: 22152286a5dabde47b814b189c0a254d, type: 2}
     - target: {fileID: 8847105557005535999, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: m_AnchorMax.x
