@@ -123,6 +123,37 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &40455322
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 40455323}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &40455323
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 40455322}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -244.6, y: 0, z: -243}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &43567847
 GameObject:
   m_ObjectHideFlags: 0
@@ -5797,16 +5828,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
-      propertyPath: health
-      value: 999999
-      objectReference: {fileID: 0}
-    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
-        type: 3}
-      propertyPath: waveTime
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
-        type: 3}
       propertyPath: EnemyPrefab
       value: 
       objectReference: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
@@ -5821,16 +5842,6 @@ PrefabInstance:
       propertyPath: MapBoundaries
       value: 
       objectReference: {fileID: 1045678099}
-    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
-        type: 3}
-      propertyPath: maxTravelTime
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
-        type: 3}
-      propertyPath: minTravelTime
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: resourcePoint
@@ -6028,3 +6039,4 @@ SceneRoots:
   - {fileID: 1045678100}
   - {fileID: 6443427340868869809}
   - {fileID: 2128871943}
+  - {fileID: 40455323}

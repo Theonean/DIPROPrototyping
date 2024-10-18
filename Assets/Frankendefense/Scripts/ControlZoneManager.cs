@@ -24,7 +24,7 @@ public class ControlZoneManager : MonoBehaviour
     public List<Slider> healthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
-    float m_MoveSpeed = 4f;
+    public float m_MoveSpeed = 4f;
     public GameObject MapBoundaries;
     Vector3[] m_BoundaryPositions;
     Vector3 m_TargetPosition;
@@ -250,9 +250,8 @@ public class ControlZoneManager : MonoBehaviour
             // Calculate the new position
             Vector3 newPosition = transform.position + (randomDirection * randomDistance);
 
-            //Check if position is reachable reachable for navmesh
-            NavMesh.SamplePosition(newPosition, out NavMeshHit hit, 100f, NavMesh.AllAreas);
-            if (hit.hit)
+            //Check if position.x is withing the boundaries (-240, 240) and do the same for y, if both are true its a legal position
+            if (newPosition.x < 240 && newPosition.x > -240 && newPosition.y < 240 && newPosition.y > -240)
             {
                 legalPosition = true;
             }
