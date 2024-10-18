@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -61,14 +62,14 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(TriggerAmbushes());  // Coroutine to trigger ambushes over time
                 break;
             case ZoneState.HARVESTING:
-                ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived / 2, 1, spawners.Length));
+                ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived * 2, 1, spawners.Length));
                 break;
         }
     }
 
     void PrepareAmbushes()
     {
-        m_AmbushesThisMove = Mathf.RoundToInt(UnityEngine.Random.Range(MinMaxAmbushesPerMove.x, MinMaxAmbushesPerMove.y));
+        m_AmbushesThisMove = Mathf.FloorToInt(MinMaxAmbushesPerMove.x + m_wavesSurvived / 2);
         m_SurpriseAttacksQueuedThisMove.Clear();
 
         for (int i = 0; i < m_AmbushesThisMove; i++)
@@ -77,26 +78,29 @@ public class WaveManager : MonoBehaviour
         }
 
         float totalTravelTime = controlZone.GetComponent<ControlZoneManager>().travelTimeLeft;
-        float ambushOffset = totalTravelTime / difficultySettings.ambushOffsetFactor;
-        float ambushPossibleTimeFrame = totalTravelTime - (totalTravelTime / 4);
+        float ambushOffset = totalTravelTime / difficultySettings.ambushOffsetFactor;  // Ensures ambush doesn't start right away
+        float ambushPossibleTimeFrame = totalTravelTime - ambushOffset * 2;  // Exclude beginning and end times for ambushes
 
-        // Center events around the middle of the possible ambush timeframe
-        float midPoint = ambushPossibleTimeFrame / 2f;
-
+        // Handle case where there is only 1 ambush
         m_ambushTimes.Clear();
-
-        // Generate ambush times symmetrically around the midpoint
-        for (int i = 1; i <= m_AmbushesThisMove; i++)
+        if (m_AmbushesThisMove == 1)
         {
-            // Calculate a normalized position between -1 and 1 where -1 is the start and 1 is the end
-            float normalizedPos = ((float)i - 0.5f) / m_AmbushesThisMove; // Spread around the middle
-            float timeOffsetFromMid = normalizedPos * (ambushPossibleTimeFrame / 2); // Spread out from the middle
-            float ambushTime = midPoint + timeOffsetFromMid + ambushOffset; // Shift the event time accordingly
-
+            // Put the single ambush in the middle of the ambush window
+            float ambushTime = ambushOffset + ambushPossibleTimeFrame / 2;
             m_ambushTimes.Enqueue(ambushTime);
         }
+        else
+        {
+            // Calculate evenly spaced ambushes over the possible timeframe for more than 1 ambush
+            for (int i = 0; i < m_AmbushesThisMove; i++)
+            {
+                float normalizedPos = (float)i / (m_AmbushesThisMove - 1);  // Normalized between 0 and 1
+                float ambushTime = ambushOffset + normalizedPos * ambushPossibleTimeFrame;  // Spread over full ambush timeframe
+                m_ambushTimes.Enqueue(ambushTime);
+            }
+        }
 
-        Debug.Log($"Ambushes This Move: {m_AmbushesThisMove}, Ambush Offset: {ambushOffset}, Ambush Times: {string.Join(", ", m_ambushTimes)}, Total Travel Time: {totalTravelTime}");
+        Debug.Log($"Ambushes This Move: {m_AmbushesThisMove}, Ambush Times: {string.Join(", ", m_ambushTimes)}, Total Travel Time: {totalTravelTime}");
     }
 
 
@@ -113,13 +117,13 @@ public class WaveManager : MonoBehaviour
             switch (attackType)
             {
                 case SurpriseAttackTypes.AMBUSH_CIRCLE:
-                    AMBUSH_CIRCLE();
+                    StartCoroutine(AMBUSH_CIRCLE());
                     break;
                 case SurpriseAttackTypes.BIG_SINGLE_WAVE:
-                    BIG_SINGLE_WAVE();
+                    StartCoroutine(BIG_SINGLE_WAVE());
                     break;
                 case SurpriseAttackTypes.SMALL_TRIPPLE_WAVE:
-                    SMALL_TRIPPLE_WAVE();
+                    StartCoroutine(SMALL_TRIPPLE_WAVE());
                     break;
             }
         }
@@ -143,7 +147,7 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    void AMBUSH_CIRCLE()
+    IEnumerator AMBUSH_CIRCLE()
     {
         Vector3 controlZonePosition = controlZone.transform.position;
         float radius = difficultySettings.spawnRadius;
@@ -154,10 +158,11 @@ public class WaveManager : MonoBehaviour
             float angle = i * Mathf.PI * 2 / enemyCount;
             Vector3 spawnPosition = new Vector3(controlZonePosition.x + Mathf.Cos(angle) * radius, controlZonePosition.y, controlZonePosition.z + Mathf.Sin(angle) * radius);
             Instantiate(spawners[0].enemyPrefab, spawnPosition, Quaternion.identity);
+            yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
         }
     }
 
-    void BIG_SINGLE_WAVE()
+    IEnumerator BIG_SINGLE_WAVE()
     {
         Vector3 direction = (Vector3)UnityEngine.Random.insideUnitCircle;
         direction.y = 0f;
@@ -165,19 +170,29 @@ public class WaveManager : MonoBehaviour
         direction *= difficultySettings.ambushRangeScale;
         Vector3 spawnPosition = controlZone.transform.position + direction;
 
-        for (int x = 0; x < 3; x++)
+        int enemyCount = difficultySettings.baseEnemyCount + m_wavesSurvived * difficultySettings.ambushEnemyMultiplier;
+        int iX = Mathf.CeilToInt(Mathf.Sqrt(enemyCount));
+        int iZ = Mathf.CeilToInt(enemyCount / (float)iX);
+
+        for (int x = 0; x < iX; x++)
         {
-            for (int z = 0; z < 5; z++)
+            for (int z = 0; z < iZ; z++)
             {
                 Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
                 Instantiate(spawners[0].enemyPrefab, spawnPosition + offset, Quaternion.identity);
+                yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
             }
         }
     }
 
-    void SMALL_TRIPPLE_WAVE()
+    IEnumerator SMALL_TRIPPLE_WAVE()
     {
-        for (int i = 0; i < 3; i++)
+        int enemyCount = difficultySettings.baseEnemyCount + m_wavesSurvived * difficultySettings.ambushEnemyMultiplier;
+        int iI = Mathf.CeilToInt(enemyCount / 3f);
+        int iX = Mathf.CeilToInt(Mathf.Sqrt(iI));
+        int iZ = Mathf.CeilToInt(iI / (float)iX);
+
+        for (int i = 0; i < iI; i++)
         {
             Vector3 direction = (Vector3)UnityEngine.Random.insideUnitCircle;
             direction.y = 0f;
@@ -185,12 +200,13 @@ public class WaveManager : MonoBehaviour
             direction *= difficultySettings.ambushRangeScale;
             Vector3 spawnPosition = controlZone.transform.position + direction;
 
-            for (int x = 0; x < m_wavesSurvived + 1; x++)
+            for (int x = 0; x < iX; x++)
             {
-                for (int z = 0; z < m_wavesSurvived + 1; z++)
+                for (int z = 0; z < iZ; z++)
                 {
                     Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
                     Instantiate(spawners[0].enemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
                 }
             }
         }

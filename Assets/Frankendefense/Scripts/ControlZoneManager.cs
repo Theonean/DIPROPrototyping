@@ -151,8 +151,6 @@ public class ControlZoneManager : MonoBehaviour
             if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 m_ZoneState = ZoneState.HARVESTING;
-                CalculateTargetPosition();
-                StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
                 m_HarvesterAnimator.Play(m_Harvesting, 0, 0f);
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Started Harvesting");
@@ -163,6 +161,8 @@ public class ControlZoneManager : MonoBehaviour
             if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 m_ZoneState = ZoneState.MOVING;
+                CalculateTargetPosition();
+                StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
                 m_HarvesterAnimator.Play(m_Idle, 0, 0f);
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Finished Harvesting, moving to new position");

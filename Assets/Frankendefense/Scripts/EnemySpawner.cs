@@ -12,9 +12,10 @@ public class EnemySpawner : MonoBehaviour
     public UnityEvent AllEnemiesDead = new UnityEvent();
     public GameObject enemyPrefab;
     public bool AutoSpawnOverride = false;
-    public float spawnRate = 1f;
-    public bool randomizeSpawn = false;
-    public Vector2 randomSpawnRateRange = new Vector2(1f, 5f);
+
+    //How many enemies per second this spawner generates
+    float spawnRate = 0.1f;
+    float spawnEnemyInNSeconds = 0f;
     public float spawnRadius = 5f; //Visualize with gizmo
     public float enemyScale = 1f;
     private float m_SpawnTimer = 0f;
@@ -23,10 +24,7 @@ public class EnemySpawner : MonoBehaviour
 
     void Start()
     {
-        if (randomizeSpawn)
-        {
-            spawnRate = Random.Range(randomSpawnRateRange.x, randomSpawnRateRange.y);
-        }
+        spawnEnemyInNSeconds = 1f / spawnRate;
 
         if (AutoSpawnOverride)
         {
@@ -40,14 +38,9 @@ public class EnemySpawner : MonoBehaviour
         {
             case SpawnState.SPAWNING:
                 m_SpawnTimer += Time.deltaTime;
-                if (m_SpawnTimer >= spawnRate)
+                if (m_SpawnTimer >= spawnEnemyInNSeconds)
                 {
                     m_SpawnTimer = 0f;
-                    if (randomizeSpawn)
-                    {
-                        spawnRate = Random.Range(randomSpawnRateRange.x, randomSpawnRateRange.y);
-                    }
-
                     SpawnEnemy();
                 }
                 break;
@@ -82,11 +75,20 @@ public class EnemySpawner : MonoBehaviour
 
     public void StartWave(int waveNumber)
     {
+        //Increase enemies spawned per second by 0.2 per wave
+        spawnRate = 0.1f + waveNumber * 0.05f
+            + Random.Range(-0.15f, 0.15f); //Slightly randome the spawn rate so not all animations are synced across spawners;
+        spawnEnemyInNSeconds = 1f / spawnRate;
+
+        Debug.Log("Spawner creating " + spawnRate + " enemies per second at an intervall of" + spawnEnemyInNSeconds);
+
         m_SpawnState = SpawnState.SPAWNING;
 
-        //tighten randomSpawnRateRange for each wave and lower it
-        randomSpawnRateRange.x = randomSpawnRateRange.x - (waveNumber * 0.1f);
-        randomSpawnRateRange.y = randomSpawnRateRange.y - (waveNumber * 0.3f);
+        //Spawn enemies immediately at start of wave to create some intial pressure on player
+        for (int i = 0; i < waveNumber; i++)
+        {
+            SpawnEnemy();
+        }
     }
 
     public void StopWave()
