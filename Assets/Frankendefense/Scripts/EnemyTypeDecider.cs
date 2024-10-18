@@ -17,14 +17,14 @@ public class EnemyTypeDecider : MonoBehaviour
         {
             enemyRegularModel.SetActive(true);
             enemyFastModel.SetActive(false);
-            followPlayer.m_MoveSpeed = 4f;
+            followPlayer.SetMoveSpeed(4f);
         }
         //Fast enemy
         else
         {
             enemyFastModel.SetActive(true);
             enemyRegularModel.SetActive(false);
-            followPlayer.m_MoveSpeed = 6f;
+            followPlayer.SetMoveSpeed(8f);
         }
 
     }

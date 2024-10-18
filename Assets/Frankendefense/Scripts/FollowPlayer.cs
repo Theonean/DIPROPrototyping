@@ -63,4 +63,11 @@ public class FollowPlayer : MonoBehaviour
         }
         m_IsMoving = true;
     }
+
+    public void SetMoveSpeed(float speed)
+    {
+        m_MoveSpeed = speed;
+        //set speed on nav mesh agent
+        agent.speed = speed;
+    }
 }
