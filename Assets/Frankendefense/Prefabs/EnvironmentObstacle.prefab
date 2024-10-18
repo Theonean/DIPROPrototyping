@@ -276,23 +276,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[2]
       value: 0
-      value: 11.2
       objectReference: {fileID: 0}
     - target: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[3]
       value: 0
-      value: 18.8
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_Name
       value: SM_Rock
-      objectReference: {fileID: 0}
-    - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
-        type: 3}
-      propertyPath: m_StaticEditorFlags
-      value: 2147483647
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
@@ -302,7 +295,12 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -312,6 +310,12 @@ PrefabInstance:
 --- !u!4 &2468976304562377206 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722753231237248541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &8053799973257080335 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
     type: 3}
   m_PrefabInstance: {fileID: 2722753231237248541}
   m_PrefabAsset: {fileID: 0}
@@ -423,6 +427,26 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 2.1336746
       objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[0]
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[1]
+      value: 98.3
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[2]
+      value: 86.4
+      objectReference: {fileID: 0}
+    - target: {fileID: -3887185075125053422, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_BlendShapeWeights.Array.data[3]
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_Name
@@ -432,6 +456,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 22
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
