@@ -16,6 +16,11 @@ public class PlayerCore : MonoBehaviour
     public float maxHealth; //Number of hits drone can take until it dies
     float m_Health; //Number of hits drone can take until it dies
     public float respawnTime; //Time until drone respawns
+    public GameObject shield;
+    public float shieldRespawnCooldown;
+    private float m_ShieldRespawnTimer;
+    private bool m_RegenShield = false;
+
     float m_RespawnTimer;
     public UnityEvent returnLegs;
     public Material transparentMaterial;
@@ -48,6 +53,16 @@ public class PlayerCore : MonoBehaviour
         if (m_DashCooldownTimer > 0f)
         {
             m_DashCooldownTimer -= Time.deltaTime;
+        }
+
+        if (m_RegenShield)
+        {
+            m_ShieldRespawnTimer -= Time.deltaTime;
+            if (m_ShieldRespawnTimer <= 0f)
+            {
+                ModifyHealth(+1);
+                Debug.Log("Shield regenerated");
+            }
         }
 
         //No Input when dead
@@ -147,15 +162,7 @@ public class PlayerCore : MonoBehaviour
                 Destroy(other.gameObject);
 
                 // Player is not dashing, so take damage
-                m_Health--;
-                if (m_Health <= 0)
-                {
-                    //Make drone invisible when dead
-                    m_Renderer.material.color = new Color(1, 1, 1, 0);
-                    transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
-                    m_IsDead = true;
-                    m_RespawnTimer = 0f;
-                }
+                ModifyHealth(-1);
             }
         }
     }
@@ -191,6 +198,36 @@ public class PlayerCore : MonoBehaviour
 
         StartCoroutine(DashMovement());
         StartCoroutine(DashEffect());
+    }
+
+    private void ModifyHealth(int amount)
+    {
+        // Update the shield status
+        if (amount > 0)
+        {
+            m_RegenShield = false;
+            shield.SetActive(true);
+        }
+        else if (amount < 0)
+        {
+            m_RegenShield = true;
+            shield.SetActive(false);
+            m_ShieldRespawnTimer = shieldRespawnCooldown;
+        }
+
+        //Change health
+        m_Health += amount;
+        m_Health = Mathf.Clamp(m_Health, 0, maxHealth);
+
+        //Check if dead
+        if (m_Health <= 0)
+        {
+            //Make drone invisible when dead
+            m_Renderer.material.color = new Color(1, 1, 1, 0);
+            transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
+            m_IsDead = true;
+            m_RespawnTimer = 0f;
+        }
     }
 
     private IEnumerator DashMovement()
@@ -261,6 +298,15 @@ public class PlayerCore : MonoBehaviour
         foreach (var leg in m_Legs)
         {
             leg.explosionRadius += radiusIncrease;
+        }
+    }
+
+    public void IncreaseLegShotSpeed(float speedIncrease)
+    {
+        //Increase shot speed on all legs
+        foreach (var leg in m_Legs)
+        {
+            leg.legFlySpeed += speedIncrease;
         }
     }
 }

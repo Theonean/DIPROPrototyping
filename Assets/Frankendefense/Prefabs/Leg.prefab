@@ -48,6 +48,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LegState: 0
+  explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
+    type: 3}
+  legFlySpeed: 50
   flySpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -82,6 +85,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
+  colliderRadiusModifierOnFloor: 3
   explosionRadius: 10
 --- !u!135 &601932258058907427
 SphereCollider:
