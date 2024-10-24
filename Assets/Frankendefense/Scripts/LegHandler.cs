@@ -84,11 +84,9 @@ public class LegHandler : MonoBehaviour
                 //Lerp scale by how close leg is to final position
                 transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale * m_ScaleMultiplierToFly, 0.1f * Time.deltaTime * legFlySpeed);
 
-                //Lerp the collider scale to the modifier
-                m_Collider.radius = Mathf.Lerp(m_Collider.radius, m_colliderOriginalRadius * colliderRadiusModifierOnFloor, t);
-
                 if (Vector3.Distance(transform.position, m_TargetPosition) < 0.1f)
                 {
+                    m_Collider.radius = m_colliderOriginalRadius * colliderRadiusModifierOnFloor;
                     m_LegState = LegState.DETACHED;
                 }
                 break;
@@ -132,6 +130,7 @@ public class LegHandler : MonoBehaviour
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
+                    m_Collider.radius = m_colliderOriginalRadius;
                 }
                 break;
         }

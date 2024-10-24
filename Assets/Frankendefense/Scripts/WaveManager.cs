@@ -13,6 +13,9 @@ public class DifficultySettings
     public float ambushOffsetFactor = 8f;
     public int ambushEnemyMultiplier = 1;
     public float ambushRangeScale = 60f;
+    [Range(-1f, 1f)]
+    [Tooltip("by how much the ambush timeline will be offset from the center of the timeline, normalized time")]
+    public float ambushOffsetFromCenterOfTimeline = 0f;
 }
 
 public class WaveManager : MonoBehaviour
@@ -62,7 +65,7 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(TriggerAmbushes());  // Coroutine to trigger ambushes over time
                 break;
             case ZoneState.HARVESTING:
-                ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived * 2, 1, spawners.Length));
+                ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived / 4, 1, spawners.Length));
                 break;
         }
     }
@@ -86,7 +89,7 @@ public class WaveManager : MonoBehaviour
         if (m_AmbushesThisMove == 1)
         {
             // Put the single ambush in the middle of the ambush window
-            float ambushTime = ambushOffset + ambushPossibleTimeFrame / 2;
+            float ambushTime = ambushOffset + difficultySettings.ambushOffsetFromCenterOfTimeline * totalTravelTime + ambushPossibleTimeFrame / 2;
             m_ambushTimes.Enqueue(ambushTime);
         }
         else
@@ -95,7 +98,7 @@ public class WaveManager : MonoBehaviour
             for (int i = 0; i < m_AmbushesThisMove; i++)
             {
                 float normalizedPos = (float)i / (m_AmbushesThisMove - 1);  // Normalized between 0 and 1
-                float ambushTime = ambushOffset + normalizedPos * ambushPossibleTimeFrame;  // Spread over full ambush timeframe
+                float ambushTime = ambushOffset + difficultySettings.ambushOffsetFromCenterOfTimeline * totalTravelTime + normalizedPos * ambushPossibleTimeFrame;  // Spread over full ambush timeframe
                 m_ambushTimes.Enqueue(ambushTime);
             }
         }
