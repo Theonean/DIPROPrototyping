@@ -20,8 +20,9 @@ public class ControlZoneManager : MonoBehaviour
     public static ControlZoneManager Instance { get; private set; }
 
     [Tooltip("Hits needed until this object signals death")]
-    public int health;
-    public List<Slider> healthSliders = new List<Slider>();
+    public int maxHealth;
+    private int m_Health;
+    public List<Slider> m_HealthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
     public float m_MoveSpeed = 4f;
@@ -61,10 +62,11 @@ public class ControlZoneManager : MonoBehaviour
 
     void Start()
     {
-        foreach (Slider slider in healthSliders)
+        m_Health = maxHealth;
+        foreach (Slider slider in m_HealthSliders)
         {
-            slider.maxValue = health;
-            slider.value = health;
+            slider.maxValue = maxHealth;
+            slider.value = maxHealth;
         }
 
         m_OriginalColor = GetComponent<Renderer>().material.color;
@@ -174,21 +176,21 @@ public class ControlZoneManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            ModifyHealth(-1);
+            Modifym_Health(-1);
             Destroy(other.gameObject);
             StartCoroutine(TakeDamageEffect());
         }
     }
 
-    void ModifyHealth(int amount)
+    void Modifym_Health(int amount)
     {
-        health += amount;
-        foreach (Slider slider in healthSliders)
+        m_Health += amount;
+        foreach (Slider slider in m_HealthSliders)
         {
-            slider.value = health;
+            slider.value = m_Health;
         }
 
-        if (health <= 0)
+        if (m_Health <= 0)
         {
             m_ZoneState = ZoneState.DIED;
             died.Invoke();
@@ -198,8 +200,13 @@ public class ControlZoneManager : MonoBehaviour
 
     public void FullHeal()
     {
-        int healthNeededToFull = 10 - health;
-        ModifyHealth(healthNeededToFull);
+        int m_HealthNeededToFull = maxHealth - m_Health;
+        Modifym_Health(m_HealthNeededToFull);
+    }
+
+    public void Die()
+    {
+        Modifym_Health(-m_Health);
     }
 
     IEnumerator FlyAway()

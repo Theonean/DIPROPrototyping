@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class CameraTracker : MonoBehaviour
@@ -9,7 +10,13 @@ public class CameraTracker : MonoBehaviour
     public SpriteRenderer arrowSprite;
     public AnimationCurve cameraFollowCurve;
     public bool allowCameraScroll = false;
-    float m_MaxDistance = 2f;
+    public float maxDistanceFromHarvester;
+    public GameObject OutOfRangeUIGroup;
+    public TextMeshProUGUI countdownUntilRespawnText;
+    public float countdownUntilRespawnTime;
+    private float m_RespawnTimer = 0f;
+    private bool m_PlayerInRange = false;
+    float m_MaxCameraDistance = 2f;
     private Vector3 cameraOffset;
 
     private void Start()
@@ -18,13 +25,27 @@ public class CameraTracker : MonoBehaviour
         cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
     }
 
+    private void Update()
+    {
+        if (!m_PlayerInRange)
+        {
+            m_RespawnTimer -= Time.deltaTime;
+            countdownUntilRespawnText.text = m_RespawnTimer.ToString("F2");
+            if (m_RespawnTimer <= 0f)
+            {
+                ControlZoneManager.Instance.Die();
+                SetIsPlayerInRange(true);
+            }
+        }
+    }
+
     void FixedUpdate()
     {
         if (trackObjectWithCamera)
         {
             Vector3 targetPosition = objectToTrack.transform.position + cameraOffset;
             float distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
-            float t = Mathf.Clamp(distance / m_MaxDistance, 0, 1);
+            float t = Mathf.Clamp(distance / m_MaxCameraDistance, 0, 1);
 
             //Move camera towards object
             Camera.main.transform.position = Vector3.MoveTowards(
@@ -52,14 +73,33 @@ public class CameraTracker : MonoBehaviour
             arrowRotator.transform.LookAt(controlZone.transform.position);
 
             //When near the control zone, make the arrow invisible
-            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < 30f)
+            if (Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position) < maxDistanceFromHarvester)
             {
-                arrowSprite.enabled = false;
+                SetIsPlayerInRange(true);
             }
             else
             {
-                arrowSprite.enabled = true;
+                SetIsPlayerInRange(false);
             }
+        }
+    }
+
+    private void SetIsPlayerInRange(bool isInRange)
+    {
+        m_PlayerInRange = isInRange;
+
+        if (m_PlayerInRange)
+        {
+            OutOfRangeUIGroup.SetActive(false);
+            m_PlayerInRange = true;
+            arrowSprite.enabled = false;
+        }
+        else
+        {
+            OutOfRangeUIGroup.SetActive(true);
+            m_PlayerInRange = false;
+            arrowSprite.enabled = true;
+            m_RespawnTimer = countdownUntilRespawnTime;
         }
     }
 }
