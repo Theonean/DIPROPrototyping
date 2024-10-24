@@ -11,7 +11,7 @@ public class UIStatsDisplayer : MonoBehaviour
     public TextMeshProUGUI shotspeedNumber;
     private void Awake()
     {
-        // Ensure there's only one instance of the FrankenGameManager
+        // Ensure there's only one instance
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
@@ -21,7 +21,7 @@ public class UIStatsDisplayer : MonoBehaviour
             Instance = this;
         }
     }
-    
+
     public void IncrementExplosionRange()
     {
         explosionRangeNumber.text = (float.Parse(explosionRangeNumber.text) + 1f).ToString();
