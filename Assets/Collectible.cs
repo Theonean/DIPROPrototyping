@@ -6,7 +6,7 @@ using UnityEngine;
 public enum CollectibleType
 {
     ExplosionRange,
-    MoveSpeed,
+    ShotSpeed,
     FullHealth
 }
 
@@ -21,7 +21,7 @@ public class Collectible : MonoBehaviour
 
     public CollectibleType type;
     public float explosionRangeIncrease = 0.1f;
-    public float moveSpeedIncrease = 0.5f;
+    public float shotSpeedIncrease = 0.5f;
 
     // Start is called before the first frame update
     void Start()
@@ -33,7 +33,7 @@ public class Collectible : MonoBehaviour
             case CollectibleType.ExplosionRange:
                 ExplosionRangeModel.SetActive(true);
                 break;
-            case CollectibleType.MoveSpeed:
+            case CollectibleType.ShotSpeed:
                 MoveSpeedModel.SetActive(true);
                 break;
             case CollectibleType.FullHealth:
@@ -51,8 +51,8 @@ public class Collectible : MonoBehaviour
                 case CollectibleType.ExplosionRange:
                     other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeIncrease);
                     break;
-                case CollectibleType.MoveSpeed:
-                    other.gameObject.GetComponent<PlayerCore>().moveSpeed += moveSpeedIncrease;
+                case CollectibleType.ShotSpeed:
+                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedIncrease);
                     break;
                 case CollectibleType.FullHealth:
                     //Find the control zone manager and give the player full health
