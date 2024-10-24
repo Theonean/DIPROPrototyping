@@ -206,12 +206,12 @@ public class PlayerCore : MonoBehaviour
         if (amount > 0)
         {
             m_RegenShield = false;
-            shield.SetActive(true);
+            shield.GetComponent<ShieldVFX>().ToggleShield(true);
         }
         else if (amount < 0)
         {
             m_RegenShield = true;
-            shield.SetActive(false);
+            shield.GetComponent<ShieldVFX>().ToggleShield(false);
             m_ShieldRespawnTimer = shieldRespawnCooldown;
         }
 

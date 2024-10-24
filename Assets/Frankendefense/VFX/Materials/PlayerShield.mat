@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: PlayerLegExplosionCore
-  m_Shader: {fileID: -6465566751694194690, guid: d7bb4ce55c91ff04ea33066515b56160,
+  m_Name: PlayerShield
+  m_Shader: {fileID: -6465566751694194690, guid: ef829f6444ee19b4191f9967fe45ebe4,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -38,18 +38,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FresnelPower: 1.44
-    - _IntersectionPower: 1
-    - _NoiseScale: 100
-    - _Opacity: 0.9
+    - _Dissolve: -0.2
+    - _DissolveEdgeThickness: 0.1
+    - _FresnelPower: 3.46
+    - _IntersectionPower: 6.59
+    - _LowerThreshold: 0.09
+    - _NoiseScale: 57.81
+    - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Threshold: 0.2
+    - _Threshold: 0.08
+    - _UpperThreshold: 0.01
     m_Colors:
-    - _BaseColor: {r: 0.7490196, g: 0.09986929, b: 0, a: 1}
-    - _EmissiveColor: {r: 1.8443027, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 0.34659088, g: 1, b: 0, a: 0.29803923}
+    - _EmissiveColor: {r: 9.026041, g: 63.49804, b: 1.5058837, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &9023888159215972475
+--- !u!114 &5592065135278644226
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
