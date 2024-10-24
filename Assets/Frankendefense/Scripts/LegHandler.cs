@@ -15,6 +15,7 @@ public class LegHandler : MonoBehaviour
 {
     public LegState m_LegState = LegState.ATTACHED;
     public GameObject explosionPrefab; //The explosion prefab to spawn when the leg explodes.
+    public bool debugExplosionSphere; //If true, a gizmo will be drawn to show the explosion radius.
     private bool isSpinning = false; //If the leg is currently spinning (one form of attack).
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
@@ -168,15 +169,17 @@ public class LegHandler : MonoBehaviour
                 //Create explosion effect
                 Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 
-                //Create gizmo with explosionradius, for debugging
-                GameObject gizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                gizmo.transform.position = transform.position;
-                gizmo.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
-                gizmo.GetComponent<Renderer>().material = explosionMaterial;
-                gizmo.GetComponent<SphereCollider>().enabled = false;
-
-                //Destroy after 5 seconds
-                Destroy(gizmo, 5f);
+                if (debugExplosionSphere)
+                {
+                    //Create gizmo with explosionradius, for debugging
+                    GameObject gizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    gizmo.transform.position = transform.position;
+                    gizmo.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
+                    gizmo.GetComponent<Renderer>().material = explosionMaterial;
+                    gizmo.GetComponent<SphereCollider>().enabled = false;
+                    //Destroy after 5 seconds
+                    Destroy(gizmo, 5f);
+                }
 
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
                 foreach (var hitCollider in hitColliders)
