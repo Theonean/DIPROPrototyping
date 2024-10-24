@@ -50,9 +50,11 @@ public class Collectible : MonoBehaviour
             {
                 case CollectibleType.ExplosionRange:
                     other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeIncrease);
+                    UIStatsDisplayer.Instance.IncrementExplosionRange();
                     break;
                 case CollectibleType.ShotSpeed:
                     other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedIncrease);
+                    UIStatsDisplayer.Instance.IncrementShotSpeed();
                     break;
                 case CollectibleType.FullHealth:
                     //Find the control zone manager and give the player full health
