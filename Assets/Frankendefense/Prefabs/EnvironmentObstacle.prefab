@@ -72,7 +72,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 2.02, y: 2.29, z: 2.78}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &7069397567193743126
 Rigidbody:
@@ -128,7 +128,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0.28, z: 0}
-  m_LocalScale: {x: 1.42, y: 1.42, z: 1.42}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4810008336700526577}
@@ -142,8 +142,8 @@ NavMeshObstacle:
   m_GameObject: {fileID: 8462809618294767473}
   m_Enabled: 1
   serializedVersion: 3
-  m_Shape: 1
-  m_Extents: {x: 0.5, y: 0.5, z: 0.5}
+  m_Shape: 0
+  m_Extents: {x: 0.9, y: 1, z: 0.9}
   m_MoveThreshold: 0.13
   m_Carve: 1
   m_CarveOnlyStationary: 1
@@ -160,17 +160,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
@@ -330,17 +330,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.3
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
