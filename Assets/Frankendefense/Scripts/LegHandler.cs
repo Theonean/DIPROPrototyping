@@ -167,7 +167,8 @@ public class LegHandler : MonoBehaviour
             case LegState.RETURNING:
             case LegState.DETACHED:
                 //Create explosion effect
-                Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+                explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius/10);
 
                 if (debugExplosionSphere)
                 {
