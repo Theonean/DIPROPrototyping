@@ -72,7 +72,7 @@ public class WaveManager : MonoBehaviour
 
     void PrepareAmbushes()
     {
-        m_AmbushesThisMove = Mathf.FloorToInt(MinMaxAmbushesPerMove.x + m_wavesSurvived / 2);
+        m_AmbushesThisMove = Mathf.FloorToInt(MinMaxAmbushesPerMove.x + m_wavesSurvived / 4);
         m_SurpriseAttacksQueuedThisMove.Clear();
 
         for (int i = 0; i < m_AmbushesThisMove; i++)
