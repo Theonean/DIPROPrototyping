@@ -7,14 +7,14 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Outline Material
-  m_Shader: {fileID: -6465566751694194690, guid: 3340a4ae3bd1d30478635f92755468c5,
+  m_Name: PlayerShield
+  m_Shader: {fileID: -6465566751694194690, guid: ef829f6444ee19b4191f9967fe45ebe4,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
   m_InvalidKeywords: []
-  m_LightmapFlags: 4
+  m_LightmapFlags: 2
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
@@ -38,13 +38,22 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Outline_Thickness: 0.2
+    - _Dissolve: -0.2
+    - _DissolveEdgeThickness: 0.1
+    - _FresnelPower: 3.46
+    - _IntersectionPower: 6.59
+    - _LowerThreshold: 0.09
+    - _NoiseScale: 57.81
+    - _Opacity: 1
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _Threshold: 0.08
+    - _UpperThreshold: 0.01
     m_Colors:
-    - _Outline_Color: {r: 0.254717, g: 0, b: 0.2324602, a: 1}
+    - _BaseColor: {r: 0, g: 1, b: 0.2829156, a: 0.29803923}
+    - _EmissiveColor: {r: 1.662252, g: 63.498043, b: 8.742334, a: 1}
   m_BuildTextureStacks: []
---- !u!114 &3103899244255345138
+--- !u!114 &5592065135278644226
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

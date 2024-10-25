@@ -50,6 +50,7 @@ MonoBehaviour:
   m_LegState: 0
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
     type: 3}
+  debugExplosionSphere: 0
   legFlySpeed: 50
   flySpeedCurve:
     serializedVersion: 2
@@ -216,7 +217,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 23edaf41b1ef048418cf3d968e29f7ad,
         type: 3}
       propertyPath: m_Layer
-      value: 22
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
