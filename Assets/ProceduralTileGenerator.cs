@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security;
 using UnityEngine;
 using UnityEngine.ProBuilder;
@@ -10,6 +11,17 @@ public class MapGenerationData
     public Color color;
     public float positionX;
 
+    public MapGenerationData(float xPos)
+    {
+        color = Color.white;
+        positionX = xPos;
+    }
+
+    override public string ToString()
+    {
+        return $"Color: {color}, PositionX: {positionX}";
+    }
+
 }
 
 [ExecuteInEditMode]
@@ -18,13 +30,32 @@ public class MapGenerationData
 [RequireComponent(typeof(MeshCollider))]
 public class ProceduralTileGenerator : MonoBehaviour
 {
-    public MapGenerationData[] gradientColorsAtPositions;
+    //Thoughts on how to implement map generation:
+    /*
+        Generate a Path List of Type Vector2 on the controlzonemanager
+        This List gets generated at the beginning of the game for the first n waves
+        from this path array the tilemap gets generated
+
+    */
+
+    //Rework script to work with this
+    public Color[] gradientColors;
+    public int wavesPerColourRegion;
     public int sizeX = 10;
     public int sizeZ = 10;
     public float tileSize = 1f;
 
+    private void Start()
+    {
+        BuildMesh();
+    }
+
     public void BuildMesh()
     {
+        //Size x now gets calculated with the number of paths in the control zone 
+        //the total length (distance first to last path point) divided by tilesize should be the new x
+        sizeX = Mathf.CeilToInt(ControlZoneManager.Instance.getPathDistance() / tileSize);
+        Debug.Log($"Tilemap Sizes: sizeX: {sizeX}, sizeZ: {sizeZ}");
         int numTiles = sizeX * sizeZ;
         int numTris = numTiles * 2;
 
@@ -55,7 +86,7 @@ public class ProceduralTileGenerator : MonoBehaviour
                 uv[z * vSize_X + x] = new Vector2((float)x, (float)z); // UV normalized by size
 
                 // Get colors for the current x position
-                (startGradient, endGradient) = GetColorGradientAtPosition(x);
+                (startGradient, endGradient) = GetColorGradientAtPosition(xPos);
 
                 // Normalize xPos between startGradient.positionX and endGradient.positionX
                 float t = Mathf.InverseLerp(startGradient.positionX, endGradient.positionX, xPos);
@@ -64,8 +95,6 @@ public class ProceduralTileGenerator : MonoBehaviour
                 colors[z * vSize_X + x] = Color.Lerp(startGradient.color, endGradient.color, t);
             }
         }
-
-
 
         int[] triangles = new int[numTris * 3];
         for (z = 0; z < sizeZ; z++)
@@ -111,46 +140,57 @@ public class ProceduralTileGenerator : MonoBehaviour
         sizeZ += additionalRows;
         BuildMesh();
     }
-    public void AddColourRegion(MapGenerationData mapGenerationData)
-    {
-        // Add the new color to the gradientColorsAtPositions array
-        List<MapGenerationData> gradientColorsList = new List<MapGenerationData>(gradientColorsAtPositions);
-        gradientColorsList.Add(mapGenerationData);
-        gradientColorsAtPositions = gradientColorsList.ToArray();
-
-        // Sort the gradientColorsAtPositions array by positionX
-        System.Array.Sort(gradientColorsAtPositions, (x, y) => x.positionX.CompareTo(y.positionX));
-
-        // Rebuild the mesh with the updated color gradient
-        BuildMesh();
-    }
-
     // Iterate over color gradient and return start and end colors at a given position
     private (MapGenerationData, MapGenerationData) GetColorGradientAtPosition(float xPos)
     {
-        // Check if the gradient is empty or the position is outside the range
-        if (gradientColorsAtPositions.Length == 0 || xPos <= gradientColorsAtPositions[0].positionX)
+        ControlZoneManager ctrlZone = ControlZoneManager.Instance;
+
+        // Check if the pathPositions array is empty or if xPos is out of range
+        if (ctrlZone.pathPositions.Length == 0 || xPos < ctrlZone.getDistanceAlongPathFromPoint(0))
         {
-            return (gradientColorsAtPositions[0], gradientColorsAtPositions[0]);
-        }
-        if (xPos >= gradientColorsAtPositions[gradientColorsAtPositions.Length - 1].positionX)
-        {
-            int lastIndex = gradientColorsAtPositions.Length - 1;
-            return (gradientColorsAtPositions[lastIndex], gradientColorsAtPositions[lastIndex]);
+            Debug.LogError("Invalid pathPositions array or pos is out of range.");
+            Debug.Log("ctrlZone.pathPositions.Length: " + ctrlZone.pathPositions.Length + " xPos: " + xPos + " pathPositions[0].z: " + ctrlZone.getDistanceAlongPathFromPoint(0));
+            // Return the first color if xPos is before the first path position
+            return (new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(0)) { color = gradientColors[0] },
+                    new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(0)) { color = gradientColors[0] });
         }
 
-        // Iterate through positions to find the range containing xPos
-        for (int i = 0; i < gradientColorsAtPositions.Length - 1; i++)
+        if (xPos >= ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1))
         {
-            if (xPos >= gradientColorsAtPositions[i].positionX && xPos <= gradientColorsAtPositions[i + 1].positionX)
+            Debug.LogError("Position is beyond the last path position.");
+            Debug.Log("xPos: " + xPos + " lastPathPosition.z: " + ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1));
+            // Return the last color if xPos is beyond the last path position
+            return (new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1)) { color = gradientColors[^1] },
+                    new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1)) { color = gradientColors[^1] });
+        }
+
+        // Iterate through path positions to find the range containing xPos, but in chunks of `wavesPerColourRegion`
+        for (int i = 0; i < ctrlZone.pathPositions.Length - 1; i += wavesPerColourRegion)
+        {
+            int regionEndIndex = Mathf.Min(i - i % wavesPerColourRegion + wavesPerColourRegion, ctrlZone.pathPositions.Length - 1); // End of current color region
+            float regionStartDistance = ctrlZone.getDistanceAlongPathFromPoint(i);
+            float regionEndDistance = ctrlZone.getDistanceAlongPathFromPoint(regionEndIndex);
+
+            Debug.Log("Comparing xPos: " + xPos + " with regionStartDistance: " + regionStartDistance + " and regionEndDistance: " + regionEndDistance);
+
+            if (xPos >= regionStartDistance && xPos <= regionEndDistance)
             {
-                return (gradientColorsAtPositions[i], gradientColorsAtPositions[i + 1]);
+                // Determine color index based on the region's starting index in terms of `wavesPerColourRegion`
+                int colorIndex = (i / wavesPerColourRegion) % gradientColors.Length;
+
+                // Create start and end gradient data for this color region
+                MapGenerationData startGradientData = new MapGenerationData(regionStartDistance) { color = gradientColors[colorIndex] };
+                MapGenerationData endGradientData = new MapGenerationData(regionEndDistance) { color = gradientColors[(colorIndex + 1) % gradientColors.Length] };
+
+                Debug.Log($"Start Gradient: {startGradientData}, End Gradient: {endGradientData}");
+
+                return (startGradientData, endGradientData);
             }
         }
 
-        // Default return if no match found
-        return (null, null);
+        // Default return if no match found (though ideally should never reach here with correct input)
+        Debug.LogWarning("No matching gradient range found for xPos; returning default color.");
+        return (new MapGenerationData(xPos) { color = Color.white },
+                new MapGenerationData(xPos) { color = Color.white });
     }
-
-
 }

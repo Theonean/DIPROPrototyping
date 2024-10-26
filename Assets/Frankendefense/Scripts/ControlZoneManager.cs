@@ -4,6 +4,8 @@ using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using System.Linq;
+using System;
 
 public enum ZoneState
 {
@@ -12,6 +14,14 @@ public enum ZoneState
     HARVESTING, //"Gathering" Resources and vulnerable to enemy attacks
     END_HARVESTING, //Ending harvest, animation
     DIED //Dead, no longer doing anything
+}
+
+public enum Direction
+{
+    up,
+    down,
+    left,
+    right
 }
 
 public class ControlZoneManager : MonoBehaviour
@@ -25,7 +35,7 @@ public class ControlZoneManager : MonoBehaviour
     public List<Slider> m_HealthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
-    public float m_MoveSpeed = 4f;
+    public float moveSpeed = 4f;
     public GameObject MapBoundaries;
     Vector3[] m_BoundaryPositions;
     Vector3 m_TargetPosition;
@@ -39,6 +49,13 @@ public class ControlZoneManager : MonoBehaviour
     public float maxTravelTime = 30f;
     public float travelTimeLeft;
     LineRenderer m_LineRenderer;
+    public Direction pathAlignment = Direction.up;
+    public int initialPathPositions = 20;
+    public int pathAngle = 35;
+    private int pathPositionsIndex = 0;
+    public Vector3[] pathPositions;
+
+
 
     //Animator stuff
     private Animator m_HarvesterAnimator;
@@ -58,6 +75,8 @@ public class ControlZoneManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        PopulatePathList(false);
     }
 
     void Start()
@@ -85,7 +104,8 @@ public class ControlZoneManager : MonoBehaviour
         m_BoundaryPositions[0] = MapBoundaries.transform.GetChild(0).position;
         m_BoundaryPositions[1] = MapBoundaries.transform.GetChild(1).position;
 
-        CalculateTargetPosition();
+        //CalculateTargetPosition();
+        SetNextPathPosition();
         changedState.Invoke(m_ZoneState);
     }
 
@@ -125,7 +145,7 @@ public class ControlZoneManager : MonoBehaviour
             Vector3 offsetPosition = m_TargetPosition + transform.right * sinOffset;
 
             // Move towards the target position with sinus wave
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, offsetPosition, m_MoveSpeed * Time.deltaTime);
+            Vector3 newPosition = Vector3.MoveTowards(transform.position, offsetPosition, moveSpeed * Time.deltaTime);
 
             // Calculate the movement direction
             Vector3 moveDirection = (newPosition - transform.position).normalized;
@@ -163,7 +183,8 @@ public class ControlZoneManager : MonoBehaviour
             if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 m_ZoneState = ZoneState.MOVING;
-                CalculateTargetPosition();
+                //CalculateTargetPosition();
+                SetNextPathPosition();
                 StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
                 m_HarvesterAnimator.Play(m_Idle, 0, 0f);
                 changedState.Invoke(m_ZoneState);
@@ -171,6 +192,94 @@ public class ControlZoneManager : MonoBehaviour
             }
         }
     }
+
+    //Create a List of Vector3 which is the path the control zone is going to move from, wave to wave
+    //Control zone can move in either of cardinal directions depending on setup direction in edtior ( or random)
+    public void PopulatePathList(bool randomDirection)
+    {
+        pathPositions = new Vector3[initialPathPositions];
+        pathPositions[0] = Vector3.zero;
+
+        Vector3 pathDirection = Vector3.zero;
+
+        //If random direction, calculate one within given allowed path angle
+        if (randomDirection)
+        {
+
+        }
+        //Go straight in the given direction otherwise
+        else
+        {
+            switch (pathAlignment)
+            {
+                case Direction.up:
+                    pathDirection = Vector3.forward;
+                    break;
+
+                case Direction.down:
+                    pathDirection = Vector3.back;
+                    break;
+
+                case Direction.left:
+                    pathDirection = Vector3.left;
+                    break;
+
+                case Direction.right:
+                    pathDirection = Vector3.right;
+                    break;
+            }
+        }
+
+        Vector3 lastPathPosition = transform.position;
+        for (int i = 1; i < initialPathPositions; i++)
+        {
+            //Each points direction has to be calculated
+            Vector3 tempPos = CalculatePathPosition(lastPathPosition, pathDirection);
+            pathPositions[i] = tempPos;
+            lastPathPosition = tempPos;
+        }
+
+        //Debug path by printing it to console and drawing a debug gizmo on each of the points
+        int d = 4;
+        int id = 0;
+        foreach (Vector3 position in pathPositions)
+        {
+            Debug.DrawLine(position, position + Vector3.up * 200f, id % d == 0 ? Color.black : Color.yellow, 1000f);
+            id++;
+        }
+
+        // Debug path positions as a formatted string
+        string pathPositionsString = string.Join(", ", pathPositions.Select(p => p.ToString()));
+        Debug.Log($"Control Zone Path Positions: {pathPositionsString}");
+    }
+
+    private void SetNextPathPosition()
+    {
+        //Calculate the next path position based on the current position and the path direction
+        Vector3 nextPathPosition = pathPositions[pathPositionsIndex];
+        m_TargetPosition = nextPathPosition;
+        resourcePoint.transform.position = nextPathPosition;
+
+        //calculate travel time for the new position
+        travelTimeLeft = Vector3.Distance(transform.position, nextPathPosition) / moveSpeed;
+
+        pathPositionsIndex++;
+    }
+
+    public float getDistanceAlongPathFromPoint(Index pathIndex)
+    {
+        //If the direction is up or down, return the z distance
+        if (pathAlignment == Direction.up || pathAlignment == Direction.down)
+        {
+            return pathPositions[pathIndex].z;
+        }
+        //If the direction is left or right, return the x distance
+        else 
+        {
+            return pathPositions[pathIndex].x;
+        }
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -237,39 +346,17 @@ public class ControlZoneManager : MonoBehaviour
         renderer.material.color = m_OriginalColor;
     }
 
-    void CalculateTargetPosition()
+    Vector3 CalculatePathPosition(Vector3 startPosition, Vector3 direction)
     {
-        bool legalPosition = false;
+        // Calculate a random distance between 20 and 30 seconds of travel
+        float minDistance = moveSpeed * minTravelTime;
+        float maxDistance = moveSpeed * maxTravelTime;
+        float randomDistance = UnityEngine.Random.Range(minDistance, maxDistance);
 
-        while (!legalPosition)
-        {
-            // Calculate a random direction
-            Vector3 randomDirection = Random.insideUnitSphere;
-            randomDirection.y = 0; // Keep it on the same y-level
-            randomDirection.Normalize();
+        // Calculate the new position
+        Vector3 newPosition = startPosition + (direction * randomDistance);
 
-            // Calculate a random distance between 20 and 30 seconds of travel
-            float travelSpeed = m_MoveSpeed;
-            float minDistance = travelSpeed * minTravelTime;
-            float maxDistance = travelSpeed * maxTravelTime;
-            float randomDistance = Random.Range(minDistance, maxDistance);
-
-            // Calculate the new position
-            Vector3 newPosition = transform.position + (randomDirection * randomDistance);
-
-            //Check if position.x is withing the boundaries (-240, 240) and do the same for y, if both are true its a legal position
-            if (newPosition.x < 240 && newPosition.x > -240 && newPosition.y < 240 && newPosition.y > -240)
-            {
-                legalPosition = true;
-            }
-
-            //calculate travel time for the new position
-            travelTimeLeft = Vector3.Distance(transform.position, newPosition) / travelSpeed;
-
-            m_TargetPosition = newPosition;
-        }
-
-        resourcePoint.transform.position = m_TargetPosition;
+        return newPosition;
     }
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
@@ -292,5 +379,10 @@ public class ControlZoneManager : MonoBehaviour
             m_LineRenderer.SetPosition(0, m_TargetPosition);
             m_LineRenderer.SetPosition(1, transform.position);
         }
+    }
+
+    public float getPathDistance()
+    {
+        return Vector3.Distance(pathPositions[0], pathPositions[pathPositions.Length - 1]);
     }
 }

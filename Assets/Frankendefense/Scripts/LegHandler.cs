@@ -114,8 +114,9 @@ public class LegHandler : MonoBehaviour
 
                 // Update the rotation of the leg to smoothly return to its initial rotation
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialTransform.rotation, 1f * Time.deltaTime);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * legFlySpeed * 1.5f);
 
-                if (distanceToUpdatedTarget < 0.03f)
+                if (distanceToUpdatedTarget < 1f)
                 {
                     transform.position = updatedTargetPosition;
                     m_LegState = LegState.ATTACHED;
@@ -123,7 +124,6 @@ public class LegHandler : MonoBehaviour
                     transform.rotation = m_InitialTransform.rotation;
                     m_Collider.radius = m_colliderOriginalRadius;
                 }
-                transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * legFlySpeed * 1.5f);
 
                 break;
             case LegState.REGROWING:
