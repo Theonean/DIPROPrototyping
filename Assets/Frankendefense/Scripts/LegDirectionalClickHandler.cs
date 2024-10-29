@@ -7,6 +7,9 @@ public class LegDirectionalClickHandler : MonoBehaviour
     public GameObject leg2; //Northeast
     public GameObject leg3; //Southeast
     public GameObject leg4; //Southwest
+    public CanvasGroup outOfLegsGroup; //UI element to quickly flash red when out of legs
+    public AnimationCurve outOfLegsFlashCurve; //Curve for the out of legs flash
+    public float outOfLegsFlashDuration; //Duration of the out of legs flash    
     private GameObject activeLeg; // The leg currently tracked and attached to the core
     GameObject lastLegClicked;
 
@@ -15,6 +18,7 @@ public class LegDirectionalClickHandler : MonoBehaviour
     public float SouthWestOffset;
     public float rotationDelay = 0.5f; // Delay before rotation starts
     private bool canRotate = true;  // To control rotation after delay
+    private Coroutine canvasFlashRoutine;
 
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same leg
     void Update()
@@ -46,6 +50,15 @@ public class LegDirectionalClickHandler : MonoBehaviour
 
             // Start the rotation delay coroutine
             StartCoroutine(StartRotationDelay());
+        }
+        else if(Input.GetMouseButtonDown(0) && activeLeg == null)
+        {
+            if(canvasFlashRoutine != null)
+            {
+                StopCoroutine(canvasFlashRoutine);
+            }
+
+            canvasFlashRoutine = StartCoroutine(FlashOutOfRockets());
         }
 
         if (Input.GetMouseButtonUp(0) && lastLegClicked != null)
@@ -131,5 +144,16 @@ public class LegDirectionalClickHandler : MonoBehaviour
         if (leg == leg4) return SouthWestOffset; // Southwest leg
 
         return 0f; // Default, no offset
+    }
+
+    private IEnumerator FlashOutOfRockets()
+    {
+        float t = 0;
+        while (t < outOfLegsFlashDuration)
+        {
+            t += Time.deltaTime;
+            outOfLegsGroup.alpha = outOfLegsFlashCurve.Evaluate(t / outOfLegsFlashDuration);
+            yield return null;
+        }
     }
 }

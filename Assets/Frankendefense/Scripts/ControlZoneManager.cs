@@ -59,10 +59,10 @@ public class ControlZoneManager : MonoBehaviour
 
     //Animator stuff
     private Animator m_HarvesterAnimator;
-    private static readonly int m_StartHarvesting = Animator.StringToHash("Convoy|Start_Harvesting");
-    private static readonly int m_Harvesting = Animator.StringToHash("Convoy|Harvesting");
-    private static readonly int m_StopHarvesting = Animator.StringToHash("Convoy|Stop_Harvesting");
-    private static readonly int m_Idle = Animator.StringToHash("Convoy|Idle");
+    private static readonly int m_StartHarvesting = Animator.StringToHash("Start_Harvesting");
+    private static readonly int m_Harvesting = Animator.StringToHash("Harvesting");
+    private static readonly int m_StopHarvesting = Animator.StringToHash("Stop_Harvesting");
+    private static readonly int m_Idle = Animator.StringToHash("Idle");
 
     private void Awake()
     {
