@@ -685,7 +685,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   waveTime: 30
-  m_MoveSpeed: 4
+  moveSpeed: 4
   MapBoundaries: {fileID: 0}
   waveProgressSlider: {fileID: 5504734985198772234}
   changedState:
@@ -695,6 +695,10 @@ MonoBehaviour:
   minTravelTime: 20
   maxTravelTime: 30
   travelTimeLeft: 0
+  pathAlignment: 0
+  initialPathPositions: 20
+  pathAngle: 35
+  pathPositions: []
 --- !u!65 &3181088379567748915
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1037,7 +1041,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1608aaff94d3b044ca39531020d240ff,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
