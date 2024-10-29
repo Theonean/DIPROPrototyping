@@ -200,7 +200,7 @@ public class PlayerCore : MonoBehaviour
         StartCoroutine(DashEffect());
     }
 
-    private void ModifyHealth(int amount)
+    public void ModifyHealth(int amount)
     {
         // Update the shield status
         if (amount > 0)
