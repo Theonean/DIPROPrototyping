@@ -12,6 +12,7 @@ public class CameraTracker : MonoBehaviour
     public AnimationCurve cameraFollowCurve;
     public bool allowCameraScroll = false;
     public float maxDistanceFromHarvester;
+    public float cameraMoveSpeed = 20f;
     public GameObject OutOfRangeUIGroup;
     public CanvasGroup outOfRangeUIGroupCanvas; // CanvasGroup for controlling the alpha of the UI
     public TextMeshProUGUI countdownUntilRespawnText;
@@ -20,6 +21,7 @@ public class CameraTracker : MonoBehaviour
     private bool m_PlayerInRange = true;
     float m_MaxCameraDistance = 2f;
     private Vector3 cameraOffset;
+    private PlayerCore playerCore;
 
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
 
@@ -27,6 +29,8 @@ public class CameraTracker : MonoBehaviour
     {
         // Save the initial offset between camera and object
         cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
+        playerCore = GetComponentInChildren<PlayerCore>();
+        
     }
 
     private void Update()
@@ -38,7 +42,8 @@ public class CameraTracker : MonoBehaviour
             if (m_RespawnTimer <= 0f)
             {
                 SetIsPlayerInRange(true);
-                ControlZoneManager.Instance.Die();
+                //Make the player die
+                playerCore.ModifyHealth(-100);
             }
         }
     }
@@ -55,20 +60,7 @@ public class CameraTracker : MonoBehaviour
             Camera.main.transform.position = Vector3.MoveTowards(
                 Camera.main.transform.position,
                 targetPosition,
-                20f * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
-
-            if (allowCameraScroll)
-            {
-                //Scroll wheel to zoom in and out
-                if (Input.GetAxis("Mouse ScrollWheel") > 0f)
-                {
-                    cameraOffset.y -= 0.3f;
-                }
-                else if (Input.GetAxis("Mouse ScrollWheel") < 0f)
-                {
-                    cameraOffset.y += 0.3f;
-                }
-            }
+                cameraMoveSpeed * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
         }
 
         // Rotate arrow to face the control zone
