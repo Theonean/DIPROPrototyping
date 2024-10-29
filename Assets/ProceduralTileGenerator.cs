@@ -148,8 +148,9 @@ public class ProceduralTileGenerator : MonoBehaviour
         // Check if the pathPositions array is empty or if xPos is out of range
         if (ctrlZone.pathPositions.Length == 0 || xPos < ctrlZone.getDistanceAlongPathFromPoint(0))
         {
-            Debug.LogError("Invalid pathPositions array or pos is out of range.");
-            Debug.Log("ctrlZone.pathPositions.Length: " + ctrlZone.pathPositions.Length + " xPos: " + xPos + " pathPositions[0].z: " + ctrlZone.getDistanceAlongPathFromPoint(0));
+            //Debug.LogError("Invalid pathPositions array or pos is out of range.");
+            //Debug.Log("ctrlZone.pathPositions.Length: " + ctrlZone.pathPositions.Length + " xPos: " + xPos + " pathPositions[0].z: " + ctrlZone.getDistanceAlongPathFromPoint(0));
+            
             // Return the first color if xPos is before the first path position
             return (new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(0)) { color = gradientColors[0] },
                     new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(0)) { color = gradientColors[0] });
@@ -157,8 +158,9 @@ public class ProceduralTileGenerator : MonoBehaviour
 
         if (xPos >= ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1))
         {
-            Debug.LogError("Position is beyond the last path position.");
-            Debug.Log("xPos: " + xPos + " lastPathPosition.z: " + ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1));
+            //Debug.LogError("Position is beyond the last path position.");
+            //Debug.Log("xPos: " + xPos + " lastPathPosition.z: " + ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1));
+            
             // Return the last color if xPos is beyond the last path position
             return (new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1)) { color = gradientColors[^1] },
                     new MapGenerationData(ctrlZone.getDistanceAlongPathFromPoint(ctrlZone.pathPositions.Length - 1)) { color = gradientColors[^1] });
@@ -171,7 +173,7 @@ public class ProceduralTileGenerator : MonoBehaviour
             float regionStartDistance = ctrlZone.getDistanceAlongPathFromPoint(i);
             float regionEndDistance = ctrlZone.getDistanceAlongPathFromPoint(regionEndIndex);
 
-            Debug.Log("Comparing xPos: " + xPos + " with regionStartDistance: " + regionStartDistance + " and regionEndDistance: " + regionEndDistance);
+            //Debug.Log("Comparing xPos: " + xPos + " with regionStartDistance: " + regionStartDistance + " and regionEndDistance: " + regionEndDistance);
 
             if (xPos >= regionStartDistance && xPos <= regionEndDistance)
             {
@@ -182,14 +184,14 @@ public class ProceduralTileGenerator : MonoBehaviour
                 MapGenerationData startGradientData = new MapGenerationData(regionStartDistance) { color = gradientColors[colorIndex] };
                 MapGenerationData endGradientData = new MapGenerationData(regionEndDistance) { color = gradientColors[(colorIndex + 1) % gradientColors.Length] };
 
-                Debug.Log($"Start Gradient: {startGradientData}, End Gradient: {endGradientData}");
+                //Debug.Log($"Start Gradient: {startGradientData}, End Gradient: {endGradientData}");
 
                 return (startGradientData, endGradientData);
             }
         }
 
         // Default return if no match found (though ideally should never reach here with correct input)
-        Debug.LogWarning("No matching gradient range found for xPos; returning default color.");
+        Debug.LogError("No matching gradient range found for xPos; returning default color.");
         return (new MapGenerationData(xPos) { color = Color.white },
                 new MapGenerationData(xPos) { color = Color.white });
     }
