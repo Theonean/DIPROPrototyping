@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.VFX;
 
 public class Obstacle : MonoBehaviour
@@ -12,6 +13,10 @@ public class Obstacle : MonoBehaviour
 
     private void Start()
     {
+        RandomizeBlendWeights();
+    }
+    public void RandomizeBlendWeights()
+    {
         //Change the Blendshape values to random
         meshRenderer.SetBlendShapeWeight(0, Random.Range(0f, 100f));
         meshRenderer.SetBlendShapeWeight(1, Random.Range(0f, 100f));
@@ -21,6 +26,7 @@ public class Obstacle : MonoBehaviour
         //Reload the meshrenderer
         meshRenderer.UpdateGIMaterials();
     }
+
     void OnTriggerEnter(Collider other)
     {
         HandleCollision(other.gameObject);
@@ -55,6 +61,6 @@ public class Obstacle : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         meshRenderer.enabled = false;
         yield return new WaitForSeconds(delay);
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

@@ -12,6 +12,9 @@ public class ObstaclePlacer : MonoBehaviour
     private GameObject[] m_obstacles0;
     private GameObject[] m_obstacles1;
     private GameObject[] m_obstacles2;
+    public Vector2 regionWidth = new Vector2(-300, 300); // Define x-axis range
+    public float regionOvershoot = 50f;
+    public float regionUndershoot = 50f;
 
     private void Start()
     {
@@ -45,8 +48,7 @@ public class ObstaclePlacer : MonoBehaviour
         for (int pathIndex = 0; pathIndex <= 2; pathIndex++)
         {
             // Define region bounds based on path positions
-            Vector2 regionHeight = new Vector2(pathPositions[pathIndex].z, pathPositions[pathIndex + 1].z);
-            Vector2 regionWidth = new Vector2(-300, 300); // Define x-axis range
+            Vector2 regionHeight = new Vector2(pathPositions[pathIndex].z - regionUndershoot, pathPositions[pathIndex + 1].z + regionOvershoot);
 
             for (int i = 0; i < obstaclesPerRegion; i++)
             {
@@ -85,20 +87,23 @@ public class ObstaclePlacer : MonoBehaviour
         Vector3[] pathPositions = ProceduralTileGenerator.Instance.GetPath();
 
         // Define region bounds based on path positions
-        Vector2 regionHeight = new Vector2(pathPositions[startPathIndex].z, pathPositions[startPathIndex + 1].z);
-        Vector2 regionWidth = new Vector2(-500, 500); // Define x-axis range
+        Vector2 regionHeight = new Vector2(pathPositions[startPathIndex].z - regionUndershoot, pathPositions[startPathIndex + 1].z + regionOvershoot);
 
-        foreach (GameObject obstacle in obstacles)
+        for (int i = 0; i < obstacles.Length; i++)
         {
             // Randomly generate a position within the specified bounds
             float xPos = Random.Range(regionWidth.x, regionWidth.y);
             float zPos = Random.Range(regionHeight.x, regionHeight.y);
             Vector3 randomPosition = new Vector3(xPos, 0, zPos);
+            GameObject obstacle = obstacles[i];
 
             // Check if the position is on the NavMesh and place an obstacle if it is
             if (NavMesh.SamplePosition(randomPosition, out NavMeshHit hit, 10f, NavMesh.AllAreas))
             {
-                obstacle.transform.position = hit.position;
+                if (obstacle != null)
+                {
+                    obstacle.GetComponent<ObstaclePattern>().MovePattern(hit.position);
+                }
             }
         }
         Debug.Log("Moved Obstacles to new region " + startPathIndex);
