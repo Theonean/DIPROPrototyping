@@ -129,11 +129,12 @@ public class ProceduralTileGenerator : MonoBehaviour
 
                 // Calculate interpolation factor `t` within this region based on x-position
                 float t = (xPos - regionStartDistance) / (regionEndDistance - regionStartDistance);
+                Debug.Log(t);
                 return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
             }
         }
 
-        return Color.white; // Fallback color if xPos is outside all regions
+        return gradientColors[0]; // Fallback color if xPos is outside all regions
     }
     public Vector3[] GeneratePath(Vector3 startPosition)
     {

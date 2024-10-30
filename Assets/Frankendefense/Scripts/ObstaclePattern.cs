@@ -19,9 +19,8 @@ public class ObstaclePattern : MonoBehaviour
         {
             obstacle.gameObject.SetActive(true);
             obstacle.RandomizeBlendWeights();
+            obstacle.UpdateColor();
         }
-
-        SetMeshColoursToRegion();
     }
 
 
@@ -29,27 +28,7 @@ public class ObstaclePattern : MonoBehaviour
     {
         foreach (Obstacle obstacle in obstacles)
         {
-            // Calculate the color based on the obstacle's position along the path
-            float zPosition = obstacle.transform.position.z;
-            Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
-
-            // Use MaterialPropertyBlock to set color without affecting shared materials
-            MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-            if (obstacle.meshRenderer is SkinnedMeshRenderer skinnedMeshRenderer)
-            {
-                skinnedMeshRenderer.GetPropertyBlock(propBlock);
-                propBlock.SetColor("_BaseColor", regionColor);
-
-                Color shadowColor1 = skinnedMeshRenderer.material.GetColor("_1st_ShadeColor");
-                Color shadowColor2 = skinnedMeshRenderer.material.GetColor("_2nd_ShadeColor");
-
-                propBlock.SetColor("_1st_ShadeColor", regionColor * shadowColor1);
-                propBlock.SetColor("_2nd_ShadeColor", regionColor * shadowColor2);
-
-                skinnedMeshRenderer.SetPropertyBlock(propBlock);
-
-
-            }
+            obstacle.UpdateColor();
         }
     }
 

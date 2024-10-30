@@ -15,7 +15,7 @@ public class FrankenGameManager : MonoBehaviour
     public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
-    public GameObject YouDiedUIOverlay;
+    public CanvasGroup YouDiedUIOverlay;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -32,8 +32,7 @@ public class FrankenGameManager : MonoBehaviour
             Instance = this;
         }
 
-        YouDiedUIOverlay.SetActive(false);
-        YouDiedUIOverlay.transform.localScale = Vector3.zero;
+        YouDiedUIOverlay.alpha = 0;
 
         ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
         zoneManager.died.AddListener(() => PlayerDied());
@@ -60,7 +59,8 @@ public class FrankenGameManager : MonoBehaviour
 
     void PlayerDied()
     {
-        YouDiedUIOverlay.SetActive(true);
+        YouDiedUIOverlay.alpha = 0;
+
         m_GameState = GameState.GAMEOVER;
 
         FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
@@ -76,13 +76,14 @@ public class FrankenGameManager : MonoBehaviour
         StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
     }
 
-    IEnumerator ScaleUpUI(GameObject uiOverlay)
+    IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
     {
         float time = 0f;
-        while (time < 1f)
+        float maxTime = 5f;
+        while (time < maxTime)
         {
             time += Time.deltaTime;
-            uiOverlay.transform.localScale = Vector3.one * time;
+            uiOverlay.alpha = Mathf.Lerp(0, 1, time / maxTime);
             yield return null;
         }
     }
