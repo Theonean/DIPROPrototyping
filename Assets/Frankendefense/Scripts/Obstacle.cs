@@ -47,6 +47,9 @@ public class Obstacle : MonoBehaviour
             propBlock.SetColor("_2nd_ShadeColor", regionColor * shadowColor2);
 
             skinnedMeshRenderer.SetPropertyBlock(propBlock);
+
+            // set explosionEffect Color
+            ExplosionEffect.SetVector4("_ParticleColor", regionColor);
         }
     }
 
@@ -83,6 +86,7 @@ public class Obstacle : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         meshRenderer.enabled = false;
+        GetComponent<Collider>().enabled = false;
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
     }
