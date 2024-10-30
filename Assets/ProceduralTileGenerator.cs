@@ -37,7 +37,7 @@ public class ProceduralTileGenerator : MonoBehaviour
 
     public void BuildMesh()
     {
-        pathPositions = GeneratePath(Vector3.zero);
+        pathPositions = GeneratePath(ControlZoneManager.Instance.transform.position);
 
         sizeX = Mathf.CeilToInt(GetPathDistance() / tileSize);
         Debug.Log($"Tilemap Sizes: sizeX: {sizeX}, sizeZ: {sizeZ}");
@@ -129,7 +129,6 @@ public class ProceduralTileGenerator : MonoBehaviour
 
                 // Calculate interpolation factor `t` within this region based on x-position
                 float t = (xPos - regionStartDistance) / (regionEndDistance - regionStartDistance);
-                Debug.Log(t);
                 return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
             }
         }
