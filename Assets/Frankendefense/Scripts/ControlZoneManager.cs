@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.VFX;
 
 public enum ZoneState
 {
@@ -53,6 +54,9 @@ public class ControlZoneManager : MonoBehaviour
 
     // Resource Point Color
     public float resoucePointColorCorrection = 1f;
+
+    // VFX
+    public VisualEffect drillingVFX;
 
     private void Awake()
     {
@@ -109,6 +113,9 @@ public class ControlZoneManager : MonoBehaviour
                 changedState.Invoke(m_ZoneState);
                 m_HarvesterAnimator.Play(m_StopHarvesting, 0, 0f);
                 Debug.Log("Finished Harvesting, starting end harvest animation");
+
+                // stop VFX
+                drillingVFX.Stop();
             }
         }
         else if (m_ZoneState == ZoneState.MOVING)
@@ -159,6 +166,9 @@ public class ControlZoneManager : MonoBehaviour
                 m_HarvesterAnimator.Play(m_Harvesting, 0, 0f);
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Started Harvesting");
+
+                // start VFX
+                drillingVFX.Play();
             }
         }
         else if (m_ZoneState == ZoneState.END_HARVESTING)
