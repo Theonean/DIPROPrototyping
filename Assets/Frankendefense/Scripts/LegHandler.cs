@@ -199,7 +199,7 @@ public class LegHandler : MonoBehaviour
                 {
                     if (hitCollider.gameObject.CompareTag("Enemy"))
                     {
-                        Destroy(hitCollider.gameObject);
+                        hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                     }
                 }
 

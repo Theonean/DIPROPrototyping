@@ -227,6 +227,8 @@ public class ControlZoneManager : MonoBehaviour
     void Modifym_Health(int amount)
     {
         m_Health += amount;
+        m_Health = Mathf.Clamp(m_Health, 0, maxHealth);
+        
         foreach (Slider slider in m_HealthSliders)
         {
             slider.value = m_Health;
@@ -256,7 +258,7 @@ public class ControlZoneManager : MonoBehaviour
     {
         Animator anim = m_carrierBalloon.GetComponent<Animator>();
         m_carrierBalloon.SetActive(true);
-        
+
         //While the animator is still playing, wait, after that continue to the fly away code-animation
         while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
