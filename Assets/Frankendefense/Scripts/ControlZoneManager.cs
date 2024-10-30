@@ -39,6 +39,8 @@ public class ControlZoneManager : MonoBehaviour
     LineRenderer m_LineRenderer;
     public int pathPositionsIndex = 0;
     public Vector3[] pathPositions;
+    [SerializeField]
+    private GameObject m_carrierBalloon;
 
 
 
@@ -198,7 +200,7 @@ public class ControlZoneManager : MonoBehaviour
             slider.value = m_Health;
         }
 
-        if (m_Health <= 0)
+        if (m_Health <= 0 && m_ZoneState != ZoneState.DIED)
         {
             m_ZoneState = ZoneState.DIED;
             died.Invoke();
@@ -219,6 +221,15 @@ public class ControlZoneManager : MonoBehaviour
 
     IEnumerator FlyAway()
     {
+        Animator anim = m_carrierBalloon.GetComponent<Animator>();
+        m_carrierBalloon.SetActive(true);
+        
+        //While the animator is still playing, wait, after that continue to the fly away code-animation
+        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+
         float timer = 0f;
         AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 2f, 1f);
         while (timer < 4f)

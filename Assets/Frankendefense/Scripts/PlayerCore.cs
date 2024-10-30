@@ -23,9 +23,6 @@ public class PlayerCore : MonoBehaviour
 
     float m_RespawnTimer;
     public UnityEvent returnLegs;
-    public Material transparentMaterial;
-    Camera m_Camera;
-    Vector3 m_OriginalCameraPosition;
     public Vector3 moveDirection;
     Vector3 m_CurrentVelocity;
     public AnimationCurve accelerationCurve;
@@ -38,8 +35,6 @@ public class PlayerCore : MonoBehaviour
 
     private void Awake()
     {
-        m_Camera = Camera.main;
-        m_OriginalCameraPosition = m_Camera.transform.localPosition;
         m_Renderer = GetComponent<MeshRenderer>();
         m_Renderer.material.color = Color.white;
         m_Health = maxHealth;
