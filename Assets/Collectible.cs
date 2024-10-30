@@ -58,7 +58,7 @@ public class Collectible : MonoBehaviour
                     break;
                 case CollectibleType.FullHealth:
                     //Find the control zone manager and give the player full health
-                    ControlZoneManager.Instance.FullHeal();
+                    ControlZoneManager.Instance.Heal();
                     break;
             }
             Destroy(gameObject);

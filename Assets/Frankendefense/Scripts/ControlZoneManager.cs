@@ -242,10 +242,9 @@ public class ControlZoneManager : MonoBehaviour
         }
     }
 
-    public void FullHeal()
+    public void Heal()
     {
-        int m_HealthNeededToFull = maxHealth - m_Health;
-        Modifym_Health(m_HealthNeededToFull);
+        Modifym_Health(1);
     }
 
     public void Die()

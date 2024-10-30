@@ -681,20 +681,22 @@ MonoBehaviour:
   maxHealth: 10
   m_HealthSliders:
   - {fileID: 4838321126794333530}
+  - {fileID: 0}
   died:
     m_PersistentCalls:
       m_Calls: []
-  waveTime: 30
-  moveSpeed: 4
+  waveTime: 20
+  moveSpeed: 5
   waveProgressSlider: {fileID: 5504734985198772234}
   changedState:
     m_PersistentCalls:
       m_Calls: []
   resourcePoint: {fileID: 0}
   travelTimeLeft: 0
-  pathPositionsIndex: 0
+  pathPositionsIndex: 1
   pathPositions: []
   m_carrierBalloon: {fileID: 2570681315178722742}
+  resoucePointColorCorrection: 0.7
 --- !u!65 &3181088379567748915
 BoxCollider:
   m_ObjectHideFlags: 0

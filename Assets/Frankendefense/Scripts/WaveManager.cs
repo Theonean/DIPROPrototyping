@@ -65,7 +65,7 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(TriggerAmbushes());  // Coroutine to trigger ambushes over time
                 break;
             case ZoneState.HARVESTING:
-                ActivateSpawners(Mathf.Clamp(1 + m_wavesSurvived / 4, 1, spawners.Length));
+                ActivateSpawners(Mathf.Clamp(2 + m_wavesSurvived / 4, 1, spawners.Length));
                 break;
         }
     }
