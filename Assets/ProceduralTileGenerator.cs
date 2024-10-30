@@ -184,7 +184,7 @@ private Color GetColorForPosition(float xPos)
 
     private Vector3 CalculatePathPosition(Vector3 startPosition, Vector3 direction)
     {
-        float randomDistance = Random.Range(minTravelTime * ControlZoneManager.Instance.moveSpeed, maxTravelTime * ControlZoneManager.Instance.moveSpeed);
+        float randomDistance = Random.Range(minTravelTime, maxTravelTime) * ControlZoneManager.Instance.moveSpeed;;
         return startPosition + (direction * randomDistance);
     }
 
