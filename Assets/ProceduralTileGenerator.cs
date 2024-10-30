@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 [ExecuteInEditMode]
 [RequireComponent(typeof(MeshFilter))]
@@ -18,8 +19,6 @@ public class ProceduralTileGenerator : MonoBehaviour
     public int pathAngle = 35;
     public float minTravelTime = 20f;
     public float maxTravelTime = 30f;
-    public float moveSpeed = 4f;
-
     private Vector3[] pathPositions;
 
     private void Awake()
@@ -34,6 +33,7 @@ public class ProceduralTileGenerator : MonoBehaviour
         }
 
         BuildMesh();
+        //GenerateObstaclesForRegion(0, 4);
     }
 
     public void BuildMesh()
@@ -153,6 +153,34 @@ public class ProceduralTileGenerator : MonoBehaviour
         return pathPositions;
     }
 
+    // Generates obstacles on the field using Poisson disc sampling
+    /*
+    private void GenerateObstaclesForRegion(int startPathIndex, int endPathIndex)
+    {
+        // Configurable parameters for Poisson disc sampling
+        float minDistance = 500f; // Minimum distance between obstacles
+        int maxAttempts = 30; // Number of attempts to place each obstacle
+        Vector2 regionHeight = new Vector2(pathPositions[startPathIndex].z, pathPositions[endPathIndex].z);
+        Vector2 regionWidth = new Vector2(-250, 250); // Define y-axis range
+
+        List<Vector2> samplePoints = PoissonDiscSampler.GeneratePoints(minDistance, regionWidth, regionHeight, maxAttempts);
+
+        foreach (Vector2 point in samplePoints)
+        {
+            // Cast a ray to ensure the obstacle is on the NavMesh
+            Vector3 obstaclePosition = new Vector3(point.x, 0, point.y);
+            if (NavMesh.SamplePosition(obstaclePosition, out NavMeshHit hit, minDistance, NavMesh.AllAreas))
+            {
+                //select a random obstacle pattern prefab from the list
+                GameObject obstaclePrefab = obstaclePatternPrefabs[Random.Range(0, obstaclePatternPrefabs.Length)];
+
+                // Instantiate obstacle on the valid NavMesh position
+                Instantiate(obstaclePrefab, hit.position, Quaternion.identity);
+            }
+        }
+    }*/
+
+
     private void OnDrawGizmos()
     {
         if (pathPositions == null) return;
@@ -173,7 +201,7 @@ public class ProceduralTileGenerator : MonoBehaviour
 
     private Vector3 CalculatePathPosition(Vector3 startPosition, Vector3 direction)
     {
-        float randomDistance = Random.Range(minTravelTime * moveSpeed, maxTravelTime * moveSpeed);
+        float randomDistance = Random.Range(minTravelTime * ControlZoneManager.Instance.moveSpeed, maxTravelTime * ControlZoneManager.Instance.moveSpeed);
         return startPosition + (direction * randomDistance);
     }
 
