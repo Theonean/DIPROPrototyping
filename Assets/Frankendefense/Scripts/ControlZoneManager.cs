@@ -51,6 +51,9 @@ public class ControlZoneManager : MonoBehaviour
     private static readonly int m_StopHarvesting = Animator.StringToHash("Stop_Harvesting");
     private static readonly int m_Idle = Animator.StringToHash("Idle");
 
+    // Resource Point Color
+    public float resoucePointColorCorrection = 1f;
+
     private void Awake()
     {
         // Ensure there's only one instance of the FrankenGameManager
@@ -190,6 +193,35 @@ public class ControlZoneManager : MonoBehaviour
         resourcePoint.transform.position = m_TargetPosition;
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;
+
+        // set resource point color
+        SetMeshColoursToRegion();
+    }
+
+    public void SetMeshColoursToRegion()
+    {
+        // Calculate the color based on the obstacle's position along the path
+        float zPosition = resourcePoint.transform.position.z;
+        Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
+
+        // Use MaterialPropertyBlock to set color without affecting shared materials
+        MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+        MeshRenderer meshRenderer = resourcePoint.GetComponentInChildren<MeshRenderer>();
+        if (meshRenderer != null)
+        {
+            meshRenderer.GetPropertyBlock(propBlock);
+            propBlock.SetColor("_BaseColor", regionColor * resoucePointColorCorrection);
+
+            Color shadowColor1 = meshRenderer.material.GetColor("_1st_ShadeColor");
+            Color shadowColor2 = meshRenderer.material.GetColor("_2nd_ShadeColor");
+
+            propBlock.SetColor("_1st_ShadeColor", regionColor * shadowColor1);
+            propBlock.SetColor("_2nd_ShadeColor", regionColor * shadowColor2);
+
+            meshRenderer.SetPropertyBlock(propBlock);
+
+
+        }
     }
 
     void Modifym_Health(int amount)
