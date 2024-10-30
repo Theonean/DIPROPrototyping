@@ -197,7 +197,7 @@ public class PlayerCore : MonoBehaviour
         }
 
         StartCoroutine(DashMovement());
-        StartCoroutine(DashEffect());
+        //Trigger Dash Effect here
     }
 
     public void ModifyHealth(int amount)
@@ -244,52 +244,6 @@ public class PlayerCore : MonoBehaviour
 
         m_IsDashing = false;
         m_Renderer.material.color = Color.white; // Reset color after dash
-    }
-
-    IEnumerator DashEffect()
-    {
-        int shadowCount = 8; // Number of shadows to leave behind
-        float shadowInterval = m_DashTime / (shadowCount + 1); // Time between each shadow
-        float fadeDuration = 0.5f; // Time for the shadow to fade out
-
-        for (int i = 0; i < shadowCount; i++)
-        {
-            CreateShadowCopy(fadeDuration);
-            yield return new WaitForSeconds(shadowInterval);
-        }
-    }
-
-    void CreateShadowCopy(float fadeDuration)
-    {
-        GameObject shadow = new GameObject("Shadow");
-        shadow.transform.position = transform.position;
-        shadow.transform.rotation = transform.rotation;
-
-        MeshFilter meshFilter = shadow.AddComponent<MeshFilter>();
-        meshFilter.mesh = GetComponent<MeshFilter>().mesh;
-
-        MeshRenderer shadowRenderer = shadow.AddComponent<MeshRenderer>();
-        shadowRenderer.material = transparentMaterial;
-        shadowRenderer.material.color = new Color(0, 0, 0, 0.5f); // Set shadow to semi-transparent
-
-        StartCoroutine(FadeOutShadow(shadowRenderer, fadeDuration));
-        Destroy(shadow, fadeDuration + 0.1f); // Destroy shadow slightly after fade out completes
-    }
-
-    IEnumerator FadeOutShadow(MeshRenderer shadowRenderer, float duration)
-    {
-        float elapsedTime = 0f;
-        Color startColor = shadowRenderer.material.color;
-        Color endColor = new Color(startColor.r, startColor.g, startColor.b, 0f);
-
-        while (elapsedTime < duration)
-        {
-            shadowRenderer.material.color = Color.Lerp(startColor, endColor, elapsedTime / duration);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
-
-        shadowRenderer.material.color = endColor; // Ensure the color is fully transparent at the end
     }
 
     public void IncreaseLegExplosionRadius(float radiusIncrease)

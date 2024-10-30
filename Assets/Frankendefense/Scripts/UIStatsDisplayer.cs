@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Rendering;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIStatsDisplayer : MonoBehaviour
 {
@@ -10,6 +8,7 @@ public class UIStatsDisplayer : MonoBehaviour
 
     public TextMeshProUGUI explosionRangeNumber;
     public TextMeshProUGUI shotspeedNumber;
+    public Slider harvesterHealthSlider;
     public LegHandler legInstance;
     private void Awake()
     {
