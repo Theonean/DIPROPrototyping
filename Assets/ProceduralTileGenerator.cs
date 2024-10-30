@@ -101,40 +101,40 @@ public class ProceduralTileGenerator : MonoBehaviour
         BuildMesh();
     }
 
-private Color GetColorForPosition(float xPos)
-{
-    float pathDistance = GetPathDistance();
-    if (pathDistance <= 0 || gradientColors.Length == 0 || wavesPerColourRegion <= 0)
-        return Color.white;
-
-    // Loop over path points in increments of `wavesPerColourRegion` to create color regions
-    float cumulativeDistance = 0f;
-
-    for (int regionStart = 0; regionStart < pathPositions.Length - 1; regionStart += wavesPerColourRegion)
+    public Color GetColorForPosition(float xPos)
     {
-        // Define the start and end indices for the current color region
-        int regionEnd = Mathf.Min(regionStart + wavesPerColourRegion, pathPositions.Length - 1);
-        
-        // Calculate the distance range for this color region
-        float regionStartDistance = cumulativeDistance;
-        cumulativeDistance += Vector3.Distance(pathPositions[regionStart], pathPositions[regionEnd]);
-        float regionEndDistance = cumulativeDistance;
+        float pathDistance = GetPathDistance();
+        if (pathDistance <= 0 || gradientColors.Length == 0 || wavesPerColourRegion <= 0)
+            return Color.white;
 
-        // Check if the x-position falls within this region's range
-        if (xPos >= regionStartDistance && xPos <= regionEndDistance)
+        // Loop over path points in increments of `wavesPerColourRegion` to create color regions
+        float cumulativeDistance = 0f;
+
+        for (int regionStart = 0; regionStart < pathPositions.Length - 1; regionStart += wavesPerColourRegion)
         {
-            // Determine the start and end color indices
-            int startColorIndex = (regionStart / wavesPerColourRegion) % gradientColors.Length;
-            int endColorIndex = (startColorIndex + 1) % gradientColors.Length;
+            // Define the start and end indices for the current color region
+            int regionEnd = Mathf.Min(regionStart + wavesPerColourRegion, pathPositions.Length - 1);
 
-            // Calculate interpolation factor `t` within this region based on x-position
-            float t = (xPos - regionStartDistance) / (regionEndDistance - regionStartDistance);
-            return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
+            // Calculate the distance range for this color region
+            float regionStartDistance = cumulativeDistance;
+            cumulativeDistance += Vector3.Distance(pathPositions[regionStart], pathPositions[regionEnd]);
+            float regionEndDistance = cumulativeDistance;
+
+            // Check if the x-position falls within this region's range
+            if (xPos >= regionStartDistance && xPos <= regionEndDistance)
+            {
+                // Determine the start and end color indices
+                int startColorIndex = (regionStart / wavesPerColourRegion) % gradientColors.Length;
+                int endColorIndex = (startColorIndex + 1) % gradientColors.Length;
+
+                // Calculate interpolation factor `t` within this region based on x-position
+                float t = (xPos - regionStartDistance) / (regionEndDistance - regionStartDistance);
+                return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
+            }
         }
-    }
 
-    return Color.white; // Fallback color if xPos is outside all regions
-}
+        return Color.white; // Fallback color if xPos is outside all regions
+    }
     public Vector3[] GeneratePath(Vector3 startPosition)
     {
         pathPositions = new Vector3[initialPathPositions];
@@ -184,7 +184,7 @@ private Color GetColorForPosition(float xPos)
 
     private Vector3 CalculatePathPosition(Vector3 startPosition, Vector3 direction)
     {
-        float randomDistance = Random.Range(minTravelTime, maxTravelTime) * ControlZoneManager.Instance.moveSpeed;;
+        float randomDistance = Random.Range(minTravelTime, maxTravelTime) * ControlZoneManager.Instance.moveSpeed; ;
         return startPosition + (direction * randomDistance);
     }
 

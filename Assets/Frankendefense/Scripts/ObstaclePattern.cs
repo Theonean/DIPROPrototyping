@@ -7,7 +7,7 @@ public class ObstaclePattern : MonoBehaviour
 {
     Obstacle[] obstacles;
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         obstacles = GetComponentsInChildren<Obstacle>();
     }
@@ -20,5 +20,29 @@ public class ObstaclePattern : MonoBehaviour
             obstacle.gameObject.SetActive(true);
             obstacle.RandomizeBlendWeights();
         }
+
+        SetMeshColoursToRegion();
     }
+
+
+    public void SetMeshColoursToRegion()
+    {
+        foreach (Obstacle obstacle in obstacles)
+        {
+            // Calculate the color based on the obstacle's position along the path
+            float zPosition = obstacle.transform.position.z;
+            Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
+
+            // Use MaterialPropertyBlock to set color without affecting shared materials
+            MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
+            if (obstacle.meshRenderer is SkinnedMeshRenderer skinnedMeshRenderer)
+            {
+                skinnedMeshRenderer.GetPropertyBlock(propBlock);
+                propBlock.SetColor("_BaseColor", regionColor);
+                skinnedMeshRenderer.SetPropertyBlock(propBlock);
+            }
+        }
+    }
+
+
 }

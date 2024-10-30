@@ -67,6 +67,8 @@ public class ObstaclePlacer : MonoBehaviour
                     GameObject gO = Instantiate(obstaclePrefab, hit.position, Quaternion.identity);
                     gO.transform.parent = transform;
 
+                    gO.GetComponent<ObstaclePattern>().SetMeshColoursToRegion();
+
                     // Add the obstacle to the appropriate array
                     if (pathIndex == 0)
                         m_obstacles0[i] = gO;
