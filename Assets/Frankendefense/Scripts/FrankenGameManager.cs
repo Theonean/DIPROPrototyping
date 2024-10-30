@@ -16,7 +16,6 @@ public class FrankenGameManager : MonoBehaviour
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
     public GameObject YouDiedUIOverlay;
-    public GameObject obstaclePrefab;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -38,11 +37,6 @@ public class FrankenGameManager : MonoBehaviour
 
         ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
         zoneManager.died.AddListener(() => PlayerDied());
-    }
-
-    private void Start()
-    {
-        GenerateObstaclesOnField();
     }
 
     private void Update()
@@ -90,28 +84,6 @@ public class FrankenGameManager : MonoBehaviour
             time += Time.deltaTime;
             uiOverlay.transform.localScale = Vector3.one * time;
             yield return null;
-        }
-    }
-    void GenerateObstaclesOnField()
-    {
-        //Place obstacles on the game fields navmesh 
-        float numObstacles = 100;
-        Vector2 mapWidthHeight = new Vector2(500, 500);
-
-        for (int i = 0; i < numObstacles; i++)
-        {
-            Vector3 position = new Vector3(
-                Random.Range(-mapWidthHeight.x / 2, mapWidthHeight.x / 2),
-                 0,
-                 Random.Range(-mapWidthHeight.y / 2, mapWidthHeight.y / 2));
-            Instantiate(obstaclePrefab, position, Quaternion.identity);
-        }
-
-        // Rebuild NavMesh to account for new obstacles
-        NavMeshSurface surface = FindObjectOfType<NavMeshSurface>();
-        if (surface != null)
-        {
-            surface.BuildNavMesh();
         }
     }
 }
