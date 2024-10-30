@@ -15,7 +15,7 @@ public class FrankenGameManager : MonoBehaviour
     public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
-    public CanvasGroup YouDiedUIOverlay;
+    public CanvasGroup gameOverGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -32,7 +32,7 @@ public class FrankenGameManager : MonoBehaviour
             Instance = this;
         }
 
-        YouDiedUIOverlay.alpha = 0;
+        gameOverGroup.alpha = 0;
 
         ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
         zoneManager.died.AddListener(() => PlayerDied());
@@ -59,7 +59,7 @@ public class FrankenGameManager : MonoBehaviour
 
     void PlayerDied()
     {
-        YouDiedUIOverlay.alpha = 0;
+        gameOverGroup.alpha = 0;
 
         m_GameState = GameState.GAMEOVER;
 
@@ -73,7 +73,7 @@ public class FrankenGameManager : MonoBehaviour
         playerCore.enabled = false;
 
         resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
-        StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
+        StartCoroutine(ScaleUpUI(gameOverGroup));
     }
 
     IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
@@ -86,5 +86,6 @@ public class FrankenGameManager : MonoBehaviour
             uiOverlay.alpha = Mathf.Lerp(0, 1, time / maxTime);
             yield return null;
         }
+        uiOverlay.alpha = 1;
     }
 }
