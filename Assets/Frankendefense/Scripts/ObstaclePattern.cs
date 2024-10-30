@@ -39,7 +39,16 @@ public class ObstaclePattern : MonoBehaviour
             {
                 skinnedMeshRenderer.GetPropertyBlock(propBlock);
                 propBlock.SetColor("_BaseColor", regionColor);
+
+                Color shadowColor1 = skinnedMeshRenderer.material.GetColor("_1st_ShadeColor");
+                Color shadowColor2 = skinnedMeshRenderer.material.GetColor("_2nd_ShadeColor");
+
+                propBlock.SetColor("_1st_ShadeColor", regionColor * shadowColor1);
+                propBlock.SetColor("_2nd_ShadeColor", regionColor * shadowColor2);
+
                 skinnedMeshRenderer.SetPropertyBlock(propBlock);
+
+
             }
         }
     }
