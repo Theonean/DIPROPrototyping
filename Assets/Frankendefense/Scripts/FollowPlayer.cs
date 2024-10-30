@@ -20,7 +20,6 @@ public class FollowPlayer : MonoBehaviour
     void Start()
     {
         m_ControlZone = GameObject.Find("ControlZone");
-        //Set NavMeshAgent Target to Control Zone
     }
 
     // Update is called once per frame
@@ -28,26 +27,8 @@ public class FollowPlayer : MonoBehaviour
     {
         if (m_IsMoving && m_ControlZone != null)
         {
-            transform.LookAt(m_ControlZone.transform);
             agent.SetDestination(m_ControlZone.transform.position);
-            /* QUICK AND DIRTY WAY OF USING NAVMESH, PROBABLY NOT THE MOST EFFICIENT BECAUSE NAVMESH SHOULDNT BE UPDATED X TIMES PER SECOND
-                //If enemy is seen by camera.main or close to zone move normal speed otherwise move 5x speed
-                if (IsVisibleToCamera() || Vector3.Distance(transform.position, m_ControlZone.transform.position) < 35f)
-                {
-                    transform.position += transform.forward * m_MoveSpeed * Time.deltaTime;
-                }
-                else
-                {
-                    transform.position += transform.forward * (m_MoveSpeed * 2f) * Time.deltaTime;
-                }
-                */
         }
-    }
-
-    bool IsVisibleToCamera()
-    {
-        Plane[] planes = GeometryUtility.CalculateFrustumPlanes(Camera.main);
-        return GeometryUtility.TestPlanesAABB(planes, GetComponentInChildren<Collider>().bounds);
     }
 
     public IEnumerator ApplyKnockback(Vector3 direction, float knockback)

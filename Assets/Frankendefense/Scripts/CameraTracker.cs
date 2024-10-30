@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CameraTracker : MonoBehaviour
 {
+    public static CameraTracker Instance { get; private set; }
     public bool trackObjectWithCamera = false;
     public GameObject objectToTrack;
     public GameObject arrowRotator;
@@ -25,12 +26,24 @@ public class CameraTracker : MonoBehaviour
 
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
 
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     private void Start()
     {
         // Save the initial offset between camera and object
         cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
         playerCore = GetComponentInChildren<PlayerCore>();
-        
+
     }
 
     private void Update()
@@ -50,7 +63,7 @@ public class CameraTracker : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (trackObjectWithCamera)
+        if (trackObjectWithCamera && objectToTrack != null)
         {
             Vector3 targetPosition = objectToTrack.transform.position + cameraOffset;
             float distance = Vector3.Distance(Camera.main.transform.position, targetPosition);

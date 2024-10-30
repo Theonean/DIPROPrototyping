@@ -179,7 +179,7 @@ public class ControlZoneManager : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             Modifym_Health(-1);
-            Destroy(other.gameObject);
+            other.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
             StartCoroutine(TakeDamageEffect());
         }
     }
@@ -204,6 +204,8 @@ public class ControlZoneManager : MonoBehaviour
         {
             m_ZoneState = ZoneState.DIED;
             died.Invoke();
+            //Find Camera Tracker and tell it to track this
+            CameraTracker.Instance.objectToTrack = this.gameObject;
             StartCoroutine(FlyAway());
         }
     }
@@ -232,7 +234,7 @@ public class ControlZoneManager : MonoBehaviour
 
         float timer = 0f;
         AnimationCurve curve = AnimationCurve.EaseInOut(0f, 0f, 2f, 1f);
-        while (timer < 4f)
+        while (timer < 10f)
         {
             transform.position += Vector3.up * 10f * Time.deltaTime * curve.Evaluate(timer);
             timer += Time.deltaTime;
