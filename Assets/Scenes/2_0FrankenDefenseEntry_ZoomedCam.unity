@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.43863112, g: 0.48676002, b: 0.5670302, a: 1}
+  m_IndirectSpecularColor: {r: 0.43863127, g: 0.48676032, b: 0.56703085, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -8917,8 +8917,88 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
         type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
       propertyPath: wavesPerColourRegion
-      value: 1
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[0].b
+      value: 0.074893214
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[0].g
+      value: 0.21638694
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[0].r
+      value: 0.9339623
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[1].b
+      value: 0.40954798
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[1].g
+      value: 0.12517802
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[1].r
+      value: 0.9150943
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[2].b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[2].g
+      value: 0.12259703
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[2].r
+      value: 0.6315636
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[3].b
+      value: 0.8962264
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[3].g
+      value: 0.7530277
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[3].r
+      value: 0.114142045
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[4].b
+      value: 0.4927032
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[4].g
+      value: 0.8773585
+      objectReference: {fileID: 0}
+    - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
+        type: 3}
+      propertyPath: gradientColors.Array.data[4].r
+      value: 0.12829298
       objectReference: {fileID: 0}
     - target: {fileID: 9216232768554380610, guid: f3a507f078a762347a2c64ff7721474d,
         type: 3}
@@ -14228,12 +14308,12 @@ PrefabInstance:
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: waveTime
-      value: 4
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: maxHealth
-      value: 1
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
