@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.VFX;
 
 public class PlayerCore : MonoBehaviour
 {
@@ -32,6 +33,9 @@ public class PlayerCore : MonoBehaviour
 
     MeshRenderer m_Renderer;
     private LegHandler[] m_Legs = new LegHandler[4];
+
+    [Header("VFX")]
+    public VisualEffect dashEffect;
 
     private void Awake()
     {
@@ -192,7 +196,9 @@ public class PlayerCore : MonoBehaviour
         }
 
         StartCoroutine(DashMovement());
+        
         //Trigger Dash Effect here
+        StartDashVFX();
     }
 
     public void ModifyHealth(int amount)
@@ -223,6 +229,7 @@ public class PlayerCore : MonoBehaviour
             m_IsDead = true;
             m_RespawnTimer = 0f;
         }
+
     }
 
     private IEnumerator DashMovement()
@@ -239,6 +246,7 @@ public class PlayerCore : MonoBehaviour
 
         m_IsDashing = false;
         m_Renderer.material.color = Color.white; // Reset color after dash
+        StopDashVFX();
     }
 
     public void IncreaseLegExplosionRadius(float radiusIncrease)
@@ -257,5 +265,16 @@ public class PlayerCore : MonoBehaviour
         {
             leg.legFlySpeed += speedIncrease;
         }
+    }
+
+    private void StartDashVFX()
+    {
+        dashEffect.SetVector3("PlayerVelocity", moveDirection);
+        dashEffect.Play();
+    }
+
+    private void StopDashVFX()
+    {
+        dashEffect.Stop();
     }
 }
