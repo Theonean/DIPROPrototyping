@@ -37,7 +37,7 @@ public class ControlZoneManager : MonoBehaviour
     public GameObject resourcePoint;
     public float travelTimeLeft;
     LineRenderer m_LineRenderer;
-    public int pathPositionsIndex = 0;
+    private int pathPositionsIndex = 0;
     public Vector3[] pathPositions;
 
 
@@ -187,7 +187,7 @@ public class ControlZoneManager : MonoBehaviour
         m_TargetPosition = pathPositions[pathPositionsIndex];
         resourcePoint.transform.position = m_TargetPosition;
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
-        pathPositionsIndex = pathPositionsIndex + 1;
+        pathPositionsIndex = (pathPositionsIndex + 1) % pathPositions.Length;
     }
 
     void Modifym_Health(int amount)

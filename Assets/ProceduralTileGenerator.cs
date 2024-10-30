@@ -33,6 +33,7 @@ public class ProceduralTileGenerator : MonoBehaviour
         }
 
         BuildMesh();
+        //GenerateObstaclesForRegion(0, 4);
     }
 
     public void BuildMesh()
@@ -100,41 +101,29 @@ public class ProceduralTileGenerator : MonoBehaviour
         sizeZ += additionalRows;
         BuildMesh();
     }
-
-private Color GetColorForPosition(float xPos)
-{
-    float pathDistance = GetPathDistance();
-    if (pathDistance <= 0 || gradientColors.Length == 0 || wavesPerColourRegion <= 0)
-        return Color.white;
-
-    // Loop over path points in increments of `wavesPerColourRegion` to create color regions
-    float cumulativeDistance = 0f;
-
-    for (int regionStart = 0; regionStart < pathPositions.Length - 1; regionStart += wavesPerColourRegion)
+    private Color GetColorForPosition(float xPos)
     {
-        // Define the start and end indices for the current color region
-        int regionEnd = Mathf.Min(regionStart + wavesPerColourRegion, pathPositions.Length - 1);
-        
-        // Calculate the distance range for this color region
-        float regionStartDistance = cumulativeDistance;
-        cumulativeDistance += Vector3.Distance(pathPositions[regionStart], pathPositions[regionEnd]);
-        float regionEndDistance = cumulativeDistance;
+        float pathDistance = GetPathDistance();
+        if (pathDistance <= 0 || gradientColors.Length == 0 || wavesPerColourRegion <= 0)
+            return Color.white;
 
-        // Check if the x-position falls within this region's range
-        if (xPos >= regionStartDistance && xPos <= regionEndDistance)
-        {
-            // Determine the start and end color indices
-            int startColorIndex = (regionStart / wavesPerColourRegion) % gradientColors.Length;
-            int endColorIndex = (startColorIndex + 1) % gradientColors.Length;
+        // Determine the total number of color regions based on the path distance and region size
+        float totalRegions = pathDistance / (wavesPerColourRegion * tileSize);
+        float normalizedPosition = Mathf.Clamp01(xPos / pathDistance);
 
-            // Calculate interpolation factor `t` within this region based on x-position
-            float t = (xPos - regionStartDistance) / (regionEndDistance - regionStartDistance);
-            return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
-        }
+        // Calculate current region index within total regions
+        int regionIndex = Mathf.FloorToInt(normalizedPosition * totalRegions);
+
+        // Map the region index to the gradientColors array by cycling through colors
+        int startColorIndex = regionIndex % gradientColors.Length;
+        int endColorIndex = (startColorIndex + 1) % gradientColors.Length;
+
+        // Interpolate between colors based on position within the region
+        float t = (normalizedPosition * totalRegions) - regionIndex;
+        return Color.Lerp(gradientColors[startColorIndex], gradientColors[endColorIndex], t);
     }
 
-    return Color.white; // Fallback color if xPos is outside all regions
-}
+
     public Vector3[] GeneratePath(Vector3 startPosition)
     {
         pathPositions = new Vector3[initialPathPositions];
@@ -163,6 +152,34 @@ private Color GetColorForPosition(float xPos)
 
         return pathPositions;
     }
+
+    // Generates obstacles on the field using Poisson disc sampling
+    /*
+    private void GenerateObstaclesForRegion(int startPathIndex, int endPathIndex)
+    {
+        // Configurable parameters for Poisson disc sampling
+        float minDistance = 500f; // Minimum distance between obstacles
+        int maxAttempts = 30; // Number of attempts to place each obstacle
+        Vector2 regionHeight = new Vector2(pathPositions[startPathIndex].z, pathPositions[endPathIndex].z);
+        Vector2 regionWidth = new Vector2(-250, 250); // Define y-axis range
+
+        List<Vector2> samplePoints = PoissonDiscSampler.GeneratePoints(minDistance, regionWidth, regionHeight, maxAttempts);
+
+        foreach (Vector2 point in samplePoints)
+        {
+            // Cast a ray to ensure the obstacle is on the NavMesh
+            Vector3 obstaclePosition = new Vector3(point.x, 0, point.y);
+            if (NavMesh.SamplePosition(obstaclePosition, out NavMeshHit hit, minDistance, NavMesh.AllAreas))
+            {
+                //select a random obstacle pattern prefab from the list
+                GameObject obstaclePrefab = obstaclePatternPrefabs[Random.Range(0, obstaclePatternPrefabs.Length)];
+
+                // Instantiate obstacle on the valid NavMesh position
+                Instantiate(obstaclePrefab, hit.position, Quaternion.identity);
+            }
+        }
+    }*/
+
 
     private void OnDrawGizmos()
     {
