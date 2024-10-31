@@ -31,6 +31,7 @@ public class LegHandler : MonoBehaviour
     private float m_colliderOriginalRadius; //Original radius of the collider
     private SphereCollider m_Collider; //Collider of the leg
     public float explosionRadius = 10f;
+    public float explosionChainDelay = 0.1f;
     Camera m_Camera;
     PlayerCore core;
 
@@ -261,7 +262,7 @@ public class LegHandler : MonoBehaviour
 
     private IEnumerator DaisyChainExplosion(LegHandler leg)
     {
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         leg.ExplodeLeg();
     }
 }
