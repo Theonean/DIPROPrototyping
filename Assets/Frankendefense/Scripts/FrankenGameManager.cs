@@ -15,8 +15,7 @@ public class FrankenGameManager : MonoBehaviour
     public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
-    public GameObject YouDiedUIOverlay;
-    public GameObject obstaclePrefab;
+    public CanvasGroup gameOverGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -33,16 +32,10 @@ public class FrankenGameManager : MonoBehaviour
             Instance = this;
         }
 
-        YouDiedUIOverlay.SetActive(false);
-        YouDiedUIOverlay.transform.localScale = Vector3.zero;
+        gameOverGroup.alpha = 0;
 
         ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
         zoneManager.died.AddListener(() => PlayerDied());
-    }
-
-    private void Start()
-    {
-        GenerateObstaclesOnField();
     }
 
     private void Update()
@@ -66,7 +59,8 @@ public class FrankenGameManager : MonoBehaviour
 
     void PlayerDied()
     {
-        YouDiedUIOverlay.SetActive(true);
+        gameOverGroup.alpha = 0;
+
         m_GameState = GameState.GAMEOVER;
 
         FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
@@ -79,39 +73,19 @@ public class FrankenGameManager : MonoBehaviour
         playerCore.enabled = false;
 
         resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
-        StartCoroutine(ScaleUpUI(YouDiedUIOverlay));
+        StartCoroutine(ScaleUpUI(gameOverGroup));
     }
 
-    IEnumerator ScaleUpUI(GameObject uiOverlay)
+    IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
     {
         float time = 0f;
-        while (time < 1f)
+        float maxTime = 25f;
+        while (time < maxTime)
         {
             time += Time.deltaTime;
-            uiOverlay.transform.localScale = Vector3.one * time;
+            uiOverlay.alpha = Mathf.Lerp(0, 1, time / maxTime);
             yield return null;
         }
-    }
-    void GenerateObstaclesOnField()
-    {
-        //Place obstacles on the game fields navmesh 
-        float numObstacles = 100;
-        Vector2 mapWidthHeight = new Vector2(500, 500);
-
-        for (int i = 0; i < numObstacles; i++)
-        {
-            Vector3 position = new Vector3(
-                Random.Range(-mapWidthHeight.x / 2, mapWidthHeight.x / 2),
-                 0,
-                 Random.Range(-mapWidthHeight.y / 2, mapWidthHeight.y / 2));
-            Instantiate(obstaclePrefab, position, Quaternion.identity);
-        }
-
-        // Rebuild NavMesh to account for new obstacles
-        NavMeshSurface surface = FindObjectOfType<NavMeshSurface>();
-        if (surface != null)
-        {
-            surface.BuildNavMesh();
-        }
+        uiOverlay.alpha = 1;
     }
 }

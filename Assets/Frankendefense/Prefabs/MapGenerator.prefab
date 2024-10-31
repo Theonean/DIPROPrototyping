@@ -47,18 +47,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c3314f158564d4598d9f4498bf050f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gradientColorsAtPositions:
-  - color: {r: 0, g: 0.2875762, b: 1, a: 1}
-    positionX: 0
-  - color: {r: 0.85490197, g: 0.43737328, b: 0.3882353, a: 1}
-    positionX: 5
-  - color: {r: 0.4715783, g: 0.8553459, b: 0.39001614, a: 1}
-    positionX: 10
-  - color: {r: 0.7116526, g: 0.3882353, b: 0.85490197, a: 1}
-    positionX: 40
-  sizeX: 64
-  sizeZ: 38
-  tileSize: 100
+  gradientColors:
+  - {r: 0.9339623, g: 0.21638694, b: 0.074893214, a: 1}
+  - {r: 0.9150943, g: 0.12517802, b: 0.40954798, a: 1}
+  - {r: 0.6315636, g: 0.12259703, b: 0.8962264, a: 1}
+  - {r: 0.114142045, g: 0.7530277, b: 0.8962264, a: 1}
+  - {r: 0.12829298, g: 0.8773585, b: 0.4927032, a: 1}
+  wavesPerColourRegion: 4
+  sizeX: 46
+  sizeZ: 20
+  tileSize: 50
+  initialPathPositions: 20
+  pathAngle: 35
+  minTravelTime: 20
+  maxTravelTime: 30
 --- !u!23 &3257321921656381280
 MeshRenderer:
   m_ObjectHideFlags: 0

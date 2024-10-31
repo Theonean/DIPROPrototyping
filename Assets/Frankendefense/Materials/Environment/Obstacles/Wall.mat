@@ -32,11 +32,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _1st_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: f24437aa53a64fb48addef3edc688e19, type: 3}
+        m_Texture: {fileID: 2800000, guid: 011fe653c2a427e428b579cdc55c4849, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _2nd_ShadeMap:
-        m_Texture: {fileID: 2800000, guid: f24437aa53a64fb48addef3edc688e19, type: 3}
+        m_Texture: {fileID: 2800000, guid: 011fe653c2a427e428b579cdc55c4849, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AngelRing_Sampler:
@@ -128,7 +128,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: f24437aa53a64fb48addef3edc688e19, type: 3}
+        m_Texture: {fileID: 2800000, guid: 011fe653c2a427e428b579cdc55c4849, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskMap:
@@ -494,8 +494,8 @@ Material:
     - _Unlit_Intensity: 0
     - _UseEmissiveIntensity: 0
     - _UseShadowThreshold: 0
-    - _Use_1stAs2nd: 0
-    - _Use_BaseAs1st: 0
+    - _Use_1stAs2nd: 1
+    - _Use_BaseAs1st: 1
     - _WorkflowMode: 1
     - _ZOverDrawMode: 0
     - _ZTestDepthEqualForOpaque: 4
@@ -511,15 +511,15 @@ Material:
     - _utsVersionY: 10
     - _utsVersionZ: 2
     m_Colors:
-    - _1st_ShadeColor: {r: 0.7506807, g: 0.28502133, b: 0.990566, a: 1}
-    - _2nd_ShadeColor: {r: 0.6698113, g: 0, b: 0.47376916, a: 1}
+    - _1st_ShadeColor: {r: 0.75947845, g: 0.6047526, b: 0.8490566, a: 1}
+    - _2nd_ShadeColor: {r: 0.7735849, g: 0.49261302, b: 0.6913493, a: 1}
     - _AngelRingMaskColor: {r: 0, g: 1, b: 0, a: 1}
     - _AngelRing_Color: {r: 1, g: 1, b: 1, a: 1}
     - _Ap_RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _BaseColor: {r: 1, g: 0.740566, b: 0.740566, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _BaseColorMap_MipInfo: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColorMaskColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 0.74056596, b: 0.74056596, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorShift: {r: 0, g: 0, b: 0, a: 1}
     - _DiffusionProfileAsset: {r: 0, g: 0, b: 0, a: 0}
     - _DoubleSidedConstants: {r: 1, g: 1, b: -1, a: 0}

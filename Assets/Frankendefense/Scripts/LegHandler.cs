@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.VFX;
 
 public enum LegState
 {
@@ -33,6 +34,9 @@ public class LegHandler : MonoBehaviour
     PlayerCore core;
 
     Transform m_InitialTransform; // Transform to hold the initial position and rotation.
+
+    [Header("VFX")]
+    public VisualEffect vfxFlying;
 
     void Awake()
     {
@@ -89,6 +93,8 @@ public class LegHandler : MonoBehaviour
                 {
                     m_Collider.radius = m_colliderOriginalRadius * colliderRadiusModifierOnFloor;
                     m_LegState = LegState.DETACHED;
+
+                    StopVFX();
                 }
                 break;
             case LegState.DETACHED:
@@ -125,6 +131,8 @@ public class LegHandler : MonoBehaviour
                     m_Collider.radius = m_colliderOriginalRadius;
                 }
 
+                StopVFX();
+
                 break;
             case LegState.REGROWING:
                 transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_LegRegrowSpeed * Time.deltaTime);
@@ -156,6 +164,8 @@ public class LegHandler : MonoBehaviour
             m_StartingPosition = transform.position;
             transform.SetParent(null);
             transform.LookAt(m_TargetPosition);
+
+            StartVFX();
         }
     }
 
@@ -169,6 +179,8 @@ public class LegHandler : MonoBehaviour
                 //Create explosion effect
                 GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
                 explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius/10);
+
+                StopVFX();
 
                 if (debugExplosionSphere)
                 {
@@ -187,7 +199,7 @@ public class LegHandler : MonoBehaviour
                 {
                     if (hitCollider.gameObject.CompareTag("Enemy"))
                     {
-                        Destroy(hitCollider.gameObject);
+                        hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                     }
                 }
 
@@ -206,5 +218,17 @@ public class LegHandler : MonoBehaviour
     public bool isAttacking()
     {
         return isSpinning || m_LegState == LegState.FLYING || m_LegState == LegState.RETURNING;
+    }
+
+    private void StartVFX()
+    {
+        vfxFlying.Reinit();
+        vfxFlying.Play();
+    }
+    private void StopVFX()
+    {
+        // stop vfx is it is still playing
+        if (vfxFlying.HasAnySystemAwake())
+            vfxFlying.Stop();
     }
 }

@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIStatsDisplayer : MonoBehaviour
 {
@@ -9,6 +8,8 @@ public class UIStatsDisplayer : MonoBehaviour
 
     public TextMeshProUGUI explosionRangeNumber;
     public TextMeshProUGUI shotspeedNumber;
+    public Slider harvesterHealthSlider;
+    public LegHandler legInstance;
     private void Awake()
     {
         // Ensure there's only one instance
@@ -20,15 +21,22 @@ public class UIStatsDisplayer : MonoBehaviour
         {
             Instance = this;
         }
+
+        //Set initial value for Shot speed and explosion range from leghandler
+        explosionRangeNumber.text = legInstance.explosionRadius.ToString() + "m";
+        shotspeedNumber.text = legInstance.legFlySpeed.ToString() + "m/s";
+
     }
 
-    public void IncrementExplosionRange()
+    public void UpdateUIExplosionRange()
     {
-        explosionRangeNumber.text = (float.Parse(explosionRangeNumber.text) + 1f).ToString();
+        string temp = legInstance.explosionRadius.ToString() + "m";
+        explosionRangeNumber.text = temp;
     }
 
-    public void IncrementShotSpeed()
+    public void UpdateUIShotSpeed()
     {
-        shotspeedNumber.text = (float.Parse(shotspeedNumber.text) + 1f).ToString();
+        string temp = legInstance.legFlySpeed.ToString() + "m/s";
+        shotspeedNumber.text = temp;
     }
 }

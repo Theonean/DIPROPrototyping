@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1349232922067166346}
+  - component: {fileID: 2301891782361769029}
   m_Layer: 0
   m_Name: ObstaclePattern_4_Circle
   m_TagString: Untagged
@@ -41,6 +42,18 @@ Transform:
   - {fileID: 5762120366497748486}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2301891782361769029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4048432588430397812}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7aee112a1d5fe4da78889825128424, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2101604933920959
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -250,17 +263,17 @@ PrefabInstance:
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 7.092907
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 7.092907
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 7.092907
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}
@@ -270,7 +283,7 @@ PrefabInstance:
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4810008336700526577, guid: b6e13ab669055944eb5eaba0596842b5,
         type: 3}

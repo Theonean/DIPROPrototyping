@@ -18,7 +18,7 @@ public class EnemyDamageHandler : MonoBehaviour
             if (leg.isAttacking())
             {
                 //Play the explosion and destroy enemy (visually)
-                Destroy(gameObject);
+                DestroyEnemy();
             }
             else
             {
@@ -42,11 +42,10 @@ public class EnemyDamageHandler : MonoBehaviour
         {
             //Play the explosion and destroy enemy (visually)
             Destroy(gameObject);
-
         }
     }
 
-    public void OnDestroy()
+    public void DestroyEnemy()
     {
         //Invoke the enemyDestroyed event
         enemyDestroyed.Invoke();
@@ -61,5 +60,6 @@ public class EnemyDamageHandler : MonoBehaviour
         UnityEngine.AI.NavMeshAgent navMeshAgent = transform.parent.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         followPlayer.enabled = false;
         navMeshAgent.enabled = false;
+        Destroy(gameObject);
     }
 }
