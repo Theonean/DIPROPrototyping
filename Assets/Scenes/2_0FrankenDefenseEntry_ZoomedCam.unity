@@ -3769,7 +3769,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   explosionRangeNumber: {fileID: 1381852601}
   shotspeedNumber: {fileID: 1381852600}
-  harvesterHealthSlider: {fileID: 0}
   legInstance: {fileID: 3500538115137141687}
 --- !u!4 &1041865987
 Transform:
@@ -8302,7 +8301,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2128871943}
-  - component: {fileID: 2128871940}
   m_Layer: 0
   m_Name: ResourcePoint
   m_TagString: Untagged
@@ -8310,27 +8308,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!65 &2128871940
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2128871939}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &2128871943
 Transform:
   m_ObjectHideFlags: 0
