@@ -143,22 +143,14 @@ public class PlayerCore : MonoBehaviour
         {
             if (m_IsDashing)
             {
-                if (DashDoesDamage)
-                {
-                    // Damage the enemy
-                    Debug.Log("Dealt damage to enemy");
-                    Destroy(other.gameObject);
-                }
-                else
-                {
-                    // Knockback the enemy
-                    Debug.Log("Knocked back enemy");
-                    StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
-                }
+                // Knockback the enemy
+                Debug.Log("Knocked back enemy");
+                StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
             }
             else if (!m_IsDead) //Only take damage when not dead
             {
-                Destroy(other.gameObject);
+                EnemyDamageHandler enemy = other.GetComponent<EnemyDamageHandler>();
+                enemy.DestroyEnemy();
 
                 // Player is not dashing, so take damage
                 ModifyHealth(-1);
@@ -180,23 +172,13 @@ public class PlayerCore : MonoBehaviour
         {
             if (hitCollider.CompareTag("Enemy"))
             {
-                if (DashDoesDamage)
-                {
-                    // Damage the enemy
-                    Debug.Log("Dealt damage to enemy");
-                    Destroy(hitCollider.gameObject);
-                }
-                else
-                {
-                    // Knockback the enemy
-                    Debug.Log("Knocked back enemy");
-                    StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
-                }
+                Debug.Log("Knocked back enemy");
+                StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
             }
         }
 
         StartCoroutine(DashMovement());
-        
+
         //Trigger Dash Effect here
         StartDashVFX();
     }
@@ -249,22 +231,26 @@ public class PlayerCore : MonoBehaviour
         StopDashVFX();
     }
 
-    public void IncreaseLegExplosionRadius(float radiusIncrease)
+    public void IncreaseLegExplosionRadius(float multiplier)
     {
         //Increase explosion radius on all legs
         foreach (var leg in m_Legs)
         {
-            leg.explosionRadius += radiusIncrease;
+            leg.explosionRadius = Mathf.Floor(leg.explosionRadius * multiplier);
         }
+
+        UIStatsDisplayer.Instance.explosionRangeBuffTimerFinished.AddListener(() => { IncreaseLegExplosionRadius(1f / multiplier); });
     }
 
-    public void IncreaseLegShotSpeed(float speedIncrease)
+    public void IncreaseLegShotSpeed(float multiplier)
     {
         //Increase shot speed on all legs
         foreach (var leg in m_Legs)
         {
-            leg.legFlySpeed += speedIncrease;
+            leg.legFlySpeed = Mathf.Floor(leg.legFlySpeed * multiplier);
         }
+
+        UIStatsDisplayer.Instance.shotspeedBuffTimerFinished.AddListener(() => { IncreaseLegShotSpeed(1f / multiplier); });
     }
 
     private void StartDashVFX()

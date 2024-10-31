@@ -20,8 +20,9 @@ public class Collectible : MonoBehaviour
     GameObject FullHealthModel;
 
     public CollectibleType type;
-    public float explosionRangeIncrease = 0.1f;
-    public float shotSpeedIncrease = 0.5f;
+    public float buffDuration = 5f;
+    public float explosionRangeMultiplier = 2f;
+    public float shotSpeedMultiplier = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -49,12 +50,12 @@ public class Collectible : MonoBehaviour
             switch (type)
             {
                 case CollectibleType.ExplosionRange:
-                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeIncrease);
-                    UIStatsDisplayer.Instance.UpdateUIExplosionRange();
+                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeMultiplier);
+                    UIStatsDisplayer.Instance.RefreshExplosionRangeBuff(buffDuration);
                     break;
                 case CollectibleType.ShotSpeed:
-                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedIncrease);
-                    UIStatsDisplayer.Instance.UpdateUIShotSpeed();
+                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedMultiplier);
+                    UIStatsDisplayer.Instance.RefreshShotSpeedBuff(buffDuration);
                     break;
                 case CollectibleType.FullHealth:
                     //Find the control zone manager and give the player full health
