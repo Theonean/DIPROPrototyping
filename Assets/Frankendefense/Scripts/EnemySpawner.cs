@@ -80,7 +80,7 @@ public class EnemySpawner : MonoBehaviour
             + Random.Range(-0.15f, 0.15f); //Slightly randome the spawn rate so not all animations are synced across spawners;
         spawnEnemyInNSeconds = 1f / spawnRate;
 
-        Debug.Log("Spawner creating " + spawnRate + " enemies per second at an intervall of" + spawnEnemyInNSeconds);
+        //Debug.Log("Spawner creating " + spawnRate + " enemies per second at an intervall of" + spawnEnemyInNSeconds);
 
         m_SpawnState = SpawnState.SPAWNING;
 
