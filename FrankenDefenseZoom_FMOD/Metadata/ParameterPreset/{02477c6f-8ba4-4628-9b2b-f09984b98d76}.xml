@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{02477c6f-8ba4-4628-9b2b-f09984b98d76}">
+		<property name="name">
+			<value>Dash</value>
+		</property>
+		<relationship name="folder">
+			<destination>{0710d6f6-74de-492f-b6e8-0f3fe60817fa}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{4acf063e-15b6-44f0-b34e-a33fd44bc18b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{4acf063e-15b6-44f0-b34e-a33fd44bc18b}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+		<property name="seekSpeedDescending">
+			<value>0.65999996662139893</value>
+		</property>
+		<property name="seekSpeedAsymmetric">
+			<value>true</value>
+		</property>
+	</object>
+</objects>
