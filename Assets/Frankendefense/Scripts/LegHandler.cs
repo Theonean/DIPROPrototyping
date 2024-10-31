@@ -9,6 +9,7 @@ public enum LegState
     FLYING,
     DETACHED,
     RETURNING,
+    EXPLODING,
     REGROWING
 }
 
@@ -176,9 +177,11 @@ public class LegHandler : MonoBehaviour
             case LegState.FLYING:
             case LegState.RETURNING:
             case LegState.DETACHED:
+                m_LegState = LegState.EXPLODING;
+
                 //Create explosion effect
                 GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius/10);
+                explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius / 10);
 
                 StopVFX();
 
@@ -201,6 +204,16 @@ public class LegHandler : MonoBehaviour
                     {
                         hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                     }
+                    else if (hitCollider.gameObject.CompareTag("Leg"))
+                    {
+                        LegHandler leg = hitCollider.GetComponent<LegHandler>();
+
+                        //Prevent back and forth loops
+                        if (leg.IsRocketExplodable())
+                        {
+                            StartCoroutine(DaisyChainExplosion(leg));
+                        }
+                    }
                 }
 
                 isSpinning = false;
@@ -214,6 +227,20 @@ public class LegHandler : MonoBehaviour
     }
 
     public void ExplodeLeg() => OnMouseDown();
+
+    public bool IsRocketExplodable()
+    {
+        if (m_LegState == LegState.FLYING ||
+            m_LegState == LegState.RETURNING ||
+            m_LegState == LegState.DETACHED)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 
     public bool isAttacking()
     {
@@ -230,5 +257,11 @@ public class LegHandler : MonoBehaviour
         // stop vfx is it is still playing
         if (vfxFlying.HasAnySystemAwake())
             vfxFlying.Stop();
+    }
+
+    private IEnumerator DaisyChainExplosion(LegHandler leg)
+    {
+        yield return new WaitForSeconds(0.2f);
+        leg.ExplodeLeg();
     }
 }

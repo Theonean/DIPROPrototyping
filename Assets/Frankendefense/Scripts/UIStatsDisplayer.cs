@@ -8,7 +8,6 @@ public class UIStatsDisplayer : MonoBehaviour
 
     public TextMeshProUGUI explosionRangeNumber;
     public TextMeshProUGUI shotspeedNumber;
-    public Slider harvesterHealthSlider;
     public LegHandler legInstance;
     private void Awake()
     {
