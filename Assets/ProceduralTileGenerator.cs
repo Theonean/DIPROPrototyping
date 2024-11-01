@@ -92,6 +92,8 @@ public class ProceduralTileGenerator : MonoBehaviour
 
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
+
+        GetComponent<MeshFilter>().mesh.RecalculateNormals();
     }
 
     public void ExtendMesh(int additionalRows)
