@@ -11,7 +11,7 @@ public class Obstacle : MonoBehaviour
 
     public VisualEffect ExplosionEffect;
 
-    private void Start()
+    private void Awake()
     {
         RandomizeBlendWeights();
     }
