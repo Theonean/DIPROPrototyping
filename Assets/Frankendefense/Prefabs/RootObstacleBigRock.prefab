@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 9184494493253215623}
   - component: {fileID: 2468931357627319789}
   - component: {fileID: 7069397567193743126}
+  - component: {fileID: 5093218024177010657}
   m_Layer: 9
   m_Name: RootObstacleBigRock
   m_TagString: Obstacle
@@ -53,6 +54,21 @@ MonoBehaviour:
   - Leg
   meshRenderer: {fileID: 8053799973257080335}
   ExplosionEffect: {fileID: 2190428012782561982}
+  changedBlendshape:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4693746709266484349}
+        m_TargetAssemblyTypeName: BlendShapeScaler, Assembly-CSharp
+        m_MethodName: UpdateNavmeshBounds
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!65 &2468931357627319789
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -101,6 +117,102 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5093218024177010657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144471608748660402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: Harvester
+  EventReference:
+    Guid:
+      Data1: -387005595
+      Data2: 1262846137
+      Data3: 455979188
+      Data4: 1063465566
+    Path: event:/SFX/Rocks/BigRock_Explotion
+  Event: 
+  EventPlayTrigger: 7
+  EventStopTrigger: 8
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 180
+--- !u!1 &8208861979253256017
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8125952288109180536}
+  - component: {fileID: 2747551183928591244}
+  - component: {fileID: 4693746709266484349}
+  m_Layer: 0
+  m_Name: NavMeshObstacles01
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &8125952288109180536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208861979253256017}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1.9, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8808503284862076636}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!208 &2747551183928591244
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208861979253256017}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.5, y: 0.5, z: 0.7}
+  m_MoveThreshold: 0.13
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!114 &4693746709266484349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8208861979253256017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed5517171162e1640b88906e9dfdf28b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxScale: {x: 1.9, y: 1, z: 1}
+  offsetWithBlendShape: {x: 0, y: 0, z: 0}
+  attributeNumber: 3
+  meshRenderer: {fileID: 8053799973257080335}
 --- !u!1 &8462809618294767473
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,9 +222,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8808503284862076636}
-  - component: {fileID: 884799460622921881}
   m_Layer: 0
-  m_Name: NavMeshObstacle
+  m_Name: NavMeshObstacles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -127,28 +238,13 @@ Transform:
   m_GameObject: {fileID: 8462809618294767473}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.28, z: 0}
+  m_LocalPosition: {x: -0, y: 0.28, z: -0.19}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_ConstrainProportionsScale: 1
-  m_Children: []
+  m_Children:
+  - {fileID: 8125952288109180536}
   m_Father: {fileID: 4810008336700526577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!208 &884799460622921881
-NavMeshObstacle:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8462809618294767473}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Shape: 0
-  m_Extents: {x: 0.9, y: 1, z: 0.9}
-  m_MoveThreshold: 0.13
-  m_Carve: 1
-  m_CarveOnlyStationary: 1
-  m_Center: {x: 0, y: 0, z: 0}
-  m_TimeToStationary: 0.5
 --- !u!1001 &2722753231237248541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -280,7 +376,7 @@ PrefabInstance:
     - target: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[1]
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
@@ -290,7 +386,7 @@ PrefabInstance:
     - target: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_BlendShapeWeights.Array.data[3]
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}

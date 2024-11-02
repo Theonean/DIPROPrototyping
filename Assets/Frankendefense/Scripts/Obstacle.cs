@@ -10,6 +10,7 @@ public class Obstacle : MonoBehaviour
     public SkinnedMeshRenderer meshRenderer;
 
     public VisualEffect ExplosionEffect;
+    public UnityEvent changedBlendshape;
 
     private void Awake()
     {
@@ -25,6 +26,7 @@ public class Obstacle : MonoBehaviour
 
         //Reload the meshrenderer
         meshRenderer.UpdateGIMaterials();
+        changedBlendshape.Invoke();
     }
 
     public void UpdateColor()
