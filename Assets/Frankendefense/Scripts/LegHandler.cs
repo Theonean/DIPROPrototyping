@@ -22,6 +22,7 @@ public class LegHandler : MonoBehaviour
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
     public float legFlySpeed = 50; //MaxSpeed of the leg when flying away.
+    public static float legFlySpeedBase = 50; //Base speed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
@@ -30,6 +31,7 @@ public class LegHandler : MonoBehaviour
     public float colliderRadiusModifierOnFloor; //Scale modifier for the collider when the leg is on the floor, to make it easier clickable
     private float m_colliderOriginalRadius; //Original radius of the collider
     private SphereCollider m_Collider; //Collider of the leg
+    public static float explosionRadiusBase = 10f;
     public float explosionRadius = 10f;
     public float explosionChainDelay = 0.1f;
     Camera m_Camera;
@@ -53,6 +55,9 @@ public class LegHandler : MonoBehaviour
                 m_StartingPosition = transform.position;
             }
         });
+
+        explosionRadius = explosionRadiusBase;
+        legFlySpeed = legFlySpeedBase;
 
         m_Camera = Camera.main;
         m_Collider = GetComponent<SphereCollider>();

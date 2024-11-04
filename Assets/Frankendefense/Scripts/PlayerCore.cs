@@ -239,7 +239,15 @@ public class PlayerCore : MonoBehaviour
             leg.explosionRadius = Mathf.Floor(leg.explosionRadius * multiplier);
         }
 
-        UIStatsDisplayer.Instance.explosionRangeBuffTimerFinished.AddListener(() => { IncreaseLegExplosionRadius(1f / multiplier); });
+        UIStatsDisplayer.Instance.explosionRangeBuffTimerFinished.AddListener(ResetLegExplosionRadius);
+    }
+
+    private void ResetLegExplosionRadius()
+    {
+        foreach (var leg in m_Legs)
+        {
+            leg.explosionRadius = LegHandler.explosionRadiusBase;
+        }
     }
 
     public void IncreaseLegShotSpeed(float multiplier)
@@ -250,9 +258,17 @@ public class PlayerCore : MonoBehaviour
             leg.legFlySpeed = Mathf.Floor(leg.legFlySpeed * multiplier);
         }
 
-        UIStatsDisplayer.Instance.shotspeedBuffTimerFinished.AddListener(() => { IncreaseLegShotSpeed(1f / multiplier); });
+        UIStatsDisplayer.Instance.shotspeedBuffTimerFinished.AddListener(ResetLegShotSpeed);
     }
 
+    private void ResetLegShotSpeed()
+    {
+        foreach (var leg in m_Legs)
+        {
+            leg.legFlySpeed = LegHandler.legFlySpeedBase;
+        }
+    }
+    
     private void StartDashVFX()
     {
         dashEffect.SetVector3("PlayerVelocity", moveDirection);
