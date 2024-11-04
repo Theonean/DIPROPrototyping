@@ -5,7 +5,6 @@ using UnityEngine.VFX;
 
 public class PlayerCore : MonoBehaviour
 {
-    public bool DashDoesDamage; //true = dash damages enemies, false = dash knocks enemies back
     bool m_IsDashing = false;
     float m_DashKnockback = 150f;
     float m_DashTime = 0.3f;
@@ -29,9 +28,8 @@ public class PlayerCore : MonoBehaviour
     public AnimationCurve accelerationCurve;
     public AnimationCurve dashCurve;
     float m_AccelerationTime;
-    bool m_IsDead = false; //When dead, track the ControlZoneManager to respawn the drone
+    public bool isDead = false; //When dead, track the ControlZoneManager to respawn the drone
 
-    MeshRenderer m_Renderer;
     private LegHandler[] m_Legs = new LegHandler[4];
 
     [Header("VFX")]
@@ -39,8 +37,6 @@ public class PlayerCore : MonoBehaviour
 
     private void Awake()
     {
-        m_Renderer = GetComponent<MeshRenderer>();
-        m_Renderer.material.color = Color.white;
         m_Health = maxHealth;
         m_RespawnTimer = 0f;
 
@@ -65,7 +61,7 @@ public class PlayerCore : MonoBehaviour
         }
 
         //No Input when dead
-        if (!m_IsDead)
+        if (!isDead)
         {
             if (Input.GetMouseButtonDown(1))
             {
@@ -100,7 +96,7 @@ public class PlayerCore : MonoBehaviour
         }
 
         //Count down respawn timer and respawn drone when player has no health
-        if (m_IsDead)
+        if (isDead)
         {
             m_RespawnTimer += Time.deltaTime;
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
@@ -109,8 +105,7 @@ public class PlayerCore : MonoBehaviour
             {
                 m_RespawnTimer = 0f;
                 m_Health = maxHealth;
-                m_Renderer.material.color = Color.white;
-                m_IsDead = false;
+                isDead = false;
             }
         }
     }
@@ -147,7 +142,7 @@ public class PlayerCore : MonoBehaviour
                 Debug.Log("Knocked back enemy");
                 StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, m_DashKnockback));
             }
-            else if (!m_IsDead) //Only take damage when not dead
+            else if (!isDead) //Only take damage when not dead
             {
                 EnemyDamageHandler enemy = other.GetComponent<EnemyDamageHandler>();
                 enemy.DestroyEnemy();
@@ -164,7 +159,6 @@ public class PlayerCore : MonoBehaviour
 
         m_DashCooldownTimer = m_DashCooldown;
         m_IsDashing = true;
-        m_Renderer.material.color = Color.red; // Change color to indicate dash
 
         //Check if there are alreay enemies inside thewd players collider, knockback or damage them
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
@@ -206,9 +200,8 @@ public class PlayerCore : MonoBehaviour
         if (m_Health <= 0)
         {
             //Make drone invisible when dead
-            m_Renderer.material.color = new Color(1, 1, 1, 0);
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
-            m_IsDead = true;
+            isDead = true;
             m_RespawnTimer = 0f;
         }
 
@@ -227,7 +220,6 @@ public class PlayerCore : MonoBehaviour
         }
 
         m_IsDashing = false;
-        m_Renderer.material.color = Color.white; // Reset color after dash
         StopDashVFX();
     }
 
@@ -268,7 +260,7 @@ public class PlayerCore : MonoBehaviour
             leg.legFlySpeed = LegHandler.legFlySpeedBase;
         }
     }
-    
+
     private void StartDashVFX()
     {
         dashEffect.SetVector3("PlayerVelocity", moveDirection);

@@ -79,7 +79,7 @@ public class FrankenGameManager : MonoBehaviour
     IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
     {
         float time = 0f;
-        float maxTime = 25f;
+        float maxTime = 20f;
         while (time < maxTime)
         {
             time += Time.deltaTime;

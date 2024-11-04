@@ -11,7 +11,6 @@ public class CameraTracker : MonoBehaviour
     public GameObject controlZone;
     public SpriteRenderer arrowSprite;
     public AnimationCurve cameraFollowCurve;
-    public bool allowCameraScroll = false;
     public float maxDistanceFromHarvester;
     public float cameraMoveSpeed = 20f;
     public GameObject OutOfRangeUIGroup;
@@ -48,7 +47,7 @@ public class CameraTracker : MonoBehaviour
 
     private void Update()
     {
-        if (!m_PlayerInRange)
+        if (!m_PlayerInRange && !ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
         {
             m_RespawnTimer -= Time.deltaTime;
             countdownUntilRespawnText.text = m_RespawnTimer.ToString("F2");
@@ -76,8 +75,8 @@ public class CameraTracker : MonoBehaviour
                 cameraMoveSpeed * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
         }
 
-        // Rotate arrow to face the control zone
-        if (arrowRotator != null && controlZone != null)
+        // Rotate arrow to face the control zone, only when the harvester is not dead
+        if (!ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
         {
             arrowRotator.transform.LookAt(controlZone.transform.position);
 
@@ -101,6 +100,7 @@ public class CameraTracker : MonoBehaviour
     private void SetIsPlayerInRange(bool isInRange)
     {
         // Only run the logic when the player's range status changes
+        //Disable logic when control zone died
         if (m_PlayerInRange != isInRange)
         {
             if (isInRange)

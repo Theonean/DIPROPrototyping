@@ -254,6 +254,7 @@ public class ControlZoneManager : MonoBehaviour
         if (m_Health <= 0 && m_ZoneState != ZoneState.DIED)
         {
             m_ZoneState = ZoneState.DIED;
+            Debug.Log("Harvester Died");
             died.Invoke();
             //Find Camera Tracker and tell it to track this
             CameraTracker.Instance.objectToTrack = this.gameObject;
@@ -328,5 +329,10 @@ public class ControlZoneManager : MonoBehaviour
             m_LineRenderer.SetPosition(0, m_TargetPosition);
             m_LineRenderer.SetPosition(1, transform.position);
         }
+    }
+
+    public ZoneState GetZoneState()
+    {
+        return m_ZoneState;
     }
 }
