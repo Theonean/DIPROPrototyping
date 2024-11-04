@@ -49,7 +49,7 @@ public class PlayerCore : MonoBehaviour
         {
             Instance = this;
         }
-        
+
         m_Health = maxHealth;
         m_RespawnTimer = 0f;
 
@@ -193,7 +193,13 @@ public class PlayerCore : MonoBehaviour
     }
 
     public void ModifyHealth(int amount)
-    {
+    {   
+        //When harvester has died, don't take damage
+        if(ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
+        {
+            return;
+        }
+        
         // Update the shield status
         if (amount > 0)
         {
