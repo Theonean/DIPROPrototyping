@@ -21,6 +21,11 @@ public class Obstacle : MonoBehaviour
     }
     public void RandomizeBlendWeights()
     {
+        meshRenderer.enabled = true;
+        GetComponent<Collider>().enabled = true;
+        navObstacleHolder.SetActive(true);
+        gameObject.SetActive(true);
+
         //Change the Blendshape values to random
         meshRenderer.SetBlendShapeWeight(0, Random.Range(0f, 100f));
         meshRenderer.SetBlendShapeWeight(1, Random.Range(0f, 100f));
