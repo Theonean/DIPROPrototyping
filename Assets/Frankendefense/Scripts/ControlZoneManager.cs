@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine.VFX;
+using Unity.AI.Navigation;
 
 public enum ZoneState
 {
@@ -25,6 +26,7 @@ public class ControlZoneManager : MonoBehaviour
     [Tooltip("Hits needed until this object signals death")]
     public int maxHealth;
     private int m_Health;
+    public NavMeshSurface navMeshSurface;
     public List<Slider> m_HealthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
@@ -155,6 +157,7 @@ public class ControlZoneManager : MonoBehaviour
                 m_ZoneState = ZoneState.START_HARVESTING;
                 m_HarvesterAnimator.Play(m_StartHarvesting, 0, 0f);
                 changedState.Invoke(m_ZoneState);
+
                 Debug.Log("Arrived at position, starting to harvest");
             }
         }
@@ -204,6 +207,10 @@ public class ControlZoneManager : MonoBehaviour
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;
 
+        //Move Navmesh transform forward by moving it along the path
+        Debug.LogError("Fix this");
+        //navMeshSurface.transform.position = new Vector3(0, 0, 0);// pathPositionsIndex * ProceduralTileGenerator.Instance.tileSize);
+
         // set resource point color
         SetMeshColoursToRegion();
     }
@@ -238,7 +245,7 @@ public class ControlZoneManager : MonoBehaviour
     {
         m_Health += amount;
         m_Health = Mathf.Clamp(m_Health, 0, maxHealth);
-        
+
         foreach (Slider slider in m_HealthSliders)
         {
             slider.value = m_Health;
