@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -73,6 +74,12 @@ public class EnemySpawner : MonoBehaviour
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
     }
 
+    IEnumerator SpawnEnemyDesynced()
+    {
+        yield return new WaitForSeconds(Random.Range(0f, 1.5f));
+        SpawnEnemy();
+    }
+
     public void StartWave(int waveNumber)
     {
         //Increase enemies spawned per second by 0.2 per wave
@@ -84,10 +91,12 @@ public class EnemySpawner : MonoBehaviour
 
         m_SpawnState = SpawnState.SPAWNING;
 
+        int initialSpawnCount = Mathf.CeilToInt(Mathf.Sqrt(waveNumber));
+
         //Spawn enemies immediately at start of wave to create some intial pressure on player
-        for (int i = 0; i < waveNumber; i++)
+        for (int i = 0; i < initialSpawnCount; i++)
         {
-            SpawnEnemy();
+            StartCoroutine(SpawnEnemyDesynced());
         }
     }
 
