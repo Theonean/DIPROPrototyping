@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
@@ -11,6 +12,8 @@ public class Obstacle : MonoBehaviour
 
     public VisualEffect ExplosionEffect;
     public UnityEvent changedBlendshape;
+
+    public GameObject navObstacleHolder;
 
     private void Awake()
     {
@@ -89,6 +92,7 @@ public class Obstacle : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         meshRenderer.enabled = false;
         GetComponent<Collider>().enabled = false;
+        navObstacleHolder.SetActive(false);
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
     }
