@@ -185,7 +185,7 @@ public class ProceduralTileGenerator : MonoBehaviour
 
     private Vector3 CalculatePathPosition(Vector3 startPosition, Vector3 direction)
     {
-        float randomDistance = Random.Range(minTravelTime, maxTravelTime) * ControlZoneManager.Instance.moveSpeed; ;
+        float randomDistance = Random.Range(minTravelTime, maxTravelTime) * ControlZoneManager.moveSpeed; ;
         return startPosition + (direction * randomDistance);
     }
 

@@ -23,6 +23,11 @@ public class LegDirectionalClickHandler : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same leg
     void Update()
     {
+        if(PlayerCore.Instance.isDead)
+        {
+            return;
+        }
+        
         // 1. Track the leg with the lowest index that is attached to the core
         activeLeg = GetLowestIndexAttachedLeg();
 

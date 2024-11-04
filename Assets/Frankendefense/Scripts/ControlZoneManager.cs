@@ -8,6 +8,7 @@ using System.Linq;
 using System;
 using UnityEngine.VFX;
 using Unity.AI.Navigation;
+using UnityEngine.ProBuilder.Shapes;
 
 public enum ZoneState
 {
@@ -30,7 +31,7 @@ public class ControlZoneManager : MonoBehaviour
     public List<Slider> m_HealthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
-    public float moveSpeed = 4f;
+    public static float moveSpeed = 5f;
     Vector3 m_TargetPosition;
     ZoneState m_ZoneState = ZoneState.MOVING;
     float m_WaveTimer = 0f;

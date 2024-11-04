@@ -1,10 +1,12 @@
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.VFX;
 
 public class PlayerCore : MonoBehaviour
 {
+    public static PlayerCore Instance { get; private set; }
     bool m_IsDashing = false;
     float m_DashKnockback = 150f;
     float m_DashTime = 0.3f;
@@ -14,6 +16,8 @@ public class PlayerCore : MonoBehaviour
     public float moveSpeed;
     public float currentSpeed;
     public float maxHealth; //Number of hits drone can take until it dies
+    public CanvasGroup playerDiedGroup;
+    public TextMeshProUGUI respawnTimerText;
     float m_Health; //Number of hits drone can take until it dies
     public float respawnTime; //Time until drone respawns
     public GameObject shield;
@@ -37,6 +41,15 @@ public class PlayerCore : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+        
         m_Health = maxHealth;
         m_RespawnTimer = 0f;
 
@@ -100,12 +113,14 @@ public class PlayerCore : MonoBehaviour
         {
             m_RespawnTimer += Time.deltaTime;
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
+            respawnTimerText.text = Mathf.Clamp(respawnTime - m_RespawnTimer, 0f, respawnTime).ToString("F2");
 
             if (m_RespawnTimer >= respawnTime)
             {
                 m_RespawnTimer = 0f;
                 m_Health = maxHealth;
                 isDead = false;
+                StartCoroutine(FadeDroneDied(false));
             }
         }
     }
@@ -203,6 +218,7 @@ public class PlayerCore : MonoBehaviour
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
             isDead = true;
             m_RespawnTimer = 0f;
+            StartCoroutine(FadeDroneDied(true));
         }
 
     }
@@ -270,5 +286,19 @@ public class PlayerCore : MonoBehaviour
     private void StopDashVFX()
     {
         dashEffect.Stop();
+    }
+    private IEnumerator FadeDroneDied(bool fadeIn)
+    {
+        float time = 0f;
+        float maxTime = 0.5f;
+        while (time < maxTime)
+        {
+            time += Time.deltaTime;
+            if (fadeIn)
+                playerDiedGroup.alpha = Mathf.Lerp(0, 1, time / maxTime);
+            else
+                playerDiedGroup.alpha = Mathf.Lerp(1, 0, time / maxTime);
+            yield return null;
+        }
     }
 }
