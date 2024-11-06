@@ -16,6 +16,7 @@ public enum LegState
 public class LegHandler : MonoBehaviour
 {
     public LegState m_LegState = LegState.ATTACHED;
+    public GameObject LegHandlerParent;
     public GameObject explosionPrefab; //The explosion prefab to spawn when the leg explodes.
     public bool debugExplosionSphere; //If true, a gizmo will be drawn to show the explosion radius.
     private bool isSpinning = false; //If the leg is currently spinning (one form of attack).
@@ -65,7 +66,7 @@ public class LegHandler : MonoBehaviour
 
         // Create a new GameObject to hold the initial transform
         GameObject initialTransformHolder = new GameObject($"{gameObject.name}_InitialTransform");
-        initialTransformHolder.transform.SetParent(core.transform);
+        initialTransformHolder.transform.SetParent(LegHandlerParent.transform);
         initialTransformHolder.transform.position = transform.position;
         initialTransformHolder.transform.rotation = transform.rotation;
 
@@ -133,7 +134,7 @@ public class LegHandler : MonoBehaviour
                 {
                     transform.position = updatedTargetPosition;
                     m_LegState = LegState.ATTACHED;
-                    transform.SetParent(core.transform);
+                    transform.SetParent(LegHandlerParent.transform);
                     transform.rotation = m_InitialTransform.rotation;
                     m_Collider.radius = m_colliderOriginalRadius;
                 }
@@ -225,7 +226,7 @@ public class LegHandler : MonoBehaviour
                 isSpinning = false;
                 transform.position = m_InitialTransform.position;
                 transform.rotation = m_InitialTransform.rotation;
-                transform.SetParent(core.transform);
+                transform.SetParent(LegHandlerParent.transform);
                 m_LegState = LegState.REGROWING;
                 transform.localScale = Vector3.zero;
                 break;
