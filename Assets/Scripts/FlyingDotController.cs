@@ -9,13 +9,19 @@ public class FlyingDotController : MonoBehaviour
     public static FlyingDotController Instance { get; private set; }
 
     [SerializeField]
-    private Sprite dotSprite; // Set this directly in the Inspector on the instance in the scene
+    private GameObject dotImagePrefab;
     [SerializeField]
     private AnimationCurve curve; // Set this directly in the Inspector on the instance in the scene
     [SerializeField]
     private float size = 10f; // Set this directly in the Inspector on the instance in the scene
     [SerializeField]
     private Canvas canvas;
+    [SerializeField]
+    private Color explosionColor = Color.red;
+    [SerializeField]
+    private Color shotSpeedColor = Color.blue;
+    [SerializeField]
+    private Color healthColor = Color.green;
 
 
     private void Awake()
@@ -43,30 +49,22 @@ public class FlyingDotController : MonoBehaviour
         }
 
         // Create the dot GameObject
-        GameObject dot = new GameObject("FlyingDot");
-        Image dotImage = dot.AddComponent<Image>();
+        GameObject dot = Instantiate(Instance.dotImagePrefab);
+        Image dotImage = dot.GetComponent<Image>();
+        Debug.Log(dotImage);
 
-        // Use the texture set on the instance
-        if (Instance.dotSprite != null)
-        {
-            dotImage.sprite = Instance.dotSprite;
-        }
-        else
-        {
-            Debug.LogWarning("Dot texture is not assigned in the Inspector on FlyingDotController.");
-        }
 
         // Set color based on CollectibleType
         switch (type)
         {
             case CollectibleType.ExplosionRange:
-                dotImage.color = Color.red;
+                dotImage.color = Instance.explosionColor;
                 break;
             case CollectibleType.ShotSpeed:
-                dotImage.color = Color.blue;
+                dotImage.color = Instance.shotSpeedColor;
                 break;
             case CollectibleType.FullHealth:
-                dotImage.color = Color.green;
+                dotImage.color = Instance.healthColor;
                 break;
         }
 
@@ -74,7 +72,7 @@ public class FlyingDotController : MonoBehaviour
         Vector3 startScreenPosition = Camera.main.WorldToScreenPoint(worldPosition);
         dot.transform.SetParent(Instance.canvas.transform);
         dot.transform.position = startScreenPosition;
-        dot.GetComponent<RectTransform>().sizeDelta = new Vector2(Instance.size, Instance.size); // Adjust size as desired
+        dot.transform.localScale = new Vector3(Instance.size, Instance.size, Instance.size);
 
         dot.AddComponent<FlyingDotMover>().Initialize(targetScreenPosition, dot, Instance.curve);
     }
