@@ -29,9 +29,6 @@ public class LegHandler : MonoBehaviour
     Vector3 m_LegOriginalScale; //Original scale of the leg.
     float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier for flying.
     private float m_LegRegrowSpeed = 1.5f; //Speed with which leg regrows to original scale
-    public float colliderRadiusModifierOnFloor; //Scale modifier for the collider when the leg is on the floor, to make it easier clickable
-    private float m_colliderOriginalRadius; //Original radius of the collider
-    private SphereCollider m_Collider; //Collider of the leg
     public static float explosionRadiusBase = 10f;
     public float explosionRadius = 10f;
     public float explosionChainDelay = 0.1f;
@@ -61,8 +58,6 @@ public class LegHandler : MonoBehaviour
         legFlySpeed = legFlySpeedBase;
 
         m_Camera = Camera.main;
-        m_Collider = GetComponent<SphereCollider>();
-        m_colliderOriginalRadius = m_Collider.radius;
 
         // Create a new GameObject to hold the initial transform
         GameObject initialTransformHolder = new GameObject($"{gameObject.name}_InitialTransform");
@@ -99,7 +94,6 @@ public class LegHandler : MonoBehaviour
 
                 if (Vector3.Distance(transform.position, m_TargetPosition) < 0.1f)
                 {
-                    m_Collider.radius = m_colliderOriginalRadius * colliderRadiusModifierOnFloor;
                     m_LegState = LegState.DETACHED;
 
                     StopVFX();
@@ -136,7 +130,6 @@ public class LegHandler : MonoBehaviour
                     m_LegState = LegState.ATTACHED;
                     transform.SetParent(LegHandlerParent.transform);
                     transform.rotation = m_InitialTransform.rotation;
-                    m_Collider.radius = m_colliderOriginalRadius;
                 }
 
                 StopVFX();
@@ -147,7 +140,6 @@ public class LegHandler : MonoBehaviour
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
-                    m_Collider.radius = m_colliderOriginalRadius;
                 }
                 break;
         }
@@ -177,7 +169,7 @@ public class LegHandler : MonoBehaviour
         }
     }
 
-    private void OnMouseDown()
+    public void ExplodeLeg()
     {
         switch (m_LegState)
         {
@@ -232,8 +224,6 @@ public class LegHandler : MonoBehaviour
                 break;
         }
     }
-
-    public void ExplodeLeg() => OnMouseDown();
 
     public bool IsRocketExplodable()
     {

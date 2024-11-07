@@ -23,11 +23,11 @@ public class LegDirectionalClickHandler : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same leg
     void Update()
     {
-        if(PlayerCore.Instance.isDead)
+        if (PlayerCore.Instance.isDead || FrankenGameManager.Instance.isPaused)
         {
             return;
         }
-        
+
         // 1. Track the leg with the lowest index that is attached to the core
         activeLeg = GetLowestIndexAttachedLeg();
 
@@ -37,33 +37,42 @@ public class LegDirectionalClickHandler : MonoBehaviour
             RotateTowardsMouse();
         }
 
-        if (Input.GetMouseButtonDown(0) && activeLeg != null)
+        if (Input.GetMouseButtonDown(0))
         {
             //Raycast to find the position to fly to, and if nothing is hit return
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hit)) return;
 
-            //Check if a leg was hit, if yes return
+            //Check if a leg was clicked, if yes return
             if (hit.collider.gameObject.CompareTag("Leg"))
             {
                 return;
             }
-
-            // Make the tracked leg the one to shoot
-            lastLegClicked = activeLeg;
-            lastLegClicked.GetComponent<LegHandler>().LegClicked();
-
-            // Start the rotation delay coroutine
-            StartCoroutine(StartRotationDelay());
-        }
-        else if(Input.GetMouseButtonDown(0) && activeLeg == null)
-        {
-            if(canvasFlashRoutine != null)
+            //If the clickable part of the leg was clicked, explode the leg
+            else if (hit.collider.gameObject.CompareTag("LegClickable"))
             {
-                StopCoroutine(canvasFlashRoutine);
+                hit.collider.gameObject.GetComponentInParent<LegHandler>().ExplodeLeg();
+                return;
             }
 
-            canvasFlashRoutine = StartCoroutine(FlashOutOfRockets());
+            if (activeLeg != null)
+            {
+                // Make the tracked leg the one to shoot
+                lastLegClicked = activeLeg;
+                lastLegClicked.GetComponent<LegHandler>().LegClicked();
+
+                // Start the rotation delay coroutine
+                StartCoroutine(StartRotationDelay());
+            }
+            else if (activeLeg == null)
+            {
+                if (canvasFlashRoutine != null)
+                {
+                    StopCoroutine(canvasFlashRoutine);
+                }
+
+                canvasFlashRoutine = StartCoroutine(FlashOutOfRockets());
+            }
         }
 
         if (Input.GetMouseButtonUp(0) && lastLegClicked != null)

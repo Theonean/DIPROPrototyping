@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.43863127, g: 0.48676032, b: 0.56703085, a: 1}
+  m_IndirectSpecularColor: {r: 0.43863112, g: 0.48676002, b: 0.5670302, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -124,6 +124,18 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &33065673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4838321126794333530, guid: cede008015de04a46bf480a2b3b76a5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6443427340868869809}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &38826260 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2700723378282298445, guid: 7818fbeebdb7c9f46b0a111050caa204,
@@ -2339,17 +2351,17 @@ PrefabInstance:
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.564
       objectReference: {fileID: 0}
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.564
       objectReference: {fileID: 0}
     - target: {fileID: 7276407882163757038, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
@@ -10356,6 +10368,21 @@ PrefabInstance:
       propertyPath: initialPathPositions
       value: 100
       objectReference: {fileID: 0}
+    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: healthSliders.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: healthSliders.Array.data[0]
+      value: 
+      objectReference: {fileID: 1809799317}
+    - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: healthSliders.Array.data[1]
+      value: 
+      objectReference: {fileID: 33065673}
     - target: {fileID: 706314438526691804, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: m_HealthSliders.Array.data[1]

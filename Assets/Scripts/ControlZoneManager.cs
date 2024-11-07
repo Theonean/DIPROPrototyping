@@ -26,9 +26,9 @@ public class ControlZoneManager : MonoBehaviour
 
     [Tooltip("Hits needed until this object signals death")]
     public int maxHealth;
-    private int m_Health;
+    public int health;
     public NavMeshSurface navMeshSurface;
-    public List<Slider> m_HealthSliders = new List<Slider>();
+    public List<Slider> healthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
     public static float moveSpeed = 5f;
@@ -76,9 +76,9 @@ public class ControlZoneManager : MonoBehaviour
 
     void Start()
     {
-        m_Health = maxHealth;
+        health = maxHealth;
         pathPositions = ProceduralTileGenerator.Instance.GetPath();
-        foreach (Slider slider in m_HealthSliders)
+        foreach (Slider slider in healthSliders)
         {
             slider.maxValue = maxHealth;
             slider.value = maxHealth;
@@ -195,7 +195,7 @@ public class ControlZoneManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Modifym_Health(-1);
+            Modifyhealth(-1);
             other.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
             StartCoroutine(TakeDamageEffect());
         }
@@ -242,17 +242,17 @@ public class ControlZoneManager : MonoBehaviour
         }
     }
 
-    void Modifym_Health(int amount)
+    void Modifyhealth(int amount)
     {
-        m_Health += amount;
-        m_Health = Mathf.Clamp(m_Health, 0, maxHealth);
+        health += amount;
+        health = Mathf.Clamp(health, 0, maxHealth);
 
-        foreach (Slider slider in m_HealthSliders)
+        foreach (Slider slider in healthSliders)
         {
-            slider.value = m_Health;
+            slider.value = health;
         }
 
-        if (m_Health <= 0 && m_ZoneState != ZoneState.DIED)
+        if (health <= 0 && m_ZoneState != ZoneState.DIED)
         {
             m_ZoneState = ZoneState.DIED;
             Debug.Log("Harvester Died");
@@ -265,12 +265,12 @@ public class ControlZoneManager : MonoBehaviour
 
     public void Heal()
     {
-        Modifym_Health(1);
+        Modifyhealth(1);
     }
 
     public void Die()
     {
-        Modifym_Health(-m_Health);
+        Modifyhealth(-health);
     }
 
     IEnumerator FlyAway()

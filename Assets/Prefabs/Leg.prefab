@@ -1,5 +1,58 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1122314631259547696
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1077426816589538700}
+  - component: {fileID: 4932951239868482663}
+  m_Layer: 12
+  m_Name: ClickCollider
+  m_TagString: LegClickable
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1077426816589538700
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122314631259547696}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5194158723973317335}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &4932951239868482663
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122314631259547696}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 1
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1351546831231942678
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,8 +202,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
-  - {fileID: 1361803899400780239}
   - {fileID: 7759845288143452904}
+  - {fileID: 1361803899400780239}
+  - {fileID: 1077426816589538700}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &562755067352527454
@@ -166,6 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LegState: 0
+  LegHandlerParent: {fileID: 0}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
     type: 3}
   debugExplosionSphere: 0
@@ -204,8 +259,8 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
-  colliderRadiusModifierOnFloor: 3
   explosionRadius: 10
+  explosionChainDelay: 0.1
   vfxFlying: {fileID: 8805036787023284058}
 --- !u!135 &601932258058907427
 SphereCollider:
@@ -217,7 +272,7 @@ SphereCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -226,7 +281,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.4089075
+  m_Radius: 1.5
   m_Center: {x: 4.972736e-10, y: -0.008805095, z: -2.8521685e-10}
 --- !u!54 &8020142586616054773
 Rigidbody:
