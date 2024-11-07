@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ShieldVFX : MonoBehaviour
@@ -7,7 +6,8 @@ public class ShieldVFX : MonoBehaviour
     Renderer _renderer;
     public float dissolveSpeed;
     private float startPos;
-    private float endPos = 1.2f;
+    private float endPos = 0.65f;
+    private Coroutine dissolveCoroutine;
 
     private void Start()
     {
@@ -17,19 +17,35 @@ public class ShieldVFX : MonoBehaviour
 
     public void ToggleShield(bool direction)
     {
-        if (direction)
-            StartCoroutine(DissolveShield(endPos, startPos));
-        else
-            StartCoroutine(DissolveShield(startPos, endPos));
+        float target = direction ? startPos : endPos;
+
+        // Stop any ongoing dissolve coroutine to switch directions
+        if (dissolveCoroutine != null)
+        {
+            StopCoroutine(dissolveCoroutine);
+        }
+
+        // Start the coroutine with the new target direction
+        dissolveCoroutine = StartCoroutine(DissolveShield(target));
     }
 
-    private IEnumerator DissolveShield(float start, float target)
+    private IEnumerator DissolveShield(float target)
     {
-        float lerp = 0;
-        while (lerp < 1)
+        float start = _renderer.material.GetFloat("_Dissolve");
+        float lerp = 0f;
+
+        // Continue until the dissolve value reaches the target
+        while (!Mathf.Approximately(start, target))
         {
-            _renderer.material.SetFloat("_Dissolve", Mathf.Lerp(start, target, lerp));
             lerp += Time.deltaTime * dissolveSpeed;
+
+            // Interpolate between start and target using Mathf.Lerp
+            float current = Mathf.Lerp(start, target, lerp);
+            _renderer.material.SetFloat("_Dissolve", current);
+
+            // Update start to the last value of current to handle direction changes smoothly
+            start = _renderer.material.GetFloat("_Dissolve");
+
             yield return null;
         }
     }

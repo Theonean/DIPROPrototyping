@@ -39,6 +39,7 @@ public class PlayerCore : MonoBehaviour
     [Header("VFX")]
     public VisualEffect dashEffect;
     public GameObject explosion;
+    private ShieldVFX shieldVFX;
 
     private void Awake()
     {
@@ -55,6 +56,7 @@ public class PlayerCore : MonoBehaviour
         m_RespawnTimer = 0f;
 
         m_Legs = GetComponentsInChildren<LegHandler>();
+        shieldVFX = shield.GetComponent<ShieldVFX>();
     }
 
     void Update()
@@ -205,12 +207,12 @@ public class PlayerCore : MonoBehaviour
         if (amount > 0)
         {
             m_RegenShield = false;
-            shield.GetComponent<ShieldVFX>().ToggleShield(true);
+            shieldVFX.ToggleShield(true);
         }
         else if (amount < 0)
         {
             m_RegenShield = true;
-            shield.GetComponent<ShieldVFX>().ToggleShield(false);
+            shieldVFX.ToggleShield(false);
             m_ShieldRespawnTimer = shieldRespawnCooldown;
         }
 
@@ -228,6 +230,7 @@ public class PlayerCore : MonoBehaviour
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
             isDead = true;
             m_RespawnTimer = 0f;
+            shieldVFX.ToggleShield(true);
             StartCoroutine(FadeDroneDied(true));
         }
 
