@@ -27,8 +27,12 @@ public class Collectible : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //When harvester is at full health, don't drop healing packs
+        int topRange = ControlZoneManager.Instance.health == ControlZoneManager.Instance.maxHealth ? 2 : 3;
+        int bottomRange = 0;
+
         //Determine what type of collectible this is and enable the corresponding game object
-        type = (CollectibleType)UnityEngine.Random.Range(0, 3);
+        type = (CollectibleType)UnityEngine.Random.Range(bottomRange, topRange);
         switch (type)
         {
             case CollectibleType.ExplosionRange:
