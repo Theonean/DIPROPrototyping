@@ -47,19 +47,37 @@ public class Collectible : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            Vector3 targetScreenPosition;
             switch (type)
             {
                 case CollectibleType.ExplosionRange:
+                    //Apply Buff and refresh duration
                     other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeMultiplier);
                     UIStatsDisplayer.Instance.RefreshExplosionRangeBuff(buffDuration);
+
+                    //Calculate target position on screen for flying dot
+                    targetScreenPosition = UIStatsDisplayer.Instance.explosionRangeNumber.rectTransform.position
+                        - new Vector3(UIStatsDisplayer.Instance.explosionRangeNumber.rectTransform.rect.width / 2, 0, 0);
+
+                    FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);
                     break;
                 case CollectibleType.ShotSpeed:
+                    //Apply Buff and refresh duration
                     other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedMultiplier);
                     UIStatsDisplayer.Instance.RefreshShotSpeedBuff(buffDuration);
+
+                    //Calculate target position on screen for flying dot
+                    targetScreenPosition = UIStatsDisplayer.Instance.shotspeedNumber.rectTransform.position
+                        - new Vector3(UIStatsDisplayer.Instance.shotspeedNumber.rectTransform.rect.width / 2, 0, 0);
+
+                    FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);
                     break;
                 case CollectibleType.FullHealth:
-                    //Find the control zone manager and give the player full health
+                    //Find the control zone manager and heal the harvester
                     ControlZoneManager.Instance.Heal();
+
+                    targetScreenPosition = UIStatsDisplayer.Instance.healthSlider.GetComponent<RectTransform>().position;
+                    FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);
                     break;
             }
             Destroy(gameObject);
