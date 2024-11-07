@@ -38,6 +38,7 @@ public class PlayerCore : MonoBehaviour
 
     [Header("VFX")]
     public VisualEffect dashEffect;
+    public GameObject explosion;
 
     private void Awake()
     {
@@ -220,6 +221,9 @@ public class PlayerCore : MonoBehaviour
         //Check if dead
         if (m_Health <= 0)
         {
+            // Instantiate Explosion VFX
+            Instantiate(explosion, transform.position, Quaternion.identity);
+
             //Make drone invisible when dead
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
             isDead = true;
