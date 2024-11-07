@@ -19,6 +19,7 @@ public class FrankenGameManager : MonoBehaviour
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
+    public bool isPaused = false;
 
     private void Awake()
     {
@@ -41,15 +42,28 @@ public class FrankenGameManager : MonoBehaviour
     private void Update()
     {
         if (m_GameState != GameState.GAMEOVER)
-            m_TotalGameTime += Time.deltaTime;
-
-        if (m_GameState == GameState.GAMEOVER)
         {
-            if (Input.GetKeyDown(KeyCode.R))
+            if (!isPaused)
+                m_TotalGameTime += Time.deltaTime;
+
+            // Toggle pause with spacebar
+            if (Input.GetKeyDown(KeyCode.Escape))
             {
-                UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+                TogglePause();
             }
         }
+
+        // Reload the scene when 'R' is pressed if the game is over
+        if (m_GameState == GameState.GAMEOVER && Input.GetKeyDown(KeyCode.R))
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+        }
+    }
+
+    private void TogglePause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0 : 1;
     }
 
     public void IncrementWavesSurvived()
@@ -74,6 +88,12 @@ public class FrankenGameManager : MonoBehaviour
 
         resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
         StartCoroutine(ScaleUpUI(gameOverGroup));
+
+        // Unpause if the game is over
+        if (isPaused)
+        {
+            TogglePause();
+        }
     }
 
     IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
