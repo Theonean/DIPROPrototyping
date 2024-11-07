@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class UIStatsDisplayer : MonoBehaviour
 {
     public static UIStatsDisplayer Instance { get; private set; }
-
+    public Slider healthSlider;
     public TextMeshProUGUI explosionRangeNumber;
     public Slider explosionRangeBuffTimer;
     public TextMeshProUGUI shotspeedNumber;
