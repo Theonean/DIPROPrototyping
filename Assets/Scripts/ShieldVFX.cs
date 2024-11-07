@@ -6,7 +6,7 @@ public class ShieldVFX : MonoBehaviour
     Renderer _renderer;
     public float dissolveSpeed;
     private float startPos;
-    private float endPos = 0.65f;
+    private float endPos = 0.9f;
     private Coroutine dissolveCoroutine;
 
     private void Start()
