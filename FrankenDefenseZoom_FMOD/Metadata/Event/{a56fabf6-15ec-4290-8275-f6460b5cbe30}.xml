@@ -5,7 +5,7 @@
 			<value>Enemy1-Walking 2</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{183e5959-1461-4ce0-a04f-df09990e2db3}</destination>
@@ -134,6 +134,7 @@
 	<object class="MixerBusEffectChain" id="{ee4bdcd6-c4ab-4b50-8df6-7058c60697bc}">
 		<relationship name="effects">
 			<destination>{dce760df-791d-480b-a132-3cfa90763bd5}</destination>
+			<destination>{7fc89d9a-3cdf-47d3-b446-65b3a3b10594}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ebd13756-32a3-45d8-b145-4825d0db3e1f}" />
@@ -145,5 +146,16 @@
 	</object>
 	<object class="MixerBusPanner" id="{b03172bf-77c1-4aaf-af83-57824059f2ad}" />
 	<object class="MixerBusFader" id="{dce760df-791d-480b-a132-3cfa90763bd5}" />
+	<object class="SpatialiserEffect" id="{7fc89d9a-3cdf-47d3-b446-65b3a3b10594}">
+		<property name="minimumDistance">
+			<value>0.699999988</value>
+		</property>
+		<property name="maximumDistance">
+			<value>900</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{c21d5dec-f319-44c9-b044-0f28aec73bf4}" />
 </objects>
