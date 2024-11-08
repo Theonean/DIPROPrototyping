@@ -16,10 +16,12 @@ public class FrankenGameManager : MonoBehaviour
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
     public CanvasGroup gameOverGroup;
+    public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
     public bool isPaused = false;
+    Coroutine pauseFadeRoutine;
 
     private void Awake()
     {
@@ -64,6 +66,11 @@ public class FrankenGameManager : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
+        if(pauseFadeRoutine != null)
+        {
+            StopCoroutine(pauseFadeRoutine);
+        }
+        pauseFadeRoutine = StartCoroutine(FadeUI(pauseGroup, isPaused, 0.5f));
     }
 
     public void IncrementWavesSurvived()
@@ -87,7 +94,7 @@ public class FrankenGameManager : MonoBehaviour
         playerCore.enabled = false;
 
         resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
-        StartCoroutine(ScaleUpUI(gameOverGroup));
+        StartCoroutine(FadeUI(gameOverGroup, true, 20f));
 
         // Unpause if the game is over
         if (isPaused)
@@ -96,16 +103,15 @@ public class FrankenGameManager : MonoBehaviour
         }
     }
 
-    IEnumerator ScaleUpUI(CanvasGroup uiOverlay)
+    IEnumerator FadeUI(CanvasGroup uiOverlay, bool fadeIn, float maxTime)
     {
-        float time = 0f;
-        float maxTime = 20f;
+        float time = fadeIn ? uiOverlay.alpha * maxTime : (1 - uiOverlay.alpha) * maxTime;
         while (time < maxTime)
         {
-            time += Time.deltaTime;
-            uiOverlay.alpha = Mathf.Lerp(0, 1, time / maxTime);
+            time += Time.unscaledDeltaTime;
+            uiOverlay.alpha = fadeIn ? time / maxTime : 1 - time / maxTime;
             yield return null;
         }
-        uiOverlay.alpha = 1;
+        uiOverlay.alpha = fadeIn ? 1 : 0;
     }
 }
