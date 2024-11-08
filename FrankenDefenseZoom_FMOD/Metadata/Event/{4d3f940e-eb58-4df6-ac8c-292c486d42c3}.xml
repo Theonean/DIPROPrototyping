@@ -5,7 +5,7 @@
 			<value>Enemy2-Walking</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{183e5959-1461-4ce0-a04f-df09990e2db3}</destination>
@@ -57,7 +57,11 @@
 			<destination>{9f62ed95-b7b3-4c85-b196-28024e20ac05}</destination>
 		</relationship>
 	</object>
-	<object class="EventAutomatableProperties" id="{ba993d34-f058-489b-968c-8e9d7b3c8dec}" />
+	<object class="EventAutomatableProperties" id="{ba993d34-f058-489b-968c-8e9d7b3c8dec}">
+		<property name="maxVoices">
+			<value>5</value>
+		</property>
+	</object>
 	<object class="MarkerTrack" id="{69361217-ec59-4f99-9560-84c1e872e26c}" />
 	<object class="GroupTrack" id="{0a5d7b29-42b3-462c-8b56-dc7ed86d6238}">
 		<relationship name="modules">
@@ -105,6 +109,9 @@
 		<property name="length">
 			<value>1.9904583333333334</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{78f67c68-37b5-45d5-a8e8-245c2dc9fa3a}</destination>
+		</relationship>
 		<relationship name="audioFile">
 			<destination>{36084078-1315-472f-afc0-daa3346b8028}</destination>
 		</relationship>
@@ -113,6 +120,9 @@
 		<property name="name">
 			<value>Audio 1</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{1824ee4d-4953-4c60-abec-e582223a0c4d}</destination>
+		</relationship>
 		<relationship name="effectChain">
 			<destination>{4dc3517a-8d33-4f68-aae6-b998cb740a02}</destination>
 		</relationship>
@@ -130,6 +140,10 @@
 		<property name="length">
 			<value>4.0333333333333332</value>
 		</property>
+		<relationship name="modulators">
+			<destination>{cd503a3e-66cc-4222-9392-a30c54677abf}</destination>
+			<destination>{dfe6d586-c602-4d7e-856e-465f2402aa69}</destination>
+		</relationship>
 		<relationship name="event">
 			<destination>{32d495e7-a5e6-4984-9fe5-d9e47675acb7}</destination>
 		</relationship>
@@ -168,16 +182,49 @@
 	<object class="MixerBusEffectChain" id="{e2a6c496-a65b-4bfb-b5d4-72711eb3f9e6}">
 		<relationship name="effects">
 			<destination>{baf68567-22db-4efa-a6fc-a659ed7200a2}</destination>
+			<destination>{79f02db2-2427-4bf1-a60c-507580e63501}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{2df3c741-05ab-4b08-ad1d-2799e547542a}" />
 	<object class="MixerBusFader" id="{a1fab1b9-8977-4b41-b9f8-797b175f4c87}" />
+	<object class="RandomizerModulator" id="{78f67c68-37b5-45d5-a8e8-245c2dc9fa3a}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>14.5</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{1824ee4d-4953-4c60-abec-e582223a0c4d}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>7.5</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{4dc3517a-8d33-4f68-aae6-b998cb740a02}">
 		<relationship name="effects">
 			<destination>{3d1217c7-a96e-43c9-97e0-ac84a0132c68}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{c6641d1a-014a-428f-b2b7-5fc4b1f4fea5}" />
+	<object class="RandomizerModulator" id="{cd503a3e-66cc-4222-9392-a30c54677abf}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>pitch</value>
+		</property>
+		<property name="amount">
+			<value>6.5</value>
+		</property>
+	</object>
+	<object class="RandomizerModulator" id="{dfe6d586-c602-4d7e-856e-465f2402aa69}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>volume</value>
+		</property>
+		<property name="amount">
+			<value>5</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{e496083b-bd4a-423d-aebb-7d60f5302a0a}">
 		<relationship name="effects">
 			<destination>{366236d7-68d1-4e60-8899-4b1488fd2fd1}</destination>
@@ -185,6 +232,17 @@
 	</object>
 	<object class="MixerBusPanner" id="{606f605b-a47f-41e2-817a-82512b771d34}" />
 	<object class="MixerBusFader" id="{baf68567-22db-4efa-a6fc-a659ed7200a2}" />
+	<object class="SpatialiserEffect" id="{79f02db2-2427-4bf1-a60c-507580e63501}">
+		<property name="minimumDistance">
+			<value>85</value>
+		</property>
+		<property name="maximumDistance">
+			<value>900</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{3d1217c7-a96e-43c9-97e0-ac84a0132c68}" />
 	<object class="MixerBusFader" id="{366236d7-68d1-4e60-8899-4b1488fd2fd1}" />
 </objects>
