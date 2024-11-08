@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 4801353644485324884}
   - component: {fileID: 5219416803614111547}
   - component: {fileID: 6072920904058813872}
+  - component: {fileID: 3227692909652219943}
   m_Layer: 0
   m_Name: PlayerExplosion
   m_TagString: Untagged
@@ -126,3 +127,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   useTimeToDestroy: 1
   timeToDestroy: 4
+--- !u!114 &3227692909652219943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4695719848415906335}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 1286730082
+      Data2: 1295560401
+      Data3: 1807618451
+      Data4: 741811024
+    Path: event:/SFX/Dron/Missile_Explotion
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 2
+  AllowFadeout: 1
+  TriggerOnce: 0
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 200
