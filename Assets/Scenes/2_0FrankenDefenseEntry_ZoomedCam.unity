@@ -8170,7 +8170,7 @@ Transform:
   m_GameObject: {fileID: 1794534184}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: -0, y: 0, z: -0.71}
+  m_LocalPosition: {x: -0, y: 0, z: -0.623}
   m_LocalScale: {x: 10.152348, y: 28.008, z: 0.8583697}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8654,6 +8654,7 @@ MonoBehaviour:
   controlZone: {fileID: 2095316635}
   resourcesHarvestedText: {fileID: 889989454}
   gameOverGroup: {fileID: 849772368}
+  pauseGroup: {fileID: 8033146558979600133}
   isPaused: 0
 --- !u!1001 &1886590408
 PrefabInstance:
@@ -10942,6 +10943,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1909661526}
     m_Modifications:
+    - target: {fileID: 791115848272372955, guid: d30b4733daec062489b2750afdeeefd2,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4719022499516056314, guid: d30b4733daec062489b2750afdeeefd2,
         type: 3}
       propertyPath: m_Name
@@ -11055,6 +11061,12 @@ PrefabInstance:
 --- !u!224 &8033146558979600132 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5635418437787562116, guid: d30b4733daec062489b2750afdeeefd2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8033146558979600131}
+  m_PrefabAsset: {fileID: 0}
+--- !u!225 &8033146558979600133 stripped
+CanvasGroup:
+  m_CorrespondingSourceObject: {fileID: 791115848272372955, guid: d30b4733daec062489b2750afdeeefd2,
     type: 3}
   m_PrefabInstance: {fileID: 8033146558979600131}
   m_PrefabAsset: {fileID: 0}
