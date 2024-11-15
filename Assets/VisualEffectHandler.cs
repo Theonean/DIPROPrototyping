@@ -49,7 +49,7 @@ public class VisualEffectHandler : MonoBehaviour
     private void DestroyThis()
     {
         if (destroyParent)
-            Destroy(gameObject.transform.parent);
+            Destroy(gameObject.transform.parent.gameObject);
         else
             Destroy(gameObject);
     }
