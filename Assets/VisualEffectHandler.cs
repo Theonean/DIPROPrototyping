@@ -11,6 +11,7 @@ public class VisualEffectHandler : MonoBehaviour
     public float timeToDestroy;
 
     private float timer = 0f;
+    public bool destroyParent = false;
 
     private void Start()
     {
@@ -47,6 +48,9 @@ public class VisualEffectHandler : MonoBehaviour
 
     private void DestroyThis()
     {
-        Destroy(gameObject);
+        if (destroyParent)
+            Destroy(gameObject.transform.parent);
+        else
+            Destroy(gameObject);
     }
 }
