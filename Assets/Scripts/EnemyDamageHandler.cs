@@ -7,7 +7,8 @@ public class EnemyDamageHandler : MonoBehaviour
     string m_EnemyTag = "Leg"; //Tag of the object that will destroy this object
     bool m_IsInLeg = false;
     LegHandler m_Leg;
-    public GameObject m_Explosion;
+    public GameObject m_Explosion_1;
+    public GameObject m_Explosion_2;
     public UnityEvent enemyDestroyed;
 
     //When collision happens, check if object has the right tag and if it does, destroy this object
@@ -52,14 +53,16 @@ public class EnemyDamageHandler : MonoBehaviour
         enemyDestroyed.Invoke();
 
         //Instantiate explosion particle system and destroy after 4 seconds
-        Instantiate(m_Explosion, transform.position, Quaternion.identity);
-        Destroy(transform.parent.gameObject, 4f);
+        GameObject explosionEffect = GetComponentInParent<EnemyTypeDecider>().enemyType ? m_Explosion_1 : m_Explosion_2;
+        Instantiate(explosionEffect, transform.position, Quaternion.identity);
+        Destroy(transform.parent.gameObject);
 
+        /*
         //Get the followplayer and navmeshagent component from parent and disable
         FollowPlayer followPlayer = transform.parent.gameObject.GetComponent<FollowPlayer>();
         UnityEngine.AI.NavMeshAgent navMeshAgent = transform.parent.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
         followPlayer.enabled = false;
         navMeshAgent.enabled = false;
-        Destroy(gameObject);
+        Destroy(gameObject);*/
     }
 }

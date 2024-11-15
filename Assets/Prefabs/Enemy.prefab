@@ -4937,7 +4937,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61d2ba3d9a19a7c4fab53af094acaecf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Explosion: {fileID: 783751046653571528, guid: 5d7f5bd2c7b9b684db94d067bcec5eb0,
+  m_Explosion_1: {fileID: 5327337419462325007, guid: 56753c4fe48b52d43808a4fd622e6332,
+    type: 3}
+  m_Explosion_2: {fileID: 5327337419462325007, guid: bd31dcb200c8e4a42878bb200e810b52,
     type: 3}
   enemyDestroyed:
     m_PersistentCalls:
@@ -5105,6 +5107,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyRegularModel: {fileID: 2426033176611949745}
   enemyFastModel: {fileID: 4457416257750489929}
+  enemyType: 0
 --- !u!195 &8490830819345528117
 NavMeshAgent:
   m_ObjectHideFlags: 0
