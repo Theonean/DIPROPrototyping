@@ -1,4 +1,6 @@
 using System.Collections;
+using FMOD.Studio;
+using FMODUnity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -13,6 +15,7 @@ public class PlayerCore : MonoBehaviour
     float m_DashSpeed = 60f;
     float m_DashCooldown = 1f;
     float m_DashCooldownTimer;
+    private bool m_standingStill = true;
     public float moveSpeed;
     public float currentSpeed;
     public float maxHealth; //Number of hits drone can take until it dies
@@ -40,6 +43,11 @@ public class PlayerCore : MonoBehaviour
     public VisualEffect dashEffect;
     public GameObject explosion;
     private ShieldVFX shieldVFX;
+    [Header("SFX")]
+    public string shieldSFXEventPath; // FMOD event path
+    public string movementSFXPath; // FMOD event path
+    private EventInstance shieldSFXInstance;
+    private EventInstance movementSFXInstance;
 
     private void Awake()
     {
@@ -59,6 +67,12 @@ public class PlayerCore : MonoBehaviour
         shieldVFX = shield.GetComponent<ShieldVFX>();
     }
 
+    private void Start()
+    {
+        FMODAudioManagement.instance.PlaySound(out shieldSFXInstance, shieldSFXEventPath, gameObject);
+        FMODAudioManagement.instance.PlaySound(out movementSFXInstance, movementSFXPath, gameObject);
+    }
+
     void Update()
     {
         if (m_DashCooldownTimer > 0f)
@@ -72,7 +86,8 @@ public class PlayerCore : MonoBehaviour
             if (m_ShieldRespawnTimer <= 0f)
             {
                 ModifyHealth(+1);
-                Debug.Log("Shield regenerated");
+
+                FMODAudioManagement.instance.PlaySound(out shieldSFXInstance, shieldSFXEventPath, gameObject);
             }
         }
 
@@ -102,11 +117,18 @@ public class PlayerCore : MonoBehaviour
                 {
                     moveDirection = input.normalized;
                     m_AccelerationTime += Time.deltaTime;
+                    if (m_standingStill)
+                    {
+                        m_standingStill = false;
+                        movementSFXInstance.setParameterByName("Movement", 1f);
+                    }
                 }
                 else
                 {
                     moveDirection = Vector3.zero;
                     m_AccelerationTime = 0f;
+                    m_standingStill = true;
+                    movementSFXInstance.setParameterByName("Movement", 0f);
                 }
             }
         }
@@ -123,6 +145,10 @@ public class PlayerCore : MonoBehaviour
                 m_RespawnTimer = 0f;
                 m_Health = maxHealth;
                 isDead = false;
+
+                shieldSFXInstance.setPaused(false);
+                movementSFXInstance.setPaused(false);
+
                 StartCoroutine(FadeDroneDied(false));
             }
         }
@@ -173,10 +199,12 @@ public class PlayerCore : MonoBehaviour
 
     private void Dash()
     {
-        if (m_IsDashing) return; // Prevent multiple dashes at the same time
+        if (m_IsDashing || moveDirection == Vector3.zero) return; // Prevent multiple dashes at the same time
 
         m_DashCooldownTimer = m_DashCooldown;
         m_IsDashing = true;
+
+        movementSFXInstance.setParameterByName("Dash", 1f);
 
         //Check if there are alreay enemies inside thewd players collider, knockback or damage them
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, 3f);
@@ -196,24 +224,28 @@ public class PlayerCore : MonoBehaviour
     }
 
     public void ModifyHealth(int amount)
-    {   
+    {
         //When harvester has died, don't take damage
-        if(ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
+        if (ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
         {
             return;
         }
-        
+
         // Update the shield status
         if (amount > 0)
         {
             m_RegenShield = false;
             shieldVFX.ToggleShield(true);
         }
+        //Break the shield
         else if (amount < 0)
         {
             m_RegenShield = true;
             shieldVFX.ToggleShield(false);
             m_ShieldRespawnTimer = shieldRespawnCooldown;
+
+            //Play shield SFX
+            shieldSFXInstance.keyOff();
         }
 
         //Change health
@@ -225,6 +257,10 @@ public class PlayerCore : MonoBehaviour
         {
             // Instantiate Explosion VFX
             Instantiate(explosion, transform.position, Quaternion.identity);
+
+            //Pause Shield SFX When Dead
+            shieldSFXInstance.setPaused(true);
+            movementSFXInstance.setPaused(true);
 
             //Make drone invisible when dead
             transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
@@ -248,6 +284,7 @@ public class PlayerCore : MonoBehaviour
             yield return null;
         }
 
+        movementSFXInstance.setParameterByName("Dash", 0f);
         m_IsDashing = false;
         StopDashVFX();
     }

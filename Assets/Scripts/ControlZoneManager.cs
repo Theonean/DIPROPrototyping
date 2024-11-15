@@ -9,6 +9,8 @@ using System;
 using UnityEngine.VFX;
 using Unity.AI.Navigation;
 using UnityEngine.ProBuilder.Shapes;
+using FMOD.Studio;
+using FMODUnity;
 
 public enum ZoneState
 {
@@ -60,6 +62,13 @@ public class ControlZoneManager : MonoBehaviour
 
     // VFX
     public VisualEffect drillingVFX;
+
+    [Header("SFX")]
+    public string harvestingSFXPath = "event:/...";
+    private EventInstance m_HarvestingSFX;
+    public StudioEventEmitter movingSFX;
+    public string enemyImpactSFXPath = "event:/...";
+    public string takeoffSFXPath = "event:/...";
 
     private void Awake()
     {
@@ -119,6 +128,9 @@ public class ControlZoneManager : MonoBehaviour
 
                 // stop VFX
                 drillingVFX.Stop();
+
+                //Set audio Cue for Harvester to pack up
+                m_HarvestingSFX.keyOff();
             }
         }
         else if (m_ZoneState == ZoneState.MOVING)
@@ -160,6 +172,9 @@ public class ControlZoneManager : MonoBehaviour
                 changedState.Invoke(m_ZoneState);
 
                 Debug.Log("Arrived at position, starting to harvest");
+                //Set Audio states
+                FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
+                movingSFX.EventInstance.setPaused(true);
             }
         }
         else if (m_ZoneState == ZoneState.START_HARVESTING)
@@ -186,6 +201,9 @@ public class ControlZoneManager : MonoBehaviour
                 m_HarvesterAnimator.Play(m_Idle, 0, 0f);
                 changedState.Invoke(m_ZoneState);
                 Debug.Log("Finished Harvesting, moving to new position");
+
+                //Set Audio states
+                movingSFX.EventInstance.setPaused(false);
             }
         }
     }
@@ -195,6 +213,9 @@ public class ControlZoneManager : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Enemy"))
         {
+            //Set Audio states
+            FMODAudioManagement.instance.PlayOneShot(enemyImpactSFXPath, other.gameObject.transform.position);
+
             Modifyhealth(-1);
             other.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
             StartCoroutine(TakeDamageEffect());
@@ -260,17 +281,15 @@ public class ControlZoneManager : MonoBehaviour
             //Find Camera Tracker and tell it to track this
             CameraTracker.Instance.objectToTrack = this.gameObject;
             StartCoroutine(FlyAway());
+
+            //Set Audio states
+            FMODAudioManagement.instance.PlayOneShot(takeoffSFXPath, transform.position);
         }
     }
 
     public void Heal()
     {
         Modifyhealth(1);
-    }
-
-    public void Die()
-    {
-        Modifyhealth(-health);
     }
 
     IEnumerator FlyAway()
