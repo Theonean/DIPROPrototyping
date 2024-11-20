@@ -40,6 +40,11 @@ public class LegHandler : MonoBehaviour
     [Header("VFX")]
     public VisualEffect vfxFlying;
 
+    [Header("SFX")]
+    public string rocketFlyAwaySFXPath = "event:/...";
+    public string rocketCallbackSFXPath = "event:/...";
+
+
     void Awake()
     {
         //Find parent "core" object and subscribe to the return event
@@ -51,6 +56,8 @@ public class LegHandler : MonoBehaviour
                 isSpinning = false;
                 m_LegState = LegState.RETURNING;
                 m_StartingPosition = transform.position;
+
+                FMODAudioManagement.instance.PlayOneShot(rocketCallbackSFXPath, gameObject);
             }
         });
 
@@ -166,6 +173,8 @@ public class LegHandler : MonoBehaviour
             transform.LookAt(m_TargetPosition);
 
             StartVFX();
+
+            FMODAudioManagement.instance.PlayOneShot(rocketFlyAwaySFXPath, gameObject);
         }
     }
 
