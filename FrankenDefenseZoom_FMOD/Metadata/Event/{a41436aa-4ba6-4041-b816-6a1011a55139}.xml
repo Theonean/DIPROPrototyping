@@ -59,7 +59,7 @@
 			<destination>{cf274ad7-b31d-49ac-a0b7-c199d91bfc2d}</destination>
 		</relationship>
 		<relationship name="output">
-			<destination>{9f62ed95-b7b3-4c85-b196-28024e20ac05}</destination>
+			<destination>{3071773d-9e7b-4ca3-97fa-a62b0d1bd72d}</destination>
 		</relationship>
 	</object>
 	<object class="EventAutomatableProperties" id="{750314d0-d959-4267-8da7-4751e6ead376}" />
@@ -137,9 +137,6 @@
 		</relationship>
 	</object>
 	<object class="EventSound" id="{db1b98d8-d916-41d5-8072-10fd02188430}">
-		<property name="start">
-			<value>2.2600000000000002</value>
-		</property>
 		<property name="length">
 			<value>13.840000000000002</value>
 		</property>
@@ -173,9 +170,6 @@
 		</relationship>
 	</object>
 	<object class="EventSound" id="{42a0c71d-b799-4ef1-9378-6fd447da9ba9}">
-		<property name="start">
-			<value>2.2600000000000002</value>
-		</property>
 		<property name="length">
 			<value>13.840000000000002</value>
 		</property>
@@ -205,7 +199,10 @@
 	</object>
 	<object class="SingleSound" id="{2c28d581-2816-4468-a612-93ab9c929dae}">
 		<property name="length">
-			<value>18.943999999999999</value>
+			<value>16.684000000000005</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>2.2600000000000002</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{1f53ed23-9b79-4d27-b2d2-cee0f5a0776d}</destination>
@@ -230,7 +227,7 @@
 	</object>
 	<object class="LoopRegion" id="{6c1b0706-0d26-4926-8dc9-06a813c5f2ee}">
 		<property name="position">
-			<value>2.2600000000000002</value>
+			<value>0</value>
 		</property>
 		<property name="length">
 			<value>13.84</value>
@@ -340,7 +337,7 @@
 			<value>0.99753694581280783</value>
 		</property>
 		<property name="value">
-			<value>3.81469727e-06</value>
+			<value>-13</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{39c3ad06-65a3-48b0-97f5-3c117e7be4a6}">
@@ -348,7 +345,7 @@
 			<value>1</value>
 		</property>
 		<property name="value">
-			<value>0</value>
+			<value>-11</value>
 		</property>
 	</object>
 	<object class="AutomationPoint" id="{eebdfc4d-6544-4ce8-8997-e84da7e89de2}">
@@ -357,6 +354,9 @@
 		</property>
 		<property name="value">
 			<value>-80</value>
+		</property>
+		<property name="curveShape">
+			<value>-0.857939363</value>
 		</property>
 	</object>
 </objects>
