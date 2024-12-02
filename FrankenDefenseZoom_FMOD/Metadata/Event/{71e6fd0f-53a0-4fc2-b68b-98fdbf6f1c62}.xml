@@ -69,6 +69,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{a747f579-2592-40bb-8d8a-2e0f39c6e323}">
+		<property name="volume">
+			<value>1.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{b7d14ba7-eedb-495d-8ddd-38ee6bbfda71}</destination>
 		</relationship>
@@ -92,6 +95,9 @@
 	<object class="MixerBusPanner" id="{68b7c16b-fe5b-4c42-8bc1-1028c2b987f1}" />
 	<object class="MixerBusEffectChain" id="{b7d14ba7-eedb-495d-8ddd-38ee6bbfda71}">
 		<relationship name="effects">
+			<destination>{fe78457e-7113-4eec-9d3b-2a10378b713b}</destination>
+			<destination>{c6d0dfeb-7f3a-437f-a969-5709a7e2b122}</destination>
+			<destination>{179447b4-966a-454f-85d4-843f7cacab96}</destination>
 			<destination>{6097d8e3-deee-4d9f-b517-d1da03958010}</destination>
 			<destination>{06ed52ab-44c4-4a0f-aec6-f2e32c2b5e63}</destination>
 		</relationship>
@@ -106,6 +112,33 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{7bb148dd-9fec-4abe-a759-c558be70feae}" />
+	<object class="ChorusEffect" id="{fe78457e-7113-4eec-9d3b-2a10378b713b}">
+		<property name="rate">
+			<value>12</value>
+		</property>
+		<property name="depth">
+			<value>78</value>
+		</property>
+		<property name="mix">
+			<value>50.5</value>
+		</property>
+	</object>
+	<object class="FlangerEffect" id="{c6d0dfeb-7f3a-437f-a969-5709a7e2b122}">
+		<property name="rate">
+			<value>6.5</value>
+		</property>
+		<property name="mix">
+			<value>57</value>
+		</property>
+	</object>
+	<object class="SFXReverbEffect" id="{179447b4-966a-454f-85d4-843f7cacab96}">
+		<property name="lowShelfFrequency">
+			<value>330</value>
+		</property>
+		<property name="wetLevel">
+			<value>-11.5</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{6097d8e3-deee-4d9f-b517-d1da03958010}" />
 	<object class="SpatialiserEffect" id="{06ed52ab-44c4-4a0f-aec6-f2e32c2b5e63}" />
 	<object class="RandomizerModulator" id="{4711260e-c068-4027-badf-1ce4442ee9a3}">
@@ -113,7 +146,7 @@
 			<value>pitch</value>
 		</property>
 		<property name="amount">
-			<value>23</value>
+			<value>13</value>
 		</property>
 	</object>
 </objects>

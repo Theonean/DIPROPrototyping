@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <objects serializationModel="Studio.02.02.00">
-	<object class="ParameterPreset" id="{3ce9d741-5747-42cf-8a01-5da6700d8a15}">
+	<object class="ParameterPreset" id="{3c969694-14a7-486b-a5fb-d37f7d6c6a08}">
 		<property name="name">
-			<value>Movement UpDown</value>
+			<value>Movement Sides</value>
 		</property>
 		<relationship name="folder">
 			<destination>{0710d6f6-74de-492f-b6e8-0f3fe60817fa}</destination>
 		</relationship>
 		<relationship name="parameter">
-			<destination>{20b42956-04fa-4ea9-b92e-ab905ab1633e}</destination>
+			<destination>{fc6f5500-1711-428d-ad5c-51035585ee59}</destination>
 		</relationship>
 	</object>
-	<object class="GameParameter" id="{20b42956-04fa-4ea9-b92e-ab905ab1633e}">
+	<object class="GameParameter" id="{fc6f5500-1711-428d-ad5c-51035585ee59}">
 		<property name="parameterType">
 			<value>1</value>
 		</property>
@@ -22,7 +22,7 @@
 			<value>0</value>
 		</property>
 		<property name="seekSpeedDescending">
-			<value>0.15999999642372131</value>
+			<value>50</value>
 		</property>
 	</object>
 </objects>
