@@ -5,7 +5,7 @@
 			<value>Impact</value>
 		</property>
 		<property name="outputFormat">
-			<value>0</value>
+			<value>2</value>
 		</property>
 		<relationship name="folder">
 			<destination>{bf6b4991-a0f6-4b0c-8206-1806d28ff285}</destination>
@@ -117,7 +117,9 @@
 	</object>
 	<object class="MixerBusEffectChain" id="{3a219fe8-9357-4e8a-a17e-7a9875925fe1}">
 		<relationship name="effects">
+			<destination>{2cfd2169-353d-4a49-9ef8-01c4ebe8509b}</destination>
 			<destination>{22e381c6-01e7-4a70-8a59-301b8d80fdef}</destination>
+			<destination>{82cacf2c-406c-4e2d-a2cc-5c4dba90569f}</destination>
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{606d4e9a-db31-43a7-867e-13d127e53d5a}" />
@@ -144,13 +146,35 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{d21e560c-b5c0-4532-8641-647797b03750}" />
+	<object class="SFXReverbEffect" id="{2cfd2169-353d-4a49-9ef8-01c4ebe8509b}">
+		<property name="decayTime">
+			<value>2200</value>
+		</property>
+		<property name="earlyDelay">
+			<value>32</value>
+		</property>
+		<property name="HFDecayRatio">
+			<value>67.5</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{22e381c6-01e7-4a70-8a59-301b8d80fdef}" />
+	<object class="SpatialiserEffect" id="{82cacf2c-406c-4e2d-a2cc-5c4dba90569f}">
+		<property name="minimumDistance">
+			<value>0</value>
+		</property>
+		<property name="maximumDistance">
+			<value>950</value>
+		</property>
+		<property name="overrideRange">
+			<value>true</value>
+		</property>
+	</object>
 	<object class="RandomizerModulator" id="{0b64ca54-b931-4530-9212-b4fee94b3793}">
 		<property name="nameOfPropertyBeingModulated">
 			<value>pitch</value>
 		</property>
 		<property name="amount">
-			<value>23</value>
+			<value>18</value>
 		</property>
 	</object>
 	<object class="SingleSound" id="{384e98a7-17ef-41a8-98cb-cd03b7fc5811}">
