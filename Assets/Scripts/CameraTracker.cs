@@ -7,6 +7,9 @@ public class CameraTracker : MonoBehaviour
     public static CameraTracker Instance { get; private set; }
     public bool trackObjectWithCamera = false;
     public GameObject objectToTrack;
+    public GameObject player;
+    public GameObject harvester;
+    public GameObject harvesterCameraPos;
     public GameObject arrowRotator;
     public GameObject controlZone;
     public SpriteRenderer arrowSprite;
@@ -40,7 +43,7 @@ public class CameraTracker : MonoBehaviour
     private void Start()
     {
         // Save the initial offset between camera and object
-        cameraOffset = Camera.main.transform.position - objectToTrack.transform.position;
+        cameraOffset = Camera.main.transform.position - player.transform.position;
         playerCore = GetComponentInChildren<PlayerCore>();
 
     }
@@ -58,13 +61,34 @@ public class CameraTracker : MonoBehaviour
                 playerCore.ModifyHealth(-100);
             }
         }
+
+        if (Input.GetKey(KeyCode.F))
+        {
+            objectToTrack = harvester;
+        }
+
+        if (Input.GetKey(KeyCode.E))
+        {
+            objectToTrack = player;
+        }
     }
 
     void FixedUpdate()
     {
         if (trackObjectWithCamera && objectToTrack != null)
         {
-            Vector3 targetPosition = objectToTrack.transform.position + cameraOffset;
+            Vector3 targetPosition;
+            if (objectToTrack == harvester)
+            {
+                targetPosition = harvesterCameraPos.transform.position;
+                Camera.main.transform.rotation = harvesterCameraPos.transform.rotation;
+            }
+            else
+            {
+                targetPosition = player.transform.position + cameraOffset;
+                Camera.main.transform.LookAt(player.transform.position);
+            }
+
             float distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
             float t = Mathf.Clamp(distance / m_MaxCameraDistance, 0, 1);
 
