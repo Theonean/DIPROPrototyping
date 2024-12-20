@@ -329,7 +329,8 @@ public class PlayerCore : MonoBehaviour
 
     private void StartDashVFX()
     {
-        dashEffect.SetVector3("PlayerVelocity", moveDirection);
+        dashEffect.SetVector3("PlayerPos", transform.position);
+        dashEffect.Reinit();
         dashEffect.Play();
     }
 
