@@ -1,0 +1,375 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: NewShaderVariants
+  m_Shaders:
+  - first: {fileID: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 7, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 4
+  - first: {fileID: 15104, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 15105, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 15106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 10753, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 10770, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: UNITY_UI_ALPHACLIP
+        passType: 0
+  - first: {fileID: 66, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 6, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: SHADOWS_DEPTH
+        passType: 8
+  - first: {fileID: 106, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: _SUNDISK_HIGH_QUALITY
+        passType: 0
+      - keywords: _SUNDISK_SIMPLE
+        passType: 0
+  - first: {fileID: 203, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9000, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9001, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9002, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9003, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9004, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9007, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9101, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9103, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 9104, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: d6dae50ee9e1bfa4db75f19f99355220, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _OUTPUT_DEPTH
+        passType: 0
+  - first: {fileID: 4800000, guid: ec9fec698a3456d4fb18cf8bacb7a2bc, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: e7857e9d0c934dc4f83f270f8447b006, type: 3}
+    second:
+      variants:
+      - keywords: _BLOOM_LQ _DITHERING _HDR_GRADING
+        passType: 0
+      - keywords: _BLOOM_LQ _HDR_GRADING
+        passType: 0
+  - first: {fileID: 4800000, guid: e6e9a19c3678ded42a3bc431ebef7dbd, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 93446b5c5339d4f00b85c159e1159b7c, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 0849e84e3d62649e8882e9d6f056a017, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _INTERLEAVED_GRADIENT _SAMPLE_COUNT_MEDIUM _SOURCE_DEPTH_NORMALS
+        passType: 0
+  - first: {fileID: 4800000, guid: 63eaba0ebfb82cc43bde059b4a8c65f6, type: 3}
+    second:
+      variants:
+      - keywords: _SMAA_PRESET_HIGH
+        passType: 0
+  - first: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 933532a4fcc9baf4fa0491de14d08ed7, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS
+          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SCREEN_SPACE_OCCLUSION
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSION _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SCREEN_SPACE_OCCLUSION
+          _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _MAIN_LIGHT_SHADOWS_CASCADE
+        passType: 13
+  - first: {fileID: 4800000, guid: fe393ace9b354375a9cb14cdbbc28be4, type: 3}
+    second:
+      variants:
+      - keywords: OUTLINE_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 50b406436c6214c49aaaa6011b71dde8, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 5caf62d8bd7c44596ace77ef9eb8ea31, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 4293210a3280c4283b9872316017f1f9, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 36e335017ad71d54fbb10842863188ae, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: 4800000, guid: 650dd9526735d5b46b79224bc6e94025, type: 3}
+    second:
+      variants:
+      - keywords: _SCREEN_SPACE_OCCLUSION _SURFACE_TYPE_TRANSPARENT
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 671443412d2e6f645b1df7ab1b5e66a9,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 228dc79a5a08ee3489da0efed17ec7d7,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 9eb08de4342897445827d9145218e2e2,
+      type: 3}
+    second:
+      variants:
+      - keywords: _SCREEN_SPACE_OCCLUSION
+        passType: 0
+      - keywords: 
+        passType: 8
+  - first: {fileID: 4800000, guid: be891319084e9d147b09d89e80ce60e0, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 8
+      - keywords: _IS_CLIPPING_TRANSMODE
+        passType: 8
+      - keywords: 
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSIVE_SIMPLE _IS_ANGELRING_OFF
+          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSIVE_SIMPLE _IS_ANGELRING_OFF
+          _IS_CLIPPING_OFF _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSIVE_SIMPLE _IS_ANGELRING_OFF
+          _IS_CLIPPING_TRANSMODE _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _EMISSIVE_SIMPLE _IS_ANGELRING_OFF
+          _IS_CLIPPING_TRANSMODE _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+      - keywords: _IS_OUTLINE_CLIPPING_YES _OUTLINE_POS
+        passType: 14
+  - first: {fileID: -6465566751694194690, guid: ef829f6444ee19b4191f9967fe45ebe4,
+      type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 0
+      - keywords: _SCREEN_SPACE_OCCLUSION
+        passType: 0
+  - first: {fileID: -6465566751694194690, guid: 3cfdcfa78397bca42961cc3d15a780ef,
+      type: 3}
+    second:
+      variants:
+      - keywords: _MAIN_LIGHT_SHADOWS _SCREEN_SPACE_OCCLUSION
+        passType: 0
+      - keywords: _MAIN_LIGHT_SHADOWS_CASCADE _SCREEN_SPACE_OCCLUSION _SHADOWS_SOFT
+        passType: 0
+      - keywords: 
+        passType: 8
+      - keywords: 
+        passType: 13
+  - first: {fileID: -6465566751694194690, guid: d7bb4ce55c91ff04ea33066515b56160,
+      type: 3}
+    second:
+      variants:
+      - keywords: _ADDITIONAL_LIGHTS _ADDITIONAL_LIGHT_SHADOWS _MAIN_LIGHT_SHADOWS_CASCADE
+          _REFLECTION_PROBE_BLENDING _REFLECTION_PROBE_BOX_PROJECTION _SCREEN_SPACE_OCCLUSION
+          _SHADOWS_SOFT
+        passType: 13
+  - first: {fileID: 4800000, guid: 313fcf3aebc04cf4ab4f8c5f2850be7f, type: 3}
+    second:
+      variants:
+      - keywords: _MAIN_LIGHT_SHADOWS
+        passType: 13
+      - keywords: _MAIN_LIGHT_SHADOWS_CASCADE _SHADOWS_SOFT
+        passType: 13
+  - first: {fileID: 4800002, guid: da9de562f32d39f469bd967f4f6e6e1e, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON
+        passType: 13
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800000, guid: da9de562f32d39f469bd967f4f6e6e1e, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON
+        passType: 13
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800000, guid: a532af9516eca2041a2636bd81d78f9f, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800002, guid: a532af9516eca2041a2636bd81d78f9f, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 13
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800000, guid: ada5fde0e7829f1448e5e276f7a8c81d, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800002, guid: ada5fde0e7829f1448e5e276f7a8c81d, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800000, guid: 85758cd494b022145b59645d7dfd979e, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800002, guid: 85758cd494b022145b59645d7dfd979e, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800004, guid: 85758cd494b022145b59645d7dfd979e, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800010, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800004, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800002, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800006, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800008, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
+  - first: {fileID: 4800000, guid: f7fbfb74d31ca2744abd8c32f2e5bd51, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON _SCREEN_SPACE_OCCLUSION
+        passType: 13
