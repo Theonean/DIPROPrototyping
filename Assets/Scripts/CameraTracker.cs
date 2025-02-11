@@ -61,7 +61,7 @@ public class CameraTracker : MonoBehaviour
                 playerCore.ModifyHealth(-100);
             }
         }
-        /*
+        
 
         if (Input.GetKey(KeyCode.F))
         {
@@ -70,7 +70,7 @@ public class CameraTracker : MonoBehaviour
         if (Input.GetKey(KeyCode.E))
         {
             objectToTrack = player;
-        }*/
+        }
     }
 
     void FixedUpdate()
