@@ -1,4 +1,5 @@
 using TMPro;
+using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -75,7 +76,7 @@ public class CameraTracker : MonoBehaviour
             fpCamera.enabled = true;
             objectToTrack = harvester;
 
-            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
         }
         if (Input.GetKey(KeyCode.E))

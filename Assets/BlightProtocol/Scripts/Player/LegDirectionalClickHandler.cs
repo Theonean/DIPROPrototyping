@@ -119,6 +119,9 @@ public class LegDirectionalClickHandler : MonoBehaviour
     private void RotateTowardsMouse()
     {
         // Raycast to find the mouse position in world space
+        if (Camera.main == null) {
+            return;
+        }
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit))
         {

@@ -1480,17 +1480,17 @@ PrefabInstance:
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0
+      value: 0.564
       objectReference: {fileID: 0}
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6896155558070904629, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0
+      value: 0.564
       objectReference: {fileID: 0}
     - target: {fileID: 7276407882163757038, guid: 54a2c3b65252e0047bcda0d8df60893b,
         type: 3}
@@ -3086,9 +3086,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1100232507}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1131243139 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5470558470959866352, guid: cede008015de04a46bf480a2b3b76a5e,
+--- !u!20 &1131243144 stripped
+Camera:
+  m_CorrespondingSourceObject: {fileID: 7003257874513638041, guid: cede008015de04a46bf480a2b3b76a5e,
     type: 3}
   m_PrefabInstance: {fileID: 6443427340868869809}
   m_PrefabAsset: {fileID: 0}
@@ -6937,7 +6937,7 @@ PrefabInstance:
         type: 3}
       propertyPath: fpCamera
       value: 
-      objectReference: {fileID: 1131243139}
+      objectReference: {fileID: 1131243144}
     - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: harvester
@@ -7871,6 +7871,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003257874513638041, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_BackGroundColor.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003257874513638041, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_BackGroundColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003257874513638041, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_BackGroundColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7003257874513638041, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_BackGroundColor.r
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7113327578232574430, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
