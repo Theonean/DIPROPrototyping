@@ -26,6 +26,9 @@ public class CameraTracker : MonoBehaviour
     private Vector3 cameraOffset;
     private PlayerCore playerCore;
 
+    public Camera topDownCamera;
+    public Camera fpCamera;
+
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
 
     private void Awake()
@@ -43,8 +46,11 @@ public class CameraTracker : MonoBehaviour
     private void Start()
     {
         // Save the initial offset between camera and object
-        cameraOffset = Camera.main.transform.position - player.transform.position;
+        cameraOffset = topDownCamera.transform.position - player.transform.position;
         playerCore = GetComponentInChildren<PlayerCore>();
+        //make sure top down camera is enabled initially
+        topDownCamera.enabled = true;
+        fpCamera.enabled = false;
 
     }
 
@@ -65,11 +71,21 @@ public class CameraTracker : MonoBehaviour
 
         if (Input.GetKey(KeyCode.F))
         {
+            topDownCamera.enabled = false;
+            fpCamera.enabled = true;
             objectToTrack = harvester;
+
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
         }
         if (Input.GetKey(KeyCode.E))
         {
+            topDownCamera.enabled = true;
+            fpCamera.enabled = false;
             objectToTrack = player;
+
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 
@@ -81,20 +97,20 @@ public class CameraTracker : MonoBehaviour
             if (objectToTrack == harvester)
             {
                 targetPosition = harvesterCameraPos.transform.position;
-                Camera.main.transform.rotation = harvesterCameraPos.transform.rotation;
+                topDownCamera.transform.rotation = harvesterCameraPos.transform.rotation;
             }
             else
             {
                 targetPosition = player.transform.position + cameraOffset;
-                Camera.main.transform.LookAt(player.transform.position);
+                topDownCamera.transform.LookAt(player.transform.position);
             }
 
-            float distance = Vector3.Distance(Camera.main.transform.position, targetPosition);
+            float distance = Vector3.Distance(topDownCamera.transform.position, targetPosition);
             float t = Mathf.Clamp(distance / m_MaxCameraDistance, 0, 1);
 
             //Move camera towards object
-            Camera.main.transform.position = Vector3.MoveTowards(
-                Camera.main.transform.position,
+            topDownCamera.transform.position = Vector3.MoveTowards(
+                topDownCamera.transform.position,
                 targetPosition,
                 cameraMoveSpeed * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
         }
