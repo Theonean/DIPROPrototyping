@@ -77,7 +77,7 @@ public class CameraTracker : MonoBehaviour
             objectToTrack = harvester;
 
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Cursor.visible = true;
         }
         if (Input.GetKey(KeyCode.E))
         {

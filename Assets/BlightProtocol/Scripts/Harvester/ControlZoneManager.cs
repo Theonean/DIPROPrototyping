@@ -222,9 +222,14 @@ public class ControlZoneManager : MonoBehaviour
         }
     }
 
-    private void SetNextPathPosition()
+    public void SetNextPathPosition(Vector3 customPosition = default(Vector3))
     {
-        m_TargetPosition = pathPositions[pathPositionsIndex];
+        if (customPosition != default(Vector3)) {
+            m_TargetPosition = customPosition;
+        }
+        else {
+            m_TargetPosition = pathPositions[pathPositionsIndex];
+        }
         resourcePoint.transform.position = m_TargetPosition;
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;

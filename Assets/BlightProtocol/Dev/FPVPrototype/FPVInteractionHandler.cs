@@ -21,7 +21,6 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         if (fpvCamera.enabled)
         {
-            Cursor.visible = false;
             if (Input.GetKeyDown(KeyCode.Mouse0))
             {
                 Interact();
@@ -32,21 +31,21 @@ public class FPVInteractionHandler : MonoBehaviour
     void Interact()
     {
         ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity))
+        
+        Debug.DrawRay(ray.origin, ray.direction*10, Color.red, 5f);
+        if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            Debug.Log(hit.collider.name);
-            {
-                SetTarget(hit);
-            }
+            SetTarget(hit);
         }
     }
 
     void SetTarget(RaycastHit _hit)
     {
+        Debug.Log(hit.collider.name + " " + _hit.textureCoord.x);
         ray = mapCamera.ViewportPointToRay(new Vector3(_hit.textureCoord.x, _hit.textureCoord.y));
         if (Physics.Raycast(ray, out mapHit))
         {
-            Debug.Log(mapHit.point);
+            ControlZoneManager.Instance.SetNextPathPosition(mapHit.point);
         }
     }
 }
