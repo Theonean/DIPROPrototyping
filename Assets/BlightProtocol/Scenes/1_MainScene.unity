@@ -1175,6 +1175,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &385549777 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7358851095998060526, guid: cede008015de04a46bf480a2b3b76a5e,
+    type: 3}
+  m_PrefabInstance: {fileID: 6443427340868869809}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &410087039
 GameObject:
   m_ObjectHideFlags: 0
@@ -3143,12 +3149,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 1ab37721800a265408962815f68dc264,
     type: 3}
   m_PrefabInstance: {fileID: 851200715}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &852445629 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1684833285897773044, guid: f0349d52a2037ba4993444b4b04754a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3500538115137141686}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &863346555
 PrefabInstance:
@@ -7864,7 +7864,7 @@ PrefabInstance:
         type: 3}
       propertyPath: harvester
       value: 
-      objectReference: {fileID: 852445629}
+      objectReference: {fileID: 385549777}
     - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: controlZone
@@ -7899,7 +7899,7 @@ PrefabInstance:
         type: 3}
       propertyPath: harvesterCameraPos
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 385549777}
     - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: outOfRangeUIGroupCanvas
