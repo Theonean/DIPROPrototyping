@@ -1,5 +1,6 @@
 using TMPro;
 using Unity.Burst.Intrinsics;
+using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -77,6 +78,7 @@ public class CameraTracker : MonoBehaviour
 
             topDownCamera.enabled = false;
             fpCamera.enabled = true;
+            fpCamera.GetComponent<FirstPersonCameraRotation>().ResetRotation();
             objectToTrack = harvester;
 
             Cursor.lockState = CursorLockMode.Locked;
@@ -107,7 +109,7 @@ public class CameraTracker : MonoBehaviour
             else
             {
                 targetPosition = player.transform.position + cameraOffset;
-                topDownCamera.transform.LookAt(player.transform.position);
+                //topDownCamera.transform.LookAt(player.transform.position);
             }
 
             float distance = Vector3.Distance(topDownCamera.transform.position, targetPosition);
