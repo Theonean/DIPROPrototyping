@@ -29,6 +29,7 @@ public class CameraTracker : MonoBehaviour
 
     public Camera topDownCamera;
     public Camera fpCamera;
+    private bool isFPV = false; 
 
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
 
@@ -70,8 +71,10 @@ public class CameraTracker : MonoBehaviour
         }
         
 
-        if (Input.GetKey(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !isFPV)
         {
+            isFPV = true;
+
             topDownCamera.enabled = false;
             fpCamera.enabled = true;
             objectToTrack = harvester;
@@ -79,8 +82,9 @@ public class CameraTracker : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
         }
-        if (Input.GetKey(KeyCode.E))
-        {
+        else if (Input.GetKeyDown(KeyCode.F) && isFPV) {
+            isFPV = false;
+
             topDownCamera.enabled = true;
             fpCamera.enabled = false;
             objectToTrack = player;
@@ -98,7 +102,7 @@ public class CameraTracker : MonoBehaviour
             if (objectToTrack == harvester)
             {
                 targetPosition = harvesterCameraPos.transform.position;
-                topDownCamera.transform.rotation = harvesterCameraPos.transform.rotation;
+                //topDownCamera.transform.rotation = harvesterCameraPos.transform.rotation;
             }
             else
             {

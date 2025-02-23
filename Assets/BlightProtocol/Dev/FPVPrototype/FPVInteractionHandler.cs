@@ -31,11 +31,18 @@ public class FPVInteractionHandler : MonoBehaviour
     void Interact()
     {
         ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
-        
-        Debug.DrawRay(ray.origin, ray.direction*10, Color.red, 5f);
+
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            SetTarget(hit);
+            switch(hit.collider.tag) {
+                case "Map":
+                    SetTarget(hit);
+                break;
+
+                default:
+                    hit.collider.GetComponent<FPVInteractable>()?.Interact();
+                break;
+            }
         }
     }
 
