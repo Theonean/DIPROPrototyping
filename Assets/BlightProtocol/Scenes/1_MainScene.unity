@@ -1645,12 +1645,17 @@ PrefabInstance:
     - target: {fileID: 28536636508463767, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 533
+      value: 569
       objectReference: {fileID: 0}
     - target: {fileID: 55595641276044231, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_Name
       value: FPV
+      objectReference: {fileID: 0}
+    - target: {fileID: 55595641276044231, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 482908988143218414, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1690,7 +1695,7 @@ PrefabInstance:
     - target: {fileID: 3564076937926530353, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 632
+      value: 668
       objectReference: {fileID: 0}
     - target: {fileID: 3677028615699569637, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1735,7 +1740,7 @@ PrefabInstance:
     - target: {fileID: 7562469046383642167, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 1509
+      value: 1545
       objectReference: {fileID: 0}
     - target: {fileID: 7653790104305802068, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1835,7 +1840,7 @@ PrefabInstance:
     - target: {fileID: 8721521932774091751, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 865
+      value: 901
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6747,6 +6752,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2650069089133766977, guid: c8a6590aaf9f19448b96abda47d7e527,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 3932088461419224805, guid: c8a6590aaf9f19448b96abda47d7e527,
         type: 3}
       propertyPath: m_Name
@@ -8368,8 +8378,8 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_Camera: {fileID: 1324875725}
+  m_PlaneDistance: 0.31
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -8379,7 +8389,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_TargetDisplay: 0
 --- !u!224 &1909661526
 RectTransform:
@@ -9096,6 +9106,11 @@ PrefabInstance:
       propertyPath: topDownCamera
       value: 
       objectReference: {fileID: 1324875725}
+    - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: topDownCanvas
+      value: 
+      objectReference: {fileID: 1909661522}
     - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: rotateAround.x
@@ -10352,7 +10367,7 @@ PrefabInstance:
     - target: {fileID: 6123906017431956231, guid: 639376ce3d061494caf83aeecac0685e,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -400
+      value: -399.99994
       objectReference: {fileID: 0}
     - target: {fileID: 6123906017431956231, guid: 639376ce3d061494caf83aeecac0685e,
         type: 3}

@@ -30,6 +30,7 @@ public class CameraTracker : MonoBehaviour
 
     public Camera topDownCamera;
     public Camera fpCamera;
+    public GameObject topDownCanvas;
     private bool isFPV = false; 
 
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
@@ -81,8 +82,11 @@ public class CameraTracker : MonoBehaviour
             fpCamera.GetComponent<FirstPersonCameraRotation>().ResetRotation();
             objectToTrack = harvester;
 
+            PlayerCore.Instance.ModifyHealth(-100);
+
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
+            topDownCanvas.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.F) && isFPV) {
             isFPV = false;
@@ -93,6 +97,7 @@ public class CameraTracker : MonoBehaviour
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            topDownCanvas.SetActive(true);
         }
     }
 
