@@ -93,8 +93,8 @@ public class ControlZoneManager : MonoBehaviour
             slider.value = maxHealth;
         }
 
-        m_OriginalColor = GetComponent<Renderer>().material.color;
-        m_LineRenderer = GetComponent<LineRenderer>();
+        //m_OriginalColor = GetComponent<Renderer>().material.color;
+        m_LineRenderer = GetComponentInChildren<LineRenderer>();
 
         m_HarvesterAnimator = GetComponentInChildren<Animator>();
 
@@ -218,7 +218,7 @@ public class ControlZoneManager : MonoBehaviour
 
             Modifyhealth(-1);
             other.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
-            StartCoroutine(TakeDamageEffect());
+            //StartCoroutine(TakeDamageEffect());
         }
     }
 
