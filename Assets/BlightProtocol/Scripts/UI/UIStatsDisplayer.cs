@@ -12,6 +12,7 @@ public class UIStatsDisplayer : MonoBehaviour
     public TextMeshProUGUI shotspeedNumber;
     public Slider shotspeedBuffTimer;
     public LegHandler legInstance;
+    private RocketData rocketData;
     public UnityEvent explosionRangeBuffTimerFinished;
     public UnityEvent shotspeedBuffTimerFinished;
 
@@ -27,9 +28,11 @@ public class UIStatsDisplayer : MonoBehaviour
             Instance = this;
         }
 
+        rocketData = legInstance.GetRocketData();
+
         //Set initial value for Shot speed and explosion range from leghandler
-        explosionRangeNumber.text = legInstance.explosionRadius.ToString() + "m";
-        shotspeedNumber.text = legInstance.legFlySpeed.ToString() + "m/s";
+        explosionRangeNumber.text = rocketData.explosionRadius.ToString() + "m";
+        shotspeedNumber.text = rocketData.flySpeed.ToString() + "m/s";
 
     }
 
@@ -58,13 +61,13 @@ public class UIStatsDisplayer : MonoBehaviour
 
     public void UpdateUIExplosionRange()
     {
-        string temp = legInstance.explosionRadius.ToString() + "m";
+        string temp = rocketData.explosionRadius.ToString() + "m";
         explosionRangeNumber.text = temp;
     }
 
     public void UpdateUIShotSpeed()
     {
-        string temp = legInstance.legFlySpeed.ToString() + "m/s";
+        string temp = rocketData.flySpeed.ToString() + "m/s";
         shotspeedNumber.text = temp;
     }
 

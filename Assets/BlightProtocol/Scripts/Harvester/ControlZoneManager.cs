@@ -83,6 +83,16 @@ public class ControlZoneManager : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        Collectible.OnCollectiblePickedUp.AddListener(HealOnPickup);
+    }
+
+    private void OnDisable()
+    {
+        Collectible.OnCollectiblePickedUp.RemoveListener(HealOnPickup);
+    }
+
     void Start()
     {
         health = maxHealth;
@@ -289,6 +299,14 @@ public class ControlZoneManager : MonoBehaviour
 
             //Set Audio states
             FMODAudioManagement.instance.PlayOneShot(takeoffSFXPath, transform.position);
+        }
+    }
+
+    private void HealOnPickup(ECollectibleType type)
+    {
+        if (type == ECollectibleType.FullHealth)
+        {
+            Heal();
         }
     }
 

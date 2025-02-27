@@ -39,7 +39,7 @@ public class FlyingDotController : MonoBehaviour
     }
 
     // Static method to create the flying dot
-    public static void CreateFlyingDot(Vector3 worldPosition, Vector3 targetScreenPosition, CollectibleType type)
+    public static void CreateFlyingDot(Vector3 worldPosition, Vector3 targetScreenPosition, ECollectibleType type)
     {
         // Ensure Instance is available
         if (Instance == null)
@@ -57,13 +57,13 @@ public class FlyingDotController : MonoBehaviour
         // Set color based on CollectibleType
         switch (type)
         {
-            case CollectibleType.ExplosionRange:
+            case ECollectibleType.ExplosionRange:
                 dotImage.color = Instance.explosionColor;
                 break;
-            case CollectibleType.ShotSpeed:
+            case ECollectibleType.ShotSpeed:
                 dotImage.color = Instance.shotSpeedColor;
                 break;
-            case CollectibleType.FullHealth:
+            case ECollectibleType.FullHealth:
                 dotImage.color = Instance.healthColor;
                 break;
         }

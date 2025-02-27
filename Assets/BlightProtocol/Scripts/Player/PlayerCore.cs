@@ -289,44 +289,6 @@ public class PlayerCore : MonoBehaviour
         StopDashVFX();
     }
 
-    public void IncreaseLegExplosionRadius(float multiplier)
-    {
-        //Increase explosion radius on all legs
-        foreach (var leg in m_Legs)
-        {
-            leg.explosionRadius = Mathf.Floor(leg.explosionRadius * multiplier);
-        }
-
-        UIStatsDisplayer.Instance.explosionRangeBuffTimerFinished.AddListener(ResetLegExplosionRadius);
-    }
-
-    private void ResetLegExplosionRadius()
-    {
-        foreach (var leg in m_Legs)
-        {
-            leg.explosionRadius = LegHandler.explosionRadiusBase;
-        }
-    }
-
-    public void IncreaseLegShotSpeed(float multiplier)
-    {
-        //Increase shot speed on all legs
-        foreach (var leg in m_Legs)
-        {
-            leg.legFlySpeed = Mathf.Floor(leg.legFlySpeed * multiplier);
-        }
-
-        UIStatsDisplayer.Instance.shotspeedBuffTimerFinished.AddListener(ResetLegShotSpeed);
-    }
-
-    private void ResetLegShotSpeed()
-    {
-        foreach (var leg in m_Legs)
-        {
-            leg.legFlySpeed = LegHandler.legFlySpeedBase;
-        }
-    }
-
     private void StartDashVFX()
     {
         dashEffect.SetVector3("PlayerPos", transform.position);

@@ -2,13 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public enum CollectibleType
-{
-    ExplosionRange,
-    ShotSpeed,
-    FullHealth
-}
+using UnityEngine.Events;
 
 public class Collectible : MonoBehaviour
 {
@@ -19,10 +13,11 @@ public class Collectible : MonoBehaviour
     [SerializeField]
     GameObject FullHealthModel;
 
-    public CollectibleType type;
-    public float buffDuration = 5f;
-    public float explosionRangeMultiplier = 2f;
-    public float shotSpeedMultiplier = 2f;
+    public ECollectibleType type;
+    public static float buffDuration = 5f;
+    public static float explosionRangeMultiplier = 2f;
+    public static float shotSpeedMultiplier = 2f;
+    public static UnityEvent<ECollectibleType> OnCollectiblePickedUp = new UnityEvent<ECollectibleType>();
 
     // Start is called before the first frame update
     void Start()
@@ -32,16 +27,16 @@ public class Collectible : MonoBehaviour
         int bottomRange = 0;
 
         //Determine what type of collectible this is and enable the corresponding game object
-        type = (CollectibleType)UnityEngine.Random.Range(bottomRange, topRange);
+        type = (ECollectibleType)UnityEngine.Random.Range(bottomRange, topRange);
         switch (type)
         {
-            case CollectibleType.ExplosionRange:
+            case ECollectibleType.ExplosionRange:
                 ExplosionRangeModel.SetActive(true);
                 break;
-            case CollectibleType.ShotSpeed:
+            case ECollectibleType.ShotSpeed:
                 MoveSpeedModel.SetActive(true);
                 break;
-            case CollectibleType.FullHealth:
+            case ECollectibleType.FullHealth:
                 FullHealthModel.SetActive(true);
                 break;
         }
@@ -52,11 +47,13 @@ public class Collectible : MonoBehaviour
         if (other.gameObject.tag == "Player")
         {
             Vector3 targetScreenPosition;
+            OnCollectiblePickedUp.Invoke(type);
+
             switch (type)
             {
-                case CollectibleType.ExplosionRange:
+                case ECollectibleType.ExplosionRange:
                     //Apply Buff and refresh duration
-                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegExplosionRadius(explosionRangeMultiplier);
+
                     UIStatsDisplayer.Instance.RefreshExplosionRangeBuff(buffDuration);
 
                     //Calculate target position on screen for flying dot
@@ -65,9 +62,8 @@ public class Collectible : MonoBehaviour
 
                     FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);
                     break;
-                case CollectibleType.ShotSpeed:
+                case ECollectibleType.ShotSpeed:
                     //Apply Buff and refresh duration
-                    other.gameObject.GetComponent<PlayerCore>().IncreaseLegShotSpeed(shotSpeedMultiplier);
                     UIStatsDisplayer.Instance.RefreshShotSpeedBuff(buffDuration);
 
                     //Calculate target position on screen for flying dot
@@ -76,9 +72,8 @@ public class Collectible : MonoBehaviour
 
                     FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);
                     break;
-                case CollectibleType.FullHealth:
+                case ECollectibleType.FullHealth:
                     //Find the control zone manager and heal the harvester
-                    ControlZoneManager.Instance.Heal();
 
                     targetScreenPosition = UIStatsDisplayer.Instance.healthSlider.GetComponent<RectTransform>().position;
                     FlyingDotController.CreateFlyingDot(transform.position, targetScreenPosition, type);

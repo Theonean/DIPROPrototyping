@@ -219,12 +219,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 100b7142166d82e4298d8505bcc519a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_rocketData: {fileID: 11400000, guid: 968fbfc4ab071cd46a754b7045dabf2b, type: 2}
   m_LegState: 0
   LegHandlerParent: {fileID: 0}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
     type: 3}
   debugExplosionSphere: 0
-  legFlySpeed: 50
   flySpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -259,8 +259,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
-  explosionRadius: 10
-  explosionChainDelay: 0.1
   vfxFlying: {fileID: 8805036787023284058}
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/CallingBack_Missiles

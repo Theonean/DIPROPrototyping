@@ -4,12 +4,18 @@ using UnityEngine.VFX;
 
 public class EnemyDamageHandler : MonoBehaviour
 {
+    [SerializeField] private EnemyData m_EnemyData;
     string m_EnemyTag = "Leg"; //Tag of the object that will destroy this object
     bool m_IsInLeg = false;
+    private int health;
     LegHandler m_Leg;
     public GameObject m_Explosion_1;
     public GameObject m_Explosion_2;
     public UnityEvent enemyDestroyed;
+
+    private void Awake() {
+        health = m_EnemyData.maxHealth;
+    }
 
     //When collision happens, check if object has the right tag and if it does, destroy this object
     void OnTriggerEnter(Collider other)
@@ -19,8 +25,19 @@ public class EnemyDamageHandler : MonoBehaviour
             LegHandler leg = other.gameObject.GetComponent<LegHandler>();
             if (leg.isAttacking())
             {
+                if (m_EnemyData.isOneShot)
+                {
+                    health = 0;
+                }
+                else
+                {
+                    RocketData rocketData = leg.GetRocketData();
+                    health -= rocketData.damage;
+                    Debug.Log("Enemy health: " + health); 
+                }
+
                 //Play the explosion and destroy enemy (visually)
-                DestroyEnemy();
+                if (health <= 0) DestroyEnemy();
             }
             else
             {
@@ -56,13 +73,5 @@ public class EnemyDamageHandler : MonoBehaviour
         GameObject explosionEffect = GetComponentInParent<EnemyTypeDecider>().enemyType ? m_Explosion_1 : m_Explosion_2;
         Instantiate(explosionEffect, transform.position, Quaternion.identity);
         Destroy(transform.parent.gameObject);
-
-        /*
-        //Get the followplayer and navmeshagent component from parent and disable
-        FollowPlayer followPlayer = transform.parent.gameObject.GetComponent<FollowPlayer>();
-        UnityEngine.AI.NavMeshAgent navMeshAgent = transform.parent.gameObject.GetComponent<UnityEngine.AI.NavMeshAgent>();
-        followPlayer.enabled = false;
-        navMeshAgent.enabled = false;
-        Destroy(gameObject);*/
     }
 }

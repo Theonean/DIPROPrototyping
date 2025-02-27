@@ -15,6 +15,7 @@ public enum LegState
 
 public class LegHandler : MonoBehaviour
 {
+    [SerializeField] private RocketData m_rocketData;
     public LegState m_LegState = LegState.ATTACHED;
     public GameObject LegHandlerParent;
     public GameObject explosionPrefab; //The explosion prefab to spawn when the leg explodes.
@@ -22,16 +23,9 @@ public class LegHandler : MonoBehaviour
     private bool isSpinning = false; //If the leg is currently spinning (one form of attack).
     Vector3 m_StartingPosition; //position the leg started flying from
     Vector3 m_TargetPosition; //position the leg will fly to when in FLYING state.
-    public float legFlySpeed = 50; //MaxSpeed of the leg when flying away.
-    public static float legFlySpeedBase = 50; //Base speed of the leg when flying away.
     public AnimationCurve flySpeedCurve; //Curve for the speed of the leg when flying away.
     public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
     Vector3 m_LegOriginalScale; //Original scale of the leg.
-    float m_ScaleMultiplierToFly = 1.5f; //Scale multiplier for flying.
-    private float m_LegRegrowSpeed = 1.5f; //Speed with which leg regrows to original scale
-    public static float explosionRadiusBase = 10f;
-    public float explosionRadius = 10f;
-    public float explosionChainDelay = 0.1f;
     Camera m_Camera;
     PlayerCore core;
 
@@ -61,8 +55,8 @@ public class LegHandler : MonoBehaviour
             }
         });
 
-        explosionRadius = explosionRadiusBase;
-        legFlySpeed = legFlySpeedBase;
+        m_rocketData.explosionRadius = m_rocketData.explosionRadiusBase;
+        m_rocketData.flySpeed = m_rocketData.flySpeedBase;
 
         m_Camera = Camera.main;
 
@@ -75,6 +69,16 @@ public class LegHandler : MonoBehaviour
         m_InitialTransform = initialTransformHolder.transform;
 
         m_LegOriginalScale = transform.localScale;
+    }
+
+    private void OnEnable()
+    {
+        Collectible.OnCollectiblePickedUp.AddListener(m_rocketData.ApplyTemporaryBoost);
+    }
+
+    private void OnDisable()
+    {
+        Collectible.OnCollectiblePickedUp.RemoveListener(m_rocketData.ApplyTemporaryBoost);
     }
 
     void Update()
@@ -94,10 +98,10 @@ public class LegHandler : MonoBehaviour
                 float t = Vector3.Distance(transform.position, m_TargetPosition) / Vector3.Distance(m_StartingPosition, m_TargetPosition);
 
                 //Update position to move towards target position using animation curve
-                transform.position = Vector3.MoveTowards(transform.position, m_TargetPosition, flySpeedCurve.Evaluate(t) * Time.deltaTime * legFlySpeed);
+                transform.position = Vector3.MoveTowards(transform.position, m_TargetPosition, flySpeedCurve.Evaluate(t) * Time.deltaTime * m_rocketData.flySpeed);
 
                 //Lerp scale by how close leg is to final position
-                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale * m_ScaleMultiplierToFly, 0.1f * Time.deltaTime * legFlySpeed);
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale * m_rocketData.flyScaleMultiplier, 0.1f * Time.deltaTime * m_rocketData.flySpeed);
 
                 if (Vector3.Distance(transform.position, m_TargetPosition) < 0.1f)
                 {
@@ -120,16 +124,16 @@ public class LegHandler : MonoBehaviour
                 // Move the leg back to the player core using animation curve
                 if (tReturn < 0.90f)
                 {
-                    transform.position = Vector3.MoveTowards(transform.position, updatedTargetPosition, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * legFlySpeed * 2f);
+                    transform.position = Vector3.MoveTowards(transform.position, updatedTargetPosition, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * m_rocketData.flySpeed * 2f);
                 }
                 else
                 {
-                    transform.position = Vector3.Lerp(transform.position, updatedTargetPosition, Time.deltaTime * legFlySpeed * 2f);
+                    transform.position = Vector3.Lerp(transform.position, updatedTargetPosition, Time.deltaTime * m_rocketData.flySpeed * 2f);
                 }
 
                 // Update the rotation of the leg to smoothly return to its initial rotation
                 transform.rotation = Quaternion.RotateTowards(transform.rotation, m_InitialTransform.rotation, 1f * Time.deltaTime);
-                transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * legFlySpeed * 1.5f);
+                transform.localScale = Vector3.MoveTowards(transform.localScale, m_LegOriginalScale, 0.1f * Time.deltaTime * m_rocketData.flySpeed * 1.5f);
 
                 if (distanceToUpdatedTarget < 1f)
                 {
@@ -143,7 +147,7 @@ public class LegHandler : MonoBehaviour
 
                 break;
             case LegState.REGROWING:
-                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_LegRegrowSpeed * Time.deltaTime);
+                transform.localScale = Vector3.Lerp(transform.localScale, m_LegOriginalScale, m_rocketData.regrowDurationAfterExplosion * Time.deltaTime);
                 if (Vector3.Distance(transform.localScale, m_LegOriginalScale) < 0.1f)
                 {
                     m_LegState = LegState.ATTACHED;
@@ -189,7 +193,7 @@ public class LegHandler : MonoBehaviour
 
                 //Create explosion effect
                 GameObject explosionEffect = Instantiate(explosionPrefab, transform.position, Quaternion.identity);
-                explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius / 10);
+                explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(m_rocketData.explosionRadius / 10);
 
                 StopVFX();
 
@@ -198,14 +202,14 @@ public class LegHandler : MonoBehaviour
                     //Create gizmo with explosionradius, for debugging
                     GameObject gizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     gizmo.transform.position = transform.position;
-                    gizmo.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
+                    gizmo.transform.localScale = new Vector3(m_rocketData.explosionRadius * 2f, m_rocketData.explosionRadius * 2f, m_rocketData.explosionRadius * 2f);
                     gizmo.GetComponent<Renderer>().material = explosionMaterial;
                     gizmo.GetComponent<SphereCollider>().enabled = false;
                     //Destroy after 5 seconds
                     Destroy(gizmo, 5f);
                 }
 
-                Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, m_rocketData.explosionRadius);
                 foreach (var hitCollider in hitColliders)
                 {
                     if (hitCollider.gameObject.CompareTag("Enemy"))
@@ -253,6 +257,11 @@ public class LegHandler : MonoBehaviour
         return isSpinning || m_LegState == LegState.FLYING || m_LegState == LegState.RETURNING;
     }
 
+    public RocketData GetRocketData()
+    {
+        return m_rocketData;
+    }
+
     private void StartVFX()
     {
         vfxFlying.Reinit();
@@ -267,7 +276,7 @@ public class LegHandler : MonoBehaviour
 
     private IEnumerator DaisyChainExplosion(LegHandler leg)
     {
-        yield return new WaitForSeconds(explosionChainDelay);
+        yield return new WaitForSeconds(m_rocketData.explosionChainDelay);
         leg.ExplodeLeg();
     }
 }

@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 945e4d52b0111ee41857c2b1235088b7, type: 3}
+  m_Name: SO_RocketData
+  m_EditorClassIdentifier: 
+  flySpeed: 50
+  flySpeedBase: 50
+  flyScaleMultiplier: 1.25
+  damage: 50
+  canExplode: 1
+  explosionRadiusBase: 1.25
+  explosionRadius: 1.25
+  explosionChainDelay: 1.25
+  regrowDurationAfterExplosion: 2
