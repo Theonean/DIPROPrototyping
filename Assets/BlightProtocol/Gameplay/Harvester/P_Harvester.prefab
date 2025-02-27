@@ -665,7 +665,6 @@ MonoBehaviour:
       m_Calls: []
   resourcePoint: {fileID: 0}
   travelTimeLeft: 0
-  m_LineRenderer: {fileID: 0}
   pathPositionsIndex: 1
   pathPositions: []
   m_carrierBalloon: {fileID: 2570681315178722742}
@@ -1296,17 +1295,17 @@ PrefabInstance:
     - target: {fileID: 875285026230314575, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 875285026230314575, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 875285026230314575, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 50
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 875285026230314575, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
@@ -1365,8 +1364,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7553219996783356627, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
+      propertyPath: m_Color.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7553219996783356627, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
+        type: 3}
       propertyPath: m_Color.b
-      value: 0.26026773
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7553219996783356627, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
@@ -1376,7 +1380,7 @@ PrefabInstance:
     - target: {fileID: 7553219996783356627, guid: e0e2428fbecaa8a45bd4f21b4ae64bb6,
         type: 3}
       propertyPath: m_Color.r
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
