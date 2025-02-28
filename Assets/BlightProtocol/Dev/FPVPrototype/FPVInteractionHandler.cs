@@ -11,6 +11,8 @@ public class FPVInteractionHandler : MonoBehaviour
     private RaycastHit mapHit;
     public LayerMask hitMask;
 
+    public LayerMask mapHitMask;
+
     void Start()
     {
         fpvCamera = GetComponent<Camera>();
@@ -50,7 +52,7 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         Debug.Log(hit.collider.name + " " + _hit.textureCoord.x);
         ray = mapCamera.ViewportPointToRay(new Vector3(_hit.textureCoord.x, _hit.textureCoord.y));
-        if (Physics.Raycast(ray, out mapHit))
+        if (Physics.Raycast(ray, out mapHit, Mathf.Infinity, mapHitMask))
         {
             ControlZoneManager.Instance.SetNextPathPosition(mapHit.point);
         }

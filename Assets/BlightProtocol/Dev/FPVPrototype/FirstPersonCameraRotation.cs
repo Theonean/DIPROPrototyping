@@ -1,7 +1,9 @@
+using Unity.Burst.Intrinsics;
 using UnityEngine;
 
 public class FirstPersonCameraRotation : MonoBehaviour {
 
+	
 	public float Sensitivity {
 		get { return sensitivity; }
 		set { sensitivity = value; }
@@ -15,6 +17,11 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 	const string xAxis = "Mouse X"; //Strings in direct code generate garbage, storing and re-using them creates no garbage
 	const string yAxis = "Mouse Y";
 
+	private Vector2 initialRot;
+	void Start () {
+		initialRot = new Vector2(transform.eulerAngles.z, -transform.eulerAngles.x);
+	}
+
 	void Update(){
 		rotation.x += Input.GetAxis(xAxis) * sensitivity;
 		rotation.y += Input.GetAxis(yAxis) * sensitivity;
@@ -27,6 +34,9 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 	}
 
 	public void ResetRotation() {
-		rotation = Vector3.zero;
+		rotation = initialRot;
+		var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
+		var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
+		transform.localRotation = xQuat * yQuat;
 	}
 }

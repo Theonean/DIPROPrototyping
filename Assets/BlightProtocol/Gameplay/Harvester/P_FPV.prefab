@@ -81,13 +81,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1049123815918348962}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.2841559, y: -0, z: -0, w: 0.9587781}
   m_LocalPosition: {x: 0, y: 1.625, z: 1.47}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8038706047492797719}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 33.017, y: 0, z: 0}
 --- !u!20 &2617997187458644427
 Camera:
   m_ObjectHideFlags: 0
@@ -214,6 +214,9 @@ MonoBehaviour:
   hitMask:
     serializedVersion: 2
     m_Bits: 65536
+  mapHitMask:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!1 &1178273178941111481
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,17 +467,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 0}
   m_VersionIndex: 1006
   m_IsSelectable: 1
-  m_SelectedFaces: 04000000
-  m_SelectedEdges:
-  - a: 16
-    b: 17
-  - a: 18
-    b: 16
-  - a: 17
-    b: 19
-  - a: 19
-    b: 18
-  m_SelectedVertices: 10000000110000001200000013000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!114 &4310222242363233205
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9435,7 +9430,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4254447723443245931
 CanvasRenderer:

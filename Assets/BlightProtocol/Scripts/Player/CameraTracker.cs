@@ -82,7 +82,7 @@ public class CameraTracker : MonoBehaviour
             fpCamera.GetComponent<FirstPersonCameraRotation>().ResetRotation();
             objectToTrack = harvester;
 
-            PlayerCore.Instance.ModifyHealth(-100);
+            PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
 
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = true;
@@ -94,6 +94,8 @@ public class CameraTracker : MonoBehaviour
             topDownCamera.enabled = true;
             fpCamera.enabled = false;
             objectToTrack = player;
+
+            PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
 
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
