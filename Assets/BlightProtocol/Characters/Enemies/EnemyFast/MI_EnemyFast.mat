@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-4896433453533715780
+--- !u!114 &-6150222704473185454
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MI_Wall
+  m_Name: MI_EnemyFast
   m_Shader: {fileID: -6465566751694194690, guid: 5fbc074a51565b743bcee7f17dc971ec,
     type: 3}
   m_Parent: {fileID: 2100000, guid: 32e705e2917b1ba4384470a101dcdd1a, type: 2}
@@ -37,13 +37,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Emission_Texture:
+        m_Texture: {fileID: 2800000, guid: db3ecdae2bf27c644a4f01e5206c3d46, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Main_Texture:
-        m_Texture: {fileID: 2800000, guid: 011fe653c2a427e428b579cdc55c4849, type: 3}
+        m_Texture: {fileID: 2800000, guid: bd5bc0949a6f8bc45a8092832b5a5f7b, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Emission_Color: {r: 0.003921571, g: 0.8980392, b: 0.04863807, a: 0}
   m_BuildTextureStacks: []

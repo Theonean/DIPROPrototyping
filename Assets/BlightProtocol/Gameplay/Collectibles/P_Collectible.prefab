@@ -53,9 +53,6 @@ MonoBehaviour:
   MoveSpeedModel: {fileID: 8779812119288703313}
   FullHealthModel: {fileID: 7302336206789681955}
   type: 0
-  buffDuration: 5
-  explosionRangeMultiplier: 2
-  shotSpeedMultiplier: 2
 --- !u!135 &1061863874608786822
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -181,7 +178,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 5bf19e2af0352874a8783755d55ef43e, type: 2}
+      objectReference: {fileID: 2100000, guid: 75fd29ecd4b6c0d4ba2d645ecde14dfa, type: 2}
     - target: {fileID: 919132149155446097, guid: 2b809c452e102354e8aaef107f824cd3,
         type: 3}
       propertyPath: m_Name
@@ -326,12 +323,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: acc00b2faa7748046b4477032e3f0a1b, type: 2}
-    - target: {fileID: -7511558181221131132, guid: 0ed2e784553e52646815ccab6d334a37,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 2100000, guid: cbfd5b7847970194db7d5dcd60755e09, type: 2}
+      objectReference: {fileID: 2100000, guid: bd3c8bc3e5f2eda4bbb45606f87ec512, type: 2}
     - target: {fileID: 919132149155446097, guid: 0ed2e784553e52646815ccab6d334a37,
         type: 3}
       propertyPath: m_Name
@@ -436,7 +428,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 58bae1275a093ec4b825dab7e817ab65, type: 2}
+      objectReference: {fileID: 2100000, guid: 7c3a66d44ccc64f4b9217028dbff23ab, type: 2}
     - target: {fileID: 919132149155446097, guid: 2b809c452e102354e8aaef107f824cd3,
         type: 3}
       propertyPath: m_Name

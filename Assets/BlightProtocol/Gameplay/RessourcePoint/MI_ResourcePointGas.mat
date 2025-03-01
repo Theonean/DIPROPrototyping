@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MI_Wall
+  m_Name: MI_ResourcePointGas
   m_Shader: {fileID: -6465566751694194690, guid: 5fbc074a51565b743bcee7f17dc971ec,
     type: 3}
   m_Parent: {fileID: 2100000, guid: 32e705e2917b1ba4384470a101dcdd1a, type: 2}
@@ -38,12 +38,12 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _Main_Texture:
-        m_Texture: {fileID: 2800000, guid: 011fe653c2a427e428b579cdc55c4849, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats: []
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _Color: {r: 1, g: 0.043137256, b: 0, a: 1}
+    - _Emission_Color: {r: 0.8235294, g: 0.019607844, b: 0.015686275, a: 1}
   m_BuildTextureStacks: []

@@ -264,13 +264,7 @@ public class ControlZoneManager : MonoBehaviour
         if (meshRenderer != null)
         {
             meshRenderer.GetPropertyBlock(propBlock);
-            propBlock.SetColor("_BaseColor", regionColor * resoucePointColorCorrection);
-
-            Color shadowColor1 = meshRenderer.material.GetColor("_1st_ShadeColor");
-            Color shadowColor2 = meshRenderer.material.GetColor("_2nd_ShadeColor");
-
-            propBlock.SetColor("_1st_ShadeColor", regionColor * shadowColor1);
-            propBlock.SetColor("_2nd_ShadeColor", regionColor * shadowColor2);
+            propBlock.SetColor("_Color", regionColor * resoucePointColorCorrection);
 
             meshRenderer.SetPropertyBlock(propBlock);
 
