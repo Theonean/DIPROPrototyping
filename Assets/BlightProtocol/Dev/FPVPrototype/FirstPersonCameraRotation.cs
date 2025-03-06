@@ -8,6 +8,10 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 		get { return sensitivity; }
 		set { sensitivity = value; }
 	}
+
+	public GameObject posParent;
+	private Transform[] positions;
+	private int currentPos = 0;
 	[Range(0.1f, 9f)][SerializeField] float sensitivity = 2f;
 	[Tooltip("Limits vertical camera rotation. Prevents the flipping that happens when rotation goes above 90.")]
 	[Range(0f, 90f)][SerializeField] float yRotationLimit = 88f;
@@ -20,6 +24,7 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 	private Vector2 initialRot;
 	void Start () {
 		initialRot = new Vector2(transform.eulerAngles.z, -transform.eulerAngles.x);
+		positions = posParent.GetComponentsInChildren<Transform>();
 	}
 
 	void Update(){
@@ -31,6 +36,13 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 		var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
 
 		transform.localRotation = xQuat * yQuat; //Quaternions seem to rotate more consistently than EulerAngles. Sensitivity seemed to change slightly at certain degrees using Euler. transform.localEulerAngles = new Vector3(-rotation.y, rotation.x, 0);
+	
+		if (Input.GetKeyDown(KeyCode.E)) {
+			ChangePosition(true);
+		}
+		else if (Input.GetKeyDown(KeyCode.Q)) {
+			ChangePosition(false);
+		}
 	}
 
 	public void ResetRotation() {
@@ -38,5 +50,21 @@ public class FirstPersonCameraRotation : MonoBehaviour {
 		var xQuat = Quaternion.AngleAxis(rotation.x, Vector3.up);
 		var yQuat = Quaternion.AngleAxis(rotation.y, Vector3.left);
 		transform.localRotation = xQuat * yQuat;
+		currentPos = 0;
+		transform.position = positions[currentPos].position;
+	}
+
+	private void ChangePosition(bool forward) {
+		if (forward)
+			currentPos++;
+		else
+			currentPos--;
+
+		if (currentPos >= positions.Length)
+			currentPos = 0;
+		else if (currentPos < 0)
+			currentPos = positions.Length - 1;
+		
+		transform.position = positions[currentPos].position;
 	}
 }
