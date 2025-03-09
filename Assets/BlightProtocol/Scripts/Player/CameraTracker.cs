@@ -29,7 +29,8 @@ public class CameraTracker : MonoBehaviour
     private PlayerCore playerCore;
 
     public Camera topDownCamera;
-    public Camera fpCamera;
+    public GameObject fpCamera;
+    public GameObject fpController;
     public GameObject topDownCanvas;
     private bool isFPV = false; 
 
@@ -54,7 +55,8 @@ public class CameraTracker : MonoBehaviour
         playerCore = GetComponentInChildren<PlayerCore>();
         //make sure top down camera is enabled initially
         topDownCamera.enabled = true;
-        fpCamera.enabled = false;
+        fpCamera.SetActive(false);
+        fpController.SetActive(false);
 
     }
 
@@ -78,21 +80,22 @@ public class CameraTracker : MonoBehaviour
             isFPV = true;
 
             topDownCamera.enabled = false;
-            fpCamera.enabled = true;
-            fpCamera.GetComponent<FirstPersonCameraRotation>().ResetRotation();
+            fpCamera.SetActive(true);
+            fpController.SetActive(true);
             objectToTrack = harvester;
 
             PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
 
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = true;
+            Cursor.visible = false;
             topDownCanvas.SetActive(false);
         }
         else if (Input.GetKeyDown(KeyCode.F) && isFPV) {
             isFPV = false;
 
             topDownCamera.enabled = true;
-            fpCamera.enabled = false;
+            fpCamera.SetActive(false);
+            fpController.SetActive(false);
             objectToTrack = player;
 
             PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;

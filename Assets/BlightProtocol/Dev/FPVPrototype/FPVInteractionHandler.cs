@@ -50,7 +50,6 @@ public class FPVInteractionHandler : MonoBehaviour
 
     void SetTarget(RaycastHit _hit)
     {
-        Debug.Log(hit.collider.name + " " + _hit.textureCoord.x);
         ray = mapCamera.ViewportPointToRay(new Vector3(_hit.textureCoord.x, _hit.textureCoord.y));
         if (Physics.Raycast(ray, out mapHit, Mathf.Infinity, mapHitMask))
         {
