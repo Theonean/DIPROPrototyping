@@ -4,56 +4,79 @@ using UnityEngine;
 
 public class FPVInteractionHandler : MonoBehaviour
 {
+    [Header("Input")]
+    public KeyCode interactKey = KeyCode.E;
+    private bool interactKeyPressed = false;
+
+    [Header("Cameras")]
     private Camera fpvCamera;
-    public Camera mapCamera;
+
+    [Header("Raycasting")]
     private Ray ray;
     private RaycastHit hit;
-    private RaycastHit mapHit;
+    public float raycastRange;
     public LayerMask hitMask;
 
-    public LayerMask mapHitMask;
+    private IFPVInteractable lastHoveredObject = null;
 
     void Start()
     {
         fpvCamera = GetComponent<Camera>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (fpvCamera.enabled)
+        if (Input.GetKeyDown(interactKey))
         {
-            if (Input.GetKeyDown(KeyCode.Mouse0))
+            interactKeyPressed = true;
+        }
+    }
+
+    void FixedUpdate()
+    {
+        ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
+
+        if (Physics.Raycast(ray, out hit, raycastRange, hitMask))
+        {
+            if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable))
+            {
+                if (interactable != lastHoveredObject)
+                {
+                    lastHoveredObject = interactable;
+                    interactable.OnHover();
+                }
+            }
+
+            if (interactKeyPressed)
             {
                 Interact();
+                interactKeyPressed = false;
+            }
+        }
+        else
+        {
+            if (lastHoveredObject != null)
+            {
+                FPVUI.Instance.ClearLookAtText();
+                lastHoveredObject = null;
             }
         }
     }
 
     void Interact()
     {
-        ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
-
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
+        switch (hit.collider.tag)
         {
-            switch(hit.collider.tag) {
-                case "Map":
-                    SetTarget(hit);
+            case "Map":
+                hit.collider.GetComponent<FPVMap>().SetTarget(hit);
                 break;
 
-                default:
-                    hit.collider.GetComponent<FPVInteractable>()?.Interact();
+            default:
+                if (lastHoveredObject != null)
+                {
+                    lastHoveredObject.OnInteract();
+                }
                 break;
-            }
-        }
-    }
-
-    void SetTarget(RaycastHit _hit)
-    {
-        ray = mapCamera.ViewportPointToRay(new Vector3(_hit.textureCoord.x, _hit.textureCoord.y));
-        if (Physics.Raycast(ray, out mapHit, Mathf.Infinity, mapHitMask))
-        {
-            ControlZoneManager.Instance.SetNextPathPosition(mapHit.point);
         }
     }
 }
