@@ -18,6 +18,7 @@ public enum ZoneState
     START_HARVESTING, //Starting to harvest resources, animation
     HARVESTING, //"Gathering" Resources and vulnerable to enemy attacks
     END_HARVESTING, //Ending harvest, animation
+    IDLE, //Not doing anything
     DIED //Dead, no longer doing anything
 }
 
@@ -33,9 +34,9 @@ public class ControlZoneManager : MonoBehaviour
     public List<Slider> healthSliders = new List<Slider>();
     public UnityEvent died;
     public float waveTime = 30f;
-    public static float moveSpeed = 5f;
+    public float moveSpeed = 5f;
     Vector3 m_TargetPosition;
-    ZoneState m_ZoneState = ZoneState.MOVING;
+    ZoneState m_ZoneState = ZoneState.IDLE;
     float m_WaveTimer = 0f;
     public Slider waveProgressSlider;
     public UnityEvent<ZoneState> changedState;
@@ -44,7 +45,7 @@ public class ControlZoneManager : MonoBehaviour
     public float travelTimeLeft;
     LineRenderer m_LineRenderer;
     public int pathPositionsIndex = 0;
-    public Vector3[] pathPositions;
+    public Vector3[] pathPositions; 
     [SerializeField]
     private GameObject m_carrierBalloon;
 
@@ -114,12 +115,18 @@ public class ControlZoneManager : MonoBehaviour
         waveProgressSlider.value = 0f;
 
         //CalculateTargetPosition();
-        SetNextPathPosition();
+        //SetNextPathPosition();
+
         changedState.Invoke(m_ZoneState);
     }
 
     private void Update()
     {
+        if(m_ZoneState == ZoneState.IDLE)
+        {
+            return;
+        }
+
         //Decrease timer until done, after that start moving again to a new resource point position
         if (m_ZoneState == ZoneState.HARVESTING)
         {
@@ -174,7 +181,7 @@ public class ControlZoneManager : MonoBehaviour
                 transform.rotation = Quaternion.LookRotation(moveDirection);
             }
 
-            //If we are close enough to the target position, change state to harvesting
+            //ARRIVED AT POSITION - START DRILL UNPACKING ANIMATION
             if (Vector3.Distance(transform.position, m_TargetPosition) < 0.5f)
             {
                 m_ZoneState = ZoneState.START_HARVESTING;
@@ -186,7 +193,7 @@ public class ControlZoneManager : MonoBehaviour
                 FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
                 movingSFX.EventInstance.setPaused(true);
             }
-        }
+        }//DRILL FINISHED UNPACKING - START HARVESTING
         else if (m_ZoneState == ZoneState.START_HARVESTING)
         {
             if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
@@ -199,14 +206,15 @@ public class ControlZoneManager : MonoBehaviour
                 // start VFX
                 drillingVFX.Play();
             }
-        }
+        }//FINISHED HARVESTING - START PACKING UP ANIMATION
         else if (m_ZoneState == ZoneState.END_HARVESTING)
         {
             if (m_HarvesterAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1f)
             {
                 m_ZoneState = ZoneState.MOVING;
                 //CalculateTargetPosition();
-                SetNextPathPosition();
+                //SetNextPathPosition();
+
                 StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
                 m_HarvesterAnimator.Play(m_Idle, 0, 0f);
                 changedState.Invoke(m_ZoneState);
@@ -356,6 +364,16 @@ public class ControlZoneManager : MonoBehaviour
             //Lerp wave timer slider to 0 over given time
             waveProgressSlider.value = Mathf.Lerp(waveTime, 0f, timer / time);
             yield return null;
+        }
+    }
+
+    public void SetMoveSpeed(float newSpeed)
+    {
+        moveSpeed = newSpeed;
+        if(moveSpeed > 0.1f)
+        {
+            m_ZoneState = ZoneState.MOVING;
+            changedState.Invoke(m_ZoneState);
         }
     }
 

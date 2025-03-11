@@ -16,7 +16,7 @@ public class HarvesterStartButton : MonoBehaviour, IFPVInteractable
 
     public void OnInteract()
     {
-        ControlZoneManager.moveSpeed = setSpeed;
+        ControlZoneManager.Instance.SetMoveSpeed(setSpeed);
     }
 
     public void OnHover() {
