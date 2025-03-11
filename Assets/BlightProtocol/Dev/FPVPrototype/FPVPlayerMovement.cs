@@ -6,6 +6,12 @@ public class FPVPlayerMovement : MonoBehaviour
 {
     [Header("Movement")]
     public float moveSpeed;
+    public float groundDrag;
+
+    [Header("Ground Check")]
+    public float playerHeight;
+    public LayerMask whatIsGround;
+    private bool grounded;
 
     public Transform orientation;
 
@@ -14,8 +20,6 @@ public class FPVPlayerMovement : MonoBehaviour
 
     Vector3 moveDirection;
     Rigidbody rb;
-
-    public bool isAtDroneControl = false;
 
     private void Start() {
         rb = GetComponent<Rigidbody>();
@@ -37,5 +41,23 @@ public class FPVPlayerMovement : MonoBehaviour
 
     private void FixedUpdate() {
         MovePlayer();
+        SpeedControl();
+
+        grounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, whatIsGround);
+        if (grounded) {
+            rb.drag = groundDrag;
+        }
+        else {
+            rb.drag = 0;
+        }
     }
-}
+
+    private void SpeedControl() {
+        Vector3 flatVel = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+
+        if (flatVel.magnitude > moveSpeed) {
+            Vector3 limitedVel = flatVel.normalized * moveSpeed;
+            rb.velocity = new Vector3(limitedVel.x, rb.velocity.y, limitedVel.z);
+        }
+    }
+ }
