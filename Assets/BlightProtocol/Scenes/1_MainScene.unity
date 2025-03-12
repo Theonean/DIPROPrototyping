@@ -21273,7 +21273,17 @@ PrefabInstance:
     - target: {fileID: 3770191199202911359, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: raycastMask.m_Bits
-      value: 1024
+      value: 5120
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870503280579632283, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: flySpeedCurve.m_Curve.Array.data[0].time
+      value: -0.02541429
+      objectReference: {fileID: 0}
+    - target: {fileID: 4870503280579632283, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: flySpeedCurve.m_Curve.Array.data[0].value
+      value: 0.03563566
       objectReference: {fileID: 0}
     - target: {fileID: 5684209241655758717, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
