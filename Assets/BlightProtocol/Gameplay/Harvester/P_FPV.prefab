@@ -4380,7 +4380,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdbcf4ec0afb704386c76ce903138de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setSpeed: 0
   lookAtText: '[E] Pulse'
 --- !u!1 &7503053789956115794
 GameObject:
@@ -5365,16 +5364,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4758513243580514618, guid: c1f03a301dd093e41a7a0272ef83126c,
-        type: 3}
-      propertyPath: groundDrag
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 4758513243580514618, guid: c1f03a301dd093e41a7a0272ef83126c,
-        type: 3}
-      propertyPath: playerHeight
-      value: 2.3
       objectReference: {fileID: 0}
     - target: {fileID: 4758513243580514618, guid: c1f03a301dd093e41a7a0272ef83126c,
         type: 3}

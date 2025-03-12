@@ -336,8 +336,8 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
-  m_CollisionDetection: 0
+  m_Constraints: 112
+  m_CollisionDetection: 2
 --- !u!114 &4758513243580514618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -351,4 +351,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 4.5
+  groundDrag: 4
+  playerHeight: 2.2
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 0
   orientation: {fileID: 4125333010350527990}
