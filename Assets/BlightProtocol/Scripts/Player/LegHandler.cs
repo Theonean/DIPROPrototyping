@@ -164,13 +164,12 @@ public class LegHandler : MonoBehaviour
         }
     }
 
-    public void LegReleased()
+    public void LegReleased(RaycastHit hit)
     {
         if (m_LegState == LegState.CLICKED)
         {
             m_LegState = LegState.FLYING;
             Ray ray = m_Camera.ScreenPointToRay(Input.mousePosition);
-            Physics.Raycast(ray, out RaycastHit hit);
             m_TargetPosition = new Vector3(hit.point.x, gameObject.transform.position.y, hit.point.z); //Keep leg height
             m_StartingPosition = transform.position;
             transform.SetParent(null);

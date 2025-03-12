@@ -13,6 +13,10 @@ public class LegDirectionalClickHandler : MonoBehaviour
     private GameObject activeLeg; // The leg currently tracked and attached to the core
     GameObject lastLegClicked;
 
+    [Header("Raycast")]
+    public LayerMask raycastMask;
+    private RaycastHit hit;
+
     [Header("Core Rotation")]
     public float NorthWestOffset;
     public float SouthWestOffset;
@@ -41,8 +45,7 @@ public class LegDirectionalClickHandler : MonoBehaviour
         {
             //Raycast to find the position to fly to, and if nothing is hit return
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, out RaycastHit hit)) return;
-
+            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, raycastMask)) return;
             //Check if a leg was clicked, if yes return
             if (hit.collider.gameObject.CompareTag("Leg"))
             {
@@ -77,7 +80,7 @@ public class LegDirectionalClickHandler : MonoBehaviour
 
         if (Input.GetMouseButtonUp(0) && lastLegClicked != null)
         {
-            lastLegClicked.GetComponent<LegHandler>().LegReleased();
+            lastLegClicked.GetComponent<LegHandler>().LegReleased(hit);
             lastLegClicked = null;
         }
     }

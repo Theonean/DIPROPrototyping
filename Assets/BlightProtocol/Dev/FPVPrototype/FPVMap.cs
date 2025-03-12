@@ -32,7 +32,8 @@ public class FPVMap : MonoBehaviour, IFPVInteractable
         ray = mapCamera.ViewportPointToRay(new Vector3(_hit.textureCoord.x, _hit.textureCoord.y));
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            ControlZoneManager.Instance.SetNextPathPosition(hit.point);
+            Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
+            ControlZoneManager.Instance.SetNextPathPosition(targetPos);
         }
     }
 }

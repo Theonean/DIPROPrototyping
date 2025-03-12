@@ -41,11 +41,11 @@ public class ControlZoneManager : MonoBehaviour
     public Slider waveProgressSlider;
     public UnityEvent<ZoneState> changedState;
     Color m_OriginalColor;
-    public GameObject resourcePoint;
+    public TargetPosition targetPosObject;
     public float travelTimeLeft;
     LineRenderer m_LineRenderer;
     public int pathPositionsIndex = 0;
-    public Vector3[] pathPositions; 
+    public Vector3[] pathPositions;
     [SerializeField]
     private GameObject m_carrierBalloon;
 
@@ -122,7 +122,7 @@ public class ControlZoneManager : MonoBehaviour
 
     private void Update()
     {
-        if(m_ZoneState == ZoneState.IDLE)
+        if (m_ZoneState == ZoneState.IDLE)
         {
             return;
         }
@@ -184,14 +184,26 @@ public class ControlZoneManager : MonoBehaviour
             //ARRIVED AT POSITION - START DRILL UNPACKING ANIMATION
             if (Vector3.Distance(transform.position, m_TargetPosition) < 0.5f)
             {
-                m_ZoneState = ZoneState.START_HARVESTING;
-                m_HarvesterAnimator.Play(m_StartHarvesting, 0, 0f);
-                changedState.Invoke(m_ZoneState);
+                if (targetPosObject.isOnResourcePoint)
+                {
+                    m_ZoneState = ZoneState.START_HARVESTING;
+                    m_HarvesterAnimator.Play(m_StartHarvesting, 0, 0f);
+                    changedState.Invoke(m_ZoneState);
 
-                Debug.Log("Arrived at position, starting to harvest");
-                //Set Audio states
-                FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
-                movingSFX.EventInstance.setPaused(true);
+                    Destroy(targetPosObject.activeResourcePoint);
+                    targetPosObject.isOnResourcePoint = false;
+
+                    Debug.Log("Arrived at position, starting to harvest");
+                    //Set Audio states
+                    FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
+                    movingSFX.EventInstance.setPaused(true);
+                }
+                else {
+                    m_ZoneState = ZoneState.IDLE;
+                    m_HarvesterAnimator.Play(m_Idle, 0, 0f);
+                    changedState.Invoke(m_ZoneState);
+                }
+
             }
         }//DRILL FINISHED UNPACKING - START HARVESTING
         else if (m_ZoneState == ZoneState.START_HARVESTING)
@@ -242,13 +254,15 @@ public class ControlZoneManager : MonoBehaviour
 
     public void SetNextPathPosition(Vector3 customPosition = default(Vector3))
     {
-        if (customPosition != default(Vector3)) {
+        if (customPosition != default(Vector3))
+        {
             m_TargetPosition = customPosition;
         }
-        else {
+        else
+        {
             m_TargetPosition = pathPositions[pathPositionsIndex];
         }
-        resourcePoint.transform.position = m_TargetPosition;
+        targetPosObject.transform.position = m_TargetPosition;
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;
 
@@ -263,12 +277,12 @@ public class ControlZoneManager : MonoBehaviour
     public void SetMeshColoursToRegion()
     {
         // Calculate the color based on the obstacle's position along the path
-        float zPosition = resourcePoint.transform.position.z;
+        float zPosition = targetPosObject.transform.position.z;
         Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
 
         // Use MaterialPropertyBlock to set color without affecting shared materials
         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-        MeshRenderer meshRenderer = resourcePoint.GetComponentInChildren<MeshRenderer>();
+        MeshRenderer meshRenderer = targetPosObject.GetComponentInChildren<MeshRenderer>();
         if (meshRenderer != null)
         {
             meshRenderer.GetPropertyBlock(propBlock);
@@ -370,7 +384,7 @@ public class ControlZoneManager : MonoBehaviour
     public void SetMoveSpeed(float newSpeed)
     {
         moveSpeed = newSpeed;
-        if(moveSpeed > 0.1f)
+        if (moveSpeed > 0.1f)
         {
             m_ZoneState = ZoneState.MOVING;
             changedState.Invoke(m_ZoneState);
