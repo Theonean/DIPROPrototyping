@@ -64,6 +64,9 @@ public class ControlZoneManager : MonoBehaviour
     // VFX
     public VisualEffect drillingVFX;
 
+    [Header("Resource Harvesting")]
+    public float resourceHarvestingSpeed = 1f;
+
     [Header("SFX")]
     public string harvestingSFXPath = "event:/...";
     private EventInstance m_HarvestingSFX;
@@ -133,6 +136,9 @@ public class ControlZoneManager : MonoBehaviour
             //Show wave progress while harvesting
             waveProgressSlider.enabled = true;
 
+            //Collect Resource
+            targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>().HarvestResource(resourceHarvestingSpeed);
+
             m_WaveTimer += Time.deltaTime;
             waveProgressSlider.value = m_WaveTimer;
             if (m_WaveTimer >= waveTime)
@@ -142,6 +148,7 @@ public class ControlZoneManager : MonoBehaviour
                 changedState.Invoke(m_ZoneState);
                 m_HarvesterAnimator.Play(m_StopHarvesting, 0, 0f);
                 Debug.Log("Finished Harvesting, starting end harvest animation");
+                Destroy(targetPosObject.activeResourcePoint);
 
                 // stop VFX
                 drillingVFX.Stop();
@@ -190,7 +197,6 @@ public class ControlZoneManager : MonoBehaviour
                     m_HarvesterAnimator.Play(m_StartHarvesting, 0, 0f);
                     changedState.Invoke(m_ZoneState);
 
-                    Destroy(targetPosObject.activeResourcePoint);
                     targetPosObject.isOnResourcePoint = false;
 
                     Debug.Log("Arrived at position, starting to harvest");
