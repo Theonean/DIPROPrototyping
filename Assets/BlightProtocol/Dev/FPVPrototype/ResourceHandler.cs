@@ -87,7 +87,7 @@ public class ResourceHandler : MonoBehaviour
         }
     }
 
-    public void ConsumeResource(ResourceData resourceData, float amount, bool instant, float duration)
+    public void ConsumeResource(ResourceData resourceData, float amount, bool instant, float duration = 1f)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
         {

@@ -7,6 +7,7 @@ public class HarvesterStartButton : MonoBehaviour, IFPVInteractable
     public float setSpeed = 0f;
     public bool IsCurrentlyInteractable {get; set;} = true;
     public string lookAtText = "E"; // Backing field for Inspector
+    public HarvesterSpeedControl harvesterSpeedControl;
 
     public string LookAtText
     {
@@ -16,7 +17,7 @@ public class HarvesterStartButton : MonoBehaviour, IFPVInteractable
 
     public void OnInteract()
     {
-        ControlZoneManager.Instance.SetMoveSpeed(setSpeed);
+        harvesterSpeedControl.SetSpeed(setSpeed);
     }
 
     public void OnHover() {

@@ -204,7 +204,8 @@ public class ControlZoneManager : MonoBehaviour
                     FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
                     movingSFX.EventInstance.setPaused(true);
                 }
-                else {
+                else
+                {
                     m_ZoneState = ZoneState.IDLE;
                     m_HarvesterAnimator.Play(m_Idle, 0, 0f);
                     changedState.Invoke(m_ZoneState);
@@ -392,8 +393,11 @@ public class ControlZoneManager : MonoBehaviour
         moveSpeed = newSpeed;
         if (moveSpeed > 0.1f)
         {
-            m_ZoneState = ZoneState.MOVING;
-            changedState.Invoke(m_ZoneState);
+            if (m_ZoneState != ZoneState.DIED && m_ZoneState != ZoneState.HARVESTING)
+            {
+                m_ZoneState = ZoneState.MOVING;
+                changedState.Invoke(m_ZoneState);
+            }
         }
     }
 
