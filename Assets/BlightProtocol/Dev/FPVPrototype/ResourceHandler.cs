@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -32,6 +33,10 @@ public class ResourceHandler : MonoBehaviour
         }
     }
 
+    void Start()
+    {
+        UpdateResourceDisplay();
+    }
     private void InitializeResources()
     {
         resourceDictionary.Clear();
@@ -50,6 +55,17 @@ public class ResourceHandler : MonoBehaviour
             }
         }
     }
+
+    public float? CheckResource(ResourceData resourceData) {
+    if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
+    {
+        return resource.amount;
+    }
+    else {
+        Debug.LogWarning("Resource not found: " + resourceData.displayName);
+        return null;
+    }
+}
 
     public void CollectResource(ResourceData resourceData, float amount)
     {
@@ -71,14 +87,22 @@ public class ResourceHandler : MonoBehaviour
         }
     }
 
-    public void ConsumeResource(ResourceData resourceData, float amount)
+    public void ConsumeResource(ResourceData resourceData, float amount, bool instant, float duration)
     {
         if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
         {
             if (resource.amount >= amount)
             {
-                resource.amount -= amount;
-                UpdateResourceDisplay();
+                if (instant)
+                {
+                    resource.amount -= amount;
+                    UpdateResourceDisplay();
+                }
+                else
+                {
+                    StartCoroutine(ConsumeResourceOverTime(resource, amount, duration));
+                }
+
             }
             else
             {
@@ -90,6 +114,29 @@ public class ResourceHandler : MonoBehaviour
             Debug.LogWarning("Resource not found: " + resourceData.displayName);
         }
     }
+
+    private IEnumerator ConsumeResourceOverTime(Resource resource, float amount, float duration)
+    {
+        float timer = 0f;
+        float totalSubtracted = 0f;
+
+        while (timer < duration)
+        {
+            float deltaAmount = amount / duration * Time.deltaTime;
+            resource.amount -= deltaAmount;
+            totalSubtracted += deltaAmount;
+
+            UpdateResourceDisplay();
+            timer += Time.deltaTime;
+            yield return null;
+        }
+
+        // Ensure exact subtraction
+        float correction = amount - totalSubtracted;
+        resource.amount -= correction;
+        UpdateResourceDisplay();
+    }
+
 
     public void UpdateResourceDisplay()
     {

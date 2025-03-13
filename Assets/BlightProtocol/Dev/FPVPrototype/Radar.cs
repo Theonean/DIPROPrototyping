@@ -4,21 +4,23 @@ using UnityEngine;
 
 public class Radar : MonoBehaviour
 {
-    public static Radar Instance { get; private set;}
+    public static Radar Instance { get; private set; }
     public float rotationSpeed = 180f;
     public float radarDistance = 150f;
     public LayerMask layerMask;
     public GameObject enemyPing;
-    public GameObject terrainPing;
+    public GameObject resourcePointPing;
 
     [Header("Pulse")]
+    public float pulseCost = 100f;
+    public ResourceData pulseCostResource;
     public Transform pulseTransform;
     private SpriteRenderer pulseSpriteRenderer;
     public float pulseStartRadius = 10f;
     public float pulseRangeFactor = 1f;
     public AnimationCurve pulseStrengthCurve;
     public float pulseSpeedFactor = 1f;
-    public AnimationCurve pulseSpeedCurve;   
+    public AnimationCurve pulseSpeedCurve;
     public float pulseDuration = 1.0f;
 
     private List<Collider> colliderList = new List<Collider>();
@@ -40,7 +42,70 @@ public class Radar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*float previousRotation = (transform.eulerAngles.y % 360) - 180;
+
+    }
+
+    public void Pulse(float range, float speed)
+    {
+        if (ResourceHandler.Instance.CheckResource(pulseCostResource) > pulseCost)
+        {
+            ResourceHandler.Instance.ConsumeResource(pulseCostResource, pulseCost, false, 1f);
+            StartCoroutine(PulseEffect(range, speed));
+        }
+        else {
+            Debug.LogWarning("Not enough Resources!");
+        }
+
+
+    }
+
+    private IEnumerator PulseEffect(float range, float speed)
+    {
+        float timer = 0f;
+        float linearTimer = 0f;
+
+        while (timer < pulseDuration)
+        {
+            linearTimer += Time.deltaTime;
+
+            float currentRadius = Mathf.Lerp(pulseStartRadius, range * pulseRangeFactor, timer / pulseDuration);
+            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / pulseDuration);
+            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / pulseDuration) * speed * pulseSpeedFactor;
+
+            pulseTransform.localScale = Vector3.one * currentRadius;
+            pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
+
+            if (Physics.SphereCast(new Ray(Vector3.up, transform.position), currentRadius, out RaycastHit hit, 0.1f, layerMask))
+            {
+                Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
+            }
+            ;
+
+            timer += Time.deltaTime * currentSpeed;
+            yield return null;
+        }
+        pulseTransform.localScale = Vector3.one;
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        Vector3 collisionPos = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
+        Debug.Log(other.tag);
+        switch (other.tag)
+        {
+            case "Enemy":
+                Instantiate(enemyPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
+                break;
+
+            case "ResourcePoint":
+            Instantiate(resourcePointPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
+                break;
+        }
+    }
+
+    public void Rotate()
+    {
+        float previousRotation = (transform.eulerAngles.y % 360) - 180;
         transform.eulerAngles -= new Vector3(0, rotationSpeed * Time.deltaTime, 0);
         float currentRotation = (transform.eulerAngles.y % 360) - 180;
 
@@ -57,50 +122,13 @@ public class Radar : MonoBehaviour
                 /*if (hit.transform.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
                 {
                     Instantiate(terrainPing, hit.point, Quaternion.Euler(90, 0, 0));
-                }
-                else if (!colliderList.Contains(hit.collider))
+                }*/
+                if (!colliderList.Contains(hit.collider))
                 {
                     colliderList.Add(hit.collider);
                     Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
                 }
             }
-        }*/
-    }
-
-    public void Pulse(float range, float speed) {
-        StartCoroutine(PulseEffect(range, speed));
-    }
-
-    private IEnumerator PulseEffect(float range, float speed)
-    {
-
-        float timer = 0f;
-        float linearTimer = 0f;
-
-        while (timer < pulseDuration)
-        {
-            linearTimer += Time.deltaTime;
-
-            float currentRadius = Mathf.Lerp(pulseStartRadius, range*pulseRangeFactor, timer / pulseDuration);
-            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer/pulseDuration);
-            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer/pulseDuration) * speed * pulseSpeedFactor;
-
-            pulseTransform.localScale = Vector3.one * currentRadius;
-            pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
-
-            if (Physics.SphereCast(new Ray(Vector3.up, transform.position), currentRadius, out RaycastHit hit, 0.1f, layerMask)) {
-                Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
-            };
-
-            timer += Time.deltaTime * currentSpeed;
-            yield return null;
         }
-        pulseTransform.localScale = Vector3.one;
-    }
-
-    void OnTriggerEnter(Collider other)
-    {
-        Vector3 collisionPos = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-        Instantiate(enemyPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
     }
 }
