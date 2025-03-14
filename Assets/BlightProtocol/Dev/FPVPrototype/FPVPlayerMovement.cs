@@ -40,6 +40,7 @@ public class FPVPlayerMovement : MonoBehaviour
     }
 
     private void FixedUpdate() {
+        if (FPVPlayerCam.Instance.isLocked) return;
         MovePlayer();
         SpeedControl();
 

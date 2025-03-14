@@ -203,6 +203,9 @@ public class ControlZoneManager : MonoBehaviour
                     //Set Audio states
                     FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
                     movingSFX.EventInstance.setPaused(true);
+
+                    //Override Speed Control
+                    HarvesterSpeedControl.Instance.OverrideSpeedStep(0);
                 }
                 else
                 {
@@ -390,14 +393,23 @@ public class ControlZoneManager : MonoBehaviour
 
     public void SetMoveSpeed(float newSpeed)
     {
+        if (m_ZoneState == ZoneState.DIED || m_ZoneState == ZoneState.END_HARVESTING) return;
         moveSpeed = newSpeed;
         if (moveSpeed > 0.1f)
         {
-            if (m_ZoneState != ZoneState.DIED && m_ZoneState != ZoneState.HARVESTING)
+            if (m_ZoneState == ZoneState.HARVESTING)
+            {
+                m_ZoneState = ZoneState.END_HARVESTING;
+            }
+            else
             {
                 m_ZoneState = ZoneState.MOVING;
-                changedState.Invoke(m_ZoneState);
             }
+            changedState.Invoke(m_ZoneState);
+        }
+        else {
+            m_ZoneState = ZoneState.IDLE;
+            changedState.Invoke(m_ZoneState);
         }
     }
 

@@ -26,10 +26,12 @@ public class FPVInteractionHandler : MonoBehaviour
 
     void Update()
     {
+        interactKeyPressed = false;
         if (Input.GetKeyDown(interactKey))
         {
             interactKeyPressed = true;
         }
+        
     }
 
     void FixedUpdate()
@@ -67,9 +69,9 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         switch (hit.collider.tag)
         {
-            case "Map":
+            /*case "Map":
                 hit.collider.GetComponent<FPVMap>().SetTarget(hit);
-                break;
+                break;*/
 
             default:
                 if (lastHoveredObject != null)

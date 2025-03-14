@@ -40,7 +40,7 @@ public class Radar : MonoBehaviour
 
     private List<Collider> colliderList = new List<Collider>();
 
-    void Start()
+    void Awake()
     {
         if (Instance != null && Instance != this)
         {
