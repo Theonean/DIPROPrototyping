@@ -91,16 +91,16 @@ public class WaveManager : MonoBehaviour
         {
             case ZoneState.IDLE:
                 waveMode = WaveMode.IDLE;
-                Debug.LogWarning("Harvester is idle, no enemies will spawn");
+                Logger.Log("Harvester is idle, no enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
             case ZoneState.HARVESTING:
                 waveMode = WaveMode.CONTINUOUS_ATTACK;
                 ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
-                Debug.LogWarning("Harvester is harvesting, enemies will spawn");
+                Logger.Log("Harvester is harvesting, enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
             case ZoneState.MOVING:
                 waveMode = WaveMode.AMBUSH_POSSIBLE;
-                Debug.LogWarning("Harvester is moving, ambushes are possible");
+                Logger.Log("Harvester is moving, ambushes are possible", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
         }
     }
@@ -109,7 +109,7 @@ public class WaveManager : MonoBehaviour
     void TriggerRandomAmbush()
     {
         SurpriseAttackTypes attackType = (SurpriseAttackTypes)UnityEngine.Random.Range(0, Enum.GetValues(typeof(SurpriseAttackTypes)).Length);
-        Debug.LogWarning("Ambush: " + attackType);
+        Logger.Log("Triggering ambush: " + attackType, LogLevel.INFO, LogType.WAVEMANAGEMENT);
 
         // Call the appropriate ambush method
         switch (attackType)

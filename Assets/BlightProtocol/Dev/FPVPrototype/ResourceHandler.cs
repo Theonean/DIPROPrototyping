@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Security;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,13 +34,16 @@ public class ResourceHandler : MonoBehaviour
             Instance = this;
             InitializeResources();
         }
-        Debug.LogError("Tie all usages of the fuel resource to the fuelResource variable to maintain SO flexibility");
+        
+        Logger.Log("ResourceHandler initialized", LogLevel.INFO, LogType.RESOURCE);
+        Logger.Log("Tie all usages of the fuel resource to the fuelResource variable to maintain SO flexibility", LogLevel.FORCE, LogType.RESOURCE);
     }
 
     void Start()
     {
         UpdateResourceDisplay();
     }
+
     private void InitializeResources()
     {
         resourceDictionary.Clear();
@@ -56,7 +57,7 @@ public class ResourceHandler : MonoBehaviour
                 }
                 else
                 {
-                    Debug.LogWarning("Duplicate resource detected: " + resource.resourceData.displayName);
+                    Logger.Log("Duplicate resource detected: " + resource.resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
                 }
             }
         }
@@ -70,7 +71,7 @@ public class ResourceHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Resource not found: " + resourceData.displayName);
+            Logger.Log("Resource not found: " + resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
             return null;
         }
     }
@@ -81,7 +82,7 @@ public class ResourceHandler : MonoBehaviour
         {
             if (resource.amount >= resource.maxCapacity)
             {
-                Debug.LogWarning(resourceData.displayName + " is full!");
+                Logger.Log(resourceData.displayName + " is full!", LogLevel.WARNING, LogType.RESOURCE);
             }
             else
             {
@@ -91,7 +92,7 @@ public class ResourceHandler : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Resource not found: " + resourceData.displayName);
+            Logger.Log("Resource not found: " + resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
         }
     }
 
@@ -114,12 +115,12 @@ public class ResourceHandler : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning(resourceData.displayName + " is empty or insufficient!");
+                Logger.Log(resourceData.displayName + " is empty or insufficient!", LogLevel.WARNING, LogType.RESOURCE);
             }
         }
         else
         {
-            Debug.LogWarning("Resource not found: " + resourceData.displayName);
+            Logger.Log("Resource not found: " + resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
         }
     }
 
