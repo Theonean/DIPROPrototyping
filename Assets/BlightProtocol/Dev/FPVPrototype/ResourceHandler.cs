@@ -21,6 +21,7 @@ public class ResourceHandler : MonoBehaviour
     private Dictionary<ResourceData, Resource> resourceDictionary = new Dictionary<ResourceData, Resource>();
 
     public static Resource fuelResource;
+    // Add other Resources here when new ones are created
 
     void Awake()
     {
