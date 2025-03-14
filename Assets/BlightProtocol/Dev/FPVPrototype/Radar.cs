@@ -5,23 +5,44 @@ using UnityEngine;
 public class Radar : MonoBehaviour
 {
     public static Radar Instance { get; private set; }
+    [Header("Rotating Radar")]
     public float rotationSpeed = 180f;
     public float radarDistance = 150f;
+    [Header("Raycast")]
     public LayerMask layerMask;
+    [Header("Ping")]
     public GameObject enemyPing;
     public GameObject resourcePointPing;
 
     [Header("Pulse")]
     public float pulseCost = 100f;
     public ResourceData pulseCostResource;
+    private MapRevealer mapRevealer;
+
+    // Collider & Sprite
     public Transform pulseTransform;
     private SpriteRenderer pulseSpriteRenderer;
-    public float pulseStartRadius = 10f;
-    public float pulseRangeFactor = 1f;
-    public AnimationCurve pulseStrengthCurve;
-    public float pulseSpeedFactor = 1f;
-    public AnimationCurve pulseSpeedCurve;
+
+    // Duration
     public float pulseDuration = 1.0f;
+
+    [Header("Pulse Range")]
+    // Range
+    public float pulseRange = 500f;
+    public float revealRangeFactor = 1f;
+    public float pulseStartRange = 10f;
+    public float revealStartRangeFactor = 1f;
+    
+
+    [Header("Pulse Strength")]
+    // Strength
+    public AnimationCurve pulseStrengthCurve;
+
+    [Header("Pulse Speed")]
+    // Speed
+    public float pulseSpeed = 100f;
+    public float revealSpeedFactor = 1f;
+    public AnimationCurve pulseSpeedCurve;
 
     private List<Collider> colliderList = new List<Collider>();
 
@@ -37,29 +58,31 @@ public class Radar : MonoBehaviour
         }
 
         pulseSpriteRenderer = pulseTransform.GetComponent<SpriteRenderer>();
+        mapRevealer = GetComponentInChildren<MapRevealer>();
+        InitiateMapRevealer();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void InitiateMapRevealer()
     {
-
+        mapRevealer.pulseStrengthCurve = pulseStrengthCurve;
+        mapRevealer.pulseSpeedCurve = pulseSpeedCurve;
     }
 
-    public void Pulse(float range, float speed)
+    public void Pulse()
     {
         if (ResourceHandler.Instance.CheckResource(pulseCostResource) > pulseCost)
         {
             ResourceHandler.Instance.ConsumeResource(pulseCostResource, pulseCost, false, 1f);
-            StartCoroutine(PulseEffect(range, speed));
+            StartCoroutine(PulseEffect());
+            mapRevealer.Pulse(pulseStartRange * revealStartRangeFactor, pulseRange * revealRangeFactor, pulseSpeed * revealSpeedFactor, pulseDuration);
         }
-        else {
+        else
+        {
             Debug.LogWarning("Not enough Resources!");
         }
-
-
     }
 
-    private IEnumerator PulseEffect(float range, float speed)
+    private IEnumerator PulseEffect()
     {
         float timer = 0f;
         float linearTimer = 0f;
@@ -68,9 +91,9 @@ public class Radar : MonoBehaviour
         {
             linearTimer += Time.deltaTime;
 
-            float currentRadius = Mathf.Lerp(pulseStartRadius, range * pulseRangeFactor, timer / pulseDuration);
+            float currentRadius = Mathf.Lerp(pulseStartRange, pulseRange, timer / pulseDuration);
             float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / pulseDuration);
-            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / pulseDuration) * speed * pulseSpeedFactor;
+            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / pulseDuration) * pulseSpeed;
 
             pulseTransform.localScale = Vector3.one * currentRadius;
             pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
@@ -98,7 +121,7 @@ public class Radar : MonoBehaviour
                 break;
 
             case "ResourcePoint":
-            Instantiate(resourcePointPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
+                Instantiate(resourcePointPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
                 break;
         }
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class MapRevealer : MonoBehaviour
 {
-    public static MapRevealer Instance {get; private set;}
     private Vector2 coords;
     public MapMask mapMask;
 
@@ -17,24 +16,10 @@ public class MapRevealer : MonoBehaviour
     public float revealStrength = 1f;
 
     [Header("Pulse")]
-    public float pulseStartRadius = 10f;
-    public float pulseRange = 500f;
     public float pulseStrength = 1f;
     public AnimationCurve pulseStrengthCurve;
-    public float pulseSpeed = 100f;
     public AnimationCurve pulseSpeedCurve;   
-    public float pulseDuration = 1.0f;
 
-    void Start() {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-        }
-        else
-        {
-            Instance = this;
-        }
-    }
     void Update()
     {
         GetMapCoordinates();
@@ -51,26 +36,25 @@ public class MapRevealer : MonoBehaviour
         }
     }
 
-    public void Pulse()
+    public void Pulse(float startRange, float range, float speed, float duration)
     {
         GetMapCoordinates();
-        Radar.Instance.Pulse(pulseRange, pulseSpeed);
-        StartCoroutine(PulseEffect(coords));
+        StartCoroutine(PulseEffect(coords, startRange, range, speed, duration));
     }
 
-    private IEnumerator PulseEffect(Vector2 coords)
+    private IEnumerator PulseEffect(Vector2 coords, float startRange, float range, float speed, float duration)
     {
 
         float timer = 0f;
         float linearTimer = 0f;
 
-        while (timer < pulseDuration)
+        while (timer < duration)
         {
             linearTimer += Time.deltaTime;
 
-            float currentRadius = Mathf.Lerp(pulseStartRadius, pulseRange, timer / pulseDuration);
-            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer/pulseDuration) * pulseStrength;
-            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer/pulseDuration) * pulseSpeed;
+            float currentRadius = Mathf.Lerp(startRange, range, timer / duration);
+            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer/duration) * pulseStrength;
+            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer/duration) * speed;
 
             mapMask.PaintOnMask(coords, currentRadius, currentStrength);
 

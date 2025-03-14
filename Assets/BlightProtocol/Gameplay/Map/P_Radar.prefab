@@ -134,8 +134,6 @@ MonoBehaviour:
     m_Bits: 2097152
   revealRadius: 5
   revealStrength: 1
-  pulseStartRadius: 1
-  pulseRange: 25
   pulseStrength: 50
   pulseStrengthCurve:
     serializedVersion: 2
@@ -170,7 +168,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  pulseSpeed: 1
   pulseSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -195,7 +192,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  pulseDuration: 1
 --- !u!1 &5735166713790048708
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,8 +252,11 @@ MonoBehaviour:
   pulseCost: 100
   pulseCostResource: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
   pulseTransform: {fileID: 6073445025465992230}
-  pulseStartRadius: 1
-  pulseRangeFactor: 8
+  pulseDuration: 1
+  pulseRange: 200
+  revealRangeFactor: 0.12
+  pulseStartRange: 10
+  revealStartRangeFactor: 0.2
   pulseStrengthCurve:
     serializedVersion: 2
     m_Curve:
@@ -291,7 +290,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  pulseSpeedFactor: 1
+  pulseSpeed: 100
+  revealSpeedFactor: 1
   pulseSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -316,7 +316,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  pulseDuration: 1
 --- !u!54 &1542474002742999619
 Rigidbody:
   m_ObjectHideFlags: 0

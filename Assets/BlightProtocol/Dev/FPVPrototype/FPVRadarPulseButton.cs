@@ -15,7 +15,7 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
 
     public void OnInteract()
     {
-        MapRevealer.Instance.Pulse();
+        Radar.Instance.Pulse();
     }
 
     public void OnHover() {
