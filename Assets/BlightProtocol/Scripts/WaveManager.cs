@@ -49,8 +49,10 @@ public class WaveManager : MonoBehaviour
             m_InactiveSpawners.Enqueue(spawner);
         }
 
-        ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
-        zoneManager.changedState.AddListener(ManageWave);
+
+        //ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
+        //zoneManager.changedState.AddListener(ManageWave);
+        Debug.LogWarning("Wave Manager is decoupled from Control Zone Manager, no enemies will be spawning any time soon, buddy");
     }
 
     void ManageWave(ZoneState zoneState)
