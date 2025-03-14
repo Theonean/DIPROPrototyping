@@ -51,7 +51,6 @@ public class WaveManager : MonoBehaviour
         }
 
         ControlZoneManager.Instance.changedState.AddListener(HarvesterChangedState);
-        Debug.LogWarning("Wave Manager is decoupled from Control Zone Manager, no enemies will be spawning any time soon, buddy");
 
         ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
     }
@@ -85,6 +84,8 @@ public class WaveManager : MonoBehaviour
         }
 
         harvesterState = zoneState;
+        float? numFuel = ResourceHandler.Instance.CheckResource(ResourceHandler.Instance.fuelResource);
+        difficultyLevel = numFuel.HasValue ? Mathf.FloorToInt(numFuel.Value / 100) : 0;
 
         switch (harvesterState)
         {
