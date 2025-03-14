@@ -20,6 +20,8 @@ public class ResourceHandler : MonoBehaviour
     [SerializeField] private List<Resource> resources = new List<Resource>(); // Editable in Inspector
     private Dictionary<ResourceData, Resource> resourceDictionary = new Dictionary<ResourceData, Resource>();
 
+    public static Resource fuelResource;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,6 +33,7 @@ public class ResourceHandler : MonoBehaviour
             Instance = this;
             InitializeResources();
         }
+        Debug.LogError("Tie all usages of the fuel resource to the fuelResource variable to maintain SO flexibility");
     }
 
     void Start()

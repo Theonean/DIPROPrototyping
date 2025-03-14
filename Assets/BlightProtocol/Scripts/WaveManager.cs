@@ -2,20 +2,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
-[System.Serializable]
+[Serializable]
 public class DifficultySettings
 {
     public float spawnRadius = 50f;
     public int baseEnemyCount = 20;
-    public float ambushOffsetFactor = 8f;
     public int ambushEnemyMultiplier = 1;
     public float ambushRangeScale = 60f;
-    [Range(-1f, 1f)]
-    [Tooltip("by how much the ambush timeline will be offset from the center of the timeline, normalized time")]
-    public float ambushOffsetFromCenterOfTimeline = 0f;
+    public Vector2 ambushWaveDelayRange = new Vector2(60f, 90f);
 }
 
 public class WaveManager : MonoBehaviour
@@ -27,19 +23,24 @@ public class WaveManager : MonoBehaviour
         SMALL_TRIPPLE_WAVE
     }
 
+    enum WaveMode
+    {
+        IDLE, //when harvester is standing still
+        AMBUSH_POSSIBLE, //When harvester is moving
+        CONTINUOUS_ATTACK //when harvester is collecting resources (creating a lot of vibration)
+    }
+
     [Header("Wave Manager Settings")]
-    public GameObject controlZone;
-    public Vector2 MinMaxAmbushesPerMove;
     public EnemySpawner[] spawners;
 
     [Header("Difficulty Settings")]
     public DifficultySettings difficultySettings;
 
     private Queue<EnemySpawner> m_InactiveSpawners = new Queue<EnemySpawner>();
-    private Queue<SurpriseAttackTypes> m_SurpriseAttacksQueuedThisMove = new Queue<SurpriseAttackTypes>();
-    private Queue<float> m_ambushTimes = new Queue<float>();
-    private float m_AmbushesThisMove = 0;
-    private int m_wavesSurvived = 0;
+    private ZoneState harvesterState = ZoneState.IDLE;
+    private WaveMode waveMode = WaveMode.IDLE;
+    private int difficultyLevel = 5;
+    private float ambushCounter = 0f;
 
     private void Awake()
     {
@@ -49,89 +50,80 @@ public class WaveManager : MonoBehaviour
             m_InactiveSpawners.Enqueue(spawner);
         }
 
-
-        //ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
-        //zoneManager.changedState.AddListener(ManageWave);
+        ControlZoneManager.Instance.changedState.AddListener(HarvesterChangedState);
         Debug.LogWarning("Wave Manager is decoupled from Control Zone Manager, no enemies will be spawning any time soon, buddy");
+
+        ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
     }
 
-    void ManageWave(ZoneState zoneState)
+    void Update()
     {
-        switch (zoneState)
+        switch (waveMode)
         {
-            case ZoneState.MOVING:
-                m_wavesSurvived++;
-                FrankenGameManager.Instance.IncrementWavesSurvived();
-                DeactivateSpawners();
-                PrepareAmbushes();
-                StartCoroutine(TriggerAmbushes());  // Coroutine to trigger ambushes over time
+            case WaveMode.AMBUSH_POSSIBLE:
+                ambushCounter -= Time.deltaTime;
+                if (ambushCounter <= 0f)
+                {
+                    ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
+                    TriggerRandomAmbush();
+                }
+                break;
+        }
+    }
+
+    void HarvesterChangedState(ZoneState zoneState)
+    {
+        if(harvesterState == zoneState)
+        {
+            return;
+        }
+
+        //When switching away from harvesting, stop continuous attack
+        if(harvesterState == ZoneState.HARVESTING)
+        {
+            DeactivateSpawners();
+        }
+
+        harvesterState = zoneState;
+
+        switch (harvesterState)
+        {
+            case ZoneState.IDLE:
+                waveMode = WaveMode.IDLE;
+                Debug.LogWarning("Harvester is idle, no enemies will spawn");
                 break;
             case ZoneState.HARVESTING:
-                ActivateSpawners(Mathf.Clamp(2 + m_wavesSurvived / 4, 1, spawners.Length));
+                waveMode = WaveMode.CONTINUOUS_ATTACK;
+                ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
+                Debug.LogWarning("Harvester is harvesting, enemies will spawn");
+                break;
+            case ZoneState.MOVING:
+                waveMode = WaveMode.AMBUSH_POSSIBLE;
+                Debug.LogWarning("Harvester is moving, ambushes are possible");
                 break;
         }
     }
 
-    void PrepareAmbushes()
+
+    void TriggerRandomAmbush()
     {
-        m_AmbushesThisMove = Mathf.FloorToInt(MinMaxAmbushesPerMove.x + m_wavesSurvived / 4);
-        m_SurpriseAttacksQueuedThisMove.Clear();
+        SurpriseAttackTypes attackType = (SurpriseAttackTypes)UnityEngine.Random.Range(0, Enum.GetValues(typeof(SurpriseAttackTypes)).Length);
+        Debug.LogWarning("Ambush: " + attackType);
 
-        for (int i = 0; i < m_AmbushesThisMove; i++)
+        // Call the appropriate ambush method
+        switch (attackType)
         {
-            m_SurpriseAttacksQueuedThisMove.Enqueue((SurpriseAttackTypes)UnityEngine.Random.Range(0, Enum.GetNames(typeof(SurpriseAttackTypes)).Length));
+            case SurpriseAttackTypes.AMBUSH_CIRCLE:
+                StartCoroutine(AMBUSH_CIRCLE());
+                break;
+            case SurpriseAttackTypes.BIG_SINGLE_WAVE:
+                StartCoroutine(BIG_SINGLE_WAVE());
+                break;
+            case SurpriseAttackTypes.SMALL_TRIPPLE_WAVE:
+                StartCoroutine(SMALL_TRIPPLE_WAVE());
+                break;
         }
 
-        float totalTravelTime = controlZone.GetComponent<ControlZoneManager>().travelTimeLeft;
-        float ambushOffset = totalTravelTime / difficultySettings.ambushOffsetFactor;  // Ensures ambush doesn't start right away
-        float ambushPossibleTimeFrame = totalTravelTime - ambushOffset * 2;  // Exclude beginning and end times for ambushes
-
-        // Handle case where there is only 1 ambush
-        m_ambushTimes.Clear();
-        if (m_AmbushesThisMove == 1)
-        {
-            // Put the single ambush in the middle of the ambush window
-            float ambushTime = ambushOffset + difficultySettings.ambushOffsetFromCenterOfTimeline * totalTravelTime + ambushPossibleTimeFrame / 2;
-            m_ambushTimes.Enqueue(ambushTime);
-        }
-        else
-        {
-            // Calculate evenly spaced ambushes over the possible timeframe for more than 1 ambush
-            for (int i = 0; i < m_AmbushesThisMove; i++)
-            {
-                float normalizedPos = (float)i / (m_AmbushesThisMove - 1);  // Normalized between 0 and 1
-                float ambushTime = ambushOffset + difficultySettings.ambushOffsetFromCenterOfTimeline * totalTravelTime + normalizedPos * ambushPossibleTimeFrame;  // Spread over full ambush timeframe
-                m_ambushTimes.Enqueue(ambushTime);
-            }
-        }
-
-        Debug.Log($"Ambushes This Move: {m_AmbushesThisMove}, Ambush Times: {string.Join(", ", m_ambushTimes)}, Total Travel Time: {totalTravelTime}");
-    }
-
-
-    IEnumerator TriggerAmbushes()
-    {
-        while (m_ambushTimes.Count > 0 && m_SurpriseAttacksQueuedThisMove.Count > 0)
-        {
-            float ambushTime = m_ambushTimes.Dequeue();
-            SurpriseAttackTypes attackType = m_SurpriseAttacksQueuedThisMove.Dequeue();
-
-            yield return new WaitForSeconds(ambushTime);  // Wait for the appropriate ambush time
-
-            // Call the appropriate ambush method
-            switch (attackType)
-            {
-                case SurpriseAttackTypes.AMBUSH_CIRCLE:
-                    StartCoroutine(AMBUSH_CIRCLE());
-                    break;
-                case SurpriseAttackTypes.BIG_SINGLE_WAVE:
-                    StartCoroutine(BIG_SINGLE_WAVE());
-                    break;
-                case SurpriseAttackTypes.SMALL_TRIPPLE_WAVE:
-                    StartCoroutine(SMALL_TRIPPLE_WAVE());
-                    break;
-            }
-        }
     }
 
     void DeactivateSpawners()
@@ -148,15 +140,15 @@ public class WaveManager : MonoBehaviour
         for (int i = 0; i < numberOfSpawners; i++)
         {
             EnemySpawner spawner = m_InactiveSpawners.Dequeue();
-            spawner.StartWave(m_wavesSurvived);
+            spawner.StartWave(difficultyLevel);
         }
     }
 
     IEnumerator AMBUSH_CIRCLE()
     {
-        Vector3 controlZonePosition = controlZone.transform.position;
+        Vector3 controlZonePosition = ControlZoneManager.Instance.transform.position;
         float radius = difficultySettings.spawnRadius;
-        int enemyCount = difficultySettings.baseEnemyCount + m_wavesSurvived * difficultySettings.ambushEnemyMultiplier;
+        int enemyCount = difficultySettings.baseEnemyCount + difficultyLevel * difficultySettings.ambushEnemyMultiplier;
 
         for (int i = 0; i < enemyCount; i++)
         {
@@ -173,9 +165,9 @@ public class WaveManager : MonoBehaviour
         direction.y = 0f;
         direction.Normalize();
         direction *= difficultySettings.ambushRangeScale;
-        Vector3 spawnPosition = controlZone.transform.position + direction;
+        Vector3 spawnPosition = ControlZoneManager.Instance.transform.position + direction;
 
-        int enemyCount = difficultySettings.baseEnemyCount + m_wavesSurvived * difficultySettings.ambushEnemyMultiplier;
+        int enemyCount = difficultySettings.baseEnemyCount + difficultyLevel * difficultySettings.ambushEnemyMultiplier;
         int iX = Mathf.CeilToInt(Mathf.Sqrt(enemyCount));
         int iZ = Mathf.CeilToInt(enemyCount / (float)iX);
 
@@ -192,7 +184,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator SMALL_TRIPPLE_WAVE()
     {
-        int enemyCount = difficultySettings.baseEnemyCount + m_wavesSurvived * difficultySettings.ambushEnemyMultiplier;
+        int enemyCount = difficultySettings.baseEnemyCount + difficultyLevel * difficultySettings.ambushEnemyMultiplier;
         int iI = Mathf.CeilToInt(enemyCount / 3f);
         int iX = Mathf.CeilToInt(Mathf.Sqrt(iI));
         int iZ = Mathf.CeilToInt(iI / (float)iX);
@@ -203,7 +195,7 @@ public class WaveManager : MonoBehaviour
             direction.y = 0f;
             direction.Normalize();
             direction *= difficultySettings.ambushRangeScale;
-            Vector3 spawnPosition = controlZone.transform.position + direction;
+            Vector3 spawnPosition = ControlZoneManager.Instance.transform.position + direction;
 
             for (int x = 0; x < iX; x++)
             {
