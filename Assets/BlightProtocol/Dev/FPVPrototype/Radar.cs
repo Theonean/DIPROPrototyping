@@ -15,8 +15,7 @@ public class Radar : MonoBehaviour
     public GameObject resourcePointPing;
 
     [Header("Pulse")]
-    public float pulseCost = 100f;
-    public ResourceData pulseCostResource;
+    public RadarData radarData;
     private MapRevealer mapRevealer;
 
     // Collider & Sprite
@@ -24,13 +23,9 @@ public class Radar : MonoBehaviour
     private SpriteRenderer pulseSpriteRenderer;
 
     // Duration
-    public float pulseDuration = 1.0f;
 
     [Header("Pulse Range")]
-    // Range
-    public float pulseRange = 500f;
     public float revealRangeFactor = 1f;
-    public float pulseStartRange = 10f;
     public float revealStartRangeFactor = 1f;
     
 
@@ -40,7 +35,6 @@ public class Radar : MonoBehaviour
 
     [Header("Pulse Speed")]
     // Speed
-    public float pulseSpeed = 100f;
     public float revealSpeedFactor = 1f;
     public AnimationCurve pulseSpeedCurve;
 
@@ -70,11 +64,11 @@ public class Radar : MonoBehaviour
 
     public void Pulse()
     {
-        if (ResourceHandler.Instance.CheckResource(pulseCostResource) > pulseCost)
+        if (ResourceHandler.Instance.CheckResource(radarData.pulseCostResource) > radarData.pulseCost)
         {
-            ResourceHandler.Instance.ConsumeResource(pulseCostResource, pulseCost, false, 1f);
+            ResourceHandler.Instance.ConsumeResource(radarData.pulseCostResource, radarData.pulseCost, false, 1f);
             StartCoroutine(PulseEffect());
-            mapRevealer.Pulse(pulseStartRange * revealStartRangeFactor, pulseRange * revealRangeFactor, pulseSpeed * revealSpeedFactor, pulseDuration);
+            mapRevealer.Pulse(radarData.pulseStartRange * revealStartRangeFactor, radarData.pulseRange * revealRangeFactor, radarData.pulseSpeed * revealSpeedFactor, radarData.pulseDuration);
         }
         else
         {
@@ -87,13 +81,13 @@ public class Radar : MonoBehaviour
         float timer = 0f;
         float linearTimer = 0f;
 
-        while (timer < pulseDuration)
+        while (timer < radarData.pulseDuration)
         {
             linearTimer += Time.deltaTime;
 
-            float currentRadius = Mathf.Lerp(pulseStartRange, pulseRange, timer / pulseDuration);
-            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / pulseDuration);
-            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / pulseDuration) * pulseSpeed;
+            float currentRadius = Mathf.Lerp(radarData.pulseStartRange, radarData.pulseRange, timer / radarData.pulseDuration);
+            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / radarData.pulseDuration);
+            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / radarData.pulseDuration) * radarData.pulseSpeed;
 
             pulseTransform.localScale = Vector3.one * currentRadius;
             pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
