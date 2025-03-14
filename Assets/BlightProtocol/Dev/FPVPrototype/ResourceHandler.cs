@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Security;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,6 +9,7 @@ using UnityEngine.UI;
 public class Resource
 {
     public ResourceData resourceData;
+    public string devDescription;
     public float amount;
     public float maxCapacity = 10000;
     public Slider displaySlider;
@@ -20,7 +22,7 @@ public class ResourceHandler : MonoBehaviour
     [SerializeField] private List<Resource> resources = new List<Resource>(); // Editable in Inspector
     private Dictionary<ResourceData, Resource> resourceDictionary = new Dictionary<ResourceData, Resource>();
 
-    public static Resource fuelResource;
+    public ResourceData fuelResource;
     // Add other Resources here when new ones are created
 
     void Awake()
@@ -60,16 +62,18 @@ public class ResourceHandler : MonoBehaviour
         }
     }
 
-    public float? CheckResource(ResourceData resourceData) {
-    if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
+    public float? CheckResource(ResourceData resourceData)
     {
-        return resource.amount;
+        if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
+        {
+            return resource.amount;
+        }
+        else
+        {
+            Debug.LogWarning("Resource not found: " + resourceData.displayName);
+            return null;
+        }
     }
-    else {
-        Debug.LogWarning("Resource not found: " + resourceData.displayName);
-        return null;
-    }
-}
 
     public void CollectResource(ResourceData resourceData, float amount)
     {

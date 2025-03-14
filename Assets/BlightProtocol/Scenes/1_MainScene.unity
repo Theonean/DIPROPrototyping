@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.48119086, g: 0.9329817, b: 0.87804735, a: 1}
+  m_IndirectSpecularColor: {r: 0.48119086, g: 0.9329818, b: 0.87804747, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1078,7 +1078,7 @@ PrefabInstance:
     - target: {fileID: 786348656890932667, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2582
+      value: 2585
       objectReference: {fileID: 0}
     - target: {fileID: 1059832739065544229, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1103,7 +1103,7 @@ PrefabInstance:
     - target: {fileID: 1290131928015314373, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 5756
+      value: 5759
       objectReference: {fileID: 0}
     - target: {fileID: 1790997134067273522, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1138,7 +1138,7 @@ PrefabInstance:
     - target: {fileID: 3564076937926530353, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 6455
+      value: 6458
       objectReference: {fileID: 0}
     - target: {fileID: 3717656643609148618, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1153,7 +1153,7 @@ PrefabInstance:
     - target: {fileID: 3745972607527258004, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2582
+      value: 2585
       objectReference: {fileID: 0}
     - target: {fileID: 4648915008057216363, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1163,7 +1163,7 @@ PrefabInstance:
     - target: {fileID: 4648915008057216363, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2631
+      value: 2634
       objectReference: {fileID: 0}
     - target: {fileID: 5121569132450173689, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1198,7 +1198,7 @@ PrefabInstance:
     - target: {fileID: 5940332540535800029, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 4205
+      value: 4208
       objectReference: {fileID: 0}
     - target: {fileID: 6702437237412597372, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1233,7 +1233,7 @@ PrefabInstance:
     - target: {fileID: 7633121540883013737, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 6276
+      value: 6279
       objectReference: {fileID: 0}
     - target: {fileID: 8038706047492797719, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1290,6 +1290,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8654219334629649704, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: fuelResource.resourceData
+      value: 
+      objectReference: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563,
+        type: 2}
     - target: {fileID: 8872640711463356057, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_Mesh
@@ -1298,7 +1304,7 @@ PrefabInstance:
     - target: {fileID: 8872640711463356057, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 2991
+      value: 2994
       objectReference: {fileID: 0}
     - target: {fileID: 9161295443071173736, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -9150,8 +9156,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36891224fbc4ca242a57d240f1887c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  controlZone: {fileID: 2095316635}
-  MinMaxAmbushesPerMove: {x: 1, y: 3}
   spawners:
   - {fileID: 461090786}
   - {fileID: 475637077}
@@ -9164,10 +9168,9 @@ MonoBehaviour:
   difficultySettings:
     spawnRadius: 70
     baseEnemyCount: 1
-    ambushOffsetFactor: 4
     ambushEnemyMultiplier: 1
     ambushRangeScale: 70
-    ambushOffsetFromCenterOfTimeline: -0.2
+    ambushWaveDelayRange: {x: 60, y: 90}
 --- !u!4 &2134228161
 Transform:
   m_ObjectHideFlags: 0

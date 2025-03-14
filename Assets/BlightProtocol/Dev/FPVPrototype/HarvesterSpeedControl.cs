@@ -20,7 +20,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     public float maxSpeed = 50f;
     public Slider speedIndicator;
     public Image speedIndicatorFill;
-    public ResourceData fuelResource;
+    private ResourceData fuelResource;
 
     private int currentSpeedStepIndex = 0;
     private float displaySpeed = 0f; // Smoothed speed for UI
@@ -39,6 +39,8 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     void Start()
     {
+        fuelResource = ResourceHandler.Instance.fuelResource;
+        
         // Initialize display speed to match the first step
         displaySpeed = speedSteps[currentSpeedStepIndex].speed;
         SetSpeed();
