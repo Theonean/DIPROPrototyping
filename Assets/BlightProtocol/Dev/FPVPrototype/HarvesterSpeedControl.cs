@@ -83,7 +83,7 @@ public class HarvesterSpeedControl : MonoBehaviour
         if (index >= 0 && index < speedSteps.Count)
         {
             currentSpeedStepIndex = index;
-            SetSpeed();
+            UpdateSpeedIndicator();
         }
     }
 
