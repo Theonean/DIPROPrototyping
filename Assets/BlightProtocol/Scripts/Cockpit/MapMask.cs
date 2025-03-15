@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MapMask : MonoBehaviour
@@ -29,24 +27,16 @@ public class MapMask : MonoBehaviour
         maskMaterial.SetFloat("_Strength", strength);
         maskMaterial.SetFloat("_Size", range);
 
-        // Create a temporary texture to store the existing texture
         RenderTexture temp = RenderTexture.GetTemporary(maskTex.width, maskTex.height, 0, RenderTextureFormat.ARGBFloat);
 
         // Copy the current mask texture into the temporary texture
         Graphics.Blit(maskTex, temp);
 
-        // Set the temporary texture as input to the shader
         maskMaterial.SetTexture("_PreviousMask", temp);
 
         // Now apply the new paint on top while preserving the existing texture
         Graphics.Blit(temp, maskTex, maskMaterial);
 
-        // Release the temporary texture
         RenderTexture.ReleaseTemporary(temp);
     }
-
-    
-
-
-
 }

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "EnemyData", menuName = "EnemyData", order = 0)]
 public class EnemyData : ScriptableObject

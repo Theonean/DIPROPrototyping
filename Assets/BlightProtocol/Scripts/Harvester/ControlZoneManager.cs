@@ -1,14 +1,10 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using System.Linq;
-using System;
 using UnityEngine.VFX;
 using Unity.AI.Navigation;
-using UnityEngine.ProBuilder.Shapes;
 using FMOD.Studio;
 using FMODUnity;
 

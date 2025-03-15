@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "RadarData", menuName = "RadarData", order = 0)]
 public class RadarData : ScriptableObject

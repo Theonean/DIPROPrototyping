@@ -1,7 +1,4 @@
 using TMPro;
-using Unity.Burst.Intrinsics;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class CameraTracker : MonoBehaviour

@@ -1,6 +1,5 @@
 using System.Collections;
 using TMPro;
-using Unity.AI.Navigation;
 using UnityEngine;
 
 public class FrankenGameManager : MonoBehaviour

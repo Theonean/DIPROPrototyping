@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RadarPulseButton : MonoBehaviour, IFPVInteractable
+public class HarvesterStartButton : MonoBehaviour, IFPVInteractable
 {
+    public bool increaseSpeed = true;
     public bool IsCurrentlyInteractable {get; set;} = true;
     public string lookAtText = "E"; // Backing field for Inspector
 
@@ -15,7 +14,7 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
 
     public void OnInteract()
     {
-        Radar.Instance.Pulse();
+        HarvesterSpeedControl.Instance.AdjustSpeed(increaseSpeed);
     }
 
     public void OnHover() {

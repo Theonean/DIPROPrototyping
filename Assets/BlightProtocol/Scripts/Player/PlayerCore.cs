@@ -1,6 +1,5 @@
 using System.Collections;
 using FMOD.Studio;
-using FMODUnity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
