@@ -272,10 +272,6 @@ public class ControlZoneManager : MonoBehaviour
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;
 
-        //Move Navmesh transform forward by moving it along the path
-        Debug.LogError("Fix this");
-        //navMeshSurface.transform.position = new Vector3(0, 0, 0);// pathPositionsIndex * ProceduralTileGenerator.Instance.tileSize);
-
         // set resource point color
         SetMeshColoursToRegion();
     }
@@ -357,21 +353,6 @@ public class ControlZoneManager : MonoBehaviour
             yield return null;
         }
         Destroy(gameObject);
-    }
-
-    //Turn material red and quickly fade back to normal
-    IEnumerator TakeDamageEffect()
-    {
-        Renderer renderer = GetComponent<Renderer>();
-        renderer.material.color = Color.red;
-        float t = 0f;
-        while (t < 0.3f)
-        {
-            t += Time.deltaTime;
-            renderer.material.color = Color.Lerp(Color.red, m_OriginalColor, t);
-            yield return null;
-        }
-        renderer.material.color = m_OriginalColor;
     }
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
