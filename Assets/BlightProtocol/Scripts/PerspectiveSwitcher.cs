@@ -1,18 +1,135 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+public enum CameraPerspective
+{
+    DRONE,
+    FPV,
+    SWITCHING
+}
 
 public class PerspectiveSwitcher : MonoBehaviour
 {
+    public static PerspectiveSwitcher Instance { get; private set; }
+    [SerializeField] private float animationDuration = 1f;
+    [SerializeField] private AnimationCurve animationCurve;
+    [SerializeField] private Camera perspectiveSwitchCamera;
+    [SerializeField] private Camera droneCamera;
+    [SerializeField] private Camera fpCamera;
+    [SerializeField] private GameObject fpController;
+    [SerializeField] private GameObject droneCanvas;
+    [SerializeField] private LoadingBayAnimator loadingBayAnimator;
+    private CameraPerspective currentPerspective = CameraPerspective.DRONE;
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        SetTopDownPerspective();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.E) && currentPerspective == CameraPerspective.DRONE && loadingBayAnimator.isPlayerNear)
+        {
+            SetPerspective(CameraPerspective.SWITCHING);
+        }
+    }
+
+    public void SetPerspective(CameraPerspective perspective)
+    {
+        if (currentPerspective == perspective)
+        {
+            return;
+        }
+
+        CameraPerspective fromPerspective = currentPerspective;
+        currentPerspective = perspective;
+
+        switch (perspective)
+        {
+            case CameraPerspective.DRONE:
+                SetTopDownPerspective();
+                break;
+            case CameraPerspective.FPV:
+                SetFPVPerspective();
+                break;
+            case CameraPerspective.SWITCHING:
+                StartCoroutine(AnimateCameraSwitch(fromPerspective));
+                break;
+        }
+    }
+
+
+    public void SetTopDownPerspective()
+    {
+        droneCamera.enabled = true;
+        perspectiveSwitchCamera.enabled = false;
+        fpCamera.gameObject.SetActive(false);
+        fpController.SetActive(false);
+
+        PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
+
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        droneCanvas.SetActive(true);
+
+    }
+
+    public void SetFPVPerspective()
+    {
+        droneCamera.enabled = false;
+        perspectiveSwitchCamera.enabled = false;
+        fpCamera.gameObject.SetActive(true);
+        fpController.SetActive(true);
+
+        PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        droneCanvas.SetActive(false);
+
+    }
+
+    private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
+    {
+        //Lerp from harvester to player or vice versa
+        yield return null;
+
+        Camera startCam = fromPerspective == CameraPerspective.FPV ? fpCamera : droneCamera;
+        Camera endCam = fromPerspective == CameraPerspective.FPV ? droneCamera : fpCamera;
+
+        perspectiveSwitchCamera.transform.position = startCam.transform.position;
+        perspectiveSwitchCamera.transform.rotation = startCam.transform.rotation;
+
+        perspectiveSwitchCamera.enabled = true;
+        startCam.enabled = false;
+        endCam.enabled = false;
+
+
+        float t = 0f;
+        while (t < animationDuration)
+        {
+            t += Time.deltaTime;
+            perspectiveSwitchCamera.transform.position = Vector3.Lerp(startCam.transform.position, endCam.transform.position, animationCurve.Evaluate(t / animationDuration));
+            perspectiveSwitchCamera.transform.rotation = Quaternion.Lerp(startCam.transform.rotation, endCam.transform.rotation, animationCurve.Evaluate(t / animationDuration));
+            yield return null;
+        }
+
+        endCam.enabled = true;
+        perspectiveSwitchCamera.enabled = false;
+        SetPerspective(fromPerspective == CameraPerspective.FPV ? CameraPerspective.DRONE : CameraPerspective.FPV);
     }
 }

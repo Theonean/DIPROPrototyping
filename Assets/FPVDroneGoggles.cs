@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
 {
-    public bool IsCurrentlyInteractable {get; set;} = true;
+    public bool IsCurrentlyInteractable { get; set; } = true;
     public string lookAtText = "[E] Enter Drone Mode"; // Backing field for Inspector
 
     public string LookAtText
@@ -13,10 +13,11 @@ public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
 
     public void OnInteract()
     {
-        CameraTracker.Instance.SetTopDownPerspective();
+        PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
     }
 
-    public void OnHover() {
+    public void OnHover()
+    {
         this.DefaultOnHover();
     }
 }

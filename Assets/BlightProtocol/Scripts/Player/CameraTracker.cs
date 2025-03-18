@@ -7,9 +7,6 @@ public class CameraTracker : MonoBehaviour
     public bool trackObjectWithCamera = false;
     public GameObject objectToTrack;
     public GameObject player;
-    public GameObject harvester;
-    public GameObject harvesterCameraPos;
-    public GameObject arrowRotator;
     public GameObject controlZone;
     public SpriteRenderer arrowSprite;
     public AnimationCurve cameraFollowCurve;
@@ -26,11 +23,6 @@ public class CameraTracker : MonoBehaviour
     private PlayerCore playerCore;
 
     public Camera topDownCamera;
-    public GameObject fpCamera;
-    public GameObject fpController;
-    public GameObject topDownCanvas;
-    private bool isFPV = false;
-
     private const float fadeStartDistance = 20f; // Start fading when player is this close to the max distance
 
     private void Awake()
@@ -50,10 +42,6 @@ public class CameraTracker : MonoBehaviour
         // Save the initial offset between camera and object
         cameraOffset = topDownCamera.transform.position - player.transform.position;
         playerCore = GetComponentInChildren<PlayerCore>();
-        //make sure top down camera is enabled initially
-        topDownCamera.enabled = true;
-        fpCamera.SetActive(false);
-        fpController.SetActive(false);
 
     }
 
@@ -70,67 +58,13 @@ public class CameraTracker : MonoBehaviour
                 playerCore.ModifyHealth(-100);
             }
         }
-
-
-        if (Input.GetKeyDown(KeyCode.E) && !isFPV)
-        {
-            SetFPVPerspective();
-        }
-    }
-
-    public void SetTopDownPerspective()
-    {
-        if (isFPV)
-        {
-            isFPV = false;
-
-            topDownCamera.enabled = true;
-            fpCamera.SetActive(false);
-            fpController.SetActive(false);
-            objectToTrack = player;
-
-            PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
-
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            topDownCanvas.SetActive(true);
-        }
-    }
-
-    public void SetFPVPerspective()
-    {
-        if (!isFPV)
-        {
-            isFPV = true;
-
-            topDownCamera.enabled = false;
-            fpCamera.SetActive(true);
-            fpController.SetActive(true);
-            objectToTrack = harvester;
-
-            PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
-
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            topDownCanvas.SetActive(false);
-        }
     }
 
     void FixedUpdate()
     {
         if (trackObjectWithCamera && objectToTrack != null)
         {
-            Vector3 targetPosition;
-            if (objectToTrack == harvester)
-            {
-                targetPosition = harvesterCameraPos.transform.position;
-                //topDownCamera.transform.rotation = harvesterCameraPos.transform.rotation;
-            }
-            else
-            {
-                targetPosition = player.transform.position + cameraOffset;
-                //topDownCamera.transform.LookAt(player.transform.position);
-            }
+            Vector3 targetPosition = player.transform.position + cameraOffset;
 
             float distance = Vector3.Distance(topDownCamera.transform.position, targetPosition);
             float t = Mathf.Clamp(distance / m_MaxCameraDistance, 0, 1);
@@ -145,9 +79,7 @@ public class CameraTracker : MonoBehaviour
         // Rotate arrow to face the control zone, only when the harvester is not dead
         if (!ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
         {
-            arrowRotator.transform.LookAt(controlZone.transform.position);
-
-            float distanceToControlZone = Vector3.Distance(arrowRotator.transform.position, controlZone.transform.position);
+            float distanceToControlZone = Vector3.Distance(player.transform.position, controlZone.transform.position);
 
             // When near the control zone, make the arrow invisible and handle UI fade
             if (distanceToControlZone < maxDistanceFromHarvester - fadeStartDistance)
