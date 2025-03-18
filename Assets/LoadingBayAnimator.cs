@@ -3,40 +3,36 @@ using UnityEngine;
 
 public class LoadingBayAnimator : MonoBehaviour
 {
+    [SerializeField] private EntityDetector playerNearRampDetector;
+    [SerializeField] private EntityDetector playerInHarvesterDetector;
     private float rampRotationClosed = 65f;
     private float rampRotationOpen = -10f;
     public float duration = 1f;
     public AnimationCurve animationCurve;
     public bool isPlayerNear = false;
 
-    private void OnTriggerEnter(Collider other)
+    private void Start()
     {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = true;
-            OpenRamp();
-        }
+        playerNearRampDetector.OnAgentEnter.AddListener(OpenRamp);
+        playerNearRampDetector.OnAgentExit.AddListener(CloseRamp);
+        playerInHarvesterDetector.OnAgentEnter.AddListener(OnPlayerInHarvester);
     }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            isPlayerNear = false;
-            CloseRamp();
-        }
-    }
-
-    public void OpenRamp()
+    private void OpenRamp()
     {
         StartCoroutine(OpenRampCoroutine());
     }
 
-    public void CloseRamp()
+    private void CloseRamp()
     {
         StartCoroutine(CloseRampCoroutine());
     }
-    
+
+    private void OnPlayerInHarvester()
+    {
+        PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
+    }
+
     private IEnumerator OpenRampCoroutine()
     {
         float time = 0f;

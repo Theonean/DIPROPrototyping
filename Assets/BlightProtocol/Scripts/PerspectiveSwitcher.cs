@@ -39,15 +39,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         SetTopDownPerspective();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.E) && currentPerspective == CameraPerspective.DRONE && loadingBayAnimator.isPlayerNear)
-        {
-            SetPerspective(CameraPerspective.SWITCHING);
-        }
-    }
-
     public void SetPerspective(CameraPerspective perspective)
     {
         if (currentPerspective == perspective)
@@ -80,8 +71,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         fpCamera.gameObject.SetActive(false);
         fpController.SetActive(false);
 
-        PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
-
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         droneCanvas.SetActive(true);
@@ -94,8 +83,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = false;
         fpCamera.gameObject.SetActive(true);
         fpController.SetActive(true);
-
-        PlayerCore.Instance.transform.position = ControlZoneManager.Instance.transform.position;
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
