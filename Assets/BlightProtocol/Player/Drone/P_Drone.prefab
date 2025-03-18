@@ -349,6 +349,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8426684896073115431}
   - component: {fileID: 1914367689053072111}
+  - component: {fileID: 405855480942748978}
   m_Layer: 0
   m_Name: P_Drone
   m_TagString: Untagged
@@ -388,9 +389,6 @@ MonoBehaviour:
   trackObjectWithCamera: 1
   objectToTrack: {fileID: 156741973787977113}
   player: {fileID: 0}
-  harvester: {fileID: 0}
-  harvesterCameraPos: {fileID: 0}
-  arrowRotator: {fileID: 3069283202996589018}
   controlZone: {fileID: 0}
   arrowSprite: {fileID: 787017369456715182}
   cameraFollowCurve:
@@ -424,8 +422,18 @@ MonoBehaviour:
   countdownUntilRespawnText: {fileID: 0}
   countdownUntilRespawnTime: 10
   topDownCamera: {fileID: 0}
-  fpCamera: {fileID: 0}
-  topDownCanvas: {fileID: 0}
+--- !u!114 &405855480942748978
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684833285897773044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f30dd2dd0877dde43939766d4e00a8df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3069283202996589018
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,6 +704,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   outOfLegsFlashDuration: 0.3
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 0
   NorthWestOffset: 45
   SouthWestOffset: 135
   rotationDelay: 0.1

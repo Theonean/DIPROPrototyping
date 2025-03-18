@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class LoadingBayAnimator : MonoBehaviour
 {
+    [SerializeField] private GameObject ramp;
     [SerializeField] private EntityDetector playerNearRampDetector;
     [SerializeField] private EntityDetector playerInHarvesterDetector;
     private float rampRotationClosed = 65f;
@@ -39,11 +40,11 @@ public class LoadingBayAnimator : MonoBehaviour
         while (time < duration)
         {
             float angle = Mathf.Lerp(rampRotationClosed, rampRotationOpen, animationCurve.Evaluate(time / duration));
-            transform.localEulerAngles = new Vector3(angle, 0f, 0f);
+            ramp.transform.localEulerAngles = new Vector3(angle, 0f, 0f);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.localEulerAngles = new Vector3(rampRotationOpen, 0f, 0f);
+        ramp.transform.localEulerAngles = new Vector3(rampRotationOpen, 0f, 0f);
     }
 
     private IEnumerator CloseRampCoroutine()
@@ -52,10 +53,10 @@ public class LoadingBayAnimator : MonoBehaviour
         while (time < duration)
         {
             float angle = Mathf.Lerp(rampRotationOpen, rampRotationClosed, animationCurve.Evaluate(time / duration));
-            transform.localEulerAngles = new Vector3(angle, 0f, 0f);
+            ramp.transform.localEulerAngles = new Vector3(angle, 0f, 0f);
             time += Time.deltaTime;
             yield return null;
         }
-        transform.localEulerAngles = new Vector3(rampRotationClosed, 0f, 0f);
+        ramp.transform.localEulerAngles = new Vector3(rampRotationClosed, 0f, 0f);
     }
 }

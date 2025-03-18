@@ -28,12 +28,12 @@ public class DroneWingsRotator : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        float lerpRotation = Mathf.Lerp(0, maxAngle, m_playerCore.currentSpeed / m_playerCore.moveSpeed);
+        float lerpRotation = Mathf.Lerp(0, maxAngle, DroneMovement.Instance.currentSpeed / DroneMovement.Instance.moveSpeed);
 
         // Rotate top and bottom wings for left-right movement
-        if (m_playerCore.moveDirection.x != 0)
+        if (DroneMovement.Instance.moveDirection.x != 0)
         {
-            float rotationZ = m_playerCore.moveDirection.x < 0 ? -lerpRotation : lerpRotation;
+            float rotationZ = DroneMovement.Instance.moveDirection.x < 0 ? -lerpRotation : lerpRotation;
             wingTop.transform.localRotation = originalRotationTop * Quaternion.Euler(0, 0, -rotationZ);
             wingBottom.transform.localRotation = originalRotationBottom * Quaternion.Euler(0, 0, rotationZ);
         }
@@ -45,9 +45,9 @@ public class DroneWingsRotator : MonoBehaviour
         }
 
         // Rotate left and right wings for up-down movement
-        if (m_playerCore.moveDirection.z != 0)
+        if (DroneMovement.Instance.moveDirection.z != 0)
         {
-            float rotationZ = m_playerCore.moveDirection.z < 0 ? -lerpRotation : lerpRotation;
+            float rotationZ = DroneMovement.Instance.moveDirection.z < 0 ? -lerpRotation : lerpRotation;
             wingLeft.transform.localRotation = originalRotationLeft * Quaternion.Euler(0, 0, -rotationZ);
             wingRight.transform.localRotation = originalRotationRight * Quaternion.Euler(0, 0, rotationZ);
         }
