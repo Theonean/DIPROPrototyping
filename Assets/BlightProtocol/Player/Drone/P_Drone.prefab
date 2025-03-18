@@ -50,8 +50,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebfc0fd698750684e97cbdbfb021bc60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 15
-  currentSpeed: 0
   maxHealth: 2
   playerDiedGroup: {fileID: 0}
   respawnTimerText: {fileID: 0}
@@ -61,61 +59,10 @@ MonoBehaviour:
   returnLegs:
     m_PersistentCalls:
       m_Calls: []
-  moveDirection: {x: 0, y: 0, z: 0}
-  accelerationCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 3.2994187
-      outSlope: 3.2994187
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.03788546
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  dashCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.0070542577
-      value: 0.4381872
-      inSlope: 5.227212
-      outSlope: 5.227212
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.040528636
-    - serializedVersion: 3
-      time: 1.0008228
-      value: 0.5269455
-      inSlope: -0.2897178
-      outSlope: -0.2897178
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.04314154
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
   isDead: 0
-  dashEffect: {fileID: 7122975628775369607}
   explosion: {fileID: 4695719848415906335, guid: c17c4653f935fb14b854e88e1881d12a,
     type: 3}
   shieldSFXEventPath: event:/SFX/Dron/Shield
-  movementSFXPath: event:/SFX/Dron/Propeller
 --- !u!65 &2374802726820007231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -348,8 +295,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8426684896073115431}
-  - component: {fileID: 1914367689053072111}
   - component: {fileID: 405855480942748978}
+  - component: {fileID: 5925267659964171928}
+  - component: {fileID: 1164632097019565433}
   m_Layer: 0
   m_Name: P_Drone
   m_TagString: Untagged
@@ -374,54 +322,6 @@ Transform:
   - {fileID: 8961514209790879627}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1914367689053072111
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684833285897773044}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a7e9af5da3430047b8ec4f75f84f6dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  trackObjectWithCamera: 1
-  objectToTrack: {fileID: 156741973787977113}
-  player: {fileID: 0}
-  controlZone: {fileID: 0}
-  arrowSprite: {fileID: 787017369456715182}
-  cameraFollowCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  maxDistanceFromHarvester: 100
-  cameraMoveSpeed: 40
-  OutOfRangeUIGroup: {fileID: 0}
-  outOfRangeUIGroupCanvas: {fileID: 0}
-  countdownUntilRespawnText: {fileID: 0}
-  countdownUntilRespawnTime: 10
-  topDownCamera: {fileID: 0}
 --- !u!114 &405855480942748978
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -434,6 +334,130 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f30dd2dd0877dde43939766d4e00a8df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isDashing: 0
+  dashKnockback: 150
+  moveSpeed: 15
+  currentSpeed: 0
+  moveDirection: {x: 0, y: 0, z: 0}
+  accelerationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dashCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.0070542577
+      value: 0.4381872
+      inSlope: 5.227212
+      outSlope: 5.227212
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.040528636
+    - serializedVersion: 3
+      time: 1.0008228
+      value: 0.5269455
+      inSlope: -0.2897178
+      outSlope: -0.2897178
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.04314154
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  movementSFXPath: event:/SFX/Dron/Propeller
+  dashEffect: {fileID: 7122975628775369607}
+--- !u!114 &5925267659964171928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684833285897773044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8e50bebe5ed094a8af41a9eb78b705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  arrowSprite: {fileID: 787017369456715182}
+  OutOfRangeUIGroup: {fileID: 0}
+  outOfRangeUIGroupCanvas: {fileID: 0}
+  countdownUntilRespawnText: {fileID: 0}
+  countdownUntilRespawnTime: 10
+  maxDistanceFromHarvester: 100
+--- !u!20 &1164632097019565433
+Camera:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684833285897773044}
+  m_Enabled: 1
+  serializedVersion: 2
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_projectionMatrixMode: 1
+  m_GateFitMode: 2
+  m_FOVAxisMode: 0
+  m_Iso: 200
+  m_ShutterSpeed: 0.005
+  m_Aperture: 16
+  m_FocusDistance: 10
+  m_FocalLength: 50
+  m_BladeCount: 5
+  m_Curvature: {x: 2, y: 11}
+  m_BarrelClipping: 0.25
+  m_Anamorphism: 0
+  m_SensorSize: {x: 36, y: 24}
+  m_LensShift: {x: 0, y: 0}
+  m_NormalizedViewPortRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+  near clip plane: 0.3
+  far clip plane: 1000
+  field of view: 60
+  orthographic: 0
+  orthographic size: 5
+  m_Depth: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingPath: -1
+  m_TargetTexture: {fileID: 0}
+  m_TargetDisplay: 0
+  m_TargetEye: 3
+  m_HDR: 1
+  m_AllowMSAA: 1
+  m_AllowDynamicResolution: 0
+  m_ForceIntoRT: 0
+  m_OcclusionCulling: 1
+  m_StereoConvergence: 10
+  m_StereoSeparation: 0.022
 --- !u!1 &3069283202996589018
 GameObject:
   m_ObjectHideFlags: 0

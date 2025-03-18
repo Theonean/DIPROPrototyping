@@ -1547,12 +1547,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c0bf5446f7da34cabd931fa8f747bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!2083052967 &528521900 stripped
-VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 7122975628775369607, guid: f0349d52a2037ba4993444b4b04754a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3500538115137141686}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &537518484
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8144,6 +8138,56 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1750019266}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1754306064 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1684833285897773044, guid: f0349d52a2037ba4993444b4b04754a2,
+    type: 3}
+  m_PrefabInstance: {fileID: 3500538115137141686}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1754306068
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1754306064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    quality: 3
+    frameInfluence: 0.1
+    jitterScale: 1
+    mipBias: 0
+    varianceClampScale: 0.9
+    contrastAdaptiveSharpening: 0
 --- !u!1 &1794534184
 GameObject:
   m_ObjectHideFlags: 0
@@ -9625,101 +9669,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: moveSpeed
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashEffect
-      value: 
-      objectReference: {fileID: 528521900}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: movementSFXPath
-      value: event:/SFX/Dron/Propeller
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[0].time
-      value: -0.0070542577
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[1].time
-      value: 1.0008228
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[0].value
-      value: 0.4381872
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[1].value
-      value: 0.5269455
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[0].inSlope
-      value: 5.227212
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[1].inSlope
-      value: -0.2897178
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[0].outSlope
-      value: 5.227212
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[1].inWeight
-      value: 0.04314154
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[1].outSlope
-      value: -0.2897178
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: dashCurve.m_Curve.Array.data[0].outWeight
-      value: 0.040528636
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[1].time
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[1].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[0].inSlope
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 405855480942748978, guid: f0349d52a2037ba4993444b4b04754a2,
-        type: 3}
-      propertyPath: accelerationCurve.m_Curve.Array.data[0].outSlope
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 570004674604441119, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10065,6 +10014,21 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5925267659964171928, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: OutOfRangeUIGroup
+      value: 
+      objectReference: {fileID: 1074653157}
+    - target: {fileID: 5925267659964171928, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: outOfRangeUIGroupCanvas
+      value: 
+      objectReference: {fileID: 1074653159}
+    - target: {fileID: 5925267659964171928, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: countdownUntilRespawnText
+      value: 
+      objectReference: {fileID: 1062302678}
     - target: {fileID: 6132903678938961910, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -10166,12 +10130,16 @@ PrefabInstance:
       value: Rockets
       objectReference: {fileID: 0}
     m_RemovedComponents:
-    - {fileID: 6500081093983454490, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
+    - {fileID: 0}
     m_RemovedGameObjects:
     - {fileID: 108171301924961812, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
     - {fileID: 5825313646059842321, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1684833285897773044, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1754306068}
   m_SourcePrefab: {fileID: 100100000, guid: f0349d52a2037ba4993444b4b04754a2, type: 3}
 --- !u!114 &3500538115137141687 stripped
 MonoBehaviour:
@@ -10478,13 +10446,18 @@ PrefabInstance:
     - target: {fileID: 6025951698947207036, guid: 8de0626cc76de2a4985961779ec64a50,
         type: 3}
       propertyPath: m_Name
-      value: Main Camera
+      value: TopDownCamera
       objectReference: {fileID: 0}
     - target: {fileID: 6025951698947207036, guid: 8de0626cc76de2a4985961779ec64a50,
         type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8625730745155329846, guid: 8de0626cc76de2a4985961779ec64a50,
+        type: 3}
+      propertyPath: objectToTrack
+      value: 
+      objectReference: {fileID: 1754306064}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
