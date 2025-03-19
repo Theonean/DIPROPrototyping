@@ -80,7 +80,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.position = dronePositionInLoadingBay.position;
         playerCore.transform.rotation = Quaternion.identity;
         playerCore.transform.localScale = new Vector3(1f, 1f, 1f);
-        playerCore.shield.SetActive(false);
+        playerCore.shield.SetActive(true);
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
