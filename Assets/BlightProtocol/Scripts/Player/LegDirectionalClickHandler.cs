@@ -23,11 +23,20 @@ public class LegDirectionalClickHandler : MonoBehaviour
     public float rotationDelay = 0.5f; // Delay before rotation starts
     private bool canRotate = true;  // To control rotation after delay
     private Coroutine canvasFlashRoutine;
+    private PlayerCore playerCore;
+    private FrankenGameManager frankenGameManager;
+    private PerspectiveSwitcher perspectiveSwitcher;
+
+    private void Start() {
+        playerCore = PlayerCore.Instance;
+        frankenGameManager = FrankenGameManager.Instance;
+        perspectiveSwitcher = PerspectiveSwitcher.Instance;
+    }
 
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same leg
     void Update()
     {
-        if (PlayerCore.Instance.isDead || FrankenGameManager.Instance.isPaused || PerspectiveSwitcher.Instance.currentPerspective != CameraPerspective.DRONE)
+        if (playerCore.isDead || frankenGameManager.isPaused || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
         {
             return;
         }
