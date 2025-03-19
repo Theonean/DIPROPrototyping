@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.AI;
 
 public enum CameraPerspective
 {
@@ -18,8 +19,9 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Camera fpCamera;
     [SerializeField] private GameObject fpController;
     [SerializeField] private GameObject droneCanvas;
-    [SerializeField] private LoadingBayAnimator loadingBayAnimator;
-    private CameraPerspective currentPerspective = CameraPerspective.DRONE;
+    [SerializeField] private Transform dronePositionInLoadingBay;
+    [SerializeField] private Transform dronePositionInHarvester;
+    public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
 
     void Awake()
     {
@@ -71,10 +73,18 @@ public class PerspectiveSwitcher : MonoBehaviour
         fpCamera.gameObject.SetActive(false);
         fpController.SetActive(false);
 
+        PlayerCore playerCore = PlayerCore.Instance;
+
+        playerCore.transform.parent = null;
+        playerCore.GetComponent<NavMeshAgent>().enabled = true;
+        playerCore.transform.position = dronePositionInLoadingBay.position;
+        playerCore.transform.rotation = Quaternion.identity;
+        playerCore.transform.localScale = new Vector3(1f, 1f, 1f);
+        playerCore.shield.SetActive(false);
+
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         droneCanvas.SetActive(true);
-
     }
 
     public void SetFPVPerspective()
@@ -83,6 +93,15 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = false;
         fpCamera.gameObject.SetActive(true);
         fpController.SetActive(true);
+
+        PlayerCore playerCore = PlayerCore.Instance;
+
+        playerCore.transform.parent = dronePositionInHarvester;
+        playerCore.GetComponent<NavMeshAgent>().enabled = false;
+        playerCore.transform.localPosition = Vector3.zero;
+        playerCore.transform.localRotation = Quaternion.identity;
+        playerCore.transform.localScale = new Vector3(0.8f, 0.8f, 0.8f);
+        playerCore.shield.SetActive(false);
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

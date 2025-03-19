@@ -24,6 +24,8 @@ public class DroneMovement : MonoBehaviour
     private EventInstance movementSFXInstance;
     public string movementSFXPath; // FMOD event path
     public VisualEffect dashEffect;
+    private PlayerCore playerCore;
+    private PerspectiveSwitcher perspectiveSwitcher;
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class DroneMovement : MonoBehaviour
     void Start()
     {
         FMODAudioManagement.instance.PlaySound(out movementSFXInstance, movementSFXPath, gameObject);
+        playerCore = PlayerCore.Instance;
+        perspectiveSwitcher = PerspectiveSwitcher.Instance;
     }
 
     // Update is called once per frame
@@ -50,8 +54,8 @@ public class DroneMovement : MonoBehaviour
             dashCooldownTimer -= Time.deltaTime;
         }
 
-        //No Input when dead
-        if (!PlayerCore.Instance.isDead)
+        //No Input when dead or not in drone perspective
+        if (!playerCore.isDead && perspectiveSwitcher.currentPerspective == CameraPerspective.DRONE)
         {
             if (Input.GetKeyDown(KeyCode.Space) && dashCooldownTimer <= 0f)
             {
@@ -85,6 +89,13 @@ public class DroneMovement : MonoBehaviour
                     movementSFXInstance.setParameterByName("Movement", 0f);
                 }
             }
+        }
+        else
+        {
+            moveDirection = Vector3.zero;
+            m_AccelerationTime = 0f;
+            isStandingStill = true;
+            movementSFXInstance.setParameterByName("Movement", 0f);
         }
     }
 

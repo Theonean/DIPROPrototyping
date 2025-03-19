@@ -31,7 +31,9 @@ public class LoadingBayAnimator : MonoBehaviour
 
     private void OnPlayerInHarvester()
     {
-        PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
+        //Prevent perspective switch from being trigered by players position being teleported into the drone bay
+        if (DroneMovement.Instance.moveDirection.magnitude > 0.1f)
+            PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
     }
 
     private IEnumerator OpenRampCoroutine()

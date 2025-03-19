@@ -27,7 +27,7 @@ public class LegDirectionalClickHandler : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same leg
     void Update()
     {
-        if (PlayerCore.Instance.isDead || FrankenGameManager.Instance.isPaused)
+        if (PlayerCore.Instance.isDead || FrankenGameManager.Instance.isPaused || PerspectiveSwitcher.Instance.currentPerspective != CameraPerspective.DRONE)
         {
             return;
         }
