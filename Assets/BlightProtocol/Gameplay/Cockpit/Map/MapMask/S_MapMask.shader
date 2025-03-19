@@ -7,6 +7,7 @@ Shader "Unlit/S_MapMask"
         _Color("Draw Color", Color) = (1,0,0,0)
         _Strength("Strength", Range(0,1)) = 1
         _Size("Size", Range(1,500)) = 0
+        _EdgeSharpness("Edge Sharpness", Range(1,500)) = 5
     }
     SubShader
     {
@@ -18,7 +19,6 @@ Shader "Unlit/S_MapMask"
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-            // make fog work
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
@@ -39,7 +39,7 @@ Shader "Unlit/S_MapMask"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Coordinates, _Color;
-            half _Size, _Strength;
+            half _Size, _Strength, _EdgeSharpness;
 
             v2f vert (appdata v)
             {
@@ -52,11 +52,14 @@ Shader "Unlit/S_MapMask"
 
             fixed4 frag (v2f i) : SV_Target
             {
-                // sample the texture
                 fixed4 col = tex2D(_MainTex, i.uv);
-                float draw = pow(saturate(1 - distance(i.uv, _Coordinates.xy)), 500/_Size);
+
+                float dist = distance(i.uv, _Coordinates.xy);
+                float draw = pow(saturate(1 - (dist * _EdgeSharpness)), 500/_Size);
+                draw = smoothstep(0.0, 1.0 / _EdgeSharpness, draw); // More controlled transition
+
                 fixed4 drawcol = _Color * (draw * _Strength);
-                
+
                 UNITY_APPLY_FOG(i.fogCoord, col);
                 return saturate(col + drawcol);
             }

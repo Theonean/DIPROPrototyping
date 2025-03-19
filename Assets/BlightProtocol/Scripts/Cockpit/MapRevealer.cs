@@ -7,6 +7,7 @@ public class MapRevealer : MonoBehaviour
     public MapMask mapMask;
     private RaycastHit hit;
     public LayerMask layerMask;
+    public float edgeSharpness = 5f;
 
     [Header("Continuous Reveal")]
     public float revealRadius = 50f;
@@ -15,12 +16,21 @@ public class MapRevealer : MonoBehaviour
     [Header("Pulse")]
     public float pulseStrength = 1f;
     public AnimationCurve pulseStrengthCurve;
-    public AnimationCurve pulseSpeedCurve;   
+    public AnimationCurve pulseSpeedCurve;
+
+    void Start()
+    {
+        if (mapMask != null)
+        {
+            mapMask.edgeSharpness = 5f;
+        }
+    }
 
     void Update()
     {
         GetMapCoordinates();
-        if (coords != null) {
+        if (coords != null)
+        {
             mapMask.PaintOnMask(coords, revealRadius, revealStrength);
         }
     }
@@ -49,8 +59,8 @@ public class MapRevealer : MonoBehaviour
             linearTimer += Time.deltaTime;
 
             float currentRadius = Mathf.Lerp(startRange, range, timer / duration);
-            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer/duration) * pulseStrength;
-            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer/duration) * speed;
+            float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / duration) * pulseStrength;
+            float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / duration) * speed;
 
             mapMask.PaintOnMask(coords, currentRadius, currentStrength);
 

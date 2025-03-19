@@ -87,11 +87,35 @@ public class ProceduralTileGenerator : MonoBehaviour
 
         if (mapMask.GetComponent<MeshFilter>() != null && mapMask.GetComponent<MeshCollider>() != null)
         {
-            mapMask.GetComponent<MeshFilter>().mesh = mesh;
+            // Clone mesh and add new UVs for the Mask
+            Mesh maskMesh = new Mesh
+            {
+                vertices = mesh.vertices,
+                normals = mesh.normals,
+                triangles = mesh.triangles,
+                colors = mesh.colors
+            };
+
+            // Create new UVs that span the entire mesh
+            Vector2[] maskUVs = new Vector2[mesh.vertices.Length];
+            for (int i = 0; i < mesh.vertices.Length; i++)
+            {
+                Vector3 vertex = mesh.vertices[i];
+                maskUVs[i] = new Vector2(
+                    Mathf.InverseLerp(mapBoundsX.x, mapBoundsX.y, vertex.x),
+                    Mathf.InverseLerp(mapBoundsZ.x, mapBoundsZ.y, vertex.z)
+                );
+            }
+
+            // Assign new UVs
+            maskMesh.uv = maskUVs;
+
+            // Assign the new mesh to the mapMask
+            mapMask.GetComponent<MeshFilter>().mesh = maskMesh;
             mapMask.GetComponent<MeshFilter>().mesh.RecalculateNormals();
-            mapMask.GetComponent<MeshCollider>().sharedMesh = mesh;
-            mapMask.GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
+            mapMask.GetComponent<MeshCollider>().sharedMesh = maskMesh;
         }
+
 
         GetComponent<MeshFilter>().mesh.RecalculateNormals();
     }

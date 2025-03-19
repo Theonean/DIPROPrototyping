@@ -7,13 +7,13 @@ public class MapMask : MonoBehaviour
     public Shader maskShader;
     private Material mapMaterial, maskMaterial;
     public int maskResolution = 1024;
-    public float mapRevealRadius = 50f;
-    public float mapRevealStrength = 1f;
+    public float edgeSharpness = 5f;
 
     void Start()
     {
         maskMaterial = new Material(maskShader);
         maskMaterial.SetVector("_Color", Color.red);
+        maskMaterial.SetFloat("_EdgeSharpness", edgeSharpness);
 
         mapMaterial = GetComponent<Renderer>().material;
 
@@ -24,7 +24,7 @@ public class MapMask : MonoBehaviour
     public void PaintOnMask(Vector2 coords, float range, float strength)
     {
         maskMaterial.SetVector("_Coordinates", new Vector4(coords.x, coords.y, 0, 0));
-        maskMaterial.SetFloat("_Strength", strength);
+        maskMaterial.SetFloat("_Strength", strength);   
         maskMaterial.SetFloat("_Size", range);
 
         RenderTexture temp = RenderTexture.GetTemporary(maskTex.width, maskTex.height, 0, RenderTextureFormat.ARGBFloat);

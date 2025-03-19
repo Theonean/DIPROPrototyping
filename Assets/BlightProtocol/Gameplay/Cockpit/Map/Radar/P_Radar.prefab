@@ -129,8 +129,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapMask: {fileID: 0}
-  revealRadius: 5
-  revealStrength: 1
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  edgeSharpness: 5
+  revealRadius: 20
+  revealStrength: 5
   pulseStrength: 50
   pulseStrengthCurve:
     serializedVersion: 2
@@ -248,7 +252,7 @@ MonoBehaviour:
     type: 3}
   radarData: {fileID: 11400000, guid: 630a389cd4ca6724c8a2cb6e0f2589ec, type: 2}
   pulseTransform: {fileID: 6073445025465992230}
-  revealRangeFactor: 0.12
+  revealRangeFactor: 0.5
   revealStartRangeFactor: 0.2
   pulseStrengthCurve:
     serializedVersion: 2
