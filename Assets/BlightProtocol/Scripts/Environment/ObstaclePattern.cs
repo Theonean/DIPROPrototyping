@@ -7,6 +7,7 @@ public class ObstaclePattern : MonoBehaviour
     void Awake()
     {
         obstacles = GetComponentsInChildren<Obstacle>();
+        SetMeshColoursToRegion();
     }
 
     public void MovePattern(Vector3 position)

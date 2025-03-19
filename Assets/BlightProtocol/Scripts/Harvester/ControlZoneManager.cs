@@ -96,7 +96,7 @@ public class ControlZoneManager : MonoBehaviour
     void Start()
     {
         health = maxHealth;
-        pathPositions = ProceduralTileGenerator.Instance.GetPath();
+        
         foreach (Slider slider in healthSliders)
         {
             slider.maxValue = maxHealth;
@@ -271,29 +271,6 @@ public class ControlZoneManager : MonoBehaviour
         targetPosObject.transform.position = m_TargetPosition;
         travelTimeLeft = Vector3.Distance(transform.position, m_TargetPosition) / moveSpeed;
         pathPositionsIndex = pathPositionsIndex + 1;
-
-        // set resource point color
-        SetMeshColoursToRegion();
-    }
-
-    public void SetMeshColoursToRegion()
-    {
-        // Calculate the color based on the obstacle's position along the path
-        float zPosition = targetPosObject.transform.position.z;
-        Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
-
-        // Use MaterialPropertyBlock to set color without affecting shared materials
-        MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-        MeshRenderer meshRenderer = targetPosObject.GetComponentInChildren<MeshRenderer>();
-        if (meshRenderer != null)
-        {
-            meshRenderer.GetPropertyBlock(propBlock);
-            propBlock.SetColor("_Color", regionColor * resoucePointColorCorrection);
-
-            meshRenderer.SetPropertyBlock(propBlock);
-
-
-        }
     }
 
     void Modifyhealth(int amount)

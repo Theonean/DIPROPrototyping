@@ -38,9 +38,7 @@ public class Obstacle : MonoBehaviour
 
     public void UpdateColor()
     {
-        // Calculate the color based on the obstacle's position along the path
-        float zPosition = transform.position.z;
-        Color regionColor = ProceduralTileGenerator.Instance.GetColorForPosition(zPosition);
+        Color regionColor = ProceduralTileGenerator.Instance.biomeColor;
 
         // Use MaterialPropertyBlock to set color without affecting shared materials
         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
