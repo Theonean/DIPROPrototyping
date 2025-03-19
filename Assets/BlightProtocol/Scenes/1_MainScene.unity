@@ -170,7 +170,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1ac53ffa8f2cb042848c4594ede41ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 2140938591}
+  player: {fileID: 0}
 --- !u!43 &34352315
 Mesh:
   m_ObjectHideFlags: 0
@@ -1678,6 +1678,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawnableResources:
   - {fileID: 11400000, guid: 4c75d2369ff48024e975bd4ce6384c10, type: 2}
+  - {fileID: 11400000, guid: d9841ee90668c584497e4848fbc15ae4, type: 2}
 --- !u!4 &556632332
 Transform:
   m_ObjectHideFlags: 0
@@ -9378,24 +9379,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &2140938587 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 156741973787977113, guid: f0349d52a2037ba4993444b4b04754a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3500538115137141686}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &2140938591 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 2502590638920620081, guid: f0349d52a2037ba4993444b4b04754a2,
-    type: 3}
-  m_PrefabInstance: {fileID: 3500538115137141686}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2140938587}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ebfc0fd698750684e97cbdbfb021bc60, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1459167435300517988
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9591,7 +9574,7 @@ PrefabInstance:
         type: 3}
       propertyPath: player
       value: 
-      objectReference: {fileID: 2140938587}
+      objectReference: {fileID: 0}
     - target: {fileID: 1914367689053072111, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: fpCamera
@@ -9838,6 +9821,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3035286231244661794, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3472185351257171191, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: m_IsTrigger
       value: 1
@@ -10251,7 +10239,7 @@ PrefabInstance:
         type: 3}
       propertyPath: attenuationObject
       value: 
-      objectReference: {fileID: 2140938587}
+      objectReference: {fileID: 0}
     - target: {fileID: 3152930537164012693, guid: 8de0626cc76de2a4985961779ec64a50,
         type: 3}
       propertyPath: m_Enabled

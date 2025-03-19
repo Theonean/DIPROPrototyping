@@ -2,8 +2,6 @@ using UnityEngine;
 
 public class DroneWingsRotator : MonoBehaviour
 {
-    [SerializeField]
-    private PlayerCore m_playerCore; // Needed for moveDirection, currentSpeed and MaxSpeed
     public float maxAngle;
 
     public GameObject wingTop;
