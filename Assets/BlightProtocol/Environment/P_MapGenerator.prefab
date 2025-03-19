@@ -51,9 +51,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mapMask: {fileID: 9109117577764644604}
   biomeColor: {r: 0, g: 0, b: 0, a: 0}
-  mapSize: {x: 0, y: 0}
-  sizeX: 46
-  sizeZ: 20
+  mapBoundsX: {x: 0, y: 0}
+  mapBoundsZ: {x: 0, y: 0}
   tileSize: 50
 --- !u!23 &3257321921656381280
 MeshRenderer:
@@ -159,9 +158,9 @@ GameObject:
   - component: {fileID: 7990360080107088423}
   - component: {fileID: 7895159280041814291}
   - component: {fileID: 1811028198314671644}
-  m_Layer: 21
+  m_Layer: 23
   m_Name: MapMask
-  m_TagString: Untagged
+  m_TagString: MapMask
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -175,7 +174,7 @@ Transform:
   m_GameObject: {fileID: 9109117577764644604}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -12, y: -21, z: 477}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children: []

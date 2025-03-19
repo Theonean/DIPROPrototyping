@@ -5,8 +5,6 @@ public class MapRevealer : MonoBehaviour
 {
     private Vector2 coords;
     public MapMask mapMask;
-
-    [Header("Raycast")]
     private RaycastHit hit;
     public LayerMask layerMask;
 

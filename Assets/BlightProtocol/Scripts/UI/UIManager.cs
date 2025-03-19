@@ -1,0 +1,46 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class UIHandler : MonoBehaviour
+{
+    PerspectiveSwitcher perspectiveSwitcher;
+    public GameObject topDownUI;
+    public GameObject fpvUI;
+    public GameObject generalUI;
+
+    void Start()
+    {
+        perspectiveSwitcher = PerspectiveSwitcher.Instance;
+        if (perspectiveSwitcher != null)
+        {
+            perspectiveSwitcher.onPerspectiveSwitched.AddListener(SwitchUI);
+        }
+        SwitchUI();
+    }
+
+    void SwitchUI()
+    {
+        Logger.Log("Switching UI to" + perspectiveSwitcher.currentPerspective, LogLevel.INFO, LogType.PERSPECTIVESWITCH);
+        switch (perspectiveSwitcher.currentPerspective)
+        {
+            case CameraPerspective.DRONE:
+                topDownUI.SetActive(true);
+                fpvUI.SetActive(false);
+                generalUI.SetActive(true);
+                break;
+
+            case CameraPerspective.FPV:
+                topDownUI.SetActive(false);
+                fpvUI.SetActive(true);
+                generalUI.SetActive(true);
+                break;
+
+            case CameraPerspective.SWITCHING:
+                topDownUI.SetActive(false);
+                fpvUI.SetActive(false);
+                generalUI.SetActive(false);
+                break;
+        }
+    }
+}

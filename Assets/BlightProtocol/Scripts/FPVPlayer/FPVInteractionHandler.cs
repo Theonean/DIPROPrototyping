@@ -13,7 +13,6 @@ public class FPVInteractionHandler : MonoBehaviour
     private Ray ray;
     private RaycastHit hit;
     public float raycastRange;
-    public LayerMask hitMask;
 
     private IFPVInteractable lastHoveredObject = null;
 
@@ -29,21 +28,29 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             interactKeyPressed = true;
         }
-        
+
     }
 
     void FixedUpdate()
     {
         ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, raycastRange, hitMask))
+        if (Physics.Raycast(ray, out hit, raycastRange))
         {
-            if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable))
+            if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable) && hit.collider.CompareTag("FPVInteractable"))
             {
                 if (interactable != lastHoveredObject)
                 {
                     lastHoveredObject = interactable;
                     interactable.OnHover();
+                }
+            }
+            else
+            {
+                if (lastHoveredObject != null)
+                {
+                    FPVUI.Instance.ClearLookAtText();
+                    lastHoveredObject = null;
                 }
             }
 
@@ -67,10 +74,6 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         switch (hit.collider.tag)
         {
-            /*case "Map":
-                hit.collider.GetComponent<FPVMap>().SetTarget(hit);
-                break;*/
-
             default:
                 if (lastHoveredObject != null)
                 {

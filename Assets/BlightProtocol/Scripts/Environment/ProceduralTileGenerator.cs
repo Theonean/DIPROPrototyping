@@ -88,7 +88,9 @@ public class ProceduralTileGenerator : MonoBehaviour
         if (mapMask.GetComponent<MeshFilter>() != null && mapMask.GetComponent<MeshCollider>() != null)
         {
             mapMask.GetComponent<MeshFilter>().mesh = mesh;
+            mapMask.GetComponent<MeshFilter>().mesh.RecalculateNormals();
             mapMask.GetComponent<MeshCollider>().sharedMesh = mesh;
+            mapMask.GetComponent<MeshCollider>().sharedMesh.RecalculateNormals();
         }
 
         GetComponent<MeshFilter>().mesh.RecalculateNormals();

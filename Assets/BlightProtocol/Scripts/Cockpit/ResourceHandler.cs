@@ -35,8 +35,8 @@ public class ResourceHandler : MonoBehaviour
             InitializeResources();
         }
         
-        Logger.Log("ResourceHandler initialized", LogLevel.INFO, LogType.RESOURCE);
-        Logger.Log("Tie all usages of the fuel resource to the fuelResource variable to maintain SO flexibility", LogLevel.FORCE, LogType.RESOURCE);
+        /*Logger.Log("ResourceHandler initialized", LogLevel.INFO, LogType.RESOURCE);
+        Logger.Log("Tie all usages of the fuel resource to the fuelResource variable to maintain SO flexibility", LogLevel.FORCE, LogType.RESOURCE)*/;
     }
 
     void Start()

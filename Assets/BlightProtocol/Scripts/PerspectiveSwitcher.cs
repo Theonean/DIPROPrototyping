@@ -19,7 +19,6 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Camera droneCamera;
     [SerializeField] private Camera fpCamera;
     [SerializeField] private GameObject fpController;
-    [SerializeField] private GameObject droneCanvas;
     [SerializeField] private Transform dronePositionInLoadingBay;
     [SerializeField] private Transform dronePositionInHarvester;
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
@@ -87,7 +86,6 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
-        droneCanvas.SetActive(true);
     }
 
     public void SetFPVPerspective()
@@ -108,8 +106,6 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        droneCanvas.SetActive(false);
-
     }
 
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
