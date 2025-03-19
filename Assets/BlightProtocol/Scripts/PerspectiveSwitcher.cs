@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Events;
 
 public enum CameraPerspective
 {
@@ -22,6 +23,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Transform dronePositionInLoadingBay;
     [SerializeField] private Transform dronePositionInHarvester;
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
+    public UnityEvent onPerspectiveSwitched;
 
     void Awake()
     {
@@ -50,6 +52,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         CameraPerspective fromPerspective = currentPerspective;
         currentPerspective = perspective;
+        onPerspectiveSwitched.Invoke();
 
         switch (perspective)
         {
