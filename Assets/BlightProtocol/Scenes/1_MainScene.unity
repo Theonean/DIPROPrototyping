@@ -3054,8 +3054,7 @@ MonoBehaviour:
   perspectiveSwitchCamera: {fileID: 848563726}
   droneCamera: {fileID: 1324875725}
   fpCamera: {fileID: 582618420}
-  mapCamera: {fileID: 0}
-  mapMaskCamera: {fileID: 0}
+  mapCamera: {fileID: 435688488}
   fpController: {fileID: 1079179407}
   dronePositionInLoadingBay: {fileID: 1741831877}
   dronePositionInHarvester: {fileID: 1350934433}
@@ -5471,6 +5470,16 @@ PrefabInstance:
       propertyPath: raycastMask.m_Bits
       value: 507641
       objectReference: {fileID: 0}
+    - target: {fileID: 4801275644696106661, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: playerDiedGroup
+      value: 
+      objectReference: {fileID: 772662230}
+    - target: {fileID: 4801275644696106661, guid: f0349d52a2037ba4993444b4b04754a2,
+        type: 3}
+      propertyPath: respawnTimerText
+      value: 
+      objectReference: {fileID: 368105186}
     - target: {fileID: 4870503280579632283, guid: f0349d52a2037ba4993444b4b04754a2,
         type: 3}
       propertyPath: flySpeedCurve.m_Curve.Array.data[0].time
