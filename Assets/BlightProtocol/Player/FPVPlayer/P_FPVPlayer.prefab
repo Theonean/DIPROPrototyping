@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4125333010350527990}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 7905104282312605873}
   - component: {fileID: 6237649471220868722}
   - component: {fileID: 6283729758415678948}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: PlayerBody
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -148,7 +148,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4412493638666385403}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: CameraPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 37192519122870096}
   - component: {fileID: 8070135445261841040}
   - component: {fileID: 4154699195578599645}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: vis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -286,7 +286,7 @@ GameObject:
   - component: {fileID: 1760599397244864158}
   - component: {fileID: 8199565140508150610}
   - component: {fileID: 4758513243580514618}
-  m_Layer: 0
+  m_Layer: 15
   m_Name: P_FPVPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -356,4 +356,5 @@ MonoBehaviour:
   whatIsGround:
     serializedVersion: 2
     m_Bits: 1024
+  maxSlopeAngle: 40
   orientation: {fileID: 4125333010350527990}
