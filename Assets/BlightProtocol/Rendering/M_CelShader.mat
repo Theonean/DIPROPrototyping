@@ -24,6 +24,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _Emission_Texture:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Main_Texture:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -42,6 +46,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Fog_Density: 0
     - _Lighting_Cutoff: 0.585
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -49,6 +54,7 @@ Material:
     - _Step_2_Percent: 0.676
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow_Tint: {r: 0.7264151, g: 0.620194, b: 0.70061857, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7781299155573986741

@@ -67,7 +67,7 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 600
   field of view: 60
   orthographic: 0
   orthographic size: 5
@@ -161,9 +161,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactKey: 101
   raycastRange: 500
-  hitMask:
-    serializedVersion: 2
-    m_Bits: 65536
 --- !u!1 &7942143646419951123
 GameObject:
   m_ObjectHideFlags: 0
