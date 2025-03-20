@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 2496205046345633308}
   - component: {fileID: 2298602925149600902}
-  - component: {fileID: 3663912645128979083}
   m_Layer: 0
   m_Name: NavMeshObstacle01
   m_TagString: Untagged
@@ -49,22 +48,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 0
   m_Center: {x: 0, y: -0.2, z: 0.35}
   m_TimeToStationary: 0.5
---- !u!114 &3663912645128979083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4994348984402493299}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ed5517171162e1640b88906e9dfdf28b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxScale: {x: 1.3, y: 1, z: 1}
-  offsetWithBlendShape: {x: -0.08, y: 0, z: 0}
-  attributeNumber: 1
-  meshRenderer: {fileID: 3654556054030680176}
 --- !u!1 &5144471608748660402
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,13 +101,13 @@ MonoBehaviour:
   - Harvester
   - Leg
   meshRenderers:
-  - {fileID: 3654556054030680176}
+  - {fileID: 8033281796988372198}
   meshParent: {fileID: 8393319146484737331}
   ExplosionEffect: {fileID: 1835712765589678237}
   changedBlendshape:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3663912645128979083}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: BlendShapeScaler, Assembly-CSharp
         m_MethodName: UpdateNavmeshBounds
         m_Mode: 1
@@ -292,7 +275,7 @@ MonoBehaviour:
   maxScale: {x: 1.15, y: 1, z: 0.8}
   offsetWithBlendShape: {x: -0.107, y: 0, z: 0.13}
   attributeNumber: 2
-  meshRenderer: {fileID: 3654556054030680176}
+  meshRenderer: {fileID: 0}
 --- !u!1 &8462809618294767473
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,16 +529,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
         type: 3}
-      propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[1].m_Value
-      value: 
-      objectReference: {fileID: 3654556054030680176}
-    - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
-        type: 3}
-      propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[2].m_Value
-      value: 
-      objectReference: {fileID: 3654556054030680176}
-    - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
-        type: 3}
       propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[3].m_Value
       value: 
       objectReference: {fileID: 2800000, guid: f24437aa53a64fb48addef3edc688e19, type: 3}
@@ -762,9 +735,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 3561687664098219515}
   m_SourcePrefab: {fileID: 100100000, guid: 660324313940fcc40a603339867cb41f, type: 3}
---- !u!137 &3654556054030680176 stripped
-SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 660324313940fcc40a603339867cb41f,
+--- !u!23 &8033281796988372198 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7511558181221131132, guid: 660324313940fcc40a603339867cb41f,
     type: 3}
   m_PrefabInstance: {fileID: 8699378444526950498}
   m_PrefabAsset: {fileID: 0}

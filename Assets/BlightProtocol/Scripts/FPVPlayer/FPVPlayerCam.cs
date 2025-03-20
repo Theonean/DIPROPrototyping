@@ -43,10 +43,6 @@ public class FPVPlayerCam : MonoBehaviour
         yRotation += mouseX;
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-    }
-    private void LateUpdate()
-    {
-        if (isLocked) return;
         transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
         orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
     }

@@ -8,7 +8,7 @@ using UnityEngine.VFX;
 public class Obstacle : MonoBehaviour
 {
     public string[] destructiveTags;
-    [SerializeField] private List<SkinnedMeshRenderer> meshRenderers;
+    [SerializeField] private List<MeshRenderer> meshRenderers;
     public GameObject meshParent;
 
     public VisualEffect ExplosionEffect;
@@ -18,13 +18,13 @@ public class Obstacle : MonoBehaviour
 
     private void Awake()
     {
-        RandomizeBlendWeights();
+        //RandomizeBlendWeights();
     }
     public void RandomizeBlendWeights()
     {
-        foreach (SkinnedMeshRenderer meshRenderer in meshRenderers)
+        foreach (MeshRenderer meshRenderer in meshRenderers)
         {
-            meshRenderer.enabled = true;
+            /*meshRenderer.enabled = true;
             GetComponent<Collider>().enabled = true;
             navObstacleHolder.SetActive(true);
             gameObject.SetActive(true);
@@ -37,7 +37,7 @@ public class Obstacle : MonoBehaviour
 
             //Reload the meshrenderer
             meshRenderer.UpdateGIMaterials();
-            changedBlendshape.Invoke();
+            changedBlendshape.Invoke();*/
 
         }
     }
@@ -48,7 +48,7 @@ public class Obstacle : MonoBehaviour
 
         // Use MaterialPropertyBlock to set color without affecting shared materials
         MaterialPropertyBlock propBlock = new MaterialPropertyBlock();
-        foreach (SkinnedMeshRenderer meshRenderer in meshRenderers)
+        foreach (MeshRenderer meshRenderer in meshRenderers)
         {
             meshRenderer.GetPropertyBlock(propBlock);
             propBlock.SetColor("_Color", regionColor);
