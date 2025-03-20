@@ -117,7 +117,9 @@ MonoBehaviour:
   destructiveTags:
   - Harvester
   - Leg
-  meshRenderer: {fileID: 3654556054030680176}
+  meshRenderers:
+  - {fileID: 3654556054030680176}
+  meshParent: {fileID: 8393319146484737331}
   ExplosionEffect: {fileID: 1835712765589678237}
   changedBlendshape:
     m_PersistentCalls:

@@ -52,7 +52,12 @@ MonoBehaviour:
   destructiveTags:
   - Harvester
   - Leg
-  meshRenderer: {fileID: 8053799973257080335}
+  meshRenderers:
+  - {fileID: 6749376377180003647}
+  - {fileID: 4090510612518805307}
+  - {fileID: 3066118459452082198}
+  - {fileID: 5751209513034747531}
+  meshParent: {fileID: 2956684016742058828}
   ExplosionEffect: {fileID: 2190428012782561982}
   changedBlendshape:
     m_PersistentCalls:
@@ -213,7 +218,7 @@ MonoBehaviour:
   maxScale: {x: 1.9, y: 1, z: 1}
   offsetWithBlendShape: {x: 0, y: 0, z: 0}
   attributeNumber: 3
-  meshRenderer: {fileID: 8053799973257080335}
+  meshRenderer: {fileID: 6749376377180003647}
 --- !u!1 &8462809618294767473
 GameObject:
   m_ObjectHideFlags: 0
@@ -287,12 +292,12 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071067
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
@@ -302,7 +307,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
@@ -404,6 +409,11 @@ PrefabInstance:
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
+    - target: {fileID: 4742473837712756890, guid: 8be795a78986ee34291bcf8a89e856f6,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -419,9 +429,33 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2722753231237248541}
   m_PrefabAsset: {fileID: 0}
---- !u!137 &8053799973257080335 stripped
+--- !u!1 &2956684016742058828 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722753231237248541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &3066118459452082198 stripped
 SkinnedMeshRenderer:
-  m_CorrespondingSourceObject: {fileID: -3887185075125053422, guid: 8be795a78986ee34291bcf8a89e856f6,
+  m_CorrespondingSourceObject: {fileID: -8123328394833576437, guid: 8be795a78986ee34291bcf8a89e856f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722753231237248541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &4090510612518805307 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -7129972156257572570, guid: 8be795a78986ee34291bcf8a89e856f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722753231237248541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &5751209513034747531 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 7645228943900539030, guid: 8be795a78986ee34291bcf8a89e856f6,
+    type: 3}
+  m_PrefabInstance: {fileID: 2722753231237248541}
+  m_PrefabAsset: {fileID: 0}
+--- !u!137 &6749376377180003647 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -548397171854316766, guid: 8be795a78986ee34291bcf8a89e856f6,
     type: 3}
   m_PrefabInstance: {fileID: 2722753231237248541}
   m_PrefabAsset: {fileID: 0}
@@ -630,19 +664,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
         type: 3}
-      propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[1].m_Value
-      value: 
-      objectReference: {fileID: 8053799973257080335}
-    - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
-        type: 3}
       propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[2].m_Value
       value: 
       objectReference: {fileID: 2800000, guid: a8b990ce3154d9f4e92d591620429778, type: 3}
-    - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
-        type: 3}
-      propertyPath: m_PropertySheet.m_NamedObject.m_Array.Array.data[3].m_Value
-      value: 
-      objectReference: {fileID: 8053799973257080335}
     - target: {fileID: 7726953543386289972, guid: a18bb48a30ab2e34fabd6061438174f3,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Overridden
