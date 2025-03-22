@@ -23,7 +23,6 @@ public class FPVInteractionHandler : MonoBehaviour
 
     void Update()
     {
-        interactKeyPressed = false;
         if (Input.GetKeyDown(interactKey))
         {
             interactKeyPressed = true;
