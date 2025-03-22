@@ -11,8 +11,7 @@ public class Radar : MonoBehaviour
     [Header("Raycast")]
     public LayerMask layerMask;
     [Header("Ping")]
-    public GameObject enemyPing;
-    public GameObject resourcePointPing;
+    public GameObject ping;
 
     [Header("Pulse")]
     public RadarData radarData;
@@ -92,12 +91,6 @@ public class Radar : MonoBehaviour
             pulseTransform.localScale = Vector3.one * currentRadius;
             pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
 
-            if (Physics.SphereCast(new Ray(Vector3.up, transform.position), currentRadius, out RaycastHit hit, 0.1f, layerMask))
-            {
-                Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
-            }
-            ;
-
             timer += Time.deltaTime * currentSpeed;
             yield return null;
         }
@@ -107,16 +100,9 @@ public class Radar : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         Vector3 collisionPos = other.gameObject.GetComponent<Collider>().ClosestPointOnBounds(transform.position);
-        Debug.Log(other.tag);
-        switch (other.tag)
-        {
-            case "Enemy":
-                Instantiate(enemyPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
-                break;
-
-            case "ResourcePoint":
-                Instantiate(resourcePointPing, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
-                break;
+        if (other.TryGetComponent<EnergySignature>(out EnergySignature signature)) {
+            GameObject instantiatedPing = Instantiate(ping, new Vector3(collisionPos.x, 0, collisionPos.z), Quaternion.Euler(90, 0, 0));
+            instantiatedPing.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
         }
     }
 
@@ -143,7 +129,7 @@ public class Radar : MonoBehaviour
                 if (!colliderList.Contains(hit.collider))
                 {
                     colliderList.Add(hit.collider);
-                    Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
+                    //Instantiate(enemyPing, hit.point, Quaternion.Euler(90, 0, 0));
                 }
             }
         }

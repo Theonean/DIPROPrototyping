@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7381570951520329136}
   - component: {fileID: 8491011004294275034}
+  - component: {fileID: 6081419836081156582}
   m_Layer: 17
   m_Name: RadarHitBox
   m_TagString: ResourcePoint
@@ -53,6 +54,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 5.0315757, z: 1}
   m_Center: {x: 0, y: 2.0157878, z: 0}
+--- !u!114 &6081419836081156582
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3368552263866829622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85e3c6362f5d04f89400ab890e7035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eClass: 0
+  eFrequency: 0
+  eMagnitude: 1
 --- !u!1 &5200256666131700239
 GameObject:
   m_ObjectHideFlags: 0

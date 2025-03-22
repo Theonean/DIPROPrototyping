@@ -4899,6 +4899,7 @@ GameObject:
   - component: {fileID: 7606478691321387734}
   - component: {fileID: 8939018676203692738}
   - component: {fileID: 1677295457117298359}
+  - component: {fileID: 5956257515943653894}
   - component: {fileID: 1463122662569889129}
   - component: {fileID: 497536192867358013}
   m_Layer: 3
@@ -4972,6 +4973,21 @@ MonoBehaviour:
   CollectiblePrefab: {fileID: 8008676224856840013, guid: 7818fbeebdb7c9f46b0a111050caa204,
     type: 3}
   dropChance: 0.15
+--- !u!114 &5956257515943653894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4386438438834597638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85e3c6362f5d04f89400ab890e7035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eClass: 0
+  eFrequency: 1
+  eMagnitude: 2
 --- !u!65 &1463122662569889129
 BoxCollider:
   m_ObjectHideFlags: 0

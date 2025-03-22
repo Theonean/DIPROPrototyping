@@ -11,17 +11,17 @@ public class RadarPing : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     void Start()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        /*spriteRenderer = GetComponent<SpriteRenderer>();
         if (animateScale) {
             transform.localScale = new Vector3 (2,2,2);
-        }
+        }*/
     }
 
     // Update is called once per frame
     void Update()
     {
         fadeTimer += Time.deltaTime;
-        float fadeProgress = fadeTimer / fadeTimeMax;
+        /*float fadeProgress = fadeTimer / fadeTimeMax;
         
         // Update sprite transparency
         spriteRenderer.color = new Color(color.r, color.g, color.b, 1 - fadeProgress);
@@ -32,7 +32,7 @@ public class RadarPing : MonoBehaviour
             transform.localScale = new Vector3(currentScale, currentScale, currentScale);
         }
         
-        // Destroy after fade completes
+        // Destroy after fade completes*/
         if (fadeTimer > fadeTimeMax) {
             Destroy(gameObject);
         }
