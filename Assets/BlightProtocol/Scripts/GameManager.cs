@@ -36,8 +36,8 @@ public class FrankenGameManager : MonoBehaviour
 
         gameOverGroup.alpha = 0;
 
-        ControlZoneManager zoneManager = controlZone.GetComponent<ControlZoneManager>();
-        zoneManager.died.AddListener(() => PlayerDied());
+        ControlZoneManager harvester = controlZone.GetComponent<ControlZoneManager>();
+        harvester.health.died.AddListener(() => PlayerDied());
     }
 
     private void Update()
@@ -65,7 +65,7 @@ public class FrankenGameManager : MonoBehaviour
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
-        if(pauseFadeRoutine != null)
+        if (pauseFadeRoutine != null)
         {
             StopCoroutine(pauseFadeRoutine);
         }

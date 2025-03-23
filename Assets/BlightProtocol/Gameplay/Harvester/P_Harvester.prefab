@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4864172717401356101}
+  - component: {fileID: 3806118222808871307}
   m_Layer: 7
   m_Name: SFX
   m_TagString: Untagged
@@ -32,6 +33,22 @@ Transform:
   - {fileID: 6936006010147451891}
   m_Father: {fileID: 818824688125454779}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3806118222808871307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 119060130755878854}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e4ec763ddaa5f04fb09806f6513e5c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  harvestingSFXPath: event:/SFX/Harvester/Harvesting
+  movingSFX: {fileID: 8190389012815932113}
+  enemyImpactSFXPath: event:/SFX/Harvester/Impact
+  takeoffSFXPath: event:/SFX/Harvester/TakingOff
 --- !u!1 &411776726686142439
 GameObject:
   m_ObjectHideFlags: 0
@@ -887,6 +904,112 @@ RectTransform:
   m_AnchoredPosition: {x: -5, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &6476196891674240112
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9125053196288167875}
+  - component: {fileID: 574977737770609118}
+  - component: {fileID: 2566912450360716628}
+  - component: {fileID: 2770387572818103519}
+  m_Layer: 0
+  m_Name: Hurtbox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9125053196288167875
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 818824688125454779}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &574977737770609118
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d66d89852345974091cbcadade127fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 10
+  health: 0
+  healthSliders:
+  - {fileID: 4838321126794333530}
+  - {fileID: 0}
+  m_carrierBalloon: {fileID: 2570681315178722742}
+  tookDamage:
+    m_PersistentCalls:
+      m_Calls: []
+  died:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!65 &2566912450360716628
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.3, y: 6, z: 8}
+  m_Center: {x: 0, y: 2, z: -1.53}
+--- !u!54 &2770387572818103519
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 64
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &6747367135560543830
 GameObject:
   m_ObjectHideFlags: 0
@@ -1099,8 +1222,7 @@ GameObject:
   m_Component:
   - component: {fileID: 818824688125454779}
   - component: {fileID: 706314438526691804}
-  - component: {fileID: 3181088379567748915}
-  - component: {fileID: 144660824488806144}
+  - component: {fileID: 3893695005072961915}
   m_Layer: 7
   m_Name: P_Harvester
   m_TagString: Harvester
@@ -1129,6 +1251,7 @@ Transform:
   - {fileID: 2899851371443547664}
   - {fileID: 3446849880171857209}
   - {fileID: 1752358629644076755}
+  - {fileID: 9125053196288167875}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &706314438526691804
@@ -1143,81 +1266,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5762ddaf6b9b774489b91d42980749f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 10
-  health: 0
-  navMeshSurface: {fileID: 0}
-  healthSliders:
-  - {fileID: 0}
-  - {fileID: 4838321126794333530}
-  died:
-    m_PersistentCalls:
-      m_Calls: []
-  waveTime: 20
   moveSpeed: 5
   waveProgressSlider: {fileID: 5504734985198772234}
   changedState:
     m_PersistentCalls:
       m_Calls: []
-  targetPosObject: {fileID: 0}
   travelTimeLeft: 0
-  pathPositionsIndex: 1
-  pathPositions: []
-  m_carrierBalloon: {fileID: 2570681315178722742}
-  resoucePointColorCorrection: 0.7
   drillingVFX: {fileID: 5204981705700948195}
   resourceHarvestingSpeed: 1
-  harvestingSFXPath: event:/SFX/Harvester/Harvesting
-  movingSFX: {fileID: 8190389012815932113}
-  enemyImpactSFXPath: event:/SFX/Harvester/Impact
-  takeoffSFXPath: event:/SFX/Harvester/TakingOff
---- !u!65 &3181088379567748915
-BoxCollider:
+--- !u!114 &3893695005072961915
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7113327578232574430}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 4.3, y: 6, z: 8}
-  m_Center: {x: 0, y: 2, z: -1.53}
---- !u!54 &144660824488806144
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7113327578232574430}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 64
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 116
-  m_CollisionDetection: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc268192493d62841b0ded2f1272c325, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSpeed: 5
+  targetPosObject: {fileID: 0}
+  travelTimeLeft: 0
+  lineRenderer: {fileID: 6001975293294036761}
 --- !u!1 &7358851095998060526
 GameObject:
   m_ObjectHideFlags: 0
@@ -1990,6 +2062,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 8862387140162161140}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 4aa8bff34cbc5944594f789d1dcee9a2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5246032259258083336}
   m_SourcePrefab: {fileID: 100100000, guid: 4aa8bff34cbc5944594f789d1dcee9a2, type: 3}
 --- !u!1 &4952035623661563928 stripped
 GameObject:
@@ -2018,6 +2094,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5246032259258083336
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4952035623661563928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d445f6b275660a439ac4cb98dec2b92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5760942323535784610 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 4aa8bff34cbc5944594f789d1dcee9a2,

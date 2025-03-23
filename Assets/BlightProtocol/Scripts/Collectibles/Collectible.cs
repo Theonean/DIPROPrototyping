@@ -20,7 +20,7 @@ public class Collectible : MonoBehaviour
     void Start()
     {
         //When harvester is at full health, don't drop healing packs
-        int topRange = ControlZoneManager.Instance.health == ControlZoneManager.Instance.maxHealth ? 2 : 3;
+        int topRange = ControlZoneManager.Instance.health.IsAtFullHealth() ? 2 : 3;
         int bottomRange = 0;
 
         //Determine what type of collectible this is and enable the corresponding game object

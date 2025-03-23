@@ -15,7 +15,7 @@ public class TargetPosition : MonoBehaviour
         if (other.CompareTag("ResourcePoint")) {
             isOnResourcePoint = true;
             transform.position = other.transform.position;
-            ControlZoneManager.Instance.SetNextPathPosition(transform.position);
+            ControlZoneManager.Instance.mover.SetDestination(transform.position);
             activeResourcePoint = other.transform.parent.gameObject;
         }
     }
