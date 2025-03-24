@@ -9,6 +9,7 @@ public class HarvesterSpeedStep
     public float fuelCost;
     public Color displayColor;
     public bool isBaseSpeed = false;
+    public float seismoEmission = 0f;
 }
 
 public class HarvesterSpeedControl : MonoBehaviour
@@ -48,6 +49,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     private void SetSpeed()
     {
         Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
+        Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
     }
 
     private void UpdateSpeedIndicator()

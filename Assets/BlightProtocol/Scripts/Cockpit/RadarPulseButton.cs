@@ -4,6 +4,7 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
 {
     public bool IsCurrentlyInteractable {get; set;} = true;
     public string lookAtText = "E"; // Backing field for Inspector
+    public float seismoEmission = 5f;
 
     public string LookAtText
     {
@@ -14,6 +15,7 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
     public void OnInteract()
     {
         Radar.Instance.Pulse();
+        Seismograph.Instance.SetOtherEmission("Radar Pulse", seismoEmission, 1f);
     }
 
     public void OnHover() {

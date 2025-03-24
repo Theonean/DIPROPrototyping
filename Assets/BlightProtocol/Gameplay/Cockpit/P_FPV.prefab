@@ -1389,6 +1389,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookAtText: '[E] Pulse'
+  seismoEmission: 5
 --- !u!1 &7503053789956115794
 GameObject:
   m_ObjectHideFlags: 0
@@ -2556,30 +2557,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_Seismograph
       objectReference: {fileID: 0}
-    - target: {fileID: 3263436741608267400, guid: 828ba3bd6d906d84b9241a7e61c2d662,
-        type: 3}
-      propertyPath: seismographEmissions.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3263436741608267400, guid: 828ba3bd6d906d84b9241a7e61c2d662,
-        type: 3}
-      propertyPath: seismographEmissions.Array.data[0].strength
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3263436741608267400, guid: 828ba3bd6d906d84b9241a7e61c2d662,
-        type: 3}
-      propertyPath: seismographEmissions.Array.data[1].strength
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3263436741608267400, guid: 828ba3bd6d906d84b9241a7e61c2d662,
-        type: 3}
-      propertyPath: seismographEmissions.Array.data[1].zoneState
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5303690484041581199, guid: 828ba3bd6d906d84b9241a7e61c2d662,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.561
       objectReference: {fileID: 0}
     - target: {fileID: 5303690484041581199, guid: 828ba3bd6d906d84b9241a7e61c2d662,
         type: 3}
@@ -2589,7 +2570,7 @@ PrefabInstance:
     - target: {fileID: 5303690484041581199, guid: 828ba3bd6d906d84b9241a7e61c2d662,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5303690484041581199, guid: 828ba3bd6d906d84b9241a7e61c2d662,
         type: 3}
@@ -2626,6 +2607,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6809999822189681202, guid: 828ba3bd6d906d84b9241a7e61c2d662,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2658,7 +2644,7 @@ PrefabInstance:
     - target: {fileID: 3105021458859584697, guid: 8b60e0624b9be194d914e9afccf4de68,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.4898805
+      value: 1.147
       objectReference: {fileID: 0}
     - target: {fileID: 3105021458859584697, guid: 8b60e0624b9be194d914e9afccf4de68,
         type: 3}
