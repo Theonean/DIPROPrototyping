@@ -1,5 +1,13 @@
 using UnityEngine;
 
+public enum HARVESTER_ANIMATION
+{
+    Idle,
+    Start_Harvesting,
+    Harvesting,
+    Stop_Harvesting
+}
+
 [RequireComponent(typeof(Animator))]
 public class HarvesterAnimator : MonoBehaviour
 {
@@ -25,6 +33,39 @@ public class HarvesterAnimator : MonoBehaviour
     {
         return animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
     }
+
+    /// <summary>
+    /// Get progress of a specific animation, returns 0 if not playing
+    /// </summary>
+    /// <param name="animation"></param>
+    /// <returns></returns>
+    public float GetCurrentAnimationProgress(HARVESTER_ANIMATION animation)
+    {
+        int targetHash = 0;
+        switch (animation)
+        {
+            case HARVESTER_ANIMATION.Idle:
+                targetHash = m_Idle;
+                break;
+            case HARVESTER_ANIMATION.Start_Harvesting:
+                targetHash = m_StartHarvesting;
+                break;
+            case HARVESTER_ANIMATION.Harvesting:
+                targetHash = m_Harvesting;
+                break;
+            case HARVESTER_ANIMATION.Stop_Harvesting:
+                targetHash = m_StopHarvesting;
+                break;
+        }
+
+        AnimatorStateInfo stateInfo = animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.shortNameHash == targetHash)
+        {
+            return stateInfo.normalizedTime;
+        }
+        return 0f;
+    }
+
 
     private void SetHarvesterAnimation(ZoneState state)
     {

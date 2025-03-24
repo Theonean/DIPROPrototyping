@@ -19,7 +19,7 @@ public class EndHarvestingState : IHarvesterState
 
     public void Update()
     {
-        if (harvester.animator.GetCurrentAnimationProgress() >= 1f)
+        if (harvester.animator.GetCurrentAnimationProgress(HARVESTER_ANIMATION.Stop_Harvesting) >= 1f)
         {
             harvester.SetState(new IdleState(harvester));
         }

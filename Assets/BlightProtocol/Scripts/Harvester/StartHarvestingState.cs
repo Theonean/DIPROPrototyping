@@ -19,7 +19,7 @@ public class StartHarvestingState : IHarvesterState
 
     public void Update()
     {
-        if (harvester.animator.GetCurrentAnimationProgress() >= 1f)
+        if (harvester.animator.GetCurrentAnimationProgress(HARVESTER_ANIMATION.Start_Harvesting) >= 1f)
         {
             Debug.Log("switching to harvesting state");
             harvester.SetState(new HarvestingState(harvester));
