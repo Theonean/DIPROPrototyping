@@ -24,6 +24,8 @@ public class MovingState : IHarvesterState
     {
         if (harvester.HasArrivedAtTarget())
         {
+            harvester.SetState(new IdleState(harvester));
+            /*
             if (harvester.IsTargetingResourcePoint())
             {
                 harvester.SetState(new StartHarvestingState(harvester));
@@ -31,7 +33,7 @@ public class MovingState : IHarvesterState
             else
             {
                 harvester.SetState(new IdleState(harvester));
-            }
+            }*/
         }
     }
 
