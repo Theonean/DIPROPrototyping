@@ -50,7 +50,7 @@ public class WaveManager : MonoBehaviour
             m_InactiveSpawners.Enqueue(spawner);
         }
 
-        ControlZoneManager.Instance.changedState.AddListener(HarvesterChangedState);
+        Harvester.Instance.changedState.AddListener(HarvesterChangedState);
 
         ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
     }
@@ -147,7 +147,7 @@ public class WaveManager : MonoBehaviour
 
     IEnumerator AMBUSH_CIRCLE()
     {
-        Vector3 controlZonePosition = ControlZoneManager.Instance.transform.position;
+        Vector3 controlZonePosition = Harvester.Instance.transform.position;
         float radius = difficultySettings.spawnRadius;
         int enemyCount = difficultySettings.baseEnemyCount + difficultyLevel * difficultySettings.ambushEnemyMultiplier;
 
@@ -166,7 +166,7 @@ public class WaveManager : MonoBehaviour
         direction.y = 0f;
         direction.Normalize();
         direction *= difficultySettings.ambushRangeScale;
-        Vector3 spawnPosition = ControlZoneManager.Instance.transform.position + direction;
+        Vector3 spawnPosition = Harvester.Instance.transform.position + direction;
 
         int enemyCount = difficultySettings.baseEnemyCount + difficultyLevel * difficultySettings.ambushEnemyMultiplier;
         int iX = Mathf.CeilToInt(Mathf.Sqrt(enemyCount));
@@ -196,7 +196,7 @@ public class WaveManager : MonoBehaviour
             direction.y = 0f;
             direction.Normalize();
             direction *= difficultySettings.ambushRangeScale;
-            Vector3 spawnPosition = ControlZoneManager.Instance.transform.position + direction;
+            Vector3 spawnPosition = Harvester.Instance.transform.position + direction;
 
             for (int x = 0; x < iX; x++)
             {

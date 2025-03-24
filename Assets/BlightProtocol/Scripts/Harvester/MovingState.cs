@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class MovingState : IHarvesterState
 {
-    private readonly ControlZoneManager harvester;
+    private readonly Harvester harvester;
     private readonly ZoneState state = ZoneState.MOVING;
 
     public ZoneState State => state;
 
-    public MovingState(ControlZoneManager harvester)
+    public MovingState(Harvester harvester)
     {
         this.harvester = harvester;
     }

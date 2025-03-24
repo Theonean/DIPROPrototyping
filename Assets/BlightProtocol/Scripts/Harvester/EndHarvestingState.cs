@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class EndHarvestingState : IHarvesterState
 {
-    private readonly ControlZoneManager harvester;
+    private readonly Harvester harvester;
     private readonly ZoneState state = ZoneState.END_HARVESTING;
 
     public ZoneState State => state;
 
-    public EndHarvestingState(ControlZoneManager harvester)
+    public EndHarvestingState(Harvester harvester)
     {
         this.harvester = harvester;
     }

@@ -1,8 +1,9 @@
 using UnityEngine;
 
-public class ExplosiveBody : MonoBehaviour, IRocketBody
+public class ExplosiveBody : ACRocketBody
 {
-    public void Explode()
+
+     public override void Explode()
     {
         throw new System.NotImplementedException();
     }

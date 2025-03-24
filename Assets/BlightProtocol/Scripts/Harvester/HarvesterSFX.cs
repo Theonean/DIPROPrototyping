@@ -11,11 +11,11 @@ public class HarvesterSFX : MonoBehaviour
     public string enemyImpactSFXPath = "event:/...";
     public string takeoffSFXPath = "event:/...";
 
-    private ControlZoneManager harvester;
+    private Harvester harvester;
 
     private void Awake()
     {
-        harvester = ControlZoneManager.Instance;
+        harvester = Harvester.Instance;
     }
 
     private void OnEnable()

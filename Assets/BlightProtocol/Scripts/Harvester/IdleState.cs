@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class IdleState : IHarvesterState
 {
-    private readonly ControlZoneManager harvester;
+    private readonly Harvester harvester;
     private readonly ZoneState state = ZoneState.IDLE;
 
     public ZoneState State => state;
 
-    public IdleState(ControlZoneManager harvester)
+    public IdleState(Harvester harvester)
     {
         this.harvester = harvester;
     }

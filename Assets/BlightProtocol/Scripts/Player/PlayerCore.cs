@@ -68,7 +68,7 @@ public class PlayerCore : MonoBehaviour
         if (isDead)
         {
             m_RespawnTimer += Time.deltaTime;
-            transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
+            transform.position = FindObjectOfType<Harvester>().transform.position;
             respawnTimerText.text = Mathf.Clamp(respawnTime - m_RespawnTimer, 0f, respawnTime).ToString("F2");
 
             if (m_RespawnTimer >= respawnTime)
@@ -114,7 +114,7 @@ public class PlayerCore : MonoBehaviour
     public void ModifyHealth(int amount)
     {
         //When harvester has died, don't take damage
-        if (ControlZoneManager.Instance.GetZoneState().Equals(ZoneState.DIED))
+        if (Harvester.Instance.GetZoneState().Equals(ZoneState.DIED))
         {
             return;
         }
@@ -150,7 +150,7 @@ public class PlayerCore : MonoBehaviour
             shieldSFXInstance.setPaused(true);
 
             //Make drone invisible when dead
-            transform.position = FindObjectOfType<ControlZoneManager>().transform.position;
+            transform.position = FindObjectOfType<Harvester>().transform.position;
             isDead = true;
             m_RespawnTimer = 0f;
             shieldVFX.ToggleShield(true);

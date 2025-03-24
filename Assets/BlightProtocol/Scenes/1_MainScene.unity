@@ -800,6 +800,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPV
       objectReference: {fileID: 0}
+    - target: {fileID: 55595641276044231, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 368676107629330808, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_Mesh
@@ -808,7 +813,7 @@ PrefabInstance:
     - target: {fileID: 736376393224426372, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 777614362969610735, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -828,7 +833,7 @@ PrefabInstance:
     - target: {fileID: 1059832739065544229, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1061316925756619983, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1063,7 +1068,7 @@ PrefabInstance:
     - target: {fileID: 8561859047588795871, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8872640711463356057, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1078,24 +1083,12 @@ PrefabInstance:
     - target: {fileID: 9161295443071173736, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 895263859405794568, guid: 0b57e7b70314eaf479534b60bc1982ce,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 2369972512001315471, guid: 0b57e7b70314eaf479534b60bc1982ce,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 7200650523614655303, guid: 0b57e7b70314eaf479534b60bc1982ce,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0b57e7b70314eaf479534b60bc1982ce, type: 3}
 --- !u!43 &414315211
 Mesh:

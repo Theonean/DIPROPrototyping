@@ -23,11 +23,12 @@ public class HarvesterHealth : MonoBehaviour
     {
         health = maxHealth;
 
+        /*
         foreach (Slider slider in healthSliders)
         {
             slider.maxValue = maxHealth;
             slider.value = maxHealth;
-        }
+        }*/
     }
 
     private void OnEnable()

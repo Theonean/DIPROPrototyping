@@ -14,7 +14,7 @@ public class HarvesterAnimator : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        ControlZoneManager.Instance.changedState.AddListener(SetHarvesterAnimation);
+        Harvester.Instance.changedState.AddListener(SetHarvesterAnimation);
     }
 
     /// <summary>

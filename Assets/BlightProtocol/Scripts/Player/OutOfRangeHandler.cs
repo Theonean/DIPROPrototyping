@@ -15,12 +15,12 @@ public class PlayerOutOfRangeHandler : MonoBehaviour
 
     private const float fadeStartDistance = 20f;
     private DroneMovement droneMovement;
-    private ControlZoneManager harvester;
+    private Harvester harvester;
 
     void Start()
     {
         droneMovement = GetComponentInChildren<DroneMovement>();
-        harvester = ControlZoneManager.Instance;
+        harvester = Harvester.Instance;
     }
 
     private void Update()

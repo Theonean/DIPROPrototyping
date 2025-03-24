@@ -47,7 +47,7 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     private void SetSpeed()
     {
-        ControlZoneManager.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
+        Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
     }
 
     private void UpdateSpeedIndicator()

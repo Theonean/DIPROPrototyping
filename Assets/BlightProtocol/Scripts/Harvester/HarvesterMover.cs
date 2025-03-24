@@ -10,12 +10,12 @@ public class HarvesterMover : MonoBehaviour
     public TargetPosition targetPosObject;
     public float travelTimeLeft;
     [SerializeField] private LineRenderer lineRenderer;
-    private ControlZoneManager harvester;
+    private Harvester harvester;
     private Coroutine moveCoroutine;
 
     private void Awake()
     {
-        harvester = ControlZoneManager.Instance;
+        harvester = Harvester.Instance;
     }
 
     public void StartMoving()

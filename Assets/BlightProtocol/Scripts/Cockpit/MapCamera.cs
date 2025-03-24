@@ -11,6 +11,6 @@ public class MapCamera : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(ControlZoneManager.Instance.transform.position.x, yPos, ControlZoneManager.Instance.transform.position.z);
+        transform.position = new Vector3(Harvester.Instance.transform.position.x, yPos, Harvester.Instance.transform.position.z);
     }
 }

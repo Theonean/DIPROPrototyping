@@ -17,11 +17,10 @@ public enum ZoneState
     DIED //Dead, no longer doing anything
 }
 
-public class ControlZoneManager
-    : MonoBehaviour
+public class Harvester : MonoBehaviour
 {
 
-    public static ControlZoneManager Instance { get; private set; }
+    public static Harvester Instance { get; private set; }
 
     private float timeUntilResourcePointEmpty;
     private float harvestingTimer = 0f;

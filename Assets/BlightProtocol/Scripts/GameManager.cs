@@ -36,7 +36,7 @@ public class FrankenGameManager : MonoBehaviour
 
         gameOverGroup.alpha = 0;
 
-        ControlZoneManager harvester = controlZone.GetComponent<ControlZoneManager>();
+        Harvester harvester = controlZone.GetComponent<Harvester>();
         harvester.health.died.AddListener(() => PlayerDied());
     }
 
