@@ -17,6 +17,8 @@ public class FPVPlayerCam : MonoBehaviour
     private Quaternion lastRotation;
     private Vector3 lastPosition;
     public float transitionDuration = 1f;
+    private bool isReparented = false;
+    private GameObject defaultParent;
 
     void Awake()
     {
@@ -28,6 +30,8 @@ public class FPVPlayerCam : MonoBehaviour
         {
             Instance = this;
         }
+
+        defaultParent = transform.parent.gameObject;
     }
 
     private void Update()
@@ -47,7 +51,7 @@ public class FPVPlayerCam : MonoBehaviour
         orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
     }
 
-    public void LockToPosition(Transform targetTransform, bool useInitPos = false)
+    public void LockToPosition(Transform targetTransform, bool useInitPos = false, bool reparent = false)
     {
         isLocked = true;
         lastRotation = transform.localRotation;
@@ -56,16 +60,25 @@ public class FPVPlayerCam : MonoBehaviour
 
         StopAllCoroutines();
 
-        Quaternion localTargetRot = transform.parent != null
-            ? Quaternion.Inverse(transform.parent.rotation) * targetTransform.rotation
-            : targetTransform.rotation;
+        if (reparent)
+        {
+            transform.parent = targetTransform;
+            isReparented = true;
 
-        Vector3 localTargetPos = transform.parent != null
-            ? transform.parent.InverseTransformPoint(targetTransform.position)
-            : targetTransform.position;
+            StartCoroutine(SmoothMove(Quaternion.identity, Vector3.zero));
+        }
+        else
+        {
+            Quaternion localTargetRot = transform.parent != null
+                        ? Quaternion.Inverse(transform.parent.rotation) * targetTransform.rotation
+                        : targetTransform.rotation;
 
-        StartCoroutine(SmoothMove(localTargetRot, localTargetPos));
+            Vector3 localTargetPos = transform.parent != null
+                ? transform.parent.InverseTransformPoint(targetTransform.position)
+                : targetTransform.position;
 
+            StartCoroutine(SmoothMove(localTargetRot, localTargetPos));
+        }
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
     }
@@ -73,6 +86,10 @@ public class FPVPlayerCam : MonoBehaviour
     public void UnlockPosition()
     {
         StopAllCoroutines();
+
+        transform.parent = defaultParent.transform;
+        isReparented = false;
+
         StartCoroutine(SmoothMove(lastRotation, lastPosition, true));
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

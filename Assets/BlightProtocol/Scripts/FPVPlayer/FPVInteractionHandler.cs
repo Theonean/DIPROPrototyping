@@ -27,7 +27,6 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             interactKeyPressed = true;
         }
-
     }
 
     void FixedUpdate()
@@ -36,20 +35,36 @@ public class FPVInteractionHandler : MonoBehaviour
 
         if (Physics.Raycast(ray, out hit, raycastRange))
         {
-            if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable) && hit.collider.CompareTag("FPVInteractable"))
+            Rigidbody hitRigidbody = hit.rigidbody;
+
+            if (hitRigidbody != null)
             {
-                if (interactable != lastHoveredObject)
+                if (hitRigidbody.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable) && hit.collider.CompareTag("FPVInteractable"))
                 {
-                    lastHoveredObject = interactable;
-                    interactable.OnHover();
+                    if (interactable != lastHoveredObject)
+                    {
+                        lastHoveredObject = interactable;
+                        interactable.OnHover();
+                    }
+                }
+                else
+                {
+                    ClearLookAtText();
                 }
             }
             else
             {
-                if (lastHoveredObject != null)
+                if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable) && hit.collider.CompareTag("FPVInteractable"))
                 {
-                    FPVUI.Instance.ClearLookAtText();
-                    lastHoveredObject = null;
+                    if (interactable != lastHoveredObject)
+                    {
+                        lastHoveredObject = interactable;
+                        interactable.OnHover();
+                    }
+                }
+                else
+                {
+                    ClearLookAtText();
                 }
             }
 
@@ -61,24 +76,39 @@ public class FPVInteractionHandler : MonoBehaviour
         }
         else
         {
-            if (lastHoveredObject != null)
-            {
-                FPVUI.Instance.ClearLookAtText();
-                lastHoveredObject = null;
-            }
+            ClearLookAtText();
+        }
+    }
+
+    private void ClearLookAtText()
+    {
+        if (lastHoveredObject != null)
+        {
+            FPVUI.Instance.ClearLookAtText();
+            lastHoveredObject = null;
         }
     }
 
     void Interact()
     {
-        switch (hit.collider.tag)
+        if (hit.collider != null)
         {
-            default:
-                if (lastHoveredObject != null)
+            Rigidbody hitRigidbody = hit.rigidbody;
+
+            if (hitRigidbody != null)
+            {
+                if (hitRigidbody.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable))
                 {
-                    lastHoveredObject.OnInteract();
+                    interactable.OnInteract();
                 }
-                break;
+            }
+            else
+            {
+                if (hit.collider.TryGetComponent<IFPVInteractable>(out IFPVInteractable interactable))
+                {
+                    interactable.OnInteract();
+                }
+            }
         }
     }
 }

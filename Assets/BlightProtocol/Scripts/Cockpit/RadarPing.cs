@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class RadarPing : MonoBehaviour
 {
+    public bool permanent = false;
+
     public float fadeTimeMax = 1f;
     public float scaleMax = 5f;
     private float fadeTimer = 0f;
@@ -20,21 +22,26 @@ public class RadarPing : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        fadeTimer += Time.deltaTime;
-        /*float fadeProgress = fadeTimer / fadeTimeMax;
-        
-        // Update sprite transparency
-        spriteRenderer.color = new Color(color.r, color.g, color.b, 1 - fadeProgress);
-        
-        // Gradually scale up
-        if (animateScale) {
-            float currentScale = Mathf.Lerp(2, scaleMax, fadeProgress);
-            transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+        if (!permanent)
+        {
+            fadeTimer += Time.deltaTime;
+            /*float fadeProgress = fadeTimer / fadeTimeMax;
+
+            // Update sprite transparency
+            spriteRenderer.color = new Color(color.r, color.g, color.b, 1 - fadeProgress);
+
+            // Gradually scale up
+            if (animateScale) {
+                float currentScale = Mathf.Lerp(2, scaleMax, fadeProgress);
+                transform.localScale = new Vector3(currentScale, currentScale, currentScale);
+            }
+
+            // Destroy after fade completes*/
+            if (fadeTimer > fadeTimeMax)
+            {
+                Destroy(gameObject);
+            }
         }
-        
-        // Destroy after fade completes*/
-        if (fadeTimer > fadeTimeMax) {
-            Destroy(gameObject);
-        }
+
     }
 }
