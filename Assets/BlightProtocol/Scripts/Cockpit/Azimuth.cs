@@ -16,15 +16,21 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
 
     [Header("Azimuth Parts")]
     public GameObject ring;
-    public float maxRotation;
+    public Vector2 rotationRange;
     public GameObject targetCircle;
     public Vector2 circleHeightRange;
+    float yRotation;
 
     [Header("Raycasting")]
     public Transform rayOrigin;
     private RaycastHit hit;
     public LayerMask hitMask;
+    public LayerMask innerRinghitMask;
     public GameObject radarMarker;
+    private GameObject radarMarkerInstance = null;
+    public Color innerRingEnabledColor;
+    public Color innerRingDisabledColor;
+    public Renderer innerRing;
 
     public string LookAtText
     {
@@ -39,8 +45,9 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
             float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
 
-            ring.transform.Rotate(Vector3.up, mouseX);
-            ring.transform.rotation = Quaternion.Euler(0, Mathf.Clamp(ring.transform.rotation.eulerAngles.y, -maxRotation, maxRotation), 0);
+            yRotation += mouseX;
+            yRotation = Mathf.Clamp(yRotation, rotationRange.x, rotationRange.y);
+            ring.transform.localRotation = Quaternion.Euler(0, yRotation, 0);
 
             targetCircle.transform.localPosition += new Vector3(0, mouseY, 0);
             targetCircle.transform.localPosition = new Vector3(targetCircle.transform.localPosition.x, Mathf.Clamp(targetCircle.transform.localPosition.y, circleHeightRange.x, circleHeightRange.y), targetCircle.transform.localPosition.z);
@@ -48,10 +55,19 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 rayDirection = (rayOrigin.position - cameraLockPos.position).normalized;
-                if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, hitMask)) {
+                if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, hitMask))
+                {
                     Logger.Log(hit.collider.name, LogLevel.INFO, LogType.HARVESTER);
                     //Debug.DrawRay(rayOrigin.position, rayDirection* 1000, Color.red, 10f);
-                    Instantiate(radarMarker, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.Euler(90, 0, 0));
+                    if (radarMarkerInstance != null)
+                    {
+                        radarMarkerInstance.transform.position = new Vector3(hit.point.x, 1, hit.point.z);
+                    }
+                    else
+                    {
+                        radarMarkerInstance = Instantiate(radarMarker, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.Euler(90, 0, 0));
+                    }
+
                 }
             }
 
@@ -59,11 +75,42 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             {
                 FPVPlayerCam.Instance.UnlockPosition();
                 Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
                 isInFocus = false;
             }
         }
     }
+
+    void FixedUpdate()
+    {
+        if (isInFocus)
+            UpdateInnerRing();
+    }
+
+    private void UpdateInnerRing()
+    {
+        Vector3 rayDirection = (rayOrigin.position - cameraLockPos.position).normalized;
+        if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, innerRinghitMask))
+        {
+            if ((hitMask & (1 << hit.collider.gameObject.layer)) != 0)
+            {
+                innerRing.material.SetColor("_Color", innerRingEnabledColor);
+                innerRing.material.SetColor("_EmissionColor", innerRingEnabledColor);
+            }
+            else
+            {
+                innerRing.material.SetColor("_Color", innerRingDisabledColor);
+                innerRing.material.SetColor("_EmissionColor", innerRingDisabledColor);
+            }
+
+        }
+        else
+        {
+            innerRing.material.SetColor("_Color", innerRingDisabledColor);
+            innerRing.material.SetColor("_EmissionColor", innerRingDisabledColor);
+        }
+    }
+
+
 
     public void OnHover()
     {
@@ -76,14 +123,12 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
         {
             FPVPlayerCam.Instance.UnlockPosition();
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             isInFocus = false;
         }
         else
         {
             FPVPlayerCam.Instance.LockToPosition(cameraLockPos, false, true);
             Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
             isInFocus = true;
         }
 

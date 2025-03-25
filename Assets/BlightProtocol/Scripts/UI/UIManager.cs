@@ -8,6 +8,20 @@ public class UIHandler : MonoBehaviour
     public GameObject topDownUI;
     public GameObject fpvUI;
     public GameObject generalUI;
+    
+    public static UIHandler Instance { get; private set; }
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     void Start()
     {

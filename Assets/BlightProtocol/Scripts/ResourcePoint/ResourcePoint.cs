@@ -27,4 +27,11 @@ public class ResourcePoint : MonoBehaviour
 
         return true;
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.collider.CompareTag("Harvester")) {
+            Destroy(aboveGround);
+        }       
+    }
 }

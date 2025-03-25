@@ -1,4 +1,5 @@
 using System.Collections;
+using TMPro.EditorUtilities;
 using UnityEngine;
 
 public class FPVPlayerCam : MonoBehaviour
@@ -81,6 +82,8 @@ public class FPVPlayerCam : MonoBehaviour
         }
         Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
+        FPVUI.Instance.ToggleFPVCrosshair(false);
+        FPVUI.Instance.ToggleLookAtText(false);
     }
 
     public void UnlockPosition()
@@ -93,6 +96,8 @@ public class FPVPlayerCam : MonoBehaviour
         StartCoroutine(SmoothMove(lastRotation, lastPosition, true));
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        FPVUI.Instance.ToggleFPVCrosshair(true);
+        FPVUI.Instance.ToggleLookAtText(true);
     }
 
     private IEnumerator SmoothMove(Quaternion targetRot, Vector3 targetPos, bool unlock = false)
