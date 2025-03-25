@@ -63,8 +63,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 1.6
+    height: 9
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -202,8 +202,8 @@ Camera:
     serializedVersion: 2
     x: 0
     y: 0
-    width: 1
-    height: 1
+    width: 1.6
+    height: 9
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -295,8 +295,33 @@ PrefabInstance:
       objectReference: {fileID: 3085719942352007462}
     - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
         type: 3}
-      propertyPath: m_AnchoredPosition.x
+      propertyPath: m_AnchorMax.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
+        type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
+        type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 5767289325558553681, guid: b6642ac08ebb45a4b8ef26e59d964e40,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -1080
       objectReference: {fileID: 0}
     - target: {fileID: 5880650157475623654, guid: b6642ac08ebb45a4b8ef26e59d964e40,
         type: 3}

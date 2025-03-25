@@ -7,6 +7,10 @@ public class FPVMoveCam : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position = cameraPosition.position;
+        if (!FPVPlayerCam.Instance.isLocked)
+        {
+            transform.position = cameraPosition.position;
+        }
+
     }
 }

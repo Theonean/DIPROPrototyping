@@ -71,8 +71,8 @@ public class FPVPlayerCam : MonoBehaviour
         else
         {
             Quaternion localTargetRot = transform.parent != null
-                        ? Quaternion.Inverse(transform.parent.rotation) * targetTransform.rotation
-                        : targetTransform.rotation;
+                ? Quaternion.Inverse(transform.parent.rotation) * targetTransform.rotation
+                : targetTransform.rotation;
 
             Vector3 localTargetPos = transform.parent != null
                 ? transform.parent.InverseTransformPoint(targetTransform.position)

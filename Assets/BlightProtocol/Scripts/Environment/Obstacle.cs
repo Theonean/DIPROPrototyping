@@ -99,7 +99,7 @@ public class Obstacle : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         meshParent.SetActive(false);
-        GetComponent<Collider>().enabled = false;
+        GetComponentInChildren<Collider>().enabled = false;
         navObstacleHolder.SetActive(false);
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);

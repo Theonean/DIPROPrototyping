@@ -24,20 +24,13 @@ public class FPVMap : MonoBehaviour, IFPVInteractable
     {
         if (isInFocus)
         {
-            Vector2 mousePos = Input.mousePosition;
-
-            float confinedMouseX = Mathf.Clamp(mousePos.x-mouseOffset.x*0.5f, 0, mapCamera.pixelWidth);
-            float confinedMouseY = Mathf.Clamp(mousePos.y-mouseOffset.y*0.5f, 0, mapCamera.pixelHeight);
-
-            float centeredMouseX = confinedMouseX - (mapCamera.pixelWidth / 2);
-            float centeredMouseY = confinedMouseY - (mapCamera.pixelHeight / 2);
-
-            // Set the UI target position based on the centered and confined mouse position
-            uiTarget.anchoredPosition = new Vector3(centeredMouseX, centeredMouseY);
+            Vector2 screenSpaceMousePos = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height);
+            Vector3 screenPoint = new Vector3(screenSpaceMousePos.x * mapCamera.pixelWidth, screenSpaceMousePos.y * mapCamera.pixelHeight, 100f);
+            uiTarget.transform.position = mapCamera.ScreenToWorldPoint(screenPoint);
 
             if (Input.GetMouseButtonDown(0))
             {
-                SetTarget(new Vector2(confinedMouseX, confinedMouseY));
+                SetTarget(screenPoint);
             }
 
             if (Input.GetKeyDown(KeyCode.E))
@@ -69,17 +62,18 @@ public class FPVMap : MonoBehaviour, IFPVInteractable
         else
         {
             FPVPlayerCam.Instance.LockToPosition(cameraLockPos);
+            Cursor.lockState = CursorLockMode.Locked;
             Cursor.lockState = CursorLockMode.Confined;
             isInFocus = true;
 
-            mouseOffset = new Vector2(Mathf.Clamp(Input.mousePosition.x, 0, mapCamera.pixelWidth), Mathf.Clamp(Input.mousePosition.y, 0, mapCamera.pixelWidth));
+            mouseOffset = new Vector2(Input.mousePosition.x - mapCamera.pixelWidth, Input.mousePosition.y-mapCamera.pixelHeight);
         }
 
     }
 
-    public void SetTarget(Vector2 pos)
+    public void SetTarget(Vector3 screenPoint)
     {
-        ray = mapCamera.ScreenPointToRay(pos);
+        ray = mapCamera.ScreenPointToRay(screenPoint);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
