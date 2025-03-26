@@ -2,43 +2,100 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
+
 public class SeismographVisualizer : MonoBehaviour
 {
     public Slider vibrationSlider;
 
+    public float maxVibration = 30f;
+
+    public LineRenderer lineRenderer;
+    public Transform boundsStart;
+    public Transform boundsEnd;
+    public int pointAmount = 50; // Number of points on the graph
+
+    private float width;
+    private float height;
     private float currentVibration = 0f;
+    public float adjustDuration = 0.5f;
+
+    public float vibrationFrequency = 20f; // Frequency of oscillation
+    public float overlay1Frequency = 45f;
+    public float noiseFrequency = 2f;
+
+    private Queue<float> vibrationHistory = new Queue<float>();
 
     void Start()
     {
-        Seismograph.Instance.vibrationChanged.AddListener(UpdateVibration);
+        Seismograph.Instance.vibrationChanged.AddListener(SetVibration);
+        width = boundsEnd.localPosition.x - boundsStart.localPosition.x;
+        height = boundsEnd.localPosition.y - boundsStart.localPosition.y;
+
+        // Initialize history with zero values
+        for (int i = 0; i < pointAmount; i++)
+        {
+            vibrationHistory.Enqueue(0f);
+        }
     }
 
-    public void UpdateVibration()
+    void Update()
+    {
+        UpdateVibration();
+    }
+
+    void SetVibration()
     {
         StopAllCoroutines();
-        StartCoroutine(AdjustVibrationDisplay());
+        StartCoroutine(AdjustVibrationOverTime(adjustDuration));
     }
 
-    private IEnumerator AdjustVibrationDisplay()
+    private void UpdateVibration()
     {
-        float newVibration = Seismograph.Instance.GetTotalVibration();
-        float oldVibration = currentVibration;
-        if (oldVibration < newVibration)
+        float oscillation = Mathf.Sin(Time.time * vibrationFrequency);
+        float oscillationMod = Mathf.Sin(Time.time * overlay1Frequency);
+        float noise = Mathf.PerlinNoise(Time.time*noiseFrequency, currentVibration*noiseFrequency);
+
+        float finalOscillation = oscillation * oscillationMod * noise * currentVibration;
+
+        vibrationHistory.Enqueue(finalOscillation);
+
+        if (vibrationHistory.Count > pointAmount)
+            vibrationHistory.Dequeue();
+
+        Vector3[] points = new Vector3[vibrationHistory.Count];
+        int i = 0;
+        foreach (float v in vibrationHistory)
         {
-            while (currentVibration < newVibration) {
-                yield return null;
-                currentVibration++;
-                vibrationSlider.value = currentVibration;
-            }
-            vibrationSlider.value = newVibration;
+            points[i] = GetRelativeLinePos(i, v);
+            i++;
         }
-        else {
-            while (currentVibration > newVibration) {
-                yield return null;
-                currentVibration--;
-                vibrationSlider.value = currentVibration;
-            }
-            vibrationSlider.value = newVibration;
+
+        lineRenderer.positionCount = points.Length;
+        lineRenderer.SetPositions(points);
+    }
+
+    Vector3 GetRelativeLinePos(int index, float value)
+    {
+        float xPosition = boundsEnd.localPosition.x - (index * (width / pointAmount));
+        float yPosition = Mathf.Clamp(value/maxVibration * height, -maxVibration, maxVibration);
+
+        return new Vector3(xPosition, yPosition*10, 0)*100;
+    }
+
+    private IEnumerator AdjustVibrationOverTime(float duration)
+    {
+        float newVibration = Seismograph.Instance.GetTotalVibration() / maxVibration;
+        float oldVibration = currentVibration;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = elapsedTime / duration;
+            currentVibration = Mathf.Lerp(oldVibration, newVibration, t);
+            yield return null;
         }
+
+        currentVibration = newVibration;
     }
 }

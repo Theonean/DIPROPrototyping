@@ -16,6 +16,7 @@ public class Radar : MonoBehaviour
     [Header("Pulse")]
     public RadarData radarData;
     private MapRevealer mapRevealer;
+    public float pulseSeismoEmission = 5f;
 
     // Collider & Sprite
     public Transform pulseTransform;
@@ -68,6 +69,8 @@ public class Radar : MonoBehaviour
             ResourceHandler.Instance.ConsumeResource(radarData.pulseCostResource, radarData.pulseCost, false, 1f);
             StartCoroutine(PulseEffect());
             mapRevealer.Pulse(radarData.pulseStartRange * revealStartRangeFactor, radarData.pulseRange * revealRangeFactor, radarData.pulseSpeed * revealSpeedFactor, radarData.pulseDuration);
+
+            Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
         }
         else
         {
