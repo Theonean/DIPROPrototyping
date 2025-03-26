@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3730880911553963632}
   - component: {fileID: 6611416620182687033}
-  m_Layer: 17
+  m_Layer: 22
   m_Name: Line
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -131,7 +131,7 @@ MonoBehaviour:
   mapMask: {fileID: 0}
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8388608
   edgeSharpness: 5
   revealRadius: 20
   revealStrength: 5
@@ -245,9 +245,10 @@ MonoBehaviour:
   radarDistance: 300
   layerMask:
     serializedVersion: 2
-    m_Bits: 131072
+    m_Bits: 0
   ping: {fileID: 6132260166650041362, guid: a8b92495340c15d448b6276802991266, type: 3}
   radarData: {fileID: 11400000, guid: 630a389cd4ca6724c8a2cb6e0f2589ec, type: 2}
+  pulseSeismoEmission: 5
   pulseTransform: {fileID: 6073445025465992230}
   revealRangeFactor: 0.6
   revealStartRangeFactor: 0.2
@@ -347,7 +348,7 @@ GameObject:
   - component: {fileID: 6073445025465992230}
   - component: {fileID: 7182332469768309546}
   - component: {fileID: 3997024030474340152}
-  m_Layer: 17
+  m_Layer: 22
   m_Name: Pulse
   m_TagString: Untagged
   m_Icon: {fileID: 0}

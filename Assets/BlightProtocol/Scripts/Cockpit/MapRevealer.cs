@@ -18,7 +18,7 @@ public class MapRevealer : MonoBehaviour
     public AnimationCurve pulseStrengthCurve;
     public AnimationCurve pulseSpeedCurve;
 
-    void Start()
+    void Awake()
     {
         if (mapMask != null)
         {

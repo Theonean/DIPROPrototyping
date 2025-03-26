@@ -23,6 +23,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
 
     [Header("Raycasting")]
     public Transform rayOrigin;
+    public float maxDistance = 600;
     private RaycastHit hit;
     public LayerMask hitMask;
     public LayerMask innerRinghitMask;
@@ -53,7 +54,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             if (Input.GetMouseButtonDown(0))
             {
                 Vector3 rayDirection = (rayOrigin.position - cameraLockPos.position).normalized;
-                if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, hitMask))
+                if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, maxDistance, hitMask))
                 {
                     Map.Instance.SetCustomMarker(hit.point);
                 }
@@ -71,14 +72,18 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
     void FixedUpdate()
     {
         if (isInFocus)
+        {
             UpdateInnerRing();
+        }
     }
 
     private void UpdateInnerRing()
     {
         Vector3 rayDirection = (rayOrigin.position - cameraLockPos.position).normalized;
-        if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, innerRinghitMask))
+        if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, maxDistance, innerRinghitMask))
         {
+            // Check if hit object should block the azimuth
+            Logger.Log(hit.collider.gameObject.layer.ToString(), LogLevel.INFO, LogType.HARVESTER);
             if ((hitMask & (1 << hit.collider.gameObject.layer)) != 0)
             {
                 innerRing.material.SetColor("_Color", innerRingEnabledColor);
