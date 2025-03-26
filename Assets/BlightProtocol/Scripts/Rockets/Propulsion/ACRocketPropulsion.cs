@@ -53,7 +53,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     private void AbortFlight(RocketState state)
     {
-        if (flightCoroutine != null && state != RocketState.FLYING)
+        if (state != RocketState.FLYING)
         {
             StopAllCoroutines();
             StopVFX();

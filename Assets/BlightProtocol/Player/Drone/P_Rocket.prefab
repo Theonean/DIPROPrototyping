@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5194158723973317335}
   - component: {fileID: 750481131182496719}
-  - component: {fileID: 562755067352527454}
   - component: {fileID: 601932258058907427}
   m_Layer: 12
   m_Name: P_Rocket
@@ -50,61 +49,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   settings: {fileID: 11400000, guid: 968fbfc4ab071cd46a754b7045dabf2b, type: 2}
---- !u!114 &562755067352527454
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2959802702298805075}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 100b7142166d82e4298d8505bcc519a5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_rocketData: {fileID: 11400000, guid: 968fbfc4ab071cd46a754b7045dabf2b, type: 2}
-  m_LegState: 0
-  LegHandlerParent: {fileID: 0}
-  explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
-    type: 3}
-  debugExplosionSphere: 0
-  flySpeedCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: -0.02541429
-      value: 0.03563566
-      inSlope: 0.027544592
-      outSlope: 0.027544592
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.84378266
-    - serializedVersion: 3
-      time: 0.18489654
-      value: 0.3719377
-      inSlope: 2.0137076
-      outSlope: 2.0137076
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.17544112
-      outWeight: 0.046242
-    - serializedVersion: 3
-      time: 1.0073031
-      value: 0.94640434
-      inSlope: -0.0607598
-      outSlope: -0.0607598
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.2181285
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
-  vfxFlying: {fileID: 0}
-  rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
-  rocketCallbackSFXPath: event:/SFX/Dron/CallingBack_Missiles
 --- !u!135 &601932258058907427
 SphereCollider:
   m_ObjectHideFlags: 0
