@@ -1,23 +1,44 @@
 using UnityEngine;
-
-public class FPVMap : MonoBehaviour, IFPVInteractable
+using System.Collections.Generic;
+public class Map : MonoBehaviour, IFPVInteractable
 {
-    public Camera mapCamera;
-    private Ray ray;
-    private RaycastHit hit;
-    public LayerMask hitMask;
-    public bool IsCurrentlyInteractable { get; set; } = true;
-
-    public string lookAtText = "E"; // Backing field for Inspector
-    public Transform cameraLockPos;
-    public RectTransform uiTarget;
-    public Vector2 mouseOffset;
-    private bool isInFocus = false;
-
+    public static Map Instance { get; private set; }
+    public string lookAtText = "E";
     public string LookAtText
     {
         get => lookAtText;
         set => lookAtText = value;
+    }
+    public Transform cameraLockPos;
+    public bool IsCurrentlyInteractable { get; set; } = true;
+    private bool isInFocus = false;
+
+    [Header("Display")]
+    public Camera mapCamera;
+
+    [Header("Target Setting")]
+    private Ray ray;
+    private RaycastHit hit;
+    public LayerMask hitMask;
+    public RectTransform uiTarget;
+    public Vector2 mouseOffset;
+
+    [Header("Markers")]
+    public GameObject energySingaturePing;
+    public GameObject customMarker;
+    public int maxMarkers = 2;
+    private List<GameObject> customMarkers = new List<GameObject>();
+
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+        }
     }
 
     void Update()
@@ -66,9 +87,8 @@ public class FPVMap : MonoBehaviour, IFPVInteractable
             Cursor.lockState = CursorLockMode.Confined;
             isInFocus = true;
 
-            mouseOffset = new Vector2(Input.mousePosition.x - mapCamera.pixelWidth, Input.mousePosition.y-mapCamera.pixelHeight);
+            mouseOffset = new Vector2(Input.mousePosition.x - mapCamera.pixelWidth, Input.mousePosition.y - mapCamera.pixelHeight);
         }
-
     }
 
     public void SetTarget(Vector3 screenPoint)
@@ -82,4 +102,20 @@ public class FPVMap : MonoBehaviour, IFPVInteractable
         }
     }
 
+    public void SetCustomMarker(Vector3 position)
+    {
+        if (customMarkers.Count >= maxMarkers)
+        {
+            Destroy(customMarkers[0]);
+            customMarkers.RemoveAt(0);
+        }
+        GameObject newMarker = Instantiate(customMarker, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+        customMarkers.Add(newMarker);
+    }
+
+    public void SetEnergySignature(Vector3 position, EnergySignature signature)
+    {
+        GameObject instantiatedSignature = Instantiate(energySingaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+        instantiatedSignature.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
+    }
 }

@@ -151,11 +151,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fe3df1f89520b44a99ed1be97a7cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lookAtText: '[E] Set Target'
+  cameraLockPos: {fileID: 7489744427844457229}
   mapCamera: {fileID: 0}
   hitMask:
     serializedVersion: 2
     m_Bits: 1024
-  lookAtText: '[E] Set Target'
-  cameraLockPos: {fileID: 7489744427844457229}
   uiTarget: {fileID: 0}
   mouseOffset: {x: 1920, y: 1080}
+  energySingaturePing: {fileID: 6132260166650041362, guid: a8b92495340c15d448b6276802991266,
+    type: 3}
+  customMarker: {fileID: 6132260166650041362, guid: 138f5f3e3040966488f919cebf7d329c,
+    type: 3}
+  maxMarkers: 2

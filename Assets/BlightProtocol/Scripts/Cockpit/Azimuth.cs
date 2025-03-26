@@ -26,8 +26,6 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
     private RaycastHit hit;
     public LayerMask hitMask;
     public LayerMask innerRinghitMask;
-    public GameObject radarMarker;
-    private GameObject radarMarkerInstance = null;
     public Color innerRingEnabledColor;
     public Color innerRingDisabledColor;
     public Renderer innerRing;
@@ -57,17 +55,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
                 Vector3 rayDirection = (rayOrigin.position - cameraLockPos.position).normalized;
                 if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, Mathf.Infinity, hitMask))
                 {
-                    Logger.Log(hit.collider.name, LogLevel.INFO, LogType.HARVESTER);
-                    //Debug.DrawRay(rayOrigin.position, rayDirection* 1000, Color.red, 10f);
-                    if (radarMarkerInstance != null)
-                    {
-                        radarMarkerInstance.transform.position = new Vector3(hit.point.x, 1, hit.point.z);
-                    }
-                    else
-                    {
-                        radarMarkerInstance = Instantiate(radarMarker, new Vector3(hit.point.x, 1, hit.point.z), Quaternion.Euler(90, 0, 0));
-                    }
-
+                    Map.Instance.SetCustomMarker(hit.point);
                 }
             }
 

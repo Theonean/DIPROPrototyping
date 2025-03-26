@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "RadarData", menuName = "RadarData", order = 0)]
-public class RadarData : ScriptableObject
+public class RadarPulseData : ScriptableObject
 {
     [Header("Pulse")]
     public float pulseCost = 100f;
