@@ -6,6 +6,7 @@ public class RocketData : ScriptableObject
     public float flySpeed;
     public float flySpeedBase;
     public float flyScaleMultiplier;
+    public AnimationCurve flySpeedCurve;
     public int damage;
     [Header("Explosion")]
     public bool canExplode;

@@ -78,10 +78,13 @@ public class Obstacle : MonoBehaviour
 
     private void HandleCollision(GameObject other)
     {
-        if (other.gameObject.tag == "Leg")
+        if (other.gameObject.tag == "Rocket")
         {
-            LegHandler leg = other.gameObject.GetComponent<LegHandler>();
-            leg.ExplodeLeg();
+            Rocket rocket = other.GetComponent<Rocket>();
+            if (rocket.CanExplode())
+            {
+                rocket.Explode();
+            }
         }
         else if (destructiveTags.Contains(other.gameObject.tag))
         {
