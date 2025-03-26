@@ -44,6 +44,8 @@ public class HarvesterSpeedControl : MonoBehaviour
         // Initialize display speed to match the first step
         displaySpeed = speedSteps[currentSpeedStepIndex].speed;
         SetSpeed();
+
+        Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
     }
 
     private void SetSpeed()
@@ -81,6 +83,17 @@ public class HarvesterSpeedControl : MonoBehaviour
         UpdateSpeedIndicator();
     }
 
+    private void OnHarvesterStateChanged(ZoneState state) {
+        switch(state) {
+            case ZoneState.IDLE:
+            case ZoneState.HARVESTING:
+            case ZoneState.START_HARVESTING:
+            case ZoneState.END_HARVESTING:
+            case ZoneState.DIED:
+                OverrideSpeedStep(0);
+            break;
+        }
+    }
     public void OverrideSpeedStep(int index)
     {
         if (index >= 0 && index < speedSteps.Count)
