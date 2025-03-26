@@ -28,9 +28,10 @@ public class ResourcePoint : MonoBehaviour
         return true;
     }
 
-    void OnCollisionEnter(Collision collision)
+    void OnTriggerEnter(Collider other)
     {
-        if (collision.collider.CompareTag("Harvester")) {
+        Logger.Log(other.name, LogLevel.INFO, LogType.HARVESTER);
+        if (other.CompareTag("Harvester")) {
             Destroy(aboveGround);
         }       
     }
