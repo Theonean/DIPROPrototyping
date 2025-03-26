@@ -98,8 +98,8 @@ public class Obstacle : MonoBehaviour
     private IEnumerator DestroyAfterDelay(float delay)
     {
         yield return new WaitForSeconds(0.2f);
-        meshParent.SetActive(false);
         GetComponentInChildren<Collider>().enabled = false;
+        meshParent.SetActive(false);        
         navObstacleHolder.SetActive(false);
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);
