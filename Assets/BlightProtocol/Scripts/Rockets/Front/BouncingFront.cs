@@ -3,20 +3,48 @@ using UnityEngine;
 public class BouncingFront : ACRocketFront
 {
     public float flightDistanceAfterBounce;
+    private Collider lastCollider;
+
     public override void ActivateAbility(Collider collider)
     {
-        Vector3 impactDirection = collider.transform.position - parentRocket.positionWhenShot;
+        Vector3 rayDirection = (collider.transform.position - rocketTransform.position).normalized;
+        Vector3 hitNormal = Vector3.zero;
+        Vector3 hitPoint = Vector3.zero;
 
-        // Reflect the impact direction on the XZ plane
-        Vector3 normal = collider.transform.up; // Assuming the collider's up vector is the surface normal
-        Vector3 reflectedDirection = Vector3.Reflect(impactDirection, normal);
+        bool hitSomething = false;
 
-        Debug.Log("Bouncee");
 
-        // Normalize the reflected direction and scale it by flightDistanceAfterBounce
-        Vector3 newDirection = new Vector3(reflectedDirection.x, 0, reflectedDirection.z).normalized * flightDistanceAfterBounce;
+        float raycastDistance = (collider.transform.position - rocketTransform.position).magnitude;
 
-        parentRocket.SetState(RocketState.IDLE);
-        parentRocket.Shoot(rocketTransform.position + newDirection);
+        // Visualize the raycast toward the collider
+        Debug.DrawRay(rocketTransform.position, rayDirection * raycastDistance, Color.cyan, 20f); // forward ray
+
+        if (Physics.Raycast(rocketTransform.position, rayDirection, out RaycastHit hit, raycastDistance))
+        {
+            hitNormal = hit.normal;
+            hitPoint = hit.point;
+            hitSomething = true;
+        }
+
+        if (hitSomething)
+        {
+            // Flatten to XZ
+            hitNormal.y = 0;
+            hitNormal.Normalize();
+
+            Vector3 reflectedDirection = Vector3.Reflect(rayDirection, hitNormal).normalized;
+            Vector3 newDirection = reflectedDirection * flightDistanceAfterBounce;
+
+            // Reflection debug rays
+            Debug.DrawRay(hitPoint, hitNormal * 20f, Color.green, 20f);           // Surface normal
+            Debug.DrawRay(hitPoint, reflectedDirection * 20f, Color.red, 20f);    // Reflected direction
+            
+            parentRocket.SetState(RocketState.IDLE);
+            parentRocket.Shoot(rocketTransform.position + newDirection);
+        }
+        else
+        {
+            Debug.LogWarning("Bounce failed: No surface detected.");
+        }
     }
 }

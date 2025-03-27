@@ -21,7 +21,7 @@ public class Rocket : MonoBehaviour
     public UnityEvent<RocketState> OnRocketStateChange;
     public RocketData settings;
     public Transform initialTransform { get; private set; }
-    public Vector3 positionWhenShot { get; private set; }
+    public Vector3 shootingDirection { get; private set; }
 
     void Start()
     {
@@ -41,11 +41,11 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (state != RocketState.ATTACHED && state != RocketState.RETURNING && state != RocketState.REGROWING)
+        if (state == RocketState.FLYING)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Rocket"))
             {
-                Rocket otherRocket = other.GetComponent<Rocket>();
+                Rocket otherRocket = other.gameObject.GetComponent<Rocket>();
                 if (otherRocket.state == RocketState.ATTACHED ||
                     otherRocket.state == RocketState.RETURNING)
                     return;
@@ -75,7 +75,7 @@ public class Rocket : MonoBehaviour
 
     public void Shoot(Vector3 target)
     {
-        positionWhenShot = transform.position;
+        shootingDirection = (target - transform.position).normalized;
         SetState(RocketState.FLYING);
         propulsionComponent.GetComponent<ACRocketPropulsion>().Shoot(target);
     }
