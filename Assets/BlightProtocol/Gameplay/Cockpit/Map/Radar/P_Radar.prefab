@@ -133,7 +133,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8388608
   edgeSharpness: 5
-  revealRadius: 20
+  revealRadius: 30
   revealStrength: 5
   pulseStrength: 50
   pulseStrengthCurve:
@@ -250,8 +250,8 @@ MonoBehaviour:
   radarData: {fileID: 11400000, guid: 630a389cd4ca6724c8a2cb6e0f2589ec, type: 2}
   pulseSeismoEmission: 5
   pulseTransform: {fileID: 6073445025465992230}
-  revealRangeFactor: 0.6
-  revealStartRangeFactor: 0.2
+  revealRangeFactor: 1
+  revealStartRangeFactor: 0.001
   pulseStrengthCurve:
     serializedVersion: 2
     m_Curve:
@@ -285,7 +285,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  revealSpeedFactor: 1
+  revealSpeedFactor: 0.65
   pulseSpeedCurve:
     serializedVersion: 2
     m_Curve:

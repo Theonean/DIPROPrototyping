@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.AI;
 public class Map : MonoBehaviour, IFPVInteractable
 {
     public static Map Instance { get; private set; }
@@ -97,8 +98,12 @@ public class Map : MonoBehaviour, IFPVInteractable
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
-            Harvester.Instance.mover.SetDestination(targetPos);
+            if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 10f, NavMesh.AllAreas))
+            {
+                Vector3 targetPos = navMeshHit.position;
+                Harvester.Instance.mover.SetDestination(targetPos);
+            }
+
         }
     }
 

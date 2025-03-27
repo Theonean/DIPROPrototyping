@@ -50,18 +50,18 @@ Shader "Unlit/S_MapMask"
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
+            fixed4 frag(v2f i) : SV_Target
             {
-                fixed4 col = tex2D(_MainTex, i.uv);
+                fixed4 prevMask = tex2D(_MainTex, i.uv);
 
                 float dist = distance(i.uv, _Coordinates.xy);
-                float draw = pow(saturate(1 - (dist * _EdgeSharpness)), 500/_Size);
-                draw = smoothstep(0.0, 1.0 / _EdgeSharpness, draw); // More controlled transition
+
+                float draw = pow(saturate(1 - (dist * _EdgeSharpness)), 500 / _Size);
+                draw = smoothstep(0.0, 1.0 / _EdgeSharpness, draw);
 
                 fixed4 drawcol = _Color * (draw * _Strength);
 
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return saturate(col + drawcol);
+                return max(prevMask, drawcol);
             }
             ENDCG
         }

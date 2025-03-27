@@ -51,6 +51,7 @@ public class MapRevealer : MonoBehaviour
 
     private IEnumerator PulseEffect(Vector2 coords, float startRange, float range, float speed, float duration)
     {
+        //yield return new WaitForSeconds(0.5f);
         float timer = 0f;
         float linearTimer = 0f;
 

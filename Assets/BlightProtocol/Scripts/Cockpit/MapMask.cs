@@ -24,7 +24,7 @@ public class MapMask : MonoBehaviour
     public void PaintOnMask(Vector2 coords, float range, float strength)
     {
         maskMaterial.SetVector("_Coordinates", new Vector4(coords.x, coords.y, 0, 0));
-        maskMaterial.SetFloat("_Strength", strength);   
+        maskMaterial.SetFloat("_Strength", strength);
         maskMaterial.SetFloat("_Size", range);
 
         RenderTexture temp = RenderTexture.GetTemporary(maskTex.width, maskTex.height, 0, RenderTextureFormat.ARGBFloat);
@@ -32,9 +32,10 @@ public class MapMask : MonoBehaviour
         // Copy the current mask texture into the temporary texture
         Graphics.Blit(maskTex, temp);
 
-        maskMaterial.SetTexture("_PreviousMask", temp);
+        // Use the temp texture as the input for the next pass
+        maskMaterial.SetTexture("_MainTex", temp);
 
-        // Now apply the new paint on top while preserving the existing texture
+        // Blit using maskMaterial to apply the new paint without accumulating endlessly
         Graphics.Blit(temp, maskTex, maskMaterial);
 
         RenderTexture.ReleaseTemporary(temp);
