@@ -59,8 +59,8 @@ public class RocketAimController : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (!Physics.Raycast(ray, out hit, 100f, raycastMask)) return;
-            
+            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, raycastMask)) return;
+
             Logger.Log("Hit tag" + hit.collider.gameObject.tag + " name " + hit.collider.name, LogLevel.INFO, LogType.ROCKETS);
 
             //Check if a leg was clicked, if yes return
