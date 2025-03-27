@@ -12,6 +12,7 @@ public class FPVInteractionHandler : MonoBehaviour
     [Header("Raycasting")]
     private Ray ray;
     private RaycastHit hit;
+    public LayerMask hitMask;
     public float raycastRange;
 
     private IFPVInteractable lastHoveredObject = null;
@@ -33,7 +34,7 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out hit, raycastRange))
+        if (Physics.Raycast(ray, out hit, raycastRange, hitMask))
         {
             Rigidbody hitRigidbody = hit.rigidbody;
 

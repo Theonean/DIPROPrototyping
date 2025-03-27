@@ -30,7 +30,6 @@ public class ResourcePoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        Logger.Log(other.name, LogLevel.INFO, LogType.HARVESTER);
         if (other.CompareTag("Harvester")) {
             Destroy(aboveGround);
         }       

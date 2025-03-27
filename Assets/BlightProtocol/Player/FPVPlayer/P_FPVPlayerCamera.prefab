@@ -160,7 +160,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactKey: 101
-  raycastRange: 500
+  hitMask:
+    serializedVersion: 2
+    m_Bits: 1
+  raycastRange: 400
 --- !u!1 &7942143646419951123
 GameObject:
   m_ObjectHideFlags: 0
