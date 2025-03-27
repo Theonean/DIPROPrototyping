@@ -76,6 +76,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             float totalDistanceToReturn = Vector3.Distance(rocketTransform.position, updatedTargetPosition);
             float tReturn = 1f - (distanceToUpdatedTarget / totalDistanceToReturn);
 
+            rocketTransform.LookAt(updatedTargetPosition);
+
             // Move the rocket back to the initial position using animation curve
             if (tReturn < 0.90f)
             {
@@ -86,9 +88,10 @@ public abstract class ACRocketPropulsion : ACRocketComponent
                 rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * ParentRocket.settings.flySpeed * 2f);
             }
 
+
             // Update the rotation of the rocket to smoothly return to its initial rotation
-            rocketTransform.rotation = Quaternion.RotateTowards(rocketTransform.rotation, ParentRocket.initialTransform.rotation, 1f * Time.deltaTime);
-            rocketTransform.localScale = Vector3.MoveTowards(rocketTransform.localScale, rocketOriginalScale, 0.1f * Time.deltaTime * ParentRocket.settings.flySpeed * 1.5f);
+            //rocketTransform.rotation = Quaternion.RotateTowards(rocketTransform.rotation, ParentRocket.initialTransform.rotation, 1f * Time.deltaTime);
+            //rocketTransform.localScale = Vector3.MoveTowards(rocketTransform.localScale, rocketOriginalScale, 0.1f * Time.deltaTime * ParentRocket.settings.flySpeed * 1.5f);
 
             if (distanceToUpdatedTarget < 1f)
             {
@@ -96,6 +99,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
                 ParentRocket.SetState(RocketState.ATTACHED);
                 rocketTransform.SetParent(parentRocket.initialTransform.parent);
                 rocketTransform.rotation = ParentRocket.initialTransform.rotation;
+                rocketTransform.localScale = rocketOriginalScale;
                 yield break;
             }
 

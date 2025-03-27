@@ -7,9 +7,9 @@ public abstract class ACRocketBody : ACRocketComponent
     [Header("Debug")]
     public bool debugExplosionSphere; //If true, a gizmo will be drawn to show the explosion radius.
     [Header("Explosion Settings")]
-    public Material explosionMaterial; //Material for the explosion effect when the leg explodes.
+    public Material explosionMaterial; //Material for the explosion effect when the rocket explodes.
 
-    public GameObject explosionPrefab; //The explosion prefab to spawn when the leg explodes.
+    public GameObject explosionPrefab; //The explosion prefab to spawn when the rocket explodes.
 
     //Private settings
     protected abstract void Explode();
