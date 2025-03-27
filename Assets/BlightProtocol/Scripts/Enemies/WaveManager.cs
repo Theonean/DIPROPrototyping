@@ -68,17 +68,24 @@ public class WaveManager : MonoBehaviour
                 }
                 break;
         }
+
+        if (Input.GetKeyDown("q"))
+        {
+            ZoneState newState = harvesterState == ZoneState.HARVESTING ? ZoneState.IDLE : ZoneState.HARVESTING;
+            Logger.Log("Toggled enemy spawning manually to " + (newState == ZoneState.HARVESTING), LogLevel.FORCE, LogType.WAVEMANAGEMENT);
+            HarvesterChangedState(newState);
+        }
     }
 
     void HarvesterChangedState(ZoneState zoneState)
     {
-        if(harvesterState == zoneState)
+        if (harvesterState == zoneState)
         {
             return;
         }
 
         //When switching away from harvesting, stop continuous attack
-        if(harvesterState == ZoneState.HARVESTING)
+        if (harvesterState == ZoneState.HARVESTING)
         {
             DeactivateSpawners();
         }

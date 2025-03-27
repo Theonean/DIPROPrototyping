@@ -4,19 +4,23 @@ using UnityEngine.VFX;
 
 public abstract class ACRocketPropulsion : ACRocketComponent
 {
+    [Header("VFX")]
     public VisualEffect vfxFlying;
-    private Coroutine flightCoroutine;
+
+    [Header("SFX")]
+    public string rocketFlyAwaySFXPath = "event:/SFX/Dron/Shoot";
+    public string rocketCallbackSFXPath = "event:/SFX/Dron/Callingback_Missiles";
     public abstract IEnumerator FlyToTargetPosition(Vector3 targetPos);
 
 
     void OnEnable()
     {
-        ParentRocket.OnRocketStateChange.AddListener(AbortFlight);
+        ParentRocket.OnRocketStateChange.AddListener(RocketChangedState);
     }
 
     void OnDisable()
     {
-        ParentRocket.OnRocketStateChange.RemoveListener(AbortFlight);
+        ParentRocket.OnRocketStateChange.RemoveListener(RocketChangedState);
     }
 
     private void Update()
@@ -26,7 +30,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             if (Input.GetMouseButtonDown(1))
             {
                 ParentRocket.SetState(RocketState.RETURNING);
-                flightCoroutine = StartCoroutine(ReturnToDrone());
+                FMODAudioManagement.instance.PlayOneShot(rocketCallbackSFXPath, gameObject);
+                StartCoroutine(ReturnToDrone());
             }
         }
     }
@@ -37,6 +42,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
         rocketTransform.SetParent(null);
         rocketTransform.LookAt(correctedTarget);
+
+        FMODAudioManagement.instance.PlayOneShot(rocketFlyAwaySFXPath, gameObject);
 
         StartCoroutine(Fly(correctedTarget));
     }
@@ -51,13 +58,10 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         ParentRocket.SetState(RocketState.IDLE);
     }
 
-    private void AbortFlight(RocketState state)
+    private void RocketChangedState(RocketState state)
     {
-        if (state != RocketState.FLYING)
-        {
-            StopAllCoroutines();
-            StopVFX();
-        }
+        StopAllCoroutines();
+        StopVFX();
     }
 
     private IEnumerator ReturnToDrone()
@@ -98,7 +102,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             yield return null;
         }
     }
-    
+
     private void StartVFX()
     {
         vfxFlying.Reinit();

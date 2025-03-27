@@ -80,7 +80,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.gameObject.tag == "Rocket")
         {
-            Rocket rocket = other.GetComponent<Rocket>();
+            Rocket rocket = other.GetComponentInParent<Rocket>();
             if (rocket.CanExplode())
             {
                 rocket.Explode();
@@ -102,7 +102,7 @@ public class Obstacle : MonoBehaviour
     {
         yield return new WaitForSeconds(0.2f);
         GetComponentInChildren<Collider>().enabled = false;
-        meshParent.SetActive(false);        
+        meshParent.SetActive(false);
         navObstacleHolder.SetActive(false);
         yield return new WaitForSeconds(delay);
         gameObject.SetActive(false);

@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &3475562796848091826
+--- !u!1 &4948005366248943228
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8127715698095127687}
-  - component: {fileID: 101912407811438166}
-  - component: {fileID: 3043559961628775212}
-  m_Layer: 0
-  m_Name: FlyingTrail
+  - component: {fileID: 4935530697301658844}
+  - component: {fileID: 1463224749962279571}
+  - component: {fileID: 7528145253731593351}
+  m_Layer: 11
+  m_Name: VFX_TrailRocket
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8127715698095127687
+--- !u!4 &4935530697301658844
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3475562796848091826}
+  m_GameObject: {fileID: 4948005366248943228}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.06, y: 0.01, z: -1.4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6186127778945037038}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!2083052967 &101912407811438166
+--- !u!2083052967 &1463224749962279571
 VisualEffect:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3475562796848091826}
+  m_GameObject: {fileID: 4948005366248943228}
   m_Enabled: 1
   m_Asset: {fileID: 8926484042661614526, guid: 85758cd494b022145b59645d7dfd979e, type: 3}
   m_InitialEventName: OnPlay
@@ -50,13 +50,7 @@ VisualEffect:
   m_ResourceVersion: 1
   m_PropertySheet:
     m_Float:
-      m_Array:
-      - m_Value: 32
-        m_Name: Burst Amount
-        m_Overridden: 1
-      - m_Value: 2
-        m_Name: Burst Size
-        m_Overridden: 1
+      m_Array: []
     m_Vector2f:
       m_Array: []
     m_Vector3f:
@@ -77,14 +71,14 @@ VisualEffect:
       m_Array: []
     m_Bool:
       m_Array: []
---- !u!73398921 &3043559961628775212
+--- !u!73398921 &7528145253731593351
 VFXRenderer:
   serializedVersion: 1
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3475562796848091826}
+  m_GameObject: {fileID: 4948005366248943228}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -126,7 +120,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6186127778945037038}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: P_RocketPropulsionTemplate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,6 +140,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8127715698095127687}
+  - {fileID: 4935530697301658844}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -58,12 +58,24 @@ public class RocketAimController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (!Physics.Raycast(ray, out hit, 100f, raycastMask)) return;
+            
+            Logger.Log("Hit tag" + hit.collider.gameObject.tag + " name " + hit.collider.name, LogLevel.INFO, LogType.ROCKETS);
+
+            //Check if a leg was clicked, if yes return
+            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("RocketComponent"))
+            {
+                Rocket rocket = hit.collider.gameObject.GetComponentInParent<Rocket>();
+                if (rocket.CanExplode())
+                {
+                    rocket.Explode();
+                }
+                return;
+            }
+
             if (!activeRocket.IsUnityNull())
             {
-                //Raycast to find the position to fly to, and if nothing is hit return
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-                if (!Physics.Raycast(ray, out hit, Mathf.Infinity, raycastMask)) return;
                 activeRocket.Shoot(hit.point);
                 StartCoroutine(StartRotationDelay());
             }

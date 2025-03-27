@@ -137,6 +137,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8127715698095127687, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.458
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -171,16 +176,18 @@ MonoBehaviour:
   parentRocket: {fileID: 0}
   componentLevel: 0
   DescriptiveName: Straight Line
-  vfxFlying: {fileID: 6420476391037091884}
+  vfxFlying: {fileID: 5493941438881058025}
+  rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
+  rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles
 --- !u!4 &984467498389963924 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6186127778945037038, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
     type: 3}
   m_PrefabInstance: {fileID: 6372608355617371770}
   m_PrefabAsset: {fileID: 0}
---- !u!2083052967 &6420476391037091884 stripped
+--- !u!2083052967 &5493941438881058025 stripped
 VisualEffect:
-  m_CorrespondingSourceObject: {fileID: 101912407811438166, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
+  m_CorrespondingSourceObject: {fileID: 1463224749962279571, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
     type: 3}
   m_PrefabInstance: {fileID: 6372608355617371770}
   m_PrefabAsset: {fileID: 0}

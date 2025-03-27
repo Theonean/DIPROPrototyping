@@ -31,11 +31,6 @@ public abstract class ACRocketBody : ACRocketComponent
         }
     }
 
-    private void OnMouseDown()
-    {
-        TryExplode();
-    }
-
     private IEnumerator RegrowRocket()
     {
         float t = 0;

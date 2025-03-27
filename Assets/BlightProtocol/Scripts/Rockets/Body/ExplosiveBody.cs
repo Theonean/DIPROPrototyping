@@ -31,7 +31,7 @@ public class ExplosiveBody : ACRocketBody
             }
             else if (hitCollider.gameObject.CompareTag("Rocket"))
             {
-                Rocket rocket = hitCollider.gameObject.GetComponent<Rocket>();
+                Rocket rocket = hitCollider.gameObject.GetComponentInParent<Rocket>();
                 if (rocket.CanExplode())
                 {
                     StartCoroutine(DaisyChainExplosion(rocket));

@@ -88,10 +88,15 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6685718496710350302, guid: 4a5078a7b7b667f489afa57c708b4f4f,
+        type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7345125889948865978, guid: 4a5078a7b7b667f489afa57c708b4f4f,
         type: 3}
       propertyPath: m_Name
-      value: PenetratingFront
+      value: BouncingFront
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
@@ -104,8 +109,8 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 7345125889948865978, guid: 4a5078a7b7b667f489afa57c708b4f4f,
         type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 5958372066322984300}
+      insertIndex: -1
+      addedObject: {fileID: 7022347562877595349}
   m_SourcePrefab: {fileID: 100100000, guid: 4a5078a7b7b667f489afa57c708b4f4f, type: 3}
 --- !u!4 &1489533741580369448 stripped
 Transform:
@@ -119,7 +124,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2076874403178512579}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5958372066322984300
+--- !u!114 &7022347562877595349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -128,13 +133,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 8736327215347914105}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c69efc85391a3aa4caf67c57113c5566, type: 3}
+  m_Script: {fileID: 11500000, guid: f88b48db776244a43a08c0beacc106e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
   componentLevel: 0
-  DescriptiveName: 
+  DescriptiveName: Bouncyyy
   abilityUsesLeft: 1
+  flightDistanceAfterBounce: 20
 --- !u!1001 &2843931660320565771
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -156,7 +162,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 9009ce8c5ad9a21409e5b55f9589f827,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.972
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 9009ce8c5ad9a21409e5b55f9589f827,
         type: 3}
@@ -193,6 +199,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 9009ce8c5ad9a21409e5b55f9589f827,
+        type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 9009ce8c5ad9a21409e5b55f9589f827,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4711208715938537054, guid: 2b41bb0ca7c43eb4da5ee6826de8a65c,
+        type: 3}
     - target: {fileID: 919132149155446097, guid: 9009ce8c5ad9a21409e5b55f9589f827,
         type: 3}
       propertyPath: m_Name

@@ -641,11 +641,12 @@ MonoBehaviour:
   rocketPropulsions:
   - {fileID: 628991970771947949, guid: f8c01ad1bd73d2e4aa0fe2cbf9281f7b, type: 3}
   rocketFronts:
+  - {fileID: 8736327215347914105, guid: 471820a94ccd0e049b1c1273b501a7ba, type: 3}
   - {fileID: 8736327215347914105, guid: 01429f51f3b891b4291f5bce51763be3, type: 3}
-  Rocket1: {fileID: 7126853389093772786}
-  Rocket2: {fileID: 6746371476147092962}
-  Rocket3: {fileID: 4799569051121381377}
-  Rocket4: {fileID: 5634830730611651850}
+  Rocket1: {fileID: 5634830730611651850}
+  Rocket2: {fileID: 4799569051121381377}
+  Rocket3: {fileID: 6746371476147092962}
+  Rocket4: {fileID: 7126853389093772786}
   outOfLegsGroup: {fileID: 0}
   outOfLegsFlashCurve:
     serializedVersion: 2
@@ -683,7 +684,7 @@ MonoBehaviour:
   outOfLegsFlashDuration: 0.3
   raycastMask:
     serializedVersion: 2
-    m_Bits: 442105
+    m_Bits: 440057
   NorthWestOffset: 45
   SouthWestOffset: 135
   rotationDelay: 0.1
@@ -1920,6 +1921,11 @@ PrefabInstance:
       propertyPath: LegHandlerParent
       value: 
       objectReference: {fileID: 8809617124274934925}
+    - target: {fileID: 601932258058907427, guid: 262a454d692f70c4eafd860c34d72327,
+        type: 3}
+      propertyPath: m_IncludeLayers.m_Bits
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2959802702298805075, guid: 262a454d692f70c4eafd860c34d72327,
         type: 3}
       propertyPath: m_Name
