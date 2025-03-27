@@ -41,7 +41,7 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (state != RocketState.ATTACHED && state != RocketState.RETURNING)
+        if (state != RocketState.ATTACHED && state != RocketState.RETURNING && state != RocketState.REGROWING)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Rocket"))
             {
