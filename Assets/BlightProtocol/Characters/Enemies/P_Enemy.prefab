@@ -4900,7 +4900,7 @@ GameObject:
   - component: {fileID: 8939018676203692738}
   - component: {fileID: 1677295457117298359}
   - component: {fileID: 5956257515943653894}
-  - component: {fileID: 1463122662569889129}
+  - component: {fileID: 5883523624273300096}
   - component: {fileID: 497536192867358013}
   m_Layer: 3
   m_Name: Sphere
@@ -4988,8 +4988,8 @@ MonoBehaviour:
   eClass: 0
   eFrequency: 1
   eMagnitude: 2
---- !u!65 &1463122662569889129
-BoxCollider:
+--- !u!135 &5883523624273300096
+SphereCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -5003,11 +5003,11 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 1
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1.5, y: 1.5, z: 1.5}
+  m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &497536192867358013
 Rigidbody:
