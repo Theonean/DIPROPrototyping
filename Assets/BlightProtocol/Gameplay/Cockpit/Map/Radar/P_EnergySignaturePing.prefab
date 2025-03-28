@@ -599,7 +599,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 8, y: 8, z: 8}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1639072732337823919}
@@ -656,8 +656,7 @@ MonoBehaviour:
   baseActiveColor: {r: 1, g: 0.49411765, b: 0, a: 1}
   frequencyActiveColor: {r: 0, g: 0, b: 0, a: 1}
   fadedColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
-  isStatic: 1
-  lifeTime: 30
+  lifeTime: 15
   lineRenderer: {fileID: 6327976459065172811}
 --- !u!1 &6200388934396865018
 GameObject:
@@ -781,7 +780,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0

@@ -18,8 +18,6 @@ public class EnergySignatureDisplayer : MonoBehaviour
     private SpriteRenderer activeClass;
     private SpriteRenderer activeFrequency;
     private SpriteRenderer[] activeMagnitudes;
-
-    public bool isStatic = true;
     [SerializeField] float lifeTime = 30f; 
     public LineRenderer lineRenderer;
 
@@ -39,7 +37,7 @@ public class EnergySignatureDisplayer : MonoBehaviour
             activeMagnitudes[i] = magnitudeSprites[i].GetComponent<SpriteRenderer>();
         }
         ResetSignatureColor();
-        if (!isStatic) {
+        if (!signature.isStatic) {
             Invoke(nameof(DestroySelf), lifeTime);
         }
     }
@@ -64,6 +62,7 @@ public class EnergySignatureDisplayer : MonoBehaviour
             float newAlpha = Mathf.Lerp(startAlpha, fadedColor.a, t);
 
             activeClass.color = newColor;
+            lineRenderer.material.SetColor("_Color", newColor);
             activeFrequency.color = new Color(startFrequencyColor.r, startFrequencyColor.g, startFrequencyColor.b, newAlpha);
 
             for (int i = 0; i < activeMagnitudes.Length; i++)
@@ -77,6 +76,7 @@ public class EnergySignatureDisplayer : MonoBehaviour
 
         // Ensure final faded state
         activeClass.color = fadedColor;
+        lineRenderer.material.SetColor("_Color", fadedColor);
         activeFrequency.color = new Color(startFrequencyColor.r, startFrequencyColor.g, startFrequencyColor.b, fadedColor.a);
         for (int i = 0; i < activeMagnitudes.Length; i++)
         {
