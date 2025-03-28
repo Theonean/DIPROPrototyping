@@ -5,6 +5,7 @@ public class FPVUI : MonoBehaviour
 {
     public static FPVUI Instance { get; private set; }
     public TextMeshProUGUI lookAtText;
+    public TextMeshProUGUI interactText;
     public GameObject crosshair;
     void Awake()
     {
@@ -18,6 +19,7 @@ public class FPVUI : MonoBehaviour
         }
     }
 
+    // Look at Text
     public void SetLookAtText(string text) {
         lookAtText.text = text;
     }
@@ -28,6 +30,19 @@ public class FPVUI : MonoBehaviour
 
     public void ToggleLookAtText(bool toggle) {
         lookAtText.gameObject.SetActive(toggle);
+    }
+
+    // Interact Text
+    public void SetInteractText(string text) {
+        interactText.text = text;
+    }
+
+    public void ClearInteractText() {
+        interactText.text = "";
+    }
+
+    public void ToggleInteractText(bool toggle) {
+        interactText.gameObject.SetActive(toggle);
     }
 
     public void ToggleFPVCrosshair(bool toggle) {
