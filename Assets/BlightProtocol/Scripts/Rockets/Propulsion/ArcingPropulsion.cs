@@ -1,9 +1,11 @@
 using System.Collections;
+using Unity.Mathematics;
 using UnityEngine;
 
 public class ArcingPropulsion : ACRocketPropulsion
 {
-    public float arcHeight = 80f; // y value of the arc's peak
+    public Vector2 minMaxArcHeight; // y value of the arc's peak, 
+    public float maxDistance; // distance from the rocket to the target
     [Header("Explosion Settings")]
     public Material explosionMaterial; //Material for the explosion effect when the rocket explodes.
 
@@ -16,7 +18,10 @@ public class ArcingPropulsion : ACRocketPropulsion
 
         Vector3 start = rocketTransform.position;
         Vector3 midPoint = (start + target) * 0.5f;
-        midPoint.y += arcHeight; // Raise the apex
+        target = new Vector3(target.x, parentRocket.initialTransform.position.y, target.z);
+
+        float distance = Vector3.Distance(start, target);
+        midPoint.y += Mathf.Lerp(minMaxArcHeight.x, minMaxArcHeight.y, Mathf.Clamp01(distance / maxDistance));
 
         float progress = 0f;
 

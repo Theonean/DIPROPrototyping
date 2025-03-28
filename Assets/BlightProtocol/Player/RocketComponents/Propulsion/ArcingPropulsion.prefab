@@ -184,7 +184,8 @@ MonoBehaviour:
   vfxFlying: {fileID: 5493941438881058025}
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles
-  arcHeight: 80
+  minMaxArcHeight: {x: 2, y: 60}
+  maxDistance: 100
   explosionMaterial: {fileID: -876546973899608171, guid: d7bb4ce55c91ff04ea33066515b56160,
     type: 3}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
