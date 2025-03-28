@@ -5,10 +5,18 @@ public class Map : MonoBehaviour, IFPVInteractable
 {
     public static Map Instance { get; private set; }
     public string lookAtText = "E";
+    public string interactText = "[Left Click] Set Target Position";
+
     public string LookAtText
     {
         get => lookAtText;
         set => lookAtText = value;
+    }
+
+    public string InteractText
+    {
+        get => interactText;
+        set => interactText = value;
     }
     public Transform cameraLockPos;
     public bool IsCurrentlyInteractable { get; set; } = true;
@@ -87,6 +95,7 @@ public class Map : MonoBehaviour, IFPVInteractable
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.lockState = CursorLockMode.Confined;
             isInFocus = true;
+            this.DefaultOnInteract();
 
             mouseOffset = new Vector2(Input.mousePosition.x - mapCamera.pixelWidth, Input.mousePosition.y - mapCamera.pixelHeight);
         }

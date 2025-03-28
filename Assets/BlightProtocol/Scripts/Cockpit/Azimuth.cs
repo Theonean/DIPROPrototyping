@@ -7,6 +7,19 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
     public bool IsCurrentlyInteractable { get; set; } = true;
 
     public string lookAtText = "Use Azimuth";
+    public string interactText = "[Left Click] Set Marker";
+
+    public string LookAtText
+    {
+        get => lookAtText;
+        set => lookAtText = value;
+    }
+
+    public string InteractText
+    {
+        get => interactText;
+        set => interactText = value;
+    }
     private bool isInFocus = false;
 
     [Header("Camera Controls")]
@@ -30,12 +43,6 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
     public Color innerRingEnabledColor;
     public Color innerRingDisabledColor;
     public Renderer innerRing;
-
-    public string LookAtText
-    {
-        get => lookAtText;
-        set => lookAtText = value;
-    }
 
     void Update()
     {
@@ -123,6 +130,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             FPVPlayerCam.Instance.LockToPosition(cameraLockPos, false, true);
             Cursor.lockState = CursorLockMode.Locked;
             isInFocus = true;
+            this.DefaultOnInteract();
         }
 
     }

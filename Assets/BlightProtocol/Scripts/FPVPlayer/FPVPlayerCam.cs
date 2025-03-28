@@ -98,6 +98,9 @@ public class FPVPlayerCam : MonoBehaviour
         Cursor.visible = false;
         FPVUI.Instance.ToggleFPVCrosshair(true);
         FPVUI.Instance.ToggleLookAtText(true);
+
+        // CLear interaction Text
+        FPVUI.Instance.ClearInteractText();
     }
 
     private IEnumerator SmoothMove(Quaternion targetRot, Vector3 targetPos, bool unlock = false)

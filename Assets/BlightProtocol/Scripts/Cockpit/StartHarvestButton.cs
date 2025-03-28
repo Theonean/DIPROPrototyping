@@ -4,15 +4,22 @@ using UnityEngine;
 public class StartHarvestButton : MonoBehaviour, IFPVInteractable
 {
     public bool IsCurrentlyInteractable { get; set; } = true;
-    public string lookAtText = "E"; // Backing field for Inspector
-    private Harvester harvester;
-    public TextMeshPro harvestButtonFeedback;
+    public string lookAtText = "E";
+    public string interactText = "";
 
     public string LookAtText
     {
         get => lookAtText;
         set => lookAtText = value;
     }
+
+    public string InteractText
+    {
+        get => interactText;
+        set => interactText = value;
+    }
+    private Harvester harvester;
+    public TextMeshPro harvestButtonFeedback;
 
     void Start()
     {
