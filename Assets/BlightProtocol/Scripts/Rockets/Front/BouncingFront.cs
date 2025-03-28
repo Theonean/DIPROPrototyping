@@ -35,7 +35,7 @@ public class BouncingFront : ACRocketFront
         {
             Logger.Log("Bounce Angle: " + Vector3.Angle(hit.normal, Vector3.up), LogLevel.INFO, LogType.ROCKETS);
             // Check if the hit normal is nearly directly upward (within 10 degrees)
-            if (Vector3.Angle(hit.normal, Vector3.up) <= 80f)
+            if (Vector3.Angle(hit.normal, Vector3.up) <= 60f)
             {
                 // Use parent's shootingDirection instead of a new reflection calculation
                 Vector3 shootingDirection = parentRocket.shootingDirection.normalized;
