@@ -81,7 +81,11 @@ public class Obstacle : MonoBehaviour
         if (other.gameObject.tag == "Rocket")
         {
             Rocket rocket = other.GetComponentInParent<Rocket>();
-            if (rocket.CanExplode())
+            if (rocket.frontComponent.GetType() == typeof(BouncingFront))
+            {
+                rocket.frontComponent.ActivateAbility(GetComponentInChildren<Collider>());
+            }
+            else if (rocket.CanExplode())
             {
                 rocket.Explode();
             }
