@@ -1,23 +1,16 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+
 public class Map : MonoBehaviour, IFPVInteractable
 {
     public static Map Instance { get; private set; }
     public string lookAtText = "E";
     public string interactText = "[Left Click] Set Target Position";
 
-    public string LookAtText
-    {
-        get => lookAtText;
-        set => lookAtText = value;
-    }
+    public string LookAtText { get => lookAtText; set => lookAtText = value; }
+    public string InteractText { get => interactText; set => interactText = value; }
 
-    public string InteractText
-    {
-        get => interactText;
-        set => interactText = value;
-    }
     public Transform cameraLockPos;
     public bool IsCurrentlyInteractable { get; set; } = true;
     private bool isInFocus = false;
@@ -33,10 +26,13 @@ public class Map : MonoBehaviour, IFPVInteractable
     public Vector2 mouseOffset;
 
     [Header("Markers")]
-    public GameObject energySingaturePing;
+    public GameObject energySignaturePing;
     public GameObject customMarker;
     public int maxMarkers = 2;
     private List<GameObject> customMarkers = new List<GameObject>();
+
+    // Dictionary to track discovered energy signatures
+    private Dictionary<EnergySignature, GameObject> discoveredSignatures = new Dictionary<EnergySignature, GameObject>();
 
     void Awake()
     {
@@ -69,7 +65,6 @@ public class Map : MonoBehaviour, IFPVInteractable
                 Cursor.lockState = CursorLockMode.Locked;
                 Cursor.visible = false;
                 isInFocus = false;
-
                 uiTarget.anchoredPosition = new Vector3(0, 0);
             }
         }
@@ -92,7 +87,6 @@ public class Map : MonoBehaviour, IFPVInteractable
         else
         {
             FPVPlayerCam.Instance.LockToPosition(cameraLockPos);
-            Cursor.lockState = CursorLockMode.Locked;
             Cursor.lockState = CursorLockMode.Confined;
             isInFocus = true;
             this.DefaultOnInteract();
@@ -112,7 +106,6 @@ public class Map : MonoBehaviour, IFPVInteractable
                 Vector3 targetPos = navMeshHit.position;
                 Harvester.Instance.mover.SetDestination(targetPos);
             }
-
         }
     }
 
@@ -129,7 +122,31 @@ public class Map : MonoBehaviour, IFPVInteractable
 
     public void SetEnergySignature(Vector3 position, EnergySignature signature)
     {
-        GameObject instantiatedSignature = Instantiate(energySingaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
-        instantiatedSignature.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
+        if (discoveredSignatures.TryGetValue(signature, out GameObject marker))
+        {
+            if (!signature.isStatic)
+            {
+                GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+                newSignatureMarker.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
+
+                Vector3 lastPosition = marker.transform.position;
+                LineRenderer lineRenderer = newSignatureMarker.GetComponent<EnergySignatureDisplayer>().lineRenderer;
+                lineRenderer.SetPosition(0, new Vector3(position.x, 0, position.z));
+                lineRenderer.SetPosition(1, new Vector3(lastPosition.x, 0, lastPosition.z));
+
+                discoveredSignatures[signature] = newSignatureMarker;
+            }
+            else
+            {
+                marker.GetComponent<EnergySignatureDisplayer>().ResetSignatureColor();
+            }
+        }
+        else
+        {
+            GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+            newSignatureMarker.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
+
+            discoveredSignatures[signature] = newSignatureMarker;
+        }
     }
 }
