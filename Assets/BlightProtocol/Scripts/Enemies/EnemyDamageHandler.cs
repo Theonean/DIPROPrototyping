@@ -9,16 +9,6 @@ public class EnemyDamageHandler : MonoBehaviour
     public GameObject m_Explosion_2;
     public UnityEvent enemyDestroyed;
 
-    //When collision happens, check if object has the right tag and if it does, destroy this object
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.tag == enemyTag)
-        {
-            DestroyEnemy();
-        }
-    }
-
-
     public void DestroyEnemy()
     {
         //Invoke the enemyDestroyed event

@@ -78,19 +78,7 @@ public class Obstacle : MonoBehaviour
 
     private void HandleCollision(GameObject other)
     {
-        if (other.gameObject.tag == "Rocket")
-        {
-            Rocket rocket = other.GetComponentInParent<Rocket>();
-            if (rocket.frontComponent.GetType() == typeof(BouncingFront))
-            {
-                rocket.frontComponent.ActivateAbility(GetComponentInChildren<Collider>());
-            }
-            else if (rocket.CanExplode())
-            {
-                rocket.Explode();
-            }
-        }
-        else if (destructiveTags.Contains(other.gameObject.tag))
+        if (destructiveTags.Contains(other.gameObject.tag))
         {
             HandleExplosion();
         }

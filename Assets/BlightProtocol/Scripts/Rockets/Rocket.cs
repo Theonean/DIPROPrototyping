@@ -41,6 +41,20 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+
+        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        {
+            if (frontComponent.GetType() == typeof(BouncingFront))
+            {
+                frontComponent.ActivateAbility(GetComponentInChildren<Collider>());
+            }
+            else if (CanExplode())
+            {
+                Explode();
+                return;
+            }
+        }
+
         if (state == RocketState.FLYING)
         {
             if (other.gameObject.layer == LayerMask.NameToLayer("Rocket"))
@@ -52,6 +66,12 @@ public class Rocket : MonoBehaviour
             }
 
             frontComponent.ActivateAbility(other);
+        }
+
+        //If other has component enemydamagehandler, destroy
+        if (other.GetComponent<EnemyDamageHandler>() != null)
+        {
+            other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
         }
     }
 
