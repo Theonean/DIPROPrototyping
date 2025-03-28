@@ -100,6 +100,7 @@ public class HarvesterSpeedControl : MonoBehaviour
         {
             currentSpeedStepIndex = index;
             UpdateSpeedIndicator();
+            Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
         }
     }
 

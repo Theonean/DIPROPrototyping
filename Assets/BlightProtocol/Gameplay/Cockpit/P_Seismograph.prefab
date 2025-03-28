@@ -127,11 +127,11 @@ MonoBehaviour:
   - zoneState: 0
     strength: 2
   - zoneState: 1
-    strength: 15
+    strength: 12
   - zoneState: 2
-    strength: 10
+    strength: 15
   - zoneState: 3
-    strength: 8
+    strength: 12
   vibrationChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -259,15 +259,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vibrationSlider: {fileID: 0}
-  maxVibration: 25
+  maxVibration: 20
   lineRenderer: {fileID: 8979815788254959921}
   boundsStart: {fileID: 4514647283362611476}
   boundsEnd: {fileID: 505136231172965946}
   pointAmount: 100
   adjustDuration: 0.5
-  vibrationFrequency: 50
-  overlay1Frequency: 15
-  noiseFrequency: 1
+  vibrationFrequency: 80
+  overlay1Frequency: 30
+  noiseFrequency: 2
 --- !u!1 &5390823836002831123
 GameObject:
   m_ObjectHideFlags: 0
@@ -293,7 +293,7 @@ Transform:
   m_GameObject: {fileID: 5390823836002831123}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.5, y: 0.5, z: 0}
+  m_LocalPosition: {x: -1.001, y: 0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -421,7 +421,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: 0
+      m_ColorSpace: -1
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -460,7 +460,7 @@ Transform:
   m_GameObject: {fileID: 7345061885717828509}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.5, y: -0.5, z: 0}
+  m_LocalPosition: {x: 0.996, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -569,7 +569,7 @@ RectTransform:
   m_GameObject: {fileID: 7558306370985420927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.01, y: 0.010000001, z: 0.010000001}
+  m_LocalScale: {x: 0.02, y: 0.010000001, z: 0.010000001}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2771349133369554675}
