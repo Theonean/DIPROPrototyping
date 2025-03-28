@@ -1,5 +1,5 @@
 using System.Collections;
-using TMPro.EditorUtilities;
+using TMPro;
 using UnityEngine;
 
 public class FPVPlayerCam : MonoBehaviour

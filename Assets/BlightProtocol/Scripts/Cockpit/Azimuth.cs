@@ -90,7 +90,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
         if (Physics.Raycast(new Ray(rayOrigin.position, rayDirection), out hit, maxDistance, innerRinghitMask))
         {
             // Check if hit object should block the azimuth
-            Logger.Log(hit.collider.gameObject.layer.ToString(), LogLevel.INFO, LogType.HARVESTER);
+            Logger.Log(hit.collider.name, LogLevel.INFO, LogType.HARVESTER);
             if ((hitMask & (1 << hit.collider.gameObject.layer)) != 0)
             {
                 innerRing.material.SetColor("_Color", innerRingEnabledColor);
