@@ -46,7 +46,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _AmbientStrength: 0.7
+    - _FalloffAmount: 0
     - _Fog_Density: 0
+    - _FresnelSize: 0
+    - _LightingCutoff: 0.01
     - _Lighting_Cutoff: 0.585
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -54,13 +58,20 @@ Material:
     - _RampSmoothness: 0.25
     - _Rim_Brightness: 2
     - _Rim_Power: 5
+    - _Smoothness: 729.7
     - _Step_2_Brightness: 0.851
     - _Step_2_Percent: 0.676
+    - _UseColor: 0
+    - _UseSpecular: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _DiffuseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
+    - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
     - _RampTinting: {r: 0.35686275, g: 0.12156863, b: 0.30588236, a: 1}
+    - _ShadowTint: {r: 0.8784314, g: 0.43529412, b: 0.78039217, a: 1}
     - _Shadow_Tint: {r: 0.7264151, g: 0.620194, b: 0.70061857, a: 1}
+    - _SpecularColor: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7781299155573986741
 MonoBehaviour:
