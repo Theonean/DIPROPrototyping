@@ -68,34 +68,41 @@ public class BoomerangPropulsion : ACRocketPropulsion
             yield return null;
         }
 
-        // Phase 2: Inbound arc from target back to the player's position.
-        Vector3 returnTarget = parentRocket.initialTransform.position;
-        Vector3 returnStart = rocketTransform.position; // This should equal target.
-        Vector3 returnMid = (returnStart + returnTarget) * 0.5f;
-        // Reverse the offset to create a smooth turning effect on the return.
-        Vector3 returnControl = returnMid - offsetDir;
-
-        float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl, returnTarget);
+        // Phase 2: Inbound arc from target back to the player's current position.
+        Vector3 returnStart = rocketTransform.position; // Start of the return arc.
         t = 0f;
-        while (t < 0.95f)
+        while (Vector3.Distance(rocketTransform.position, parentRocket.initialTransform.position) > 1f)
         {
+            // Get the player's current position each frame.
+            Vector3 currentTarget = parentRocket.initialTransform.position;
+
+            // Recalculate the mid-point and control point based on the current target.
+            Vector3 returnMid = (returnStart + currentTarget) * 0.5f;
+            Vector3 returnControl = returnMid - offsetDir;
+
+            // Estimate the arc length for the current curve.
+            float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl, currentTarget);
+
+            // Increment t based on the fly speed and current arc length.
             t += (parentRocket.settings.flySpeed * Time.deltaTime) / inboundArcLength;
             t = Mathf.Clamp01(t);
-            Vector3 pos = QuadraticBezier(t, returnStart, returnControl, returnTarget);
+
+            // Compute the new position along the bezier curve.
+            Vector3 pos = QuadraticBezier(t, returnStart, returnControl, currentTarget);
             rocketTransform.position = pos;
 
+            // Update the rotation based on the derivative of the curve.
             float deltaT = 0.001f;
-            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), returnStart, returnControl, returnTarget);
+            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), returnStart, returnControl, currentTarget);
             Vector3 derivative = posAhead - pos;
             if (derivative != Vector3.zero)
             {
                 rocketTransform.rotation = Quaternion.LookRotation(derivative.normalized);
             }
+
             yield return null;
         }
-        
-        StartCoroutine(ReturnToDrone());
+
+        parentRocket.ReattachRocketToDrone();
     }
-
-
 }

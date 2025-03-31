@@ -23,5 +23,8 @@ public class StraightLinePropulsion : ACRocketPropulsion
 
             yield return null;
         }
+
+        Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
+        ParentRocket.SetState(RocketState.IDLE);
     }
 }

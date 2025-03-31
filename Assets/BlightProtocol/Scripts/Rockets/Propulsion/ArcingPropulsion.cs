@@ -54,5 +54,8 @@ public class ArcingPropulsion : ACRocketPropulsion
         // Trigger explosion
         GameObject explosionEffect = Instantiate(explosionPrefab, rocketTransform.position, Quaternion.identity);
         explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(landingExplosionRadius / 10f);
+
+        Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
+        ParentRocket.SetState(RocketState.IDLE);
     }
 }

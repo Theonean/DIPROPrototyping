@@ -53,9 +53,6 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         StartVFX();
         yield return StartCoroutine(FlyToTargetPosition(target));
         StopVFX();
-
-        Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
-        ParentRocket.SetState(RocketState.IDLE);
     }
 
     private void RocketChangedState(RocketState state)
@@ -95,11 +92,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
             if (distanceToUpdatedTarget < 1f)
             {
-                rocketTransform.position = updatedTargetPosition;
-                ParentRocket.SetState(RocketState.ATTACHED);
-                rocketTransform.SetParent(parentRocket.initialTransform.parent);
-                rocketTransform.rotation = ParentRocket.initialTransform.rotation;
-                rocketTransform.localScale = rocketOriginalScale;
+                parentRocket.ReattachRocketToDrone();
                 yield break;
             }
 

@@ -155,4 +155,13 @@ public class Rocket : MonoBehaviour
             frontComponent = Instantiate(front, transform).GetComponent<ACRocketFront>();
         }
     }
+
+    public void ReattachRocketToDrone()
+    {
+        transform.position = initialTransform.position;
+        SetState(RocketState.ATTACHED);
+        transform.SetParent(initialTransform.parent);
+        transform.rotation = initialTransform.rotation;
+        transform.localScale = initialTransform.localScale;
+    }
 }

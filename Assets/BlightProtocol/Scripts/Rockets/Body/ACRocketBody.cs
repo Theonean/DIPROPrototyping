@@ -44,7 +44,6 @@ public abstract class ACRocketBody : ACRocketComponent
             yield return null;
         }
 
-        rocketTransform.localScale = rocketOriginalScale;
-        ParentRocket.SetState(RocketState.ATTACHED);
+        parentRocket.ReattachRocketToDrone();
     }
 }
