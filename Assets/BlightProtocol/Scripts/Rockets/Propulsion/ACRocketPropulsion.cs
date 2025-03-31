@@ -64,7 +64,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         StopVFX();
     }
 
-    private IEnumerator ReturnToDrone()
+    protected IEnumerator ReturnToDrone()
     {
         while (true)
         {
