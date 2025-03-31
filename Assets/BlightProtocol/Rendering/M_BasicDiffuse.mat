@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_CelShading2
-  m_Shader: {fileID: -6465566751694194690, guid: 5fbc074a51565b743bcee7f17dc971ec,
+  m_Name: M_BasicDiffuse
+  m_Shader: {fileID: -6465566751694194690, guid: 53ab7777c6613094ba748da53e36462b,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -68,7 +68,7 @@ Material:
     m_Ints: []
     m_Floats:
     - _AmbientStrength: 0.7
-    - _FalloffAmount: 0
+    - _FalloffAmount: 0.1
     - _Fog_Density: 0
     - _FresnelSize: 0
     - _LightingCutoff: 0.01
@@ -79,7 +79,7 @@ Material:
     - _RampSmoothness: 0.5
     - _Rim_Brightness: 0
     - _Rim_Power: 5
-    - _Smoothness: 729.7
+    - _Smoothness: 100
     - _Step_2_Brightness: 0.5
     - _Step_2_Percent: 0.75
     - _UseColor: 0
@@ -87,10 +87,10 @@ Material:
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 0}
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 0}
-    - _Emission_Color: {r: 0.6037736, g: 0, b: 0, a: 1}
+    - _Emission_Color: {r: 1, g: 0.023584902, b: 0.023584902, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
     - _RampTinting: {r: 0.3584906, g: 0.12006053, b: 0.3055061, a: 1}
-    - _ShadowTint: {r: 0.8773585, g: 0.43454075, b: 0.7789545, a: 1}
+    - _ShadowTint: {r: 0, g: 0, b: 0, a: 0}
     - _Shadow_Tint: {r: 0.7254902, g: 0.61960787, b: 0.7019608, a: 1}
-    - _SpecularColor: {r: 1, g: 1, b: 1, a: 0}
+    - _SpecularColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
