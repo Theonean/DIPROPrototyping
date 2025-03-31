@@ -5,6 +5,9 @@ using UnityEngine;
 public class FPVPlayerCam : MonoBehaviour
 {
     public static FPVPlayerCam Instance { get; private set; }
+    private KeyCode lookKey = KeyCode.Mouse1;
+    public bool lookIsToggle = false;
+    public bool isLooking = false;
     public float sensX;
     public float sensY;
 
@@ -41,15 +44,52 @@ public class FPVPlayerCam : MonoBehaviour
         {
             return;
         }
-        ;
-        float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
+        if (Input.GetKeyDown(lookKey))
+        {
+            if (lookIsToggle && isLooking)
+            {
+                UnlockCursor();
+                isLooking = false;
+            }
+            else
+            {
+                LockCursor();
+                isLooking = true;
+            }
+                
+        }
+        else if (Input.GetKeyUp(lookKey))
+        {
+            if (!lookIsToggle)
+            {
+                UnlockCursor();
+                isLooking = false;
+            }
+        }
 
-        yRotation += mouseX;
-        xRotation -= mouseY;
-        xRotation = Mathf.Clamp(xRotation, -90f, 90f);
-        transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
-        orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
+        if (isLooking)
+        {
+            float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
+            float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
+
+            yRotation += mouseX;
+            xRotation -= mouseY;
+            xRotation = Mathf.Clamp(xRotation, -90f, 90f);
+            transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
+            orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
+        }
+    }
+
+    public void LockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    public void UnlockCursor()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+        Cursor.visible = true;
     }
 
     public void LockToPosition(Transform targetTransform, bool useInitPos = false, bool reparent = false)
@@ -94,8 +134,6 @@ public class FPVPlayerCam : MonoBehaviour
         isReparented = false;
 
         StartCoroutine(SmoothMove(lastRotation, lastPosition, true));
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
         FPVUI.Instance.ToggleFPVCrosshair(true);
         FPVUI.Instance.ToggleLookAtText(true);
 

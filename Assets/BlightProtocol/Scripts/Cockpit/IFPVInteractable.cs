@@ -5,8 +5,8 @@ public interface IFPVInteractable
     public string LookAtText { get; set; }
     public string InteractText { get; set; }
     void OnInteract();
-
     void OnHover();
+    public bool UpdateHover { get; set; }
 }
 
 public static class FPVInteractableExtensions

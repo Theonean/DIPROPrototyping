@@ -3,11 +3,12 @@ using UnityEngine;
 public class FPVInteractionHandler : MonoBehaviour
 {
     [Header("Input")]
-    public KeyCode interactKey = KeyCode.E;
+    KeyCode interactKey = KeyCode.Mouse0;
     private bool interactKeyPressed = false;
 
     [Header("Cameras")]
     private Camera fpvCamera;
+    private FPVPlayerCam fpvPlayerCam;
 
     [Header("Raycasting")]
     private Ray ray;
@@ -20,6 +21,7 @@ public class FPVInteractionHandler : MonoBehaviour
     void Start()
     {
         fpvCamera = GetComponent<Camera>();
+        fpvPlayerCam = GetComponent<FPVPlayerCam>();
     }
 
     void Update()
@@ -28,10 +30,19 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             interactKeyPressed = true;
         }
+        if (Input.GetKeyUp(interactKey))
+        {
+            interactKeyPressed = false;
+        }
     }
 
     void FixedUpdate()
     {
+        if (fpvPlayerCam.isLooking)
+        {
+            return;
+        }
+
         ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out hit, raycastRange, hitMask))
@@ -47,6 +58,10 @@ public class FPVInteractionHandler : MonoBehaviour
                         lastHoveredObject = interactable;
                         interactable.OnHover();
                     }
+                    else if (interactable.UpdateHover)
+                    {
+                        interactable.OnHover();
+                    }
                 }
                 else
                 {
@@ -60,6 +75,10 @@ public class FPVInteractionHandler : MonoBehaviour
                     if (interactable != lastHoveredObject)
                     {
                         lastHoveredObject = interactable;
+                        interactable.OnHover();
+                    }
+                    else if (interactable.UpdateHover)
+                    {
                         interactable.OnHover();
                     }
                 }

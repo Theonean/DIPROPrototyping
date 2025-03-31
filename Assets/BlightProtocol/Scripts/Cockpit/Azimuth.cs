@@ -8,6 +8,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
 
     public string lookAtText = "Use Azimuth";
     public string interactText = "[Left Click] Set Marker";
+    public bool UpdateHover { get; set; } = false;
 
     public string LookAtText
     {

@@ -7,6 +7,7 @@ public class Map : MonoBehaviour, IFPVInteractable
     public static Map Instance { get; private set; }
     public string lookAtText = "E";
     public string interactText = "[Left Click] Set Target Position";
+    public bool UpdateHover { get; set; } = true;
 
     public string LookAtText { get => lookAtText; set => lookAtText = value; }
     public string InteractText { get => interactText; set => interactText = value; }
@@ -24,6 +25,7 @@ public class Map : MonoBehaviour, IFPVInteractable
     public LayerMask hitMask;
     public RectTransform uiTarget;
     public Vector2 mouseOffset;
+    private Vector3 screenPoint;
 
     [Header("Markers")]
     public GameObject energySignaturePing;
@@ -46,52 +48,22 @@ public class Map : MonoBehaviour, IFPVInteractable
         }
     }
 
-    void Update()
-    {
-        if (isInFocus)
-        {
-            Vector2 screenSpaceMousePos = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height);
-            Vector3 screenPoint = new Vector3(screenSpaceMousePos.x * mapCamera.pixelWidth, screenSpaceMousePos.y * mapCamera.pixelHeight, 100f);
-            uiTarget.transform.position = mapCamera.ScreenToWorldPoint(screenPoint);
-
-            if (Input.GetMouseButtonDown(0))
-            {
-                SetTarget(screenPoint);
-            }
-
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                FPVPlayerCam.Instance.UnlockPosition();
-                Cursor.lockState = CursorLockMode.Locked;
-                Cursor.visible = false;
-                isInFocus = false;
-                uiTarget.anchoredPosition = new Vector3(0, 0);
-            }
-        }
-    }
-
     public void OnHover()
     {
-        this.DefaultOnHover();
+        Vector2 screenSpaceMousePos = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height);
+        Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        {
+            screenPoint = new Vector3(hit.textureCoord.x * mapCamera.pixelWidth, hit.textureCoord.y * mapCamera.pixelHeight, 0);
+            uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
+        }
     }
 
     public void OnInteract()
     {
-        if (FPVPlayerCam.Instance.isLocked)
+        if (screenPoint != null)
         {
-            FPVPlayerCam.Instance.UnlockPosition();
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
-            isInFocus = false;
-        }
-        else
-        {
-            FPVPlayerCam.Instance.LockToPosition(cameraLockPos);
-            Cursor.lockState = CursorLockMode.Confined;
-            isInFocus = true;
-            this.DefaultOnInteract();
-
-            mouseOffset = new Vector2(Input.mousePosition.x - mapCamera.pixelWidth, Input.mousePosition.y - mapCamera.pixelHeight);
+            SetTarget(screenPoint);
         }
     }
 

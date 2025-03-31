@@ -5,6 +5,7 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
     public bool IsCurrentlyInteractable {get; set;} = true;
     public string lookAtText = "E";
     public string interactText = "";
+    public bool UpdateHover { get; set; } = false;
 
     public string LookAtText
     {
