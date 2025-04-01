@@ -30,16 +30,6 @@ public class HarvesterHealth : MonoBehaviour
         }
     }
 
-    private void OnEnable()
-    {
-        Collectible.OnCollectiblePickedUp.AddListener(HealOnPickup);
-    }
-
-    private void OnDisable()
-    {
-        Collectible.OnCollectiblePickedUp.RemoveListener(HealOnPickup);
-    }
-
     void OnTriggerEnter(Collider other)
     {
         if (dead) return;
@@ -73,14 +63,6 @@ public class HarvesterHealth : MonoBehaviour
             //Find Camera Tracker and tell it to track this
             CameraTracker.Instance.objectToTrack = this.gameObject;
             StartCoroutine(FlyAway());
-        }
-    }
-
-    private void HealOnPickup(ECollectibleType type)
-    {
-        if (type == ECollectibleType.FullHealth)
-        {
-            Heal();
         }
     }
 

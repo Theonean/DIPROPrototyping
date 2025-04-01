@@ -14,21 +14,4 @@ public class RocketData : ScriptableObject
     public float explosionRadius;
     public float explosionChainDelay;
     public float regrowDurationAfterExplosion;
-
-    public void ApplyTemporaryBoost(ECollectibleType type)
-    {
-        switch (type)
-        {
-            case ECollectibleType.ExplosionRange:
-                explosionRadius = explosionRadiusBase * Collectible.explosionRangeMultiplier;
-                UIStatsDisplayer.Instance.explosionRangeBuffTimerFinished.AddListener(() => explosionRadius = explosionRadiusBase);
-                break;
-            case ECollectibleType.ShotSpeed:
-                flySpeed = flySpeedBase * Collectible.shotSpeedMultiplier;
-                UIStatsDisplayer.Instance.shotspeedBuffTimerFinished.AddListener(() => flySpeed = flySpeedBase);
-                break;
-            case ECollectibleType.FullHealth:
-                break;
-        }
-    }
 }
