@@ -10,6 +10,7 @@ public abstract class ACRocketBody : ACRocketComponent
     public Material explosionMaterial; //Material for the explosion effect when the rocket explodes.
 
     public GameObject explosionPrefab; //The explosion prefab to spawn when the rocket explodes.
+    [SerializeField] protected float explosionRadius = 10f; // Radius of the explosion when the rocket explodes.
 
     //Private settings
     protected abstract void Explode();
@@ -21,12 +22,8 @@ public abstract class ACRocketBody : ACRocketComponent
             Logger.Log("Rocket clicked", LogLevel.INFO, LogType.ROCKETS);
             Explode();
 
-            rocketTransform.position = ParentRocket.initialTransform.position;
-            rocketTransform.rotation = ParentRocket.initialTransform.rotation;
-            rocketTransform.SetParent(parentRocket.initialTransform.parent);
-            rocketTransform.localScale = Vector3.zero;
+            parentRocket.ReattachRocketToDrone(RocketState.REGROWING);
 
-            ParentRocket.SetState(RocketState.REGROWING);
             StartCoroutine(RegrowRocket());
         }
     }

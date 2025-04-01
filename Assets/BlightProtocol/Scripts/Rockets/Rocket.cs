@@ -156,10 +156,10 @@ public class Rocket : MonoBehaviour
         }
     }
 
-    public void ReattachRocketToDrone()
+    public void ReattachRocketToDrone(RocketState stateOverride = RocketState.ATTACHED)
     {
         transform.position = initialTransform.position;
-        SetState(RocketState.ATTACHED);
+        SetState(stateOverride);
         transform.SetParent(initialTransform.parent);
         transform.rotation = initialTransform.rotation;
         transform.localScale = initialTransform.localScale;
