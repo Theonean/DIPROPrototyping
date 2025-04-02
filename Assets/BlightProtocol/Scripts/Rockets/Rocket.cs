@@ -41,8 +41,9 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (state == RocketState.ATTACHED) return;
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("Harvester"))
         {
             if (frontComponent.GetType() == typeof(BouncingFront))
             {

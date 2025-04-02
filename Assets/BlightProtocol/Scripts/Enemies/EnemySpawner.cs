@@ -11,7 +11,6 @@ public class EnemySpawner : MonoBehaviour
         FINISHED //No more enemies to spawn and idle
     }
     public UnityEvent AllEnemiesDead = new UnityEvent();
-    public GameObject enemyPrefab;
     public bool AutoSpawnOverride = false;
 
     //How many enemies per second this spawner generates
@@ -69,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = -0.12f;
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(WaveManager.Instance.regularEnemyPrefab, spawnPosition, Quaternion.identity);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
     }

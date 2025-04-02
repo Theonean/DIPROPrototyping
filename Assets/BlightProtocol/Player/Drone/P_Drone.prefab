@@ -84,7 +84,7 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -199,7 +199,6 @@ GameObject:
   - component: {fileID: 405855480942748978}
   - component: {fileID: 5925267659964171928}
   - component: {fileID: 4801275644696106661}
-  - component: {fileID: 52105820017883907}
   - component: {fileID: 5502411632049774116}
   - component: {fileID: 6718319768529780314}
   m_Layer: 6
@@ -336,27 +335,6 @@ MonoBehaviour:
   explosion: {fileID: 4695719848415906335, guid: c17c4653f935fb14b854e88e1881d12a,
     type: 3}
   shieldSFXEventPath: event:/SFX/Dron/Shield
---- !u!65 &52105820017883907
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1684833285897773044}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 7, y: 2, z: 7}
-  m_Center: {x: 0, y: -0.000000029802322, z: -0.0000009536743}
 --- !u!54 &5502411632049774116
 Rigidbody:
   m_ObjectHideFlags: 0

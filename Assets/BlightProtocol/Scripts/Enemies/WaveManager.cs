@@ -16,6 +16,7 @@ public class DifficultySettings
 
 public class WaveManager : MonoBehaviour
 {
+    public static WaveManager Instance { get; private set; }
     enum SurpriseAttackTypes
     {
         AMBUSH_CIRCLE,
@@ -32,6 +33,9 @@ public class WaveManager : MonoBehaviour
 
     [Header("Wave Manager Settings")]
     public EnemySpawner[] spawners;
+    public GameObject regularEnemyPrefab;
+    public GameObject chargerEnemyPrefab;
+    public GameObject tankEnemyPrefab;
 
     [Header("Difficulty Settings")]
     public DifficultySettings difficultySettings;
@@ -44,6 +48,15 @@ public class WaveManager : MonoBehaviour
 
     private void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+
         spawners = spawners.OrderBy(x => UnityEngine.Random.value).ToArray();
         foreach (EnemySpawner spawner in spawners)
         {
@@ -162,7 +175,7 @@ public class WaveManager : MonoBehaviour
         {
             float angle = i * Mathf.PI * 2 / enemyCount;
             Vector3 spawnPosition = new Vector3(controlZonePosition.x + Mathf.Cos(angle) * radius, controlZonePosition.y, controlZonePosition.z + Mathf.Sin(angle) * radius);
-            Instantiate(spawners[0].enemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(regularEnemyPrefab, spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
         }
     }
@@ -184,7 +197,7 @@ public class WaveManager : MonoBehaviour
             for (int z = 0; z < iZ; z++)
             {
                 Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
-                Instantiate(spawners[0].enemyPrefab, spawnPosition + offset, Quaternion.identity);
+                Instantiate(regularEnemyPrefab, spawnPosition + offset, Quaternion.identity);
                 yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
             }
         }
@@ -210,7 +223,7 @@ public class WaveManager : MonoBehaviour
                 for (int z = 0; z < iZ; z++)
                 {
                     Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
-                    Instantiate(spawners[0].enemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    Instantiate(regularEnemyPrefab, spawnPosition + offset, Quaternion.identity);
                     yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
                 }
             }

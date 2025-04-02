@@ -5,12 +5,26 @@ public class EntityDetector : MonoBehaviour
 {
     public UnityEvent OnAgentEnter;
     public UnityEvent OnAgentExit;
-    public string tagToLookFor;
+    public string layerToLookFor = "Player";
 
+    void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer(layerToLookFor))
+        {
+            OnAgentEnter.Invoke();
+        }
+    }
+    void OnCollisionExit(Collision collision)
+    {
+        if (collision.gameObject.layer == LayerMask.NameToLayer(layerToLookFor))
+        {
+            OnAgentExit.Invoke();
+        }
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag(tagToLookFor))
+        if (other.gameObject.layer == LayerMask.NameToLayer(layerToLookFor))
         {
             OnAgentEnter.Invoke();
         }
@@ -18,7 +32,7 @@ public class EntityDetector : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag(tagToLookFor))
+        if (other.gameObject.layer == LayerMask.NameToLayer(layerToLookFor))
         {
             OnAgentExit.Invoke();
         }
