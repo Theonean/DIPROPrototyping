@@ -322,14 +322,8 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6235206037039435799, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       insertIndex: 1
-      addedObject: {fileID: 6911180559840699274}
+      addedObject: {fileID: 5896565767391517654}
   m_SourcePrefab: {fileID: 100100000, guid: ef27b165cb5d7b84e824bac4cb87bd83, type: 3}
---- !u!195 &251136864335591914 stripped
-NavMeshAgent:
-  m_CorrespondingSourceObject: {fileID: 8490830819345528117, guid: ef27b165cb5d7b84e824bac4cb87bd83,
-    type: 3}
-  m_PrefabInstance: {fileID: 8550446736093285599}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &707601992295850391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9185269845558177096, guid: ef27b165cb5d7b84e824bac4cb87bd83,
@@ -342,7 +336,7 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8550446736093285599}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6911180559840699274
+--- !u!114 &5896565767391517654
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,7 +348,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7633870c3fd94804fa2d0448f11ac533, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_MoveSpeed: 4
   knockbackCurve:
     serializedVersion: 2
     m_Curve:
@@ -379,4 +372,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  agent: {fileID: 251136864335591914}
+  moveSpeed: 4

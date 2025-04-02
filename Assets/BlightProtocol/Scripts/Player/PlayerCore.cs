@@ -98,7 +98,7 @@ public class PlayerCore : MonoBehaviour
             {
                 // Knockback the enemy
                 Debug.Log("Knocked back enemy");
-                StartCoroutine(other.GetComponentInParent<FollowPlayer>().ApplyKnockback(DroneMovement.Instance.moveDirection, DroneMovement.Instance.dashKnockback));
+                StartCoroutine(other.GetComponentInParent<ACEnemyMovementBehaviour>().ApplyKnockback(DroneMovement.Instance.moveDirection, DroneMovement.Instance.dashKnockback));
             }
             else if (!isDead) //Only take damage when not dead
             {

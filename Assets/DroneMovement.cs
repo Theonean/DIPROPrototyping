@@ -138,7 +138,7 @@ public class DroneMovement : MonoBehaviour
             if (hitCollider.CompareTag("Enemy"))
             {
                 Debug.Log("Knocked back enemy");
-                StartCoroutine(hitCollider.GetComponentInParent<FollowPlayer>().ApplyKnockback(moveDirection, dashKnockback));
+                StartCoroutine(hitCollider.GetComponentInParent<ACEnemyMovementBehaviour>().ApplyKnockback(moveDirection, dashKnockback));
             }
         }
 

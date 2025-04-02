@@ -83,12 +83,6 @@ public class FrankenGameManager : MonoBehaviour
 
         m_GameState = GameState.GAMEOVER;
 
-        FollowPlayer[] followPlayers = FindObjectsOfType<FollowPlayer>();
-        foreach (FollowPlayer followPlayer in followPlayers)
-        {
-            followPlayer.enabled = false;
-        }
-
         PlayerCore playerCore = FindObjectOfType<PlayerCore>();
         playerCore.enabled = false;
 
