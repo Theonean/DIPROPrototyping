@@ -43,17 +43,35 @@ public class Rocket : MonoBehaviour
     {
         if (state == RocketState.ATTACHED) return;
 
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyArmor"))
+        {
+            switch (frontComponent.GetType().Name)
+            {
+                case "BouncingFront":
+                    frontComponent.ActivateAbility(other);
+                    break;
+                case "PenetrativeFront":
+                    frontComponent.ActivateAbility(other);
+                    break;
+                default:
+                    Explode();
+                    break;
+            }
+            return;
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("Harvester"))
         {
-            if (frontComponent.GetType() == typeof(BouncingFront))
+            switch (frontComponent.GetType().Name)
             {
-                frontComponent.ActivateAbility(GetComponentInChildren<Collider>());
+                case "BouncingFront":
+                    frontComponent.ActivateAbility(other);
+                    break;
+                default:
+                    Explode();
+                    break;
             }
-            else if (CanExplode())
-            {
-                Explode();
-                return;
-            }
+            return;
         }
 
         if (state == RocketState.FLYING)
@@ -164,5 +182,7 @@ public class Rocket : MonoBehaviour
         transform.SetParent(initialTransform.parent);
         transform.rotation = initialTransform.rotation;
         transform.localScale = initialTransform.localScale;
+
+        frontComponent.abilityUsesLeft = frontComponent.maxAbilityUses;
     }
 }

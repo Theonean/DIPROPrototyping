@@ -32,6 +32,12 @@ public class ShrapnelShot : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
+        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyArmor"))
+        {
+            Destroy(gameObject);
+            return;
+        }
+        
         if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
         {
             // Assuming the enemy has a method to take damage

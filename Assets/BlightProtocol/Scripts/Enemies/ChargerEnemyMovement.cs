@@ -13,9 +13,7 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     protected override void Update()
     {
         if (charging)
-        {
-            return; // Skip movement if already charging
-        }
+            return;
 
         if (CanMove())
         {
