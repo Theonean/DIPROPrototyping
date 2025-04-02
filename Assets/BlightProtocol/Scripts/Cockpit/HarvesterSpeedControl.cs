@@ -18,8 +18,6 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     [SerializeField] private List<HarvesterSpeedStep> speedSteps;
     public float maxSpeed = 50f;
-    public Slider speedIndicator;
-    public Image speedIndicatorFill;
     private ResourceData fuelResource;
 
     private int currentSpeedStepIndex = 0;
@@ -40,11 +38,10 @@ public class HarvesterSpeedControl : MonoBehaviour
     void Start()
     {
         fuelResource = ResourceHandler.Instance.fuelResource;
-        
+
         // Initialize display speed to match the first step
         displaySpeed = speedSteps[currentSpeedStepIndex].speed;
         SetSpeed();
-
         Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
     }
 
@@ -56,15 +53,13 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     private void UpdateSpeedIndicator()
     {
-        displaySpeed = Mathf.Lerp(displaySpeed, speedSteps[currentSpeedStepIndex].speed, Time.deltaTime * 5f);
-
+        /*displaySpeed = Mathf.Lerp(displaySpeed, speedSteps[currentSpeedStepIndex].speed, Time.deltaTime * 5f);
         speedIndicator.value = displaySpeed / maxSpeed;
-        speedIndicatorFill.color = speedSteps[currentSpeedStepIndex].displayColor;
+        speedIndicatorFill.color = speedSteps[currentSpeedStepIndex].displayColor;*/
     }
 
     void Update()
     {
-        // Adjust fuel based on current step
         if (speedSteps.Count > 0)
         {
             HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
@@ -73,7 +68,7 @@ public class HarvesterSpeedControl : MonoBehaviour
             {
                 ResourceHandler.Instance.ConsumeResource(fuelResource, currentStep.fuelCost * Time.deltaTime, true);
             }
-            else if(currentSpeedStepIndex > 0)
+            else if (currentSpeedStepIndex > 0)
             {
                 currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
                 SetSpeed();
@@ -83,17 +78,20 @@ public class HarvesterSpeedControl : MonoBehaviour
         UpdateSpeedIndicator();
     }
 
-    private void OnHarvesterStateChanged(ZoneState state) {
-        switch(state) {
+    private void OnHarvesterStateChanged(ZoneState state)
+    {
+        switch (state)
+        {
             case ZoneState.IDLE:
             case ZoneState.HARVESTING:
             case ZoneState.START_HARVESTING:
             case ZoneState.END_HARVESTING:
             case ZoneState.DIED:
                 OverrideSpeedStep(0);
-            break;
+                break;
         }
     }
+
     public void OverrideSpeedStep(int index)
     {
         if (index >= 0 && index < speedSteps.Count)
@@ -104,19 +102,17 @@ public class HarvesterSpeedControl : MonoBehaviour
         }
     }
 
-    public void AdjustSpeed(bool increase)
+    public void SetSpeedStepIndex(int index)
     {
-        if (increase)
+        if (index >= 0 && index < speedSteps.Count)
         {
-            if (currentSpeedStepIndex < speedSteps.Count - 1)
-                currentSpeedStepIndex++;
+            currentSpeedStepIndex = index;
+            SetSpeed();
         }
-        else
-        {
-            if (currentSpeedStepIndex > 0)
-                currentSpeedStepIndex--;
-        }
+    }
 
-        SetSpeed();
+    public int GetSpeedStepCount()
+    {
+        return speedSteps.Count;
     }
 }

@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 1583035581717775186}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.11099994, y: -3.87, z: -0.13400006}
+  m_LocalPosition: {x: -0.11099994, y: -2.448, z: -0.13400006}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -383,7 +383,7 @@ Transform:
   m_GameObject: {fileID: 1929961099369236374}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.36099994, y: -1.451, z: 0.19599998}
+  m_LocalPosition: {x: -0.36099994, y: -0.029000044, z: 0.19599998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -735,7 +735,7 @@ Transform:
   m_GameObject: {fileID: 3290045621298791775}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: -0.28299993, y: -1.2819998, z: -0.24000001}
+  m_LocalPosition: {x: -0.28299993, y: 0.1400001, z: -0.24000001}
   m_LocalScale: {x: 0.70832, y: 0.70832, z: 0.70832}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1890,6 +1890,7 @@ Transform:
   - {fileID: 2180739389202220564}
   - {fileID: 5115944789945319148}
   - {fileID: 8751597031769101228}
+  - {fileID: 5916657113525819655}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4553534805032301025
@@ -1906,6 +1907,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookAtText: Enter Drone Mode
   interactText: 
+  _touchPoint: {fileID: 5916657113525819655}
 --- !u!65 &1261709540231745231
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1926,7 +1928,38 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 0.89835846, y: 0.41699386, z: 0.65384805}
-  m_Center: {x: 0.009451687, y: -1.333913, z: -0.08391556}
+  m_Center: {x: 0.009451687, y: 0.08, z: -0.08391556}
+--- !u!1 &6524090984387941014
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5916657113525819655}
+  m_Layer: 0
+  m_Name: TouchPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5916657113525819655
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6524090984387941014}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8264495442965251991}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &7191396327400978202
 GameObject:
   m_ObjectHideFlags: 0
@@ -1956,7 +1989,7 @@ Transform:
   m_GameObject: {fileID: 7191396327400978202}
   serializedVersion: 2
   m_LocalRotation: {x: 0.5, y: -0.5, z: 0.5, w: -0.5}
-  m_LocalPosition: {x: 0.156, y: -1.282, z: -0.24}
+  m_LocalPosition: {x: 0.156, y: 0.14, z: -0.24}
   m_LocalScale: {x: 0.70832, y: 0.70832, z: 0.70832}
   m_ConstrainProportionsScale: 0
   m_Children: []

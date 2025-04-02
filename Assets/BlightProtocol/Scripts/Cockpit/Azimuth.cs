@@ -9,7 +9,13 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
     public string lookAtText = "Use Azimuth";
     public string interactText = "[Left Click] Set Marker";
     public bool UpdateHover { get; set; } = false;
-
+    public bool UpdateInteract { get; set; } = false;
+    [SerializeField] private Transform _touchPoint;
+    public Transform TouchPoint
+    {
+        get => _touchPoint;
+        set => _touchPoint = value;
+    }
     public string LookAtText
     {
         get => lookAtText;
@@ -118,7 +124,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
         this.DefaultOnHover();
     }
 
-    public void OnInteract()
+    public void OnStartInteract()
     {
         if (FPVPlayerCam.Instance.isLocked)
         {
@@ -133,6 +139,7 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
             isInFocus = true;
             this.DefaultOnInteract();
         }
-
     }
+    public void OnUpdateInteract() {}
+    public void OnEndInteract() {}
 }

@@ -8,6 +8,13 @@ public class Map : MonoBehaviour, IFPVInteractable
     public string lookAtText = "E";
     public string interactText = "[Left Click] Set Target Position";
     public bool UpdateHover { get; set; } = true;
+    public bool UpdateInteract { get; set; } = false;
+    [SerializeField] private Transform _touchPoint;
+    public Transform TouchPoint
+    {
+        get => _touchPoint;
+        set => _touchPoint = value;
+    }
 
     public string LookAtText { get => lookAtText; set => lookAtText = value; }
     public string InteractText { get => interactText; set => interactText = value; }
@@ -56,16 +63,19 @@ public class Map : MonoBehaviour, IFPVInteractable
         {
             screenPoint = new Vector3(hit.textureCoord.x * mapCamera.pixelWidth, hit.textureCoord.y * mapCamera.pixelHeight, 0);
             uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
+            TouchPoint.transform.position = hit.point;
         }
     }
 
-    public void OnInteract()
+    public void OnStartInteract()
     {
         if (screenPoint != null)
         {
             SetTarget(screenPoint);
         }
     }
+    public void OnUpdateInteract() {}
+    public void OnEndInteract() {}
 
     public void SetTarget(Vector3 screenPoint)
     {

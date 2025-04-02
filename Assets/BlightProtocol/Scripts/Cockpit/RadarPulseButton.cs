@@ -6,6 +6,14 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
     public string lookAtText = "E";
     public string interactText = "";
     public bool UpdateHover { get; set; } = false;
+    public bool UpdateInteract { get; set; } = false;
+    [SerializeField] private Transform _touchPoint;
+
+    public Transform TouchPoint
+    {
+        get => _touchPoint;
+        set => _touchPoint = value;
+    }
 
     public string LookAtText
     {
@@ -19,10 +27,12 @@ public class RadarPulseButton : MonoBehaviour, IFPVInteractable
         set => interactText = value;
     }
 
-    public void OnInteract()
+    public void OnStartInteract()
     {
         Radar.Instance.Pulse();
     }
+    public void OnUpdateInteract() {}
+    public void OnEndInteract() {}
 
     public void OnHover() {
         this.DefaultOnHover();

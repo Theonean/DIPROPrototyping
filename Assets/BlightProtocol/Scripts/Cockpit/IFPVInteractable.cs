@@ -1,12 +1,18 @@
+using UnityEngine;
+
 public interface IFPVInteractable
 {
     bool IsCurrentlyInteractable{ get; }
 
     public string LookAtText { get; set; }
     public string InteractText { get; set; }
-    void OnInteract();
+    void OnStartInteract();
+    void OnUpdateInteract();
+    void OnEndInteract();
     void OnHover();
     public bool UpdateHover { get; set; }
+    public bool UpdateInteract { get; set; }
+    public Transform TouchPoint {get; set; }
 }
 
 public static class FPVInteractableExtensions

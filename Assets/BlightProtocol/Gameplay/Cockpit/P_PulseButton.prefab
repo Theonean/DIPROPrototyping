@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2329107976647546816
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7126437841561473561}
+  m_Layer: 0
+  m_Name: TouchPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7126437841561473561
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2329107976647546816}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.16955805, y: 0.11400002, z: -0.17390776}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7246863015105028006}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3516827334614825317
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +218,7 @@ GameObject:
   - component: {fileID: 4161069423346750741}
   - component: {fileID: 6695639667971865592}
   m_Layer: 0
-  m_Name: PulseButton
+  m_Name: P_PulseButton
   m_TagString: FPVInteractable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,6 +238,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 7169274361062172842}
+  - {fileID: 7126437841561473561}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7985610667760391344
@@ -861,3 +893,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lookAtText: Pulse
   interactText: 
+  _touchPoint: {fileID: 2329107976647546816}
