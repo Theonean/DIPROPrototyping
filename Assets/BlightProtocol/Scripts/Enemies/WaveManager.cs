@@ -90,6 +90,23 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public GameObject GetRandomEnemyPrefab()
+    {
+        int randomValue = UnityEngine.Random.Range(0, 100);
+        if (randomValue < 10)
+        {
+            return tankEnemyPrefab;
+        }
+        else if (randomValue < 30)
+        {
+            return chargerEnemyPrefab;
+        }
+        else
+        {
+            return regularEnemyPrefab;
+        }
+    }
+
     void HarvesterChangedState(ZoneState zoneState)
     {
         if (harvesterState == zoneState)
@@ -175,7 +192,7 @@ public class WaveManager : MonoBehaviour
         {
             float angle = i * Mathf.PI * 2 / enemyCount;
             Vector3 spawnPosition = new Vector3(controlZonePosition.x + Mathf.Cos(angle) * radius, controlZonePosition.y, controlZonePosition.z + Mathf.Sin(angle) * radius);
-            Instantiate(regularEnemyPrefab, spawnPosition, Quaternion.identity);
+            Instantiate(GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
             yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
         }
     }
@@ -197,7 +214,7 @@ public class WaveManager : MonoBehaviour
             for (int z = 0; z < iZ; z++)
             {
                 Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
-                Instantiate(regularEnemyPrefab, spawnPosition + offset, Quaternion.identity);
+                Instantiate(GetRandomEnemyPrefab(), spawnPosition + offset, Quaternion.identity);
                 yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
             }
         }
@@ -223,7 +240,7 @@ public class WaveManager : MonoBehaviour
                 for (int z = 0; z < iZ; z++)
                 {
                     Vector3 offset = new Vector3(x * 5 - 5, 0, z * 5 - 7.5f);
-                    Instantiate(regularEnemyPrefab, spawnPosition + offset, Quaternion.identity);
+                    Instantiate(GetRandomEnemyPrefab(), spawnPosition + offset, Quaternion.identity);
                     yield return new WaitForSeconds(0.1f); // Slight delay to desynchronize animations
                 }
             }

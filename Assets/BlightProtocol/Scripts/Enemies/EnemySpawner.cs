@@ -68,7 +68,7 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = -0.12f;
 
-        GameObject enemy = Instantiate(WaveManager.Instance.regularEnemyPrefab, spawnPosition, Quaternion.identity);
+        GameObject enemy = Instantiate(WaveManager.Instance.GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
     }
