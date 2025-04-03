@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class SpeedSlider : MonoBehaviour, IFPVInteractable
@@ -28,26 +29,31 @@ public class SpeedSlider : MonoBehaviour, IFPVInteractable
     }
 
     public Transform sliderHead;
-    public float sliderRange = 200f;
+    public Transform sliderMax;
+    public Transform sliderMin;
+    private float sliderProgress = 0f;
+    private Vector2[] screenSpaceBounds;
+    public AnimationCurve adjustCurve;
 
     private int speedStepCount;
-    private float minY, maxY;
 
     void Start()
     {
         speedStepCount = HarvesterSpeedControl.Instance.GetSpeedStepCount();
-        minY = -sliderRange * 0.5f;
-        maxY = sliderRange * 0.5f;
+        SetSliderPosition(0);
     }
 
-    public void OnStartInteract() {
+    public void OnStartInteract()
+    {
         Cursor.visible = false;
+        screenSpaceBounds = this.GetScreenSpaceBounds(sliderMin.position, sliderMax.position, FPVPlayerCam.Instance.GetComponent<Camera>());
     }
     public void OnUpdateInteract()
     {
         DragSlider();
     }
-    public void OnEndInteract() {
+    public void OnEndInteract()
+    {
         Cursor.visible = true;
     }
 
@@ -58,13 +64,51 @@ public class SpeedSlider : MonoBehaviour, IFPVInteractable
 
     private void DragSlider()
     {
-        float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * 5f;
-        float newY = Mathf.Clamp(sliderHead.localPosition.y + mouseY, minY, maxY);
-        sliderHead.localPosition = new Vector3(sliderHead.localPosition.x, newY, sliderHead.localPosition.z);
+        sliderProgress = this.GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
+        Vector3 newPos = GetSliderPosition(sliderProgress);
 
-        float percentage = Mathf.InverseLerp(minY, maxY, newY);
+        sliderHead.position = newPos;
+
+        float percentage = Vector3.Distance(sliderMin.position, newPos) / Vector3.Distance(sliderMin.position, sliderMax.position);
         int newIndex = Mathf.RoundToInt(percentage * (speedStepCount - 1));
 
         HarvesterSpeedControl.Instance.SetSpeedStepIndex(newIndex);
+    }
+
+    public void SetSliderPosition(float SpeedStepIndex)
+    {
+        // NOTE: Problem is state setting, harvester likely goes into idle state if speed is low
+        Logger.Log("overriding slider position", LogLevel.INFO, LogType.LOGGER);
+        float targetProgress = SpeedStepIndex / (speedStepCount - 1);
+        StartCoroutine(LerpSliderPosition(targetProgress, 1f));
+    }
+
+    private IEnumerator LerpSliderPosition(float targetProgress, float duration)
+    {
+        IsCurrentlyInteractable = false;
+        float elapsedTime = 0f;
+        float startProgress = sliderProgress;
+
+        while (elapsedTime < duration)
+        {
+            float t = elapsedTime / duration;
+            float curveValue = adjustCurve.Evaluate(t);
+
+            float newProgress = startProgress + curveValue * (targetProgress - startProgress);
+            sliderHead.position = GetSliderPosition(newProgress);
+            sliderProgress = newProgress;
+
+
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        sliderHead.position = Vector3.Lerp(sliderMin.position, sliderMax.position, targetProgress);
+        sliderProgress = targetProgress;
+        IsCurrentlyInteractable = true;
+    }
+
+    private Vector3 GetSliderPosition(float progress)
+    {
+        return Vector3.Lerp(sliderMin.position, sliderMax.position, progress);
     }
 }

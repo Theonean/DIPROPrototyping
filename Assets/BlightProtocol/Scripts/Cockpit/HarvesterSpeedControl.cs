@@ -22,6 +22,7 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     private int currentSpeedStepIndex = 0;
     private float displaySpeed = 0f; // Smoothed speed for UI
+    private SpeedSlider speedSlider;
 
     void Awake()
     {
@@ -38,6 +39,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     void Start()
     {
         fuelResource = ResourceHandler.Instance.fuelResource;
+        speedSlider = GetComponent<SpeedSlider>();
 
         // Initialize display speed to match the first step
         displaySpeed = speedSteps[currentSpeedStepIndex].speed;
@@ -49,13 +51,6 @@ public class HarvesterSpeedControl : MonoBehaviour
     {
         Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
         Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
-    }
-
-    private void UpdateSpeedIndicator()
-    {
-        /*displaySpeed = Mathf.Lerp(displaySpeed, speedSteps[currentSpeedStepIndex].speed, Time.deltaTime * 5f);
-        speedIndicator.value = displaySpeed / maxSpeed;
-        speedIndicatorFill.color = speedSteps[currentSpeedStepIndex].displayColor;*/
     }
 
     void Update()
@@ -74,8 +69,6 @@ public class HarvesterSpeedControl : MonoBehaviour
                 SetSpeed();
             }
         }
-
-        UpdateSpeedIndicator();
     }
 
     private void OnHarvesterStateChanged(ZoneState state)
@@ -97,14 +90,14 @@ public class HarvesterSpeedControl : MonoBehaviour
         if (index >= 0 && index < speedSteps.Count)
         {
             currentSpeedStepIndex = index;
-            UpdateSpeedIndicator();
+            speedSlider.SetSliderPosition(index);
             Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
         }
     }
 
     public void SetSpeedStepIndex(int index)
     {
-        if (index >= 0 && index < speedSteps.Count)
+        if (index >= 0 && index < speedSteps.Count && index != currentSpeedStepIndex)
         {
             currentSpeedStepIndex = index;
             SetSpeed();

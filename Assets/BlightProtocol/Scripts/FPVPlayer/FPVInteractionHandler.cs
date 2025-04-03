@@ -32,7 +32,7 @@ public class FPVInteractionHandler : MonoBehaviour
         interactKeyPressed = Input.GetKey(interactKey);
 
         // If interact key is pressed, handle active interaction
-        if (activeInteractable != null && interactKeyPressed)
+        if (activeInteractable != null && interactKeyPressed && activeInteractable.IsCurrentlyInteractable)
         {
             UpdateInteraction();
         }
@@ -73,7 +73,7 @@ public class FPVInteractionHandler : MonoBehaviour
                 Hover(interactable);
 
                 // If interact key is pressed and the hovered interactable is not the previous active one
-                if (interactKeyPressed && interactable != activeInteractable)
+                if (interactKeyPressed && interactable != activeInteractable && interactable.IsCurrentlyInteractable)
                 {
                     StartInteraction(interactable);
                 }

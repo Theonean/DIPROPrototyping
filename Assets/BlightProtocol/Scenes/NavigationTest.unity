@@ -1399,7 +1399,7 @@ PrefabInstance:
     - target: {fileID: 786348656890932667, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8123
+      value: 8321
       objectReference: {fileID: 0}
     - target: {fileID: 874898442871654688, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1614,7 +1614,7 @@ PrefabInstance:
     - target: {fileID: 3745972607527258004, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8123
+      value: 8321
       objectReference: {fileID: 0}
     - target: {fileID: 3811958560419719220, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1689,7 +1689,7 @@ PrefabInstance:
     - target: {fileID: 4648915008057216363, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8172
+      value: 8370
       objectReference: {fileID: 0}
     - target: {fileID: 4702255263423215860, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1784,7 +1784,7 @@ PrefabInstance:
     - target: {fileID: 5940332540535800029, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 9746
+      value: 9944
       objectReference: {fileID: 0}
     - target: {fileID: 6089354863669286488, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -2089,7 +2089,7 @@ PrefabInstance:
     - target: {fileID: 8872640711463356057, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 8532
+      value: 8730
       objectReference: {fileID: 0}
     - target: {fileID: 8877636503098527397, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -4692,21 +4692,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d47412c8e8144dd47bffa22844e1cde7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 1809799317}
-  explosionRangeNumber: {fileID: 0}
-  explosionRangeBuffTimer: {fileID: 0}
-  shotspeedNumber: {fileID: 0}
-  shotspeedBuffTimer: {fileID: 0}
-  legInstance: {fileID: 0}
-  rocketData: {fileID: 0}
-  explosionRangeBuffTimerFinished:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
-  shotspeedBuffTimerFinished:
-    m_PersistentCalls:
-      m_Calls: []
-    m_CallsDirty: 1
 --- !u!4 &1041865987
 Transform:
   m_ObjectHideFlags: 0
@@ -8856,54 +8841,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c65fc2afce450c044b801d54b59f577b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dotImagePrefab: {fileID: 5476885561442581045, guid: a094ea5b4cf042d408493f71d1a746c0,
-    type: 3}
-  curve:
-    m_Curve:
-    - time: -0.013214111
-      value: 0.24375153
-      inSlope: 3.243812
-      outSlope: 3.243812
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0.33333334
-    - time: 0.11613279
-      value: 0.6633286
-      inSlope: 2.7440784
-      outSlope: 2.7440784
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.04613164
-    - time: 0.998291
-      value: 0.21875
-      inSlope: -0.5039669
-      outSlope: -0.5039669
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  size: 0.2
-  canvas: {fileID: 1909661525}
-  explosionColor:
-    r: 1
-    g: 0.37254903
-    b: 0
-    a: 1
-  shotSpeedColor:
-    r: 0.40784314
-    g: 0.60784316
-    b: 0.85882354
-    a: 1
-  healthColor:
-    r: 0
-    g: 1
-    b: 0.44705883
-    a: 1
 --- !u!4 &1845556394
 Transform:
   m_ObjectHideFlags: 0
@@ -9322,12 +9259,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5328846699306707342}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &1909661525 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 8733580564143476065, guid: 94c580c3465cbd842a1304a6e5068e65,
-    type: 3}
-  m_PrefabInstance: {fileID: 5328846699306707342}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1967032504
 GameObject:
   m_ObjectHideFlags: 0
@@ -9358,7 +9289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   typeFilter: 1
-  levelFilter: -1
+  levelFilter: 1
   logToFile: 0
   logFileName: log.txt
 --- !u!4 &1967032506
@@ -10410,6 +10341,12 @@ MonoBehaviour:
   - {fileID: 43567848}
   - {fileID: 423548563}
   - {fileID: 1582699637}
+  regularEnemyPrefab: {fileID: 2318980918978960584, guid: 7513b8226d4bc7643b013f3dfc978c8f,
+    type: 3}
+  chargerEnemyPrefab: {fileID: 2318980918978960584, guid: 34ac9549e726d114b9195363f4ac4ac3,
+    type: 3}
+  tankEnemyPrefab: {fileID: 2318980918978960584, guid: 0cf7139c56e24d84092d5810a861707c,
+    type: 3}
   difficultySettings:
     spawnRadius: 70
     baseEnemyCount: 1
