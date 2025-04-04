@@ -66,9 +66,9 @@ public class HarvesterHealth : MonoBehaviour
         }
     }
 
-    public void Heal()
+    public void Heal(int amount)
     {
-        Modifyhealth(1);
+        Modifyhealth(amount);
     }
 
     IEnumerator FlyAway()
