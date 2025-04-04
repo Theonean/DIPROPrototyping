@@ -110,7 +110,7 @@ MonoBehaviour:
   m_Name: Outline
   m_EditorClassIdentifier: 
   m_Active: 1
-  injectionPoint: 600
+  injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 7
   passMaterial: {fileID: 2100000, guid: 62386241297cc6f42828e6319cd14e1f, type: 2}
@@ -225,7 +225,8 @@ MonoBehaviour:
   - {fileID: -1525229892944984331}
   - {fileID: -5820841322543865992}
   - {fileID: -21458135385060479}
-  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0beafddb8bdcb99bed5405fd3ac8cf9a814f506354e7e4bd5ea789fdb43a83738af81cbd486f0c3b3ff
+  - {fileID: 1752997818480444186}
+  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0beafddb8bdcb99bed5405fd3ac8cf9a814f506354e7e4bd5ea789fdb43a83738af81cbd486f0c3b3ff1ac38f663ae65318
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -280,11 +281,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
   m_Name: TopGradient
   m_EditorClassIdentifier: 
-  m_Active: 1
+  m_Active: 0
   injectionPoint: 550
   fetchColorBuffer: 1
   requirements: 4
   passMaterial: {fileID: 2100000, guid: c564e746a7a774e48bc8bdb13555c35d, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &1752997818480444186
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
+  m_Name: Fog
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  injectionPoint: 550
+  fetchColorBuffer: 1
+  requirements: 1
+  passMaterial: {fileID: 2100000, guid: 3ab0f60ab17077946b62c1c6ecd5ee5d, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
