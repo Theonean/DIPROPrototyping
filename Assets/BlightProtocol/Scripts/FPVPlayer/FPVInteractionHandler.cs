@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class FPVInteractionHandler : MonoBehaviour
 {
+    public static FPVInteractionHandler Instance;
+
     [Header("Input")]
     [SerializeField] private KeyCode interactKey = KeyCode.Mouse0;
     private bool interactKeyPressed = false;
@@ -21,6 +23,17 @@ public class FPVInteractionHandler : MonoBehaviour
     private IFPVInteractable hoveredInteractable = null;  // The interactable being hovered over (when interact key is not pressed)
     private IFPVInteractable previousHoveredInteractable = null;  // The previous hovered interactable (for hover change detection)
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
     void Start()
     {
         fpvCamera = GetComponent<Camera>();
@@ -119,6 +132,7 @@ public class FPVInteractionHandler : MonoBehaviour
         activeInteractable = interactable;
         touchTarget.transform.position = interactable.TouchPoint.position;
         interactable.OnStartInteract();
+        Cursor.visible = false;
     }
 
     private void UpdateInteraction()
@@ -138,6 +152,17 @@ public class FPVInteractionHandler : MonoBehaviour
             touchTarget.transform.position = transform.position;
             activeInteractable.OnEndInteract();
             activeInteractable = null;
+        }
+        Cursor.visible = true;
+    }
+
+    public void AbortInteraction()
+    {
+        if (activeInteractable != null)
+        {
+            touchTarget.transform.position = transform.position;
+            activeInteractable = null;
+            Cursor.visible = true;
         }
     }
 }

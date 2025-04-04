@@ -10,6 +10,7 @@ public class EnemyApproachingAlarm : MonoBehaviour
     void Start()
     {
         HarvesterAlarmHandler.Instance.OnHarvesterAlarm.AddListener(EnableAlarm);
+        HarvesterAlarmHandler.Instance.OnHarvesterAlarmDisable.AddListener(DisableAlarm);
     }
 
     private void EnableAlarm()

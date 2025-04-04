@@ -67,6 +67,7 @@ public class HarvesterSpeedControl : MonoBehaviour
             {
                 currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
                 SetSpeed();
+                OverrideSpeedStep(currentSpeedStepIndex);
             }
         }
     }
@@ -90,7 +91,7 @@ public class HarvesterSpeedControl : MonoBehaviour
         if (index >= 0 && index < speedSteps.Count)
         {
             currentSpeedStepIndex = index;
-            speedSlider.SetSliderPosition(index);
+            speedSlider.SetSliderPositionIndex(index);
             Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
         }
     }
