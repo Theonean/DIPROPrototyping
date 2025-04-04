@@ -1,40 +1,26 @@
 using UnityEngine;
 
-public class RadarPulseButton : MonoBehaviour, IFPVInteractable
+public class RadarPulseButton : ACTimedButton
 {
-    public bool IsCurrentlyInteractable {get; set;} = true;
-    public string lookAtText = "E";
-    public string interactText = "";
-    public bool UpdateHover { get; set; } = false;
-    public bool UpdateInteract { get; set; } = false;
-    [SerializeField] private Transform _touchPoint;
+    public float chargeSuccededModifier = 1.5f;
+    public float chargeFailedModifier = 0.8f;
 
-    public Transform TouchPoint
+    
+
+    public override void OnChargeSucceeded()
     {
-        get => _touchPoint;
-        set => _touchPoint = value;
+        base.OnChargeSucceeded();
+        Radar.Instance.Pulse(chargeSuccededModifier);
     }
 
-    public string LookAtText
+    public override void OnChargeFailed()
     {
-        get => lookAtText;
-        set => lookAtText = value;
+        base.OnChargeFailed();
+        Radar.Instance.Pulse(chargeFailedModifier);
     }
 
-    public string InteractText
-    {
-        get => interactText;
-        set => interactText = value;
-    }
-
-    public void OnStartInteract()
-    {
-        Radar.Instance.Pulse();
-    }
-    public void OnUpdateInteract() {}
-    public void OnEndInteract() {}
-
-    public void OnHover() {
-        this.DefaultOnHover();
+    public override void OnChargeTimeElapsed() {
+        base.OnChargeTimeElapsed();
+        Radar.Instance.Pulse(1f);
     }
 }

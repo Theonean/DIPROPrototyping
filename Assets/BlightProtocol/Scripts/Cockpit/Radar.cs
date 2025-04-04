@@ -62,13 +62,13 @@ public class Radar : MonoBehaviour
         mapRevealer.pulseSpeedCurve = pulseSpeedCurve;
     }
 
-    public void Pulse()
+    public void Pulse(float modifier)
     {
         if (ResourceHandler.Instance.CheckResource(radarData.pulseCostResource) > radarData.pulseCost)
         {
             ResourceHandler.Instance.ConsumeResource(radarData.pulseCostResource, radarData.pulseCost, false, 1f);
-            StartCoroutine(PulseEffect());
-            mapRevealer.Pulse(radarData.pulseStartRange * revealStartRangeFactor, radarData.pulseRange * revealRangeFactor, radarData.pulseSpeed * revealSpeedFactor, radarData.pulseDuration);
+            StartCoroutine(PulseEffect(modifier));
+            mapRevealer.Pulse(radarData.pulseStartRange * revealStartRangeFactor, radarData.pulseRange * revealRangeFactor * modifier, radarData.pulseSpeed * revealSpeedFactor, radarData.pulseDuration);
 
             Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
         }
@@ -78,16 +78,18 @@ public class Radar : MonoBehaviour
         }
     }
 
-    private IEnumerator PulseEffect()
+    private IEnumerator PulseEffect(float modifier)
     {
         float timer = 0f;
         float linearTimer = 0f;
+
+        float range = radarData.pulseRange * modifier;
 
         while (timer < radarData.pulseDuration)
         {
             linearTimer += Time.deltaTime;
 
-            float currentRadius = Mathf.Lerp(radarData.pulseStartRange, radarData.pulseRange, timer / radarData.pulseDuration);
+            float currentRadius = Mathf.Lerp(radarData.pulseStartRange, range, timer / radarData.pulseDuration);
             float currentStrength = pulseStrengthCurve.Evaluate(linearTimer / radarData.pulseDuration);
             float currentSpeed = pulseSpeedCurve.Evaluate(linearTimer / radarData.pulseDuration) * radarData.pulseSpeed;
 
