@@ -15,16 +15,23 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     void OnEnable()
     {
+        if(ParentRocket == null)
+            return;
         ParentRocket.OnRocketStateChange.AddListener(RocketChangedState);
     }
 
     void OnDisable()
     {
+        if(ParentRocket == null)
+            return;
         ParentRocket.OnRocketStateChange.RemoveListener(RocketChangedState);
     }
 
     private void Update()
     {
+        if(ParentRocket == null)
+            return;
+            
         if (ParentRocket.CanBeReturned())
         {
             if (Input.GetMouseButtonDown(1))

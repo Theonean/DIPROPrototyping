@@ -44,16 +44,19 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6192387764617629335}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 10c3314f158564d4598d9f4498bf050f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   mapMask: {fileID: 9109117577764644604}
-  biomeColor: {r: 0, g: 0, b: 0, a: 0}
-  mapBoundsX: {x: 0, y: 0}
-  mapBoundsZ: {x: 0, y: 0}
+  biomeColor: {r: 0.93333334, g: 0.21568628, b: 0.07450981, a: 1}
+  mapBoundsX: {x: -1000, y: 1000}
+  mapBoundsZ: {x: -1000, y: 1000}
   tileSize: 50
+  noiseScale: 0.01
+  noiseAmplitude: 10
+  noiseOffset: {x: -2.67, y: 1.03}
 --- !u!23 &3257321921656381280
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -266,5 +269,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maskShader: {fileID: 4800000, guid: bc305bd759a8a4f458c003ad7d11ace3, type: 3}
   maskResolution: 1024
-  mapRevealRadius: 5
-  mapRevealStrength: 1
+  edgeSharpness: 5

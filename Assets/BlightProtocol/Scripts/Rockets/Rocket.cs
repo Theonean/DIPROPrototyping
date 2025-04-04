@@ -13,9 +13,9 @@ public enum RocketState
 
 public class Rocket : MonoBehaviour
 {
-    public ACRocketPropulsion propulsionComponent { get; private set; }
-    public ACRocketBody bodyComponent { get; private set; }
-    public ACRocketFront frontComponent { get; private set; }
+    public ACRocketPropulsion propulsionComponent;
+    public ACRocketBody bodyComponent;
+    public ACRocketFront frontComponent;
 
     public RocketState state { get; private set; } = RocketState.ATTACHED;
     public UnityEvent<RocketState> OnRocketStateChange;
@@ -32,11 +32,6 @@ public class Rocket : MonoBehaviour
         initialTransformHolder.transform.rotation = transform.rotation;
 
         initialTransform = initialTransformHolder.transform;
-
-        RocketAimController rAI = GetComponentInParent<RocketAimController>();
-        SetPropulsion(rAI.rocketPropulsions[0]);
-        SetBody(rAI.rocketBodies[0]);
-        SetFront(rAI.rocketFronts[0]);
     }
 
     void OnTriggerEnter(Collider other)
@@ -135,7 +130,7 @@ public class Rocket : MonoBehaviour
         {
             if (propulsionComponent != null)
             {
-                Destroy(propulsionComponent);
+                Destroy(propulsionComponent.gameObject);
             }
             propulsionComponent = Instantiate(propulsion, transform).GetComponent<ACRocketPropulsion>();
         }
@@ -152,7 +147,7 @@ public class Rocket : MonoBehaviour
         {
             if (bodyComponent != null)
             {
-                Destroy(bodyComponent);
+                Destroy(bodyComponent.gameObject);
             }
             bodyComponent = Instantiate(body, transform).GetComponent<ACRocketBody>();
         }
@@ -169,7 +164,7 @@ public class Rocket : MonoBehaviour
         {
             if (frontComponent != null)
             {
-                Destroy(frontComponent);
+                Destroy(frontComponent.gameObject);
             }
             frontComponent = Instantiate(front, transform).GetComponent<ACRocketFront>();
         }

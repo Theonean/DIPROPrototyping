@@ -26,6 +26,10 @@ public abstract class ACRocketComponent : MonoBehaviour
 
     private void Awake()
     {
+        if (ParentRocket == null)
+        {
+            return;
+        }
         rocketOriginalScale = ParentRocket.transform.localScale;
     }
 }

@@ -37,6 +37,9 @@ public class RocketAimController : MonoBehaviour
         playerCore = PlayerCore.Instance;
         frankenGameManager = FrankenGameManager.Instance;
         perspectiveSwitcher = PerspectiveSwitcher.Instance;
+
+        //Set each rocket to it's coressponding setting from UISelectedRocketManager ->private (RocketComponentType componentType, GameObject newComponent) GetRocketSettingsFromPlayerPrefs
+        //Check if it is not null
     }
 
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same Rocket

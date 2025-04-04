@@ -1,18 +1,34 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class UIRocketSelectable : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private UISelectedRocketManager parentManager;
+    private bool isSelected = false;
+    private void Start()
     {
-        
+        parentManager = GetComponentInParent<UISelectedRocketManager>();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        
+        if(!isSelected) return;
+
+        if (Input.GetMouseButtonUp(0))
+        {
+            foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material.color = Color.white;
+        }
+    }
+    private void OnMouseEnter()
+    {
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material.color = Color.yellow;
+    }
+    private void OnMouseExit()
+    {
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material.color = Color.white;
+    }
+    void OnMouseDown()
+    {
+        foreach (Renderer renderer in GetComponentsInChildren<Renderer>()) renderer.material.color = Color.green;
+        parentManager.SetSelectedRocket(GetComponent<Rocket>());
     }
 }
