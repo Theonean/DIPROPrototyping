@@ -47,7 +47,7 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
 
             foreach (Renderer renderer in renderers)
             {
-                renderer.material.color = Color.Lerp(startColor, endColor, t);
+                if(renderer != null) renderer.material.color = Color.Lerp(startColor, endColor, t);
             }
 
             yield return null;

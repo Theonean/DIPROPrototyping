@@ -55,7 +55,36 @@ public class ArcingPropulsion : ACRocketPropulsion
         GameObject explosionEffect = Instantiate(explosionPrefab, rocketTransform.position, Quaternion.identity);
         explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(landingExplosionRadius / 10f);
 
+        Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, landingExplosionRadius);
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            {
+                Vector3 directionToEnemy = hitCollider.transform.position - rocketTransform.position;
+                //Debug raycast to check if the rocket is in line of sight to the enemy
+                Debug.DrawRay(rocketTransform.position, directionToEnemy.normalized * directionToEnemy.magnitude, Color.red, 50f);
+                if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, directionToEnemy.magnitude))
+                {
+                    hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
+                }
+            }
+            else if (hitCollider.gameObject.CompareTag("Rocket"))
+            {
+                Rocket rocket = hitCollider.gameObject.GetComponentInParent<Rocket>();
+                if (rocket.CanExplode())
+                {
+                    StartCoroutine(DaisyChainExplosion(rocket));
+                }
+            }
+        }
+
         Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
         ParentRocket.SetState(RocketState.IDLE);
+    }
+
+    private IEnumerator DaisyChainExplosion(Rocket rocket)
+    {
+        yield return new WaitForSeconds(ParentRocket.settings.explosionChainDelay);
+        rocket.Explode();
     }
 }

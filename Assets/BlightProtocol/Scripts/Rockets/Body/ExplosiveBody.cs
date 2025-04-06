@@ -25,12 +25,12 @@ public class ExplosiveBody : ACRocketBody
         Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, ParentRocket.settings.explosionRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.CompareTag("Enemy"))
+            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
             {
                 Vector3 directionToEnemy = hitCollider.transform.position - rocketTransform.position;
                 //Debug raycast to check if the rocket is in line of sight to the enemy
                 Debug.DrawRay(rocketTransform.position, directionToEnemy.normalized * directionToEnemy.magnitude, Color.red, 50f);
-                if (!Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, directionToEnemy.magnitude))
+                if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, directionToEnemy.magnitude))
                 {
                     hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                 }

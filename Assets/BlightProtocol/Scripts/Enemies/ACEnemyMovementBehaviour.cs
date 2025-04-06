@@ -11,7 +11,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     public AnimationCurve knockbackCurve;
     public float moveSpeed = 4f;
 
-    protected abstract void Update(); 
+    protected abstract void Update();
 
     //NOTE: navMeshAgent.SetDestination forces a path recalculation, maybe in future add only do it every x frames
 
@@ -34,7 +34,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         }
     }
 
-    protected void StopMovement()
+    public void StopMovement()
     {
         if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
         {
@@ -43,7 +43,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         }
     }
 
-    protected void ResumeMovement()
+    public void ResumeMovement()
     {
         if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
         {
