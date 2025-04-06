@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -23,6 +24,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     private int currentSpeedStepIndex = 0;
     private float displaySpeed = 0f; // Smoothed speed for UI
     private SpeedSlider speedSlider;
+    public TMP_Text feedbackText;
 
     void Awake()
     {
@@ -68,8 +70,14 @@ public class HarvesterSpeedControl : MonoBehaviour
                 currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
                 SetSpeed();
                 OverrideSpeedStep(currentSpeedStepIndex);
+                feedbackText.text = "Not enough fuel!";
+                Invoke(nameof(ClearFeedbackText), 2f);
             }
         }
+    }
+
+    private void ClearFeedbackText() {
+        feedbackText.text = "";
     }
 
     private void OnHarvesterStateChanged(ZoneState state)
