@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 
 public enum RocketState
@@ -13,6 +14,7 @@ public enum RocketState
 
 public class Rocket : MonoBehaviour
 {
+    [SerializeField] private NavMeshObstacle navMeshObstacle;
     public ACRocketPropulsion propulsionComponent;
     public ACRocketBody bodyComponent;
     public ACRocketFront frontComponent;
@@ -25,6 +27,8 @@ public class Rocket : MonoBehaviour
 
     void Start()
     {
+        navMeshObstacle.enabled = false;
+
         // Create a new GameObject to hold the initial transform
         GameObject initialTransformHolder = new GameObject($"{gameObject.name}_InitialTransform");
         initialTransformHolder.transform.SetParent(transform.parent);
@@ -83,7 +87,7 @@ public class Rocket : MonoBehaviour
         }
 
         //If other has component enemydamagehandler, destroy
-        if (other.GetComponent<EnemyDamageHandler>() != null)
+        if (other.GetComponent<EnemyDamageHandler>() != null && state != RocketState.IDLE) 
         {
             other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
         }
@@ -94,6 +98,8 @@ public class Rocket : MonoBehaviour
         if (this.state == state) return;
 
         this.state = state;
+        navMeshObstacle.enabled = state == RocketState.IDLE;
+
         OnRocketStateChange?.Invoke(state);
     }
 

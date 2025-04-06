@@ -9,6 +9,11 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     [SerializeField] private AnimationCurve chargeSpeedCurve;
     private bool charging = false;
 
+    void Start()
+    {
+        navMeshAgent.acceleration = chargeSpeed*5f;
+    }
+
     protected override void Update()
     {
         if (charging)
@@ -31,18 +36,20 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     private IEnumerator ChargeWindup()
     {
         float elapsedTime = 0f;
-        Renderer renderer = GetComponent<Renderer>();
-        Color startColor = Color.green;
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        Color startColor = Color.white;
         Color endColor = Color.red;
 
         while (elapsedTime < chargeWindupTime)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / chargeWindupTime;
-            if (renderer != null)
+
+            foreach (Renderer renderer in renderers)
             {
                 renderer.material.color = Color.Lerp(startColor, endColor, t);
             }
+
             yield return null;
         }
 

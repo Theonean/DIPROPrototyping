@@ -121,6 +121,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ChargerEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 8490830819345528117, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: m_Acceleration
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 9185269845558177096, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -248,9 +253,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   moveSpeed: 4
-  chargeDistance: 100
-  chargeSpeed: 50
-  chargeWindupTime: 1
+  chargeDistance: 60
+  chargeSpeed: 70
+  chargeWindupTime: 3
   chargeSpeedCurve:
     serializedVersion: 2
     m_Curve:
@@ -264,13 +269,22 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.040528636
     - serializedVersion: 3
-      time: 0.99886966
-      value: 1.25009
-      inSlope: -0.2897178
-      outSlope: -0.2897178
+      time: 0.016094968
+      value: 1.001319
+      inSlope: -0.06410572
+      outSlope: -0.06410572
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.04314154
+      inWeight: 0.33333334
+      outWeight: 0.043333933
+    - serializedVersion: 3
+      time: 1
+      value: 0.99999845
+      inSlope: -0.0650821
+      outSlope: -0.0650821
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.049320273
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2

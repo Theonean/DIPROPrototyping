@@ -8,6 +8,8 @@ public class UISelectedRocketManager : MonoBehaviour
     public static UISelectedRocketManager Instance { get; private set; }
     public Rocket selectedRocketMirrorDummy;
     public Rocket selectedRocket;
+    public bool setAllRocketsAtOnce = true;
+    [SerializeField] private Rocket[] rockets = new Rocket[4];
     private Rocket equivalentPlayerRocket;
 
     private void Awake()
@@ -24,12 +26,16 @@ public class UISelectedRocketManager : MonoBehaviour
 
     private void Start()
     {
+        if(setAllRocketsAtOnce) selectedRocketMirrorDummy.gameObject.SetActive(false);
+
         SetSelectedRocket(GetComponentsInChildren<Rocket>().FirstOrDefault());
     }
 
 
     public void SetSelectedRocket(Rocket rocket)
     {
+        if(setAllRocketsAtOnce) return;
+        
         selectedRocket = rocket;
         equivalentPlayerRocket = PlayerCore.Instance.GetComponentsInChildren<Rocket>().Where(x => x.name == selectedRocket.name).FirstOrDefault();
         Debug.Log("Selected Rocket: " + selectedRocket.name);
@@ -42,23 +48,49 @@ public class UISelectedRocketManager : MonoBehaviour
 
     public void ChangeComponent(RocketComponentType componentType, GameObject newComponent)
     {
-        switch (componentType)
+        if (setAllRocketsAtOnce)
         {
-            case RocketComponentType.FRONT:
-                selectedRocket.SetFront(newComponent);
-                equivalentPlayerRocket.SetFront(newComponent);
-                selectedRocketMirrorDummy.SetFront(newComponent);
-                break;
-            case RocketComponentType.BODY:
-                selectedRocket.SetBody(newComponent);
-                equivalentPlayerRocket.SetBody(newComponent);
-                selectedRocketMirrorDummy.SetBody(newComponent);
-                break;
-            case RocketComponentType.PROPULSION:
-                selectedRocket.SetPropulsion(newComponent);
-                equivalentPlayerRocket.SetPropulsion(newComponent);
-                selectedRocketMirrorDummy.SetPropulsion(newComponent);
-                break;
+            foreach (var rocket in rockets)
+            {
+                selectedRocket = rocket;
+                equivalentPlayerRocket = PlayerCore.Instance.GetComponentsInChildren<Rocket>().Where(x => x.name == selectedRocket.name).FirstOrDefault();
+                switch (componentType)
+                {
+                    case RocketComponentType.FRONT:
+                        selectedRocket.SetFront(newComponent);
+                        equivalentPlayerRocket.SetFront(newComponent);
+                        break;
+                    case RocketComponentType.BODY:
+                        selectedRocket.SetBody(newComponent);
+                        equivalentPlayerRocket.SetBody(newComponent);
+                        break;
+                    case RocketComponentType.PROPULSION:
+                        selectedRocket.SetPropulsion(newComponent);
+                        equivalentPlayerRocket.SetPropulsion(newComponent);
+                        break;
+                }
+            }
+        }
+        else
+        {
+            switch (componentType)
+            {
+                case RocketComponentType.FRONT:
+                    selectedRocket.SetFront(newComponent);
+                    equivalentPlayerRocket.SetFront(newComponent);
+                    selectedRocketMirrorDummy.SetFront(newComponent);
+                    break;
+                case RocketComponentType.BODY:
+                    selectedRocket.SetBody(newComponent);
+                    equivalentPlayerRocket.SetBody(newComponent);
+                    selectedRocketMirrorDummy.SetBody(newComponent);
+                    break;
+                case RocketComponentType.PROPULSION:
+                    selectedRocket.SetPropulsion(newComponent);
+                    equivalentPlayerRocket.SetPropulsion(newComponent);
+                    selectedRocketMirrorDummy.SetPropulsion(newComponent);
+                    break;
+            }
         }
     }
 }

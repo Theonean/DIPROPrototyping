@@ -13,6 +13,7 @@ public class BouncingFront : ACRocketFront
     {
         if (collider == parentRocket.GetComponent<Collider>()) return;
         if (!canBounce) return;
+        
 
         Vector3 rayDirection = (collider.transform.position - rocketTransform.position).normalized;
         Vector3 hitNormal = Vector3.zero;

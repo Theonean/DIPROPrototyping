@@ -15,23 +15,23 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     void OnEnable()
     {
-        if(ParentRocket == null)
+        if (ParentRocket == null)
             return;
         ParentRocket.OnRocketStateChange.AddListener(RocketChangedState);
     }
 
     void OnDisable()
     {
-        if(ParentRocket == null)
+        if (ParentRocket == null)
             return;
         ParentRocket.OnRocketStateChange.RemoveListener(RocketChangedState);
     }
 
     private void Update()
     {
-        if(ParentRocket == null)
+        if (ParentRocket == null)
             return;
-            
+
         if (ParentRocket.CanBeReturned())
         {
             if (Input.GetMouseButtonDown(1))
@@ -70,6 +70,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     protected IEnumerator ReturnToDrone()
     {
+        if (ParentRocket.propulsionComponent.GetType() == typeof(StraightLinePropulsion)) rocketTransform.position = new Vector3(rocketTransform.position.x, ParentRocket.initialTransform.position.y, rocketTransform.position.z);
+
         while (true)
         {
             // Use the initial rocketTransform's position and rotation instead of separate variables
