@@ -116,6 +116,12 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         playerCore.shield.SetActive(false);
 
+        RocketAimController rocketAimController = playerCore.GetComponentInChildren<RocketAimController>();
+        rocketAimController.Rocket1.ReattachRocketToDrone();
+        rocketAimController.Rocket2.ReattachRocketToDrone();
+        rocketAimController.Rocket3.ReattachRocketToDrone();
+        rocketAimController.Rocket4.ReattachRocketToDrone();
+
 
         Harvester harvester = Harvester.Instance;
         //playerCore.transform.LookAt(harvester.mover.targetPosObject.transform.position);

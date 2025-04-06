@@ -4,17 +4,11 @@ using UnityEngine;
 
 public class BouncingFront : ACRocketFront
 {
+    [Header("Bouncing Front")]
     public float flightDistanceAfterBounce;
-    private bool canBounce = true;
-    private float bounceCooldown = 0.2f;
-    private float bounceCooldownTimer;
 
-    public override void ActivateAbility(Collider collider)
+    protected override void OnActivateAbility(Collider collider)
     {
-        if (collider == parentRocket.GetComponent<Collider>()) return;
-        if (!canBounce) return;
-        
-
         Vector3 rayDirection = (collider.transform.position - rocketTransform.position).normalized;
         Vector3 hitNormal = Vector3.zero;
         Vector3 hitPoint = Vector3.zero;
@@ -73,23 +67,10 @@ public class BouncingFront : ACRocketFront
                                                 rocketTransform.position.z + newDirection.z);
                 parentRocket.Shoot(newTarget);
             }
-            canBounce = false;
-            StartCoroutine(BounceCooldown());
         }
         else
         {
             Debug.LogWarning("Bounce failed: No surface detected.");
         }
-    }
-
-    private IEnumerator BounceCooldown()
-    {
-        bounceCooldownTimer = bounceCooldown;
-        while (bounceCooldownTimer > 0)
-        {
-            bounceCooldownTimer -= Time.deltaTime;
-            yield return null;
-        }
-        canBounce = true;
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public abstract class ACRocketComponent : MonoBehaviour
 {
-    public Rocket parentRocket;
+    [HideInInspector] public Rocket parentRocket;
     public Rocket ParentRocket
     {
         get

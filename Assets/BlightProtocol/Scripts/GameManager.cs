@@ -12,6 +12,7 @@ public class FrankenGameManager : MonoBehaviour
     }
 
     public static FrankenGameManager Instance { get; private set; }
+    public bool destroyRocketsAfterAbiltieUsesDepleted = true;
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
     public CanvasGroup gameOverGroup;
@@ -42,6 +43,12 @@ public class FrankenGameManager : MonoBehaviour
 
     private void Update()
     {
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            destroyRocketsAfterAbiltieUsesDepleted = !destroyRocketsAfterAbiltieUsesDepleted;
+            Debug.Log("Destroy rockets after ability uses depleted: " + destroyRocketsAfterAbiltieUsesDepleted);
+        }
+
         if (m_GameState != GameState.GAMEOVER)
         {
             if (!isPaused)

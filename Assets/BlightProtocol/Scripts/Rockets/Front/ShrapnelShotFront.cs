@@ -2,10 +2,11 @@ using UnityEngine;
 
 public class ShrapnelShotFront : ACRocketFront
 {
+    [Header("Shrapnel Settings")]
     public GameObject shrapnelPrefab;
     public int shrapnelCount = 10;
     public float shrapnelSpreadAngle = 30f;
-    public override void ActivateAbility(Collider collider)
+    protected override void OnActivateAbility(Collider collider)
     {
         Vector3 shrapnelDirection = parentRocket.shootingDirection.normalized;
         float angleStep = shrapnelSpreadAngle / (shrapnelCount - 1);
