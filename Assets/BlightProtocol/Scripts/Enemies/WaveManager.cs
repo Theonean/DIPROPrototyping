@@ -116,6 +116,10 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    public void IncreaseDifficultyLevel(int amount) {
+        difficultyLevel += amount;
+    }
+
     public GameObject GetRandomEnemyPrefab()
     {
         int randomValue = UnityEngine.Random.Range(0, 100);

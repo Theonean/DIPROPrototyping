@@ -117,6 +117,8 @@ public class Harvester : MonoBehaviour
         
         if(resourcePoint.resourceAmount <= 0f)
             Destroy(mover.targetPosObject.activeResourcePoint);
+        
+        WaveManager.Instance.IncreaseDifficultyLevel(1);
 
         drillingVFX.Stop();
         StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
