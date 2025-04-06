@@ -9,6 +9,8 @@ public class Resource
     public ResourceData resourceData;
     public string devDescription;
     public float amount;
+    public float lastAmount;
+    public float delta;
     public float maxCapacity = 10000;
     public Slider displaySlider;
 }
@@ -42,6 +44,20 @@ public class ResourceHandler : MonoBehaviour
     void Start()
     {
         UpdateResourceDisplay();
+        foreach(var resource in resources)
+        {
+            resource.lastAmount = resource.amount;
+            resource.delta = 0f;
+        }
+    }
+
+    void Update()
+    {
+        foreach(var resource in resources)
+        {
+            resource.delta = resource.amount - resource.lastAmount;
+            resource.lastAmount = resource.amount;
+        }
     }
 
     private void InitializeResources()
@@ -93,6 +109,17 @@ public class ResourceHandler : MonoBehaviour
         else
         {
             Logger.Log("Resource not found: " + resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
+        }
+    }
+
+    public float GetDelta(ResourceData resourceData) {
+        if (resourceDictionary.TryGetValue(resourceData, out Resource resource))
+        {
+            return resource.delta;
+        }
+        else {
+            Logger.Log("Resource not found: " + resourceData.displayName, LogLevel.WARNING, LogType.RESOURCE);
+            return 0f;
         }
     }
 

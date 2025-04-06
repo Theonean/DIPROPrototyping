@@ -8,28 +8,33 @@ void MainLight_float(float3 WorldPos, out float3 Direction, out float3 Color,
         ShadowAtten = 1.0f;
     #else
         #if SHADOWS_SCREEN
-                    half4 clipPos = TransformWorldToHClip(WorldPos);
-                    half4 shadowCoord = ComputeScreenPos(clipPos);
+            half4 clipPos = TransformWorldToHClip(WorldPos);
+            half4 shadowCoord = ComputeScreenPos(clipPos);
+            shadowCoord.xyz /= shadowCoord.w; // Important perspective division
         #else
             half4 shadowCoord = TransformWorldToShadowCoord(WorldPos);
         #endif
-            Light mainLight = GetMainLight(shadowCoord);
-            Direction = mainLight.direction;
-            Color = mainLight.color;
-            DistanceAtten = mainLight.distanceAttenuation;
-    
-        #if !defined(_MAIN_LIGHT_SHADOWS) || defined(_RECEIVE_SHADOWS_OFF)
-            ShadowAtten = 1.0h;
-        #endif
-    
-        #if SHADOWS_SCREEN
-                    ShadowAtten = SampleScreenSpaceShadowmap(shadowCoord);
-        #else
-            ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
-            half shadowStrength = GetMainLightShadowStrength();
-            ShadowAtten = SampleShadowmap(shadowCoord, TEXTURE2D_ARGS(_MainLightShadowmapTexture,
-                    sampler_MainLightShadowmapTexture),
-                    shadowSamplingData, shadowStrength, false);
+        
+        Light mainLight = GetMainLight(shadowCoord);
+        Direction = mainLight.direction;
+        Color = mainLight.color;
+        DistanceAtten = mainLight.distanceAttenuation;
+        ShadowAtten = 1.0; // Default value
+
+        #if defined(_MAIN_LIGHT_SHADOWS) && !defined(_RECEIVE_SHADOWS_OFF)
+            #if SHADOWS_SCREEN
+                ShadowAtten = SampleScreenSpaceShadowmap(shadowCoord);
+            #else
+                ShadowSamplingData shadowSamplingData = GetMainLightShadowSamplingData();
+                half shadowStrength = GetMainLightShadowStrength();
+                ShadowAtten = SampleShadowmap(
+                    shadowCoord, 
+                    TEXTURE2D_ARGS(_MainLightShadowmapTexture, sampler_MainLightShadowmapTexture),
+                    shadowSamplingData, 
+                    shadowStrength, 
+                    true // Enable shadow bias to prevent acne
+                );
+            #endif
         #endif
     #endif
 }

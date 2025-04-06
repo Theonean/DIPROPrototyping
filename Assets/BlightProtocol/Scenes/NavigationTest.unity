@@ -1371,7 +1371,12 @@ PrefabInstance:
     - target: {fileID: 786348656890932667, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 10160
+      value: 10349
+      objectReference: {fileID: 0}
+    - target: {fileID: 943273733598494858, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: 948259854138839442, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1423,6 +1428,31 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2556486053718292633, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.49999994
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556486053718292633, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556486053718292633, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556486053718292633, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.50000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 2556486053718292633, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
     - target: {fileID: 3017716308573629881, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -1446,7 +1476,7 @@ PrefabInstance:
     - target: {fileID: 3745972607527258004, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 10160
+      value: 10349
       objectReference: {fileID: 0}
     - target: {fileID: 3916029693676065411, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1456,7 +1486,7 @@ PrefabInstance:
     - target: {fileID: 3916029693676065411, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 11642
+      value: 11831
       objectReference: {fileID: 0}
     - target: {fileID: 4069010910397362442, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1471,7 +1501,7 @@ PrefabInstance:
     - target: {fileID: 4648915008057216363, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 10209
+      value: 10398
       objectReference: {fileID: 0}
     - target: {fileID: 4661273085095016163, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1616,7 +1646,7 @@ PrefabInstance:
     - target: {fileID: 8872640711463356057, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 10569
+      value: 10758
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5376,6 +5406,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2ec35b1892b1aa4d899a88b20b21f90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  destroyRocketsAfterAbiltieUsesDepleted: 1
   controlZone: {fileID: 2095316635}
   resourcesHarvestedText: {fileID: 889989454}
   gameOverGroup: {fileID: 849772368}
@@ -5925,6 +5956,7 @@ MonoBehaviour:
     ambushEnemyMultiplier: 1
     ambushRangeScale: 70
     ambushWaveDelayRange: {x: 30, y: 50}
+  difficultyLevel: 5
 --- !u!4 &2134228161
 Transform:
   m_ObjectHideFlags: 0
