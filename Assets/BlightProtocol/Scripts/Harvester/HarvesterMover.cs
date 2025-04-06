@@ -100,4 +100,9 @@ public class HarvesterMover : MonoBehaviour
             lineRenderer.SetPosition(1, transform.position);
         }
     }
+
+    public Vector3 GetMovementDirection()
+    {
+        return(targetPosition - transform.position).normalized;
+    }
 }

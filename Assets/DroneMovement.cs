@@ -8,6 +8,7 @@ public class DroneMovement : MonoBehaviour
 {
     public static DroneMovement Instance { get; private set; }
     public bool isDashing = false;
+    public bool isContinuingDash = false;
     public float dashKnockback = 150f;
     float dashTime = 0.3f;
     float dashSpeed = 60f;
@@ -63,7 +64,7 @@ public class DroneMovement : MonoBehaviour
             }
 
             //Disallows steering while dashig
-            if (!isDashing)
+            if (!isDashing || isContinuingDash)
             {
                 Vector3 input = Vector3.zero;
                 if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
@@ -160,6 +161,24 @@ public class DroneMovement : MonoBehaviour
             yield return null;
         }
 
+        if (Input.GetKey(KeyCode.Space))
+        {
+            isContinuingDash = true;
+            // Continue dashing in the same direction
+            while (Input.GetKey(KeyCode.Space))
+            {
+                transform.position += moveDirection * dashSpeed * Time.deltaTime;
+                yield return null;
+            }
+            isContinuingDash = false;
+        }
+
+        EndDash();
+
+    }
+
+    private void EndDash()
+    {
         movementSFXInstance.setParameterByName("Dash", 0f);
         isDashing = false;
         StopDashVFX();

@@ -43,7 +43,7 @@ public class WaveManager : MonoBehaviour
     private Queue<EnemySpawner> m_InactiveSpawners = new Queue<EnemySpawner>();
     private ZoneState harvesterState = ZoneState.IDLE;
     private WaveMode waveMode = WaveMode.IDLE;
-    private int difficultyLevel = 5;
+    public int difficultyLevel = 5;
     private float ambushCounter = 0f;
 
     private void Awake()
@@ -82,17 +82,9 @@ public class WaveManager : MonoBehaviour
                 break;
         }
 
-        if (Input.GetKeyDown("q"))
-        {
-            ZoneState newState = harvesterState == ZoneState.HARVESTING ? ZoneState.IDLE : ZoneState.HARVESTING;
-            Logger.Log("Toggled enemy spawning manually to " + (newState == ZoneState.HARVESTING), LogLevel.FORCE, LogType.WAVEMANAGEMENT);
-            HarvesterChangedState(newState);
-        }
-        else if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             difficultyLevel++;
-            DeactivateSpawners();
-            ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
             Logger.Log("Increased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
@@ -102,8 +94,6 @@ public class WaveManager : MonoBehaviour
             {
                 difficultyLevel = 0;
             }
-            DeactivateSpawners();
-            ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
             Logger.Log("Decreased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
         }
         else if (Input.GetKeyDown("e"))
