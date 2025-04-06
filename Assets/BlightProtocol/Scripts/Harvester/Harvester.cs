@@ -27,12 +27,12 @@ public class Harvester : MonoBehaviour
 
     public float moveSpeed = 5f;
     ZoneState state = ZoneState.IDLE;
-    public Slider waveProgressSlider;
+    public List<Slider> waveProgressSliders = new List<Slider>();
     public UnityEvent<ZoneState> changedState;
     public float travelTimeLeft;
 
     //Harvester Sub-Systems with specific tasks
-    public HarvesterAnimator animator {  get; private set; }
+    public HarvesterAnimator animator { get; private set; }
     public HarvesterMover mover { get; private set; }
     public HarvesterHealth health { get; private set; }
     public HarvesterSFX sFX { get; private set; }
@@ -70,8 +70,11 @@ public class Harvester : MonoBehaviour
 
         harvestingTimer = 0f;
 
-        waveProgressSlider.maxValue = timeUntilResourcePointEmpty;
-        waveProgressSlider.value = 0f;
+        foreach (Slider slider in waveProgressSliders)
+        {
+            slider.maxValue = timeUntilResourcePointEmpty;
+            slider.value = 0f;
+        }
 
         changedState.Invoke(state);
     }
@@ -88,13 +91,16 @@ public class Harvester : MonoBehaviour
         stateMachine.SetState(newState);
     }
 
-    public void UpdateHarvesting() 
+    public void UpdateHarvesting()
     {
         //Collect Resource
         ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
 
         harvestingTimer += Time.deltaTime;
-        waveProgressSlider.value = harvestingTimer;
+        foreach (Slider slider in waveProgressSliders)
+        {
+            slider.value = harvestingTimer;
+        }
         resourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
     }
 
@@ -105,19 +111,21 @@ public class Harvester : MonoBehaviour
         ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
         timeUntilResourcePointEmpty = resourcePoint.resourceAmount / resourceHarvestingSpeed;
 
-        waveProgressSlider.enabled = true;
-        waveProgressSlider.maxValue = timeUntilResourcePointEmpty;
-
+        foreach (Slider slider in waveProgressSliders)
+        {
+            slider.enabled = true;
+            slider.maxValue = timeUntilResourcePointEmpty;
+        }
         harvestingTimer = 0f;
     }
 
-    public void StopHarvesting() 
+    public void StopHarvesting()
     {
         ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
-        
-        if(resourcePoint.resourceAmount <= 0f)
+
+        if (resourcePoint.resourceAmount <= 0f)
             Destroy(mover.targetPosObject.activeResourcePoint);
-        
+
         WaveManager.Instance.IncreaseDifficultyLevel(1);
 
         drillingVFX.Stop();
@@ -135,7 +143,10 @@ public class Harvester : MonoBehaviour
             timer += Time.deltaTime;
 
             //Lerp wave timer slider to 0 over given time
-            waveProgressSlider.value = Mathf.Lerp(timeUntilResourcePointEmpty, 0f, timer / time);
+            foreach (Slider slider in waveProgressSliders)
+            {
+                slider.value = Mathf.Lerp(timeUntilResourcePointEmpty, 0f, timer / time);
+            }
             yield return null;
         }
     }

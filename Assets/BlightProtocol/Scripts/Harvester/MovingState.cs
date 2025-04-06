@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MovingState : IHarvesterState
 {
@@ -17,7 +18,10 @@ public class MovingState : IHarvesterState
         Debug.Log("Harvester: Entering Moving State");
         harvester.mover.StartMoving();
 
-        harvester.waveProgressSlider.enabled = false;
+        foreach (Slider slider in harvester.waveProgressSliders)
+        {
+            slider.enabled = false;
+        }
     }
 
     public void Update()
