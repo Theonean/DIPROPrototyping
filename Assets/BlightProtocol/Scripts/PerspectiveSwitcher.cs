@@ -112,12 +112,12 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.GetComponent<NavMeshAgent>().enabled = false;
         playerCore.transform.localPosition = Vector3.zero;
         playerCore.transform.localRotation = Quaternion.identity;
-        playerCore.transform.localScale = new Vector3(0.4f, 0.4f, 0.4f);
+        playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         playerCore.shield.SetActive(false);
 
 
         Harvester harvester = Harvester.Instance;
-        playerCore.transform.LookAt(harvester.mover.targetPosObject.transform.position);
+        //playerCore.transform.LookAt(harvester.mover.targetPosObject.transform.position);
 
         //Make players colliders not make UI Rocket selector to be unclickable
         Collider[] playerColliders = playerCore.GetComponentsInChildren<Collider>();
