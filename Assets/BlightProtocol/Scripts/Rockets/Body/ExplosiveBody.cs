@@ -30,9 +30,12 @@ public class ExplosiveBody : ACRocketBody
                 Vector3 directionToEnemy = hitCollider.transform.position - rocketTransform.position;
                 //Debug raycast to check if the rocket is in line of sight to the enemy
                 Debug.DrawRay(rocketTransform.position, directionToEnemy.normalized * directionToEnemy.magnitude, Color.red, 50f);
-                if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, directionToEnemy.magnitude))
+
+                RaycastHit hit;
+                if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, out hit, directionToEnemy.magnitude))
                 {
-                    hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
+                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                        hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                 }
             }
             else if (hitCollider.gameObject.CompareTag("Rocket"))
