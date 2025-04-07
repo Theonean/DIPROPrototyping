@@ -99,13 +99,15 @@ public class Harvester : MonoBehaviour
     {
         //Collect Resource
         ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
-
-        harvestingTimer += Time.deltaTime;
-        foreach (Slider slider in waveProgressSliders)
+        if (resourcePoint != null)
         {
-            slider.value = harvestingTimer;
+            harvestingTimer += Time.deltaTime;
+            foreach (Slider slider in waveProgressSliders)
+            {
+                slider.value = harvestingTimer;
+            }
+            resourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
         }
-        resourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
     }
 
     public void BeginHarvesting()
