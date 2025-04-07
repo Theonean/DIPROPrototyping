@@ -8,7 +8,9 @@ public class ShrapnelShotFront : ACRocketFront
     public float shrapnelSpreadAngle = 30f;
     protected override void OnActivateAbility(Collider collider)
     {
-        Vector3 shrapnelDirection = parentRocket.shootingDirection.normalized;
+        Vector3 shrapnelDirection = (collider.transform.position - rocketTransform.position).normalized;
+        shrapnelDirection.y = 0;
+
         float angleStep = shrapnelSpreadAngle / (shrapnelCount - 1);
         for (int i = 0; i < shrapnelCount; i++)
         {
@@ -17,6 +19,7 @@ public class ShrapnelShotFront : ACRocketFront
             Vector3 newDirection = rotation * shrapnelDirection;
 
             ShrapnelShot shrapnel = Instantiate(shrapnelPrefab, rocketTransform.position, Quaternion.identity).GetComponent<ShrapnelShot>();
+
             shrapnel.Activate(newDirection);
         }
     }
