@@ -96,11 +96,13 @@ public class RocketComponentDropdownLoader : MonoBehaviour
         string componentName = dropdown.options[selectedPropertyIndex].text;
 
         GameObject selectedComponentPrefab = null;
+        Vector3 componentVisualizerOffset = Vector3.zero;
         switch (componentType)
         {
             case RocketComponentType.PROPULSION:
                 selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketPropulsions
                     .FirstOrDefault(x => componentName.Contains(x.name));
+                componentVisualizerOffset = new Vector3(0, 0, 0.25f);
                 break;
             case RocketComponentType.BODY:
                 selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketBodies
@@ -109,17 +111,21 @@ public class RocketComponentDropdownLoader : MonoBehaviour
             case RocketComponentType.FRONT:
                 selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketFronts
                     .FirstOrDefault(x => componentName.Contains(x.name));
+                componentVisualizerOffset = new Vector3(0, 0, -0.25f);
                 break;
         }
 
 
         if (selectedComponentPrefab != null)
         {
-            if(selectedComponentGameobject != null)
+            if (selectedComponentGameobject != null)
             {
                 Destroy(selectedComponentGameobject);
             }
-            selectedComponentGameobject = Instantiate(selectedComponentPrefab, Vector3.zero, Quaternion.identity, selectedComponentHolder.transform);
+            selectedComponentGameobject = Instantiate(selectedComponentPrefab, selectedComponentHolder.transform.position, selectedComponentHolder.transform.rotation, selectedComponentHolder.transform);
+            selectedComponentGameobject.transform.localScale = Vector3.one / 4f;
+            selectedComponentGameobject.transform.localPosition = componentVisualizerOffset;
+
             SelectedComponentChanged?.Invoke(componentType, selectedComponentPrefab);
         }
         else
