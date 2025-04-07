@@ -17,7 +17,7 @@ public class HarvesterSpeedControl : MonoBehaviour
 {
     public static HarvesterSpeedControl Instance { get; private set; }
 
-    [SerializeField] private List<HarvesterSpeedStep> speedSteps;
+    [SerializeField] public List<HarvesterSpeedStep> speedSteps;
     public float maxSpeed = 50f;
     private ResourceData fuelResource;
 
@@ -108,6 +108,10 @@ public class HarvesterSpeedControl : MonoBehaviour
     {
         if (index >= 0 && index < speedSteps.Count && index != currentSpeedStepIndex)
         {
+            if (Harvester.Instance.HasArrivedAtTarget()) {
+                OverrideSpeedStep(0);
+                feedbackText.text = "No Target set!";
+            }
             currentSpeedStepIndex = index;
             SetSpeed();
         }

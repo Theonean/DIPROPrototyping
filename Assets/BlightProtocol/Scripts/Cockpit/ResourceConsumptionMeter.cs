@@ -16,8 +16,6 @@ public class ResourceCocnsumptionMeter : MonoBehaviour
     void Start()
     {
         resourceHandler = ResourceHandler.Instance;
-        // Initialize needle position
-        needlePivot.transform.localRotation = Quaternion.Euler(0, 0, minMaxAngle.x);
     }
 
     void Update()

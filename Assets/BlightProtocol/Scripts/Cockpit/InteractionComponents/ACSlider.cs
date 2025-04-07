@@ -65,7 +65,6 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
 
         Vector3 newPos = GetPosition(progress);
         head.position = newPos;
-
         OnValueChanged(progress);
     }
 
