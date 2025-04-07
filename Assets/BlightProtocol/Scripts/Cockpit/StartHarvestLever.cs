@@ -22,7 +22,8 @@ public class StartHarvestLever : ACLever
             }
             else if (harvester.HasArrivedAtTarget()
             && harvester.IsTargetingResourcePoint()
-            && harvester.GetZoneState() is not (ZoneState.HARVESTING or ZoneState.START_HARVESTING or ZoneState.END_HARVESTING))
+            && harvester.GetZoneState() is not (ZoneState.HARVESTING or ZoneState.START_HARVESTING or ZoneState.END_HARVESTING)
+            && harvester.resourcePointDetector.activeResourcePoints.Count > 0)
             {
                 isPulled = true;
                 SetPositionNormalized(1f);

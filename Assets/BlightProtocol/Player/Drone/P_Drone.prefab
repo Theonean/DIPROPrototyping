@@ -134,7 +134,7 @@ Transform:
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 2753765569132390410}
-  m_LocalEulerAnglesHint: {x: 89.972, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 89.972, y: -90, z: 0}
 --- !u!212 &787017369456715182
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -238,8 +238,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isDashing: 0
+  isContinuingDash: 0
   dashKnockback: 150
-  moveSpeed: 15
+  moveSpeed: 20
   currentSpeed: 0
   moveDirection: {x: 0, y: 0, z: 0}
   accelerationCurve:
@@ -391,7 +392,7 @@ NavMeshAgent:
   m_AutoRepath: 1
   m_Height: 3
   m_BaseOffset: 1.5
-  m_WalkableMask: 4294967295
+  m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
 --- !u!1 &3069283202996589018
 GameObject:
@@ -424,7 +425,7 @@ Transform:
   m_Children:
   - {fileID: 6132903678938961910}
   m_Father: {fileID: 2657404939992042329}
-  m_LocalEulerAnglesHint: {x: 0, y: 270, z: 0}
+  m_LocalEulerAnglesHint: {x: -2063.8, y: 0, z: 0}
 --- !u!1 &4284575246778931578
 GameObject:
   m_ObjectHideFlags: 0
@@ -584,7 +585,7 @@ GameObject:
   - component: {fileID: 8807547958867853206}
   - component: {fileID: 3770191199202911359}
   m_Layer: 6
-  m_Name: LegHandler
+  m_Name: Rockets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -624,12 +625,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rocketBodies:
+  - {fileID: 3263305297781087075, guid: dddcb98577495a048b977a00326d86af, type: 3}
   - {fileID: 3263305297781087075, guid: 11784d1deb428a54795b886a5ae02d08, type: 3}
   - {fileID: 3263305297781087075, guid: 5ec723a782c25fc43a4c709dcb76f546, type: 3}
   rocketPropulsions:
   - {fileID: 628991970771947949, guid: e277e4c11c9a94540b486aef85f7ff77, type: 3}
-  - {fileID: 628991970771947949, guid: 388edeb0b8faaa1429ca2ae5c0ab4cb0, type: 3}
   - {fileID: 628991970771947949, guid: f8c01ad1bd73d2e4aa0fe2cbf9281f7b, type: 3}
+  - {fileID: 628991970771947949, guid: 388edeb0b8faaa1429ca2ae5c0ab4cb0, type: 3}
   rocketFronts:
   - {fileID: 8736327215347914105, guid: 471820a94ccd0e049b1c1273b501a7ba, type: 3}
   - {fileID: 8736327215347914105, guid: 01429f51f3b891b4291f5bce51763be3, type: 3}
@@ -754,13 +756,33 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
         type: 3}
-      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.size
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Name
+      value: Burst Size
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Float.m_Array.Array.data[0].m_Value
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Name
       value: PlayerVelocity
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Name
+      value: PlayerPos
       objectReference: {fileID: 0}
     - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
         type: 3}
@@ -780,6 +802,11 @@ PrefabInstance:
     - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
         type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Overridden
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7408380099068056282, guid: 4b90b96312869ad44bd6109f1c24c126,
+        type: 3}
+      propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Overridden
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

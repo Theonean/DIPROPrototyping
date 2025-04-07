@@ -8,10 +8,14 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     [SerializeField] private float chargeWindupTime = 1f;
     [SerializeField] private AnimationCurve chargeSpeedCurve;
     private bool charging = false;
+    [SerializeField] private Color chargeStartColor;
+    [ColorUsage(true, true)]
+    [SerializeField] private Color chargeEndColor;
+    [SerializeField] private Renderer batteryRenderer;
 
     void Start()
     {
-        navMeshAgent.acceleration = chargeSpeed*5f;
+        navMeshAgent.acceleration = chargeSpeed * 5f;
     }
 
     protected override void Update()
@@ -36,21 +40,32 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     private IEnumerator ChargeWindup()
     {
         float elapsedTime = 0f;
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        Color startColor = Color.white;
-        Color endColor = Color.red;
+        float blinkTime = 1f;
 
-        while (elapsedTime < chargeWindupTime)
+        while (elapsedTime < chargeWindupTime - blinkTime)
         {
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / chargeWindupTime;
-
-            foreach (Renderer renderer in renderers)
-            {
-                if(renderer != null) renderer.material.color = Color.Lerp(startColor, endColor, t);
-            }
+            batteryRenderer.material.color = Color.Lerp(chargeStartColor, chargeEndColor, t);
 
             yield return null;
+        }
+        StartCoroutine(Blink(blinkTime));
+    }
+
+    private IEnumerator Blink(float timeLeft)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < timeLeft)
+        {
+            batteryRenderer.material.color = chargeStartColor;
+            yield return new WaitForSeconds(0.1f);
+            elapsedTime += 0.1f;
+
+            batteryRenderer.material.color = chargeEndColor;
+            yield return new WaitForSeconds(0.1f);
+            elapsedTime += 0.1f;
         }
 
         ResumeMovement();
