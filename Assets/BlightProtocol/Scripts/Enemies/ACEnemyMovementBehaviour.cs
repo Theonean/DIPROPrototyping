@@ -26,7 +26,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         return isMoving && harvester != null && harvester.GetZoneState() != ZoneState.DIED;
     }
 
-    protected void SetDestination(Vector3 targetPosition)
+    public void SetDestination(Vector3 targetPosition)
     {
         if (navMeshAgent != null && navMeshAgent.isActiveAndEnabled)
         {

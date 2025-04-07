@@ -40,7 +40,7 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (state == RocketState.ATTACHED) return;
+        if (state == RocketState.ATTACHED || state == RocketState.REGROWING) return;
 
         if (other.gameObject.layer == LayerMask.NameToLayer("EnemyArmor"))
         {
