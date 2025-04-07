@@ -650,6 +650,8 @@ GameObject:
   - component: {fileID: 574977737770609118}
   - component: {fileID: 2566912450360716628}
   - component: {fileID: 2770387572818103519}
+  - component: {fileID: 7144603520783483735}
+  - component: {fileID: 7103360586420896483}
   m_Layer: 7
   m_Name: Hurtbox
   m_TagString: Harvester
@@ -744,6 +746,40 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 0
+--- !u!114 &7144603520783483735
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3fe0ceaf6050942b5fa5cffc159b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAgentEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAgentExit:
+    m_PersistentCalls:
+      m_Calls: []
+  layerToLookFor: Player
+--- !u!114 &7103360586420896483
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6476196891674240112}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9ae2f9f5992a0f4d8e1c66fc964df69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityDetector: {fileID: 0}
+  activeResourcePoints: []
+  isOnResourcePoint: 0
 --- !u!1 &6801766856849689453
 GameObject:
   m_ObjectHideFlags: 0

@@ -783,7 +783,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6553042188547210295}
   - component: {fileID: 6798753275269608049}
-  m_Layer: 20
+  - component: {fileID: 518853741449241341}
+  m_Layer: 21
   m_Name: TargetingHitBox
   m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
@@ -828,6 +829,25 @@ CapsuleCollider:
   m_Height: 1
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &518853741449241341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5200256666131700239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb3fe0ceaf6050942b5fa5cffc159b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnAgentEnter:
+    m_PersistentCalls:
+      m_Calls: []
+  OnAgentExit:
+    m_PersistentCalls:
+      m_Calls: []
+  layerToLookFor: Harvester
 --- !u!1 &7008496131983134758
 GameObject:
   m_ObjectHideFlags: 0

@@ -6,17 +6,10 @@ public class ResourcePoint : MonoBehaviour
     public float resourceAmount = 100f;
     private bool isAboveGround = false;
     public GameObject aboveGround;
-
-    /// <summary>
-    /// Interface to harvest resources from a node
-    /// </summary>
-    /// <param name="amount">amount of resources to deduct from this node</param>
-    /// <returns>returns whether resources can still be harvested from this node</returns>
-    /// 
     void Start()
     {
         isAboveGround = Random.value > 0.5f;
-        aboveGround.SetActive(isAboveGround);     
+        aboveGround.SetActive(isAboveGround); 
     }
     public bool HarvestResource(float amount) {
         if(resourceAmount <= 0f)

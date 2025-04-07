@@ -11,7 +11,6 @@ public class TargetPosition : MonoBehaviour
     }
 
     void OnTriggerEnter(Collider other) {
-        Debug.Log(other.gameObject.name);
         if (other.CompareTag("ResourcePoint")) {
             isOnResourcePoint = true;
             transform.position = other.transform.position;
@@ -24,7 +23,6 @@ public class TargetPosition : MonoBehaviour
     {
         if (other.CompareTag("ResourcePoint")) {
             isOnResourcePoint = false;
-            Debug.Log("Exit Resource Point");
         }
     }
 }

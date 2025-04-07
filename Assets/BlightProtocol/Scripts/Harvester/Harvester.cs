@@ -36,6 +36,7 @@ public class Harvester : MonoBehaviour
     public HarvesterMover mover { get; private set; }
     public HarvesterHealth health { get; private set; }
     public HarvesterSFX sFX { get; private set; }
+    public HarvesterResourcePointDetector resourcePointDetector { get; private set; }
 
     // VFX
     [SerializeField] private VisualEffect drillingVFX;
@@ -43,6 +44,8 @@ public class Harvester : MonoBehaviour
     [Header("Resource Harvesting")]
     public float resourceHarvestingSpeed = 1f;
     private HarvesterStateMachine stateMachine;
+
+    // Harvesting
 
     private void Awake()
     {
@@ -60,6 +63,7 @@ public class Harvester : MonoBehaviour
         mover = GetComponentInChildren<HarvesterMover>();
         sFX = GetComponentInChildren<HarvesterSFX>();
         health = GetComponentInChildren<HarvesterHealth>();
+        resourcePointDetector = GetComponentInChildren<HarvesterResourcePointDetector>();
     }
 
     void Start()
@@ -94,7 +98,7 @@ public class Harvester : MonoBehaviour
     public void UpdateHarvesting()
     {
         //Collect Resource
-        ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
+        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
 
         harvestingTimer += Time.deltaTime;
         foreach (Slider slider in waveProgressSliders)
@@ -121,10 +125,10 @@ public class Harvester : MonoBehaviour
 
     public void StopHarvesting()
     {
-        ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
+        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
 
         if (resourcePoint.resourceAmount <= 0f)
-            Destroy(mover.targetPosObject.activeResourcePoint);
+            Destroy(resourcePoint.gameObject);
 
         WaveManager.Instance.IncreaseDifficultyLevel(1);
 
