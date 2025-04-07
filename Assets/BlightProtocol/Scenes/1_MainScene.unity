@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 1.3760797, g: 0.72016513, b: 0.3840338, a: 1}
+  m_IndirectSpecularColor: {r: 0.99999946, g: 0, b: 0.99999946, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -9715,8 +9715,8 @@ MonoBehaviour:
     baseEnemyCount: 1
     ambushEnemyMultiplier: 1
     ambushRangeScale: 70
-    ambushWaveDelayRange: {x: 60, y: 90}
-  difficultyLevel: 5
+    ambushWaveDelayRange: {x: 30, y: 60}
+  difficultyLevel: 3
 --- !u!4 &2134228161
 Transform:
   m_ObjectHideFlags: 0
