@@ -626,7 +626,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7246863015105028006}
-  - component: {fileID: 6939954388773486032}
   - component: {fileID: 7985610667760391344}
   - component: {fileID: 934247431209935302}
   - component: {fileID: 93072584069433871}
@@ -657,31 +656,6 @@ Transform:
   - {fileID: 2161914318603457493}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6939954388773486032
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6514100043750109896}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afdbcf4ec0afb704386c76ce903138de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  lookAtText: Pulse
-  interactText: 
-  _touchPoint: {fileID: 7126437841561473561}
-  slider: {fileID: 6518905083779664429}
-  sweetSpotOverlay: {fileID: 2315074574714878359}
-  sweetSpotMinMax: {x: 0.6, y: 0.8}
-  chargeTime: 1
-  isCharging: 0
-  normalColor: {r: 0, g: 0.7583685, b: 1, a: 1}
-  succeedColor: {r: 0.015686274, g: 1, b: 0.23004554, a: 1}
-  failColor: {r: 1, g: 0, b: 0, a: 1}
-  chargeSuccededModifier: 1.5
-  chargeFailedModifier: 0.8
 --- !u!114 &7985610667760391344
 MonoBehaviour:
   m_ObjectHideFlags: 0
