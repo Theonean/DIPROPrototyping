@@ -143,6 +143,31 @@ MonoBehaviour:
   maxAbilityUses: 3
   hasAbilityCooldown: 1
   abilityCooldown: 0.2
+  depletionAnimationCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  meshToPopOff: {fileID: 3149921692485801818}
   flightDistanceAfterBounce: 20
 --- !u!1001 &2843931660320565771
 PrefabInstance:
@@ -152,12 +177,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1489533741580369448}
     m_Modifications:
-    - target: {fileID: -5754084199372789682, guid: 9009ce8c5ad9a21409e5b55f9589f827,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4711208715938537054, guid: 2b41bb0ca7c43eb4da5ee6826de8a65c,
-        type: 3}
     - target: {fileID: -8679921383154817045, guid: fd66493418a9260418ad6a4a5881ae69,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -218,6 +237,12 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_FrontBouncing
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 9009ce8c5ad9a21409e5b55f9589f827,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4711208715938537054, guid: 2b41bb0ca7c43eb4da5ee6826de8a65c,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -226,6 +251,12 @@ PrefabInstance:
 --- !u!4 &2377080073445019104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: fd66493418a9260418ad6a4a5881ae69,
+    type: 3}
+  m_PrefabInstance: {fileID: 2843931660320565771}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3149921692485801818 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: fd66493418a9260418ad6a4a5881ae69,
     type: 3}
   m_PrefabInstance: {fileID: 2843931660320565771}
   m_PrefabAsset: {fileID: 0}
