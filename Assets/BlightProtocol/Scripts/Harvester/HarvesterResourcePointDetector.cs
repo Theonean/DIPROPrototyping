@@ -4,34 +4,23 @@ using UnityEngine;
 
 public class HarvesterResourcePointDetector : MonoBehaviour
 {
-    public List<GameObject> activeResourcePoints = new List<GameObject>();
+    public ResourcePoint activeResourcePoint;
     public bool isOnResourcePoint = false;
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("ResourcePoint")) {
-            GameObject resourcePointParent = other.attachedRigidbody.gameObject;
-            OnResourcePointEnter(resourcePointParent);
+        if (other.CompareTag("ResourcePoint")
+        && other.gameObject.transform.parent.TryGetComponent<ResourcePoint>(out ResourcePoint resourcePoint))
+        {
+            activeResourcePoint = resourcePoint;
         }
     }
 
-    void OnTriggerExit(Collider other) {
-        if (other.CompareTag("ResourcePoint")) {
-            GameObject resourcePointParent = other.attachedRigidbody.gameObject;
-            OnResourcePointExit(resourcePointParent);
-        }
-    }
-
-    void OnResourcePointEnter(GameObject resourcePoint) {
-        activeResourcePoints.Add(resourcePoint);
-        isOnResourcePoint = true;
-        
-    }
-
-    public void OnResourcePointExit(GameObject resourcePoint) {
-        activeResourcePoints.Remove(resourcePoint);
-        if (activeResourcePoints.Count <= 0) {
-            isOnResourcePoint = false;
+    void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("ResourcePoint"))
+        {
+            activeResourcePoint = null;
         }
     }
 }

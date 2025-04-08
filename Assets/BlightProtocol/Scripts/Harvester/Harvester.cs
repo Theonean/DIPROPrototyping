@@ -97,25 +97,21 @@ public class Harvester : MonoBehaviour
 
     public void UpdateHarvesting()
     {
-        //Collect Resource
-        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
-        if (resourcePoint != null)
+        if (resourcePointDetector.activeResourcePoint != null)
         {
             harvestingTimer += Time.deltaTime;
             foreach (Slider slider in waveProgressSliders)
             {
                 slider.value = harvestingTimer;
             }
-            resourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
+            resourcePointDetector.activeResourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
         }
     }
 
     public void BeginHarvesting()
     {
         drillingVFX.Play();
-
-        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
-        timeUntilResourcePointEmpty = resourcePoint.resourceAmount / resourceHarvestingSpeed;
+        timeUntilResourcePointEmpty = resourcePointDetector.activeResourcePoint.resourceAmount / resourceHarvestingSpeed;
 
         foreach (Slider slider in waveProgressSliders)
         {
@@ -127,12 +123,10 @@ public class Harvester : MonoBehaviour
 
     public void StopHarvesting()
     {
-        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
-
-        if (resourcePoint != null)
+        if (resourcePointDetector.activeResourcePoint != null)
         {
-            resourcePointDetector.OnResourcePointExit(resourcePoint.gameObject);
-            Destroy(resourcePoint.gameObject);
+            Destroy(resourcePointDetector.activeResourcePoint.gameObject);
+            resourcePointDetector.activeResourcePoint = null;
             WaveManager.Instance.IncreaseDifficultyLevel(1);
         }
         drillingVFX.Stop();
@@ -140,7 +134,7 @@ public class Harvester : MonoBehaviour
     }
     public bool HasCompletedHarvest() => harvestingTimer >= timeUntilResourcePointEmpty;
     public bool HasArrivedAtTarget() => Vector3.Distance(transform.position, mover.targetPosObject.transform.position) < 0.5f;
-    public bool IsOnResourcePoint() => resourcePointDetector.activeResourcePoints.Count > 0 && resourcePointDetector.activeResourcePoints[0] != null;
+    public bool IsOnResourcePoint() => resourcePointDetector.activeResourcePoint != null;
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
     {
