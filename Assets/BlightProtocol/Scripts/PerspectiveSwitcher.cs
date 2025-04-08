@@ -106,6 +106,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         fpCamera.gameObject.SetActive(true);
         fpController.SetActive(true);
         mapCamera.gameObject.SetActive(true);
+        Cursor.visible = true;
 
         PlayerCore playerCore = PlayerCore.Instance;
 

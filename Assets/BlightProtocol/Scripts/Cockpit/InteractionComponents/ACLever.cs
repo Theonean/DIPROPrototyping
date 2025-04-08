@@ -11,7 +11,6 @@ public abstract class ACLever : ACSlider
 
     public override void OnStartInteract() {
         base.OnStartInteract();
-        isPulled = false;
     }
 
     public override void OnUpdateInteract()

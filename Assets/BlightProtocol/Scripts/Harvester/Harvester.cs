@@ -114,7 +114,7 @@ public class Harvester : MonoBehaviour
     {
         drillingVFX.Play();
 
-        ResourcePoint resourcePoint = mover.targetPosObject.activeResourcePoint.GetComponent<ResourcePoint>();
+        ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
         timeUntilResourcePointEmpty = resourcePoint.resourceAmount / resourceHarvestingSpeed;
 
         foreach (Slider slider in waveProgressSliders)
@@ -129,17 +129,18 @@ public class Harvester : MonoBehaviour
     {
         ResourcePoint resourcePoint = resourcePointDetector.activeResourcePoints[0].GetComponent<ResourcePoint>();
 
-        if (resourcePoint.resourceAmount <= 0f)
+        if (resourcePoint != null)
+        {
+            resourcePointDetector.OnResourcePointExit(resourcePoint.gameObject);
             Destroy(resourcePoint.gameObject);
-
-        WaveManager.Instance.IncreaseDifficultyLevel(1);
-
+            WaveManager.Instance.IncreaseDifficultyLevel(1);
+        }
         drillingVFX.Stop();
         StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
     }
     public bool HasCompletedHarvest() => harvestingTimer >= timeUntilResourcePointEmpty;
     public bool HasArrivedAtTarget() => Vector3.Distance(transform.position, mover.targetPosObject.transform.position) < 0.5f;
-    public bool IsTargetingResourcePoint() => mover.targetPosObject.isOnResourcePoint;
+    public bool IsOnResourcePoint() => resourcePointDetector.activeResourcePoints.Count > 0 && resourcePointDetector.activeResourcePoints[0] != null;
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
     {

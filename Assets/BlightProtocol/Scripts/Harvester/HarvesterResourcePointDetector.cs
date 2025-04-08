@@ -28,7 +28,7 @@ public class HarvesterResourcePointDetector : MonoBehaviour
         
     }
 
-    void OnResourcePointExit(GameObject resourcePoint) {
+    public void OnResourcePointExit(GameObject resourcePoint) {
         activeResourcePoints.Remove(resourcePoint);
         if (activeResourcePoints.Count <= 0) {
             isOnResourcePoint = false;

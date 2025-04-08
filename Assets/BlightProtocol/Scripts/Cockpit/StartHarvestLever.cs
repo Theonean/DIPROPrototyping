@@ -20,10 +20,8 @@ public class StartHarvestLever : ACLever
                 harvestButtonFeedback.text = "CANNOT HARVEST WHILE MOVING!";
                 ResetLever();
             }
-            else if (harvester.HasArrivedAtTarget()
-            && harvester.IsTargetingResourcePoint()
-            && harvester.GetZoneState() is not (ZoneState.HARVESTING or ZoneState.START_HARVESTING or ZoneState.END_HARVESTING)
-            && harvester.resourcePointDetector.activeResourcePoints.Count > 0)
+            else if (harvester.IsOnResourcePoint()
+            && harvester.GetZoneState() is not (ZoneState.HARVESTING or ZoneState.START_HARVESTING or ZoneState.END_HARVESTING))
             {
                 isPulled = true;
                 SetPositionNormalized(1f);
