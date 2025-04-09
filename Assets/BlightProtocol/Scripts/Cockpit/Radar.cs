@@ -10,8 +10,6 @@ public class Radar : MonoBehaviour
     public float radarDistance = 150f;
     [Header("Raycast")]
     public LayerMask layerMask;
-    [Header("Ping")]
-    public GameObject ping;
 
     [Header("Pulse")]
     public RadarPulseData radarData;
