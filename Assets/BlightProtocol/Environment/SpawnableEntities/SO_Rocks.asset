@@ -24,8 +24,11 @@ MonoBehaviour:
   - {fileID: 4048432588430397812, guid: 69e66a5a6c5ca704bb51561b620e480a, type: 3}
   numEntities: 25
   spawnStrategy: 3
-  customSpawnAreaX: {x: -500, y: 500}
-  customSpawnAreaZ: {x: -200, y: 1200}
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -200, y: 1200}
+  voronoiSiteCount: 2
+  siteSpreadRadius: 6
+  siteJitter: 0
   minRotation: 0
   maxRotation: 360
   scaleVariance: 0.4

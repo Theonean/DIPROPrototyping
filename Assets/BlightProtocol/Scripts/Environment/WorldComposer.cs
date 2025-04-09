@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class WorldComposer : MonoBehaviour
@@ -34,19 +35,20 @@ public class WorldComposer : MonoBehaviour
     {
         foreach (SpawnableEntity spawnable in spawnableResources)
         {
-            for (int i = 0; i < spawnable.numEntities; i++)
+            Vector3[] spawnPositions = spawnable.GenerateSpawnPositions(mapBoundsX, mapBoundsZ);
+            if (spawnPositions.Length == 0)
             {
-                // Get the spawn position using the configured strategy.
-                Vector3 spawnPos = GetSpawnPosition(spawnable);
+                Debug.LogWarning($"No spawn positions generated for {spawnable.name}");
+                continue;
+            }
 
-                // Get a random prefab from the scriptable object.
+            spawnPositions = spawnPositions.OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos)).ToArray();
+
+            foreach (Vector3 spawnPos in spawnPositions)
+            {
+                // Instantiate the prefab at the generated position.
                 GameObject prefab = spawnable.GetPrefab();
-
-                // Create a random rotation between the provided min and max angles.
-                float randomRotation = Random.Range(spawnable.minRotation, spawnable.maxRotation);
-                Quaternion rotation = Quaternion.Euler(0, randomRotation, 0);
-
-                // Instantiate the prefab with the chosen position and rotation.
+                Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
                 GameObject instance = Instantiate(prefab, spawnPos, rotation, transform);
 
                 // Optionally apply a random scale variance.
@@ -56,50 +58,8 @@ public class WorldComposer : MonoBehaviour
                     instance.transform.localScale *= scaleFactor;
                 }
 
-                // Optionally, wait a frame between spawns.
                 yield return null;
             }
-        }
-    }
-
-    private Vector3 GetSpawnPosition(SpawnableEntity spawnable)
-    {
-        switch (spawnable.spawnStrategy)
-        {
-            case SpawnStrategy.Random:
-                {
-                    float xPos = Random.Range(mapBoundsX.x, mapBoundsX.y);
-                    float zPos = Random.Range(mapBoundsZ.x, mapBoundsZ.y);
-                    return new Vector3(xPos, 0, zPos);
-                }
-            case SpawnStrategy.Grid:
-                {
-                    // Example: evenly distribute positions across the bounds.
-                    float gridX = Mathf.Lerp(mapBoundsX.x, mapBoundsX.y, Random.value);
-                    float gridZ = Mathf.Lerp(mapBoundsZ.x, mapBoundsZ.y, Random.value);
-                    return new Vector3(gridX, 0, gridZ);
-                }
-            case SpawnStrategy.Noise:
-                {
-                    // Example: use Perlin noise to vary the position.
-                    float noiseX = Mathf.PerlinNoise(Random.value, Random.value) * (mapBoundsX.y - mapBoundsX.x) + mapBoundsX.x;
-                    float noiseZ = Mathf.PerlinNoise(Random.value, Random.value) * (mapBoundsZ.y - mapBoundsZ.x) + mapBoundsZ.x;
-                    return new Vector3(noiseX, 0, noiseZ);
-                }
-            case SpawnStrategy.Custom:
-                {
-                    // Example: use custom spawn area if provided.
-                    float xPos = Random.Range(spawnable.customSpawnAreaX.x, spawnable.customSpawnAreaX.y);
-                    float zPos = Random.Range(spawnable.customSpawnAreaZ.x, spawnable.customSpawnAreaZ.y);
-                    return new Vector3(xPos, 0, zPos);
-                }
-            default:
-                {
-                    // Fallback to random spawn if strategy is unrecognized.
-                    float xPos = Random.Range(mapBoundsX.x, mapBoundsX.y);
-                    float zPos = Random.Range(mapBoundsZ.x, mapBoundsZ.y);
-                    return new Vector3(xPos, 0, zPos);
-                }
         }
     }
 }
