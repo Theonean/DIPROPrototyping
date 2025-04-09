@@ -17,7 +17,6 @@ public class ObstaclePattern : MonoBehaviour
         foreach (Obstacle obstacle in obstacles)
         {
             obstacle.gameObject.SetActive(true);
-            obstacle.RandomizeBlendWeights();
             obstacle.UpdateColor();
         }
     }
