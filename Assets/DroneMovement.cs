@@ -27,6 +27,7 @@ public class DroneMovement : MonoBehaviour
     public VisualEffect dashEffect;
     private PlayerCore playerCore;
     private PerspectiveSwitcher perspectiveSwitcher;
+    [SerializeField] private Rigidbody rb;
 
     private void Awake()
     {
@@ -100,6 +101,11 @@ public class DroneMovement : MonoBehaviour
         }
     }
 
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Collision with: " + collision.gameObject.name);
+    }
+
 
     void FixedUpdate()
     {
@@ -118,7 +124,7 @@ public class DroneMovement : MonoBehaviour
                 Vector3 targetVelocity = moveDirection * currentSpeed;
                 m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
             }
-            transform.position += m_CurrentVelocity * Time.fixedDeltaTime;
+            rb.velocity = m_CurrentVelocity;
         }
     }
 
