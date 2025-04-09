@@ -14,7 +14,6 @@ public class HarvesterMover : MonoBehaviour
     [SerializeField] private NavMeshAgent navMeshAgent;
     private Harvester harvester;
     private bool isMoving = false;
-    private Vector3 rotatorTargetPosition;
 
     private void Awake()
     {
