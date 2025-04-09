@@ -58,8 +58,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4810008336700526577}
   - component: {fileID: 9184494493253215623}
-  - component: {fileID: 6804580927246222980}
   - component: {fileID: 7069397567193743126}
+  - component: {fileID: 6804580927246222980}
+  - component: {fileID: 2740710912456855408}
   - component: {fileID: 5251472444159987537}
   m_Layer: 9
   m_Name: P_ObstacleWall
@@ -97,62 +98,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47e6e6325f676294193640e4c005e938, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  destructiveTags:
-  - Harvester
-  - Leg
   meshRenderers:
   - {fileID: 8033281796988372198}
   meshParent: {fileID: 8393319146484737331}
   ExplosionEffect: {fileID: 1835712765589678237}
-  changedBlendshape:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: BlendShapeScaler, Assembly-CSharp
-        m_MethodName: UpdateNavmeshBounds
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 3605634125254664908}
-        m_TargetAssemblyTypeName: BlendShapeScaler, Assembly-CSharp
-        m_MethodName: UpdateNavmeshBounds
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
   navObstacleHolder: {fileID: 8462809618294767473}
---- !u!65 &6804580927246222980
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5144471608748660402}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 2, y: 1, z: 2.8}
-  m_Center: {x: 0, y: 0.4, z: -0.1}
 --- !u!54 &7069397567193743126
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -180,6 +130,48 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &6804580927246222980
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144471608748660402}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.9, y: 1.7, z: 0.5}
+  m_Center: {x: 0.1, y: 0.4, z: 1}
+--- !u!65 &2740710912456855408
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5144471608748660402}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.5, y: 2, z: 3.8}
+  m_Center: {x: 0.8, y: 0, z: -0.4}
 --- !u!114 &5251472444159987537
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -291,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8808503284862076636
 Transform:
   m_ObjectHideFlags: 0
@@ -729,11 +721,7 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 5777900482453508318}
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 3561687664098219515}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 660324313940fcc40a603339867cb41f, type: 3}
 --- !u!23 &8033281796988372198 stripped
 MeshRenderer:
@@ -747,28 +735,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 8699378444526950498}
   m_PrefabAsset: {fileID: 0}
---- !u!64 &3561687664098219515
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8393319146484737331}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 1
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 8733429697405204941, guid: 660324313940fcc40a603339867cb41f, type: 3}
 --- !u!4 &9165071428654301065 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 660324313940fcc40a603339867cb41f,
