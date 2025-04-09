@@ -1,72 +1,55 @@
+using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class HarvesterMover : MonoBehaviour
 {
     public float moveSpeed = 5f;
+    public float maxAngularRotationSpeed;
     Vector3 targetPosition;
 
     public TargetPosition targetPosObject;
-    public float travelTimeLeft;
     [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private NavMeshAgent navMeshAgent;
     private Harvester harvester;
-    private Coroutine moveCoroutine;
+    private bool isMoving = false;
+    private Vector3 rotatorTargetPosition;
 
     private void Awake()
     {
         harvester = Harvester.Instance;
+        navMeshAgent.speed = moveSpeed;
+    }
+
+    void Update()
+    {
+        if (isMoving)
+        {
+            navMeshAgent.angularSpeed = Mathf.Lerp(0, maxAngularRotationSpeed, navMeshAgent.velocity.magnitude / moveSpeed);
+            DrawLineToTarget();
+            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            {
+                isMoving = false;
+                navMeshAgent.isStopped = true;
+                harvester.SetState(new IdleState(harvester));
+            }
+        }
     }
 
     public void StartMoving()
     {
-        if(moveCoroutine != null)
-            StopCoroutine(moveCoroutine);
-
-        moveCoroutine = StartCoroutine(MoveHarvesterToDestination());
-    }
-
-    private IEnumerator MoveHarvesterToDestination()
-    {
-        Debug.Log(Vector3.Distance(transform.position, targetPosition));
-        while (Vector3.Distance(transform.position, targetPosition) > 0.5f)
-        {
-            travelTimeLeft -= Time.deltaTime;
-            if (travelTimeLeft <= 0)
-                Debug.Log("Harvester should have arrived?");
-
-
-            DrawLineToTarget();
-
-            // Calculate the sinus wave offset
-            float sinOffset = Mathf.Sin(Time.time * 2f) * 0.5f;
-            Vector3 offsetPosition = targetPosition + transform.right * sinOffset;
-
-            // Move towards the target position with sinus wave
-            Vector3 newPosition = Vector3.MoveTowards(transform.position, offsetPosition, moveSpeed * Time.deltaTime);
-
-            // Calculate the movement direction
-            Vector3 moveDirection = (newPosition - transform.position).normalized;
-
-            // Update position
-            transform.position = newPosition;
-
-            // Rotate to face the movement direction
-            if (moveDirection != Vector3.zero)
-            {
-                transform.rotation = Quaternion.LookRotation(moveDirection);
-            }
-
-            yield return null;
-        }
+        isMoving = true;
+        navMeshAgent.isStopped = false;
+        navMeshAgent.speed = moveSpeed;
     }
 
     public void SetDestination(Vector3 targetPosition)
-    { 
+    {
         this.targetPosition = targetPosition;
+        navMeshAgent.SetDestination(targetPosition);
 
         targetPosObject.transform.position = targetPosition;
-        travelTimeLeft = Vector3.Distance(transform.position, targetPosition) / moveSpeed;
     }
 
 
@@ -75,6 +58,7 @@ public class HarvesterMover : MonoBehaviour
         if (harvester.GetZoneState() == ZoneState.DIED || harvester.GetZoneState() == ZoneState.END_HARVESTING) return;
 
         moveSpeed = newSpeed;
+        navMeshAgent.speed = moveSpeed;
         if (moveSpeed > 0.1f)
         {
             if (harvester.GetZoneState() == ZoneState.HARVESTING)
@@ -103,6 +87,6 @@ public class HarvesterMover : MonoBehaviour
 
     public Vector3 GetMovementDirection()
     {
-        return(targetPosition - transform.position).normalized;
+        return (targetPosition - transform.position).normalized;
     }
 }

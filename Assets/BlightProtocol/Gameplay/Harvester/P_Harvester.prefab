@@ -777,8 +777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9ae2f9f5992a0f4d8e1c66fc964df69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityDetector: {fileID: 0}
-  activeResourcePoints: []
+  activeResourcePoint: {fileID: 0}
   isOnResourcePoint: 0
 --- !u!1 &6801766856849689453
 GameObject:
@@ -959,6 +958,7 @@ GameObject:
   - component: {fileID: 818824688125454779}
   - component: {fileID: 706314438526691804}
   - component: {fileID: 3893695005072961915}
+  - component: {fileID: 6823219094255352287}
   m_Layer: 7
   m_Name: P_Harvester
   m_TagString: Harvester
@@ -1023,9 +1023,32 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 5
+  maxAngularRotationSpeed: 30
   targetPosObject: {fileID: 0}
-  travelTimeLeft: 0
   lineRenderer: {fileID: 6001975293294036761}
+  navMeshAgent: {fileID: 6823219094255352287}
+--- !u!195 &6823219094255352287
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7113327578232574430}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 1
+  m_Speed: 3.5
+  m_Acceleration: 2
+  avoidancePriority: 99
+  m_AngularSpeed: 120
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 3
 --- !u!1 &7358851095998060526
 GameObject:
   m_ObjectHideFlags: 0
