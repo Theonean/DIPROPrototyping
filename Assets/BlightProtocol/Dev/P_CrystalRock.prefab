@@ -445,17 +445,17 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 88ea8775a979bff4c90ee325ade4a444, type: 2}
+      objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 266038113189829920, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 88ea8775a979bff4c90ee325ade4a444, type: 2}
+      objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 797658409950097719, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 88ea8775a979bff4c90ee325ade4a444, type: 2}
+      objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
       propertyPath: m_Name
@@ -492,10 +492,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1596429790620269437}
-    - targetCorrespondingSourceObject: {fileID: -2699922579773320111, guid: 8be795a78986ee34291bcf8a89e856f6,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4255030599643171255}
   m_SourcePrefab: {fileID: 100100000, guid: 8be795a78986ee34291bcf8a89e856f6, type: 3}
 --- !u!4 &2552025937351159620 stripped
 Transform:
@@ -587,31 +583,3 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: -5630024020402786232, guid: 8be795a78986ee34291bcf8a89e856f6, type: 3}
---- !u!1 &9108483908161592574 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -2699922579773320111, guid: 8be795a78986ee34291bcf8a89e856f6,
-    type: 3}
-  m_PrefabInstance: {fileID: 2657167128781342895}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &4255030599643171255
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9108483908161592574}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: 1398453063044349671, guid: 8be795a78986ee34291bcf8a89e856f6, type: 3}
