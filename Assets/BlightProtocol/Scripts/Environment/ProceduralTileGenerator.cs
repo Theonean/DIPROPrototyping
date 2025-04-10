@@ -15,11 +15,6 @@ public class ProceduralTileGenerator : MonoBehaviour
     public int mapWidth { get; private set; }
     public int mapDepth { get; private set; }
     public float tileSize = 1f;
-    [Header("Noise Settings")]
-    public float noiseScale = 0.3f;
-    public float noiseAmplitude = 5f;
-    public Vector2 noiseOffset = new Vector2(0f, 0f);
-
 
     private void Awake()
     {
@@ -53,12 +48,7 @@ public class ProceduralTileGenerator : MonoBehaviour
                 int index = z * (mapWidth + 1) + x;
                 float xPos = mapBoundsX.x + x * tileSize;
                 float zPos = mapBoundsZ.x + z * tileSize;
-
-                // Calculate noise sample coordinates and height value
-                float sampleX = xPos * noiseScale + noiseOffset.x;
-                float sampleZ = zPos * noiseScale + noiseOffset.y;
-                float noise = Mathf.PerlinNoise(sampleX, sampleZ);
-                float yPos = noise * noiseAmplitude;
+                float yPos = 0f; 
 
                 vertices[index] = new Vector3(xPos, yPos, zPos);
                 normals[index] = Vector3.up;
