@@ -33,7 +33,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
         Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
         // Raycast to find ground at the target's XZ position
         RaycastHit hit;
-        int groundLayerMask = LayerMask.GetMask("Ground");
+        int groundLayerMask = LayerMask.GetMask("PL_IsEnvironmentPhysicalObject");
 
         // Cast straight down from above the target position
         Vector3 rayOrigin = target + Vector3.up * 50f;

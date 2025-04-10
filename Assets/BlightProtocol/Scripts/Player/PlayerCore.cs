@@ -94,7 +94,7 @@ public class PlayerCore : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            if (DroneMovement.Instance.isDashing)
+            if (DroneMovement.Instance.IsDashing)
             {
                 // Knockback the enemy
                 Debug.Log("Knocked back enemy");

@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 5451548261969284166}
   - component: {fileID: 3891812838275016137}
   - component: {fileID: 7543469885322352971}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: AboveGroundStruct (2)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,9 +117,9 @@ GameObject:
   - component: {fileID: 5319203318662955048}
   - component: {fileID: 5391088603650655674}
   - component: {fileID: 5768095540474135356}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: AboveGroundStruct (4)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -219,9 +219,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7234386082048316058}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: GroundCrystals
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -234,7 +234,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 377858578103124145}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -244,7 +244,7 @@ Transform:
   - {fileID: 4179220438809909191}
   - {fileID: 8301251363769979898}
   - {fileID: 7837839533538428784}
-  m_Father: {fileID: 4868336868686352234}
+  m_Father: {fileID: 7381570951520329136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1149869511330600606
 GameObject:
@@ -258,9 +258,9 @@ GameObject:
   - component: {fileID: 7248840740467915092}
   - component: {fileID: 5833473197373314687}
   - component: {fileID: 7239186414814721779}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: AboveGroundStruct (1)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -360,9 +360,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152193725867872449}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGround
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -375,7 +375,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1737457711817801451}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -386,7 +386,7 @@ Transform:
   - {fileID: 67851561598671532}
   - {fileID: 1816407941490613130}
   - {fileID: 9112449558163229923}
-  m_Father: {fileID: 4868336868686352234}
+  m_Father: {fileID: 7381570951520329136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2675105609455253037
 GameObject:
@@ -400,9 +400,9 @@ GameObject:
   - component: {fileID: 7424165224809177468}
   - component: {fileID: 2856133905469788859}
   - component: {fileID: 5391132619491404394}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGroundStruct (7)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -504,8 +504,8 @@ GameObject:
   - component: {fileID: 7381570951520329136}
   - component: {fileID: 8491011004294275034}
   - component: {fileID: 6081419836081156582}
-  m_Layer: 17
-  m_Name: RadarHitBox
+  m_Layer: 30
+  m_Name: MeshHolder
   m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -523,7 +523,9 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7234386082048316058}
+  - {fileID: 1152193725867872449}
   m_Father: {fileID: 4868336868686352234}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &8491011004294275034
@@ -541,7 +543,7 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
@@ -575,9 +577,9 @@ GameObject:
   - component: {fileID: 5980825364364767834}
   - component: {fileID: 7519518286048937898}
   - component: {fileID: 5770765755187171803}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGroundStruct (9)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -680,9 +682,9 @@ GameObject:
   - component: {fileID: 2780845034525127964}
   - component: {fileID: 5567795727802246207}
   - component: {fileID: 1424544641886885692}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: AboveGroundStruct
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -784,7 +786,7 @@ GameObject:
   - component: {fileID: 6553042188547210295}
   - component: {fileID: 6798753275269608049}
   - component: {fileID: 518853741449241341}
-  m_Layer: 21
+  m_Layer: 24
   m_Name: TargetingHitBox
   m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
@@ -848,6 +850,59 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   layerToLookFor: Harvester
+--- !u!1 &6026762930563296991
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9001989542496442353}
+  - component: {fileID: 1699161404953981446}
+  m_Layer: 24
+  m_Name: BlockingCollider
+  m_TagString: ResourcePoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9001989542496442353
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026762930563296991}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4868336868686352234}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1699161404953981446
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6026762930563296991}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 3, y: 3, z: 3}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7008496131983134758
 GameObject:
   m_ObjectHideFlags: 0
@@ -860,9 +915,9 @@ GameObject:
   - component: {fileID: 853886148530889040}
   - component: {fileID: 5838595102247632856}
   - component: {fileID: 8626614128600471967}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGroundStruct (5)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -965,8 +1020,7 @@ GameObject:
   - component: {fileID: 495218428925458173}
   - component: {fileID: 563089344200980273}
   - component: {fileID: 1760140524580456193}
-  - component: {fileID: 2728280826849321699}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: P_ResourcePoint
   m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
@@ -986,10 +1040,9 @@ Transform:
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7234386082048316058}
   - {fileID: 7381570951520329136}
   - {fileID: 6553042188547210295}
-  - {fileID: 1152193725867872449}
+  - {fileID: 9001989542496442353}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!2083052967 &495218428925458173
@@ -1085,33 +1138,6 @@ MonoBehaviour:
   resourceData: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
   resourceAmount: 300
   aboveGround: {fileID: 1737457711817801451}
---- !u!54 &2728280826849321699
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7858307912075322005}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &7899318503340193155
 GameObject:
   m_ObjectHideFlags: 0
@@ -1124,9 +1150,9 @@ GameObject:
   - component: {fileID: 5390810619532925510}
   - component: {fileID: 7802366130566965217}
   - component: {fileID: 8749629573874152252}
-  m_Layer: 9
+  m_Layer: 30
   m_Name: AboveGroundStruct (3)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1229,9 +1255,9 @@ GameObject:
   - component: {fileID: 234051371752375728}
   - component: {fileID: 8467676045143045944}
   - component: {fileID: 2897694610696388246}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGroundStruct (8)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1334,9 +1360,9 @@ GameObject:
   - component: {fileID: 5752854329577026988}
   - component: {fileID: 837567854981202508}
   - component: {fileID: 4155844252891019288}
-  m_Layer: 0
+  m_Layer: 30
   m_Name: AboveGroundStruct (6)
-  m_TagString: Untagged
+  m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1508,7 +1534,17 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 5d91c114fd2e8b64aa89a48a34de52d4,
         type: 3}
       propertyPath: m_Layer
-      value: 0
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5d91c114fd2e8b64aa89a48a34de52d4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 5d91c114fd2e8b64aa89a48a34de52d4,
+        type: 3}
+      propertyPath: m_TagString
+      value: ResourcePoint
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

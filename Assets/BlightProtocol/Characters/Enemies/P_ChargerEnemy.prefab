@@ -6,7 +6,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 707601992295850391}
+    m_TransformParent: {fileID: 4866465728094619761}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
@@ -26,7 +26,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
@@ -46,7 +46,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
@@ -56,7 +56,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
@@ -77,6 +77,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_Beetle
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: e8922aa94b66c7e43ad0e56017bbf600,
+        type: 3}
+      propertyPath: m_Layer
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433603701334075825, guid: e8922aa94b66c7e43ad0e56017bbf600,
+        type: 3}
+      propertyPath: m_Layer
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 5904875033031544068, guid: e8922aa94b66c7e43ad0e56017bbf600,
+        type: 3}
+      propertyPath: m_Layer
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6383438874832070818, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
@@ -221,7 +236,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 9185269845558177096, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+    - targetCorrespondingSourceObject: {fileID: 3828168306696406190, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 7452798517218923336}
@@ -231,12 +246,6 @@ PrefabInstance:
       insertIndex: 1
       addedObject: {fileID: 6190230789700640181}
   m_SourcePrefab: {fileID: 100100000, guid: ef27b165cb5d7b84e824bac4cb87bd83, type: 3}
---- !u!4 &707601992295850391 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 9185269845558177096, guid: ef27b165cb5d7b84e824bac4cb87bd83,
-    type: 3}
-  m_PrefabInstance: {fileID: 8550446736093285599}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2318980918978960584 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6235206037039435799, guid: ef27b165cb5d7b84e824bac4cb87bd83,
@@ -319,3 +328,9 @@ MonoBehaviour:
   chargeStartColor: {r: 0, g: 0.2264151, b: 0.20844565, a: 1}
   chargeEndColor: {r: 0, g: 7.9999995, b: 7.358024, a: 1}
   batteryRenderer: {fileID: 4067197325939956737}
+--- !u!4 &4866465728094619761 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3828168306696406190, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+    type: 3}
+  m_PrefabInstance: {fileID: 8550446736093285599}
+  m_PrefabAsset: {fileID: 0}

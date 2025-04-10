@@ -118,6 +118,7 @@ public class Rocket : MonoBehaviour
         shootingDirection = (target - transform.position).normalized;
         SetState(RocketState.FLYING);
         propulsionComponent.GetComponent<ACRocketPropulsion>().Shoot(target);
+        gameObject.layer = LayerMask.NameToLayer("PL_IsRocket");
     }
 
     public void Explode()
@@ -185,5 +186,7 @@ public class Rocket : MonoBehaviour
         transform.localScale = initialTransform.localScale;
 
         frontComponent.abilityUsesLeft = frontComponent.maxAbilityUses;
+
+        gameObject.layer = LayerMask.NameToLayer("PL_IsPlayer");
     }
 }

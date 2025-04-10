@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2496205046345633308}
   - component: {fileID: 2298602925149600902}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: NavMeshObstacle01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -62,7 +62,7 @@ GameObject:
   - component: {fileID: 6804580927246222980}
   - component: {fileID: 2740710912456855408}
   - component: {fileID: 5251472444159987537}
-  m_Layer: 9
+  m_Layer: 24
   m_Name: P_ObstacleWall
   m_TagString: Obstacle
   m_Icon: {fileID: 0}
@@ -214,7 +214,7 @@ GameObject:
   - component: {fileID: 9154386982181679920}
   - component: {fileID: 2479615152357973976}
   - component: {fileID: 3605634125254664908}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: NavMeshObstacle02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -277,13 +277,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8808503284862076636}
-  m_Layer: 0
+  m_Layer: 24
   m_Name: NavMeshObstacles
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8808503284862076636
 Transform:
   m_ObjectHideFlags: 0
@@ -387,7 +387,7 @@ PrefabInstance:
     - target: {fileID: 5474936451977225265, guid: a18bb48a30ab2e34fabd6061438174f3,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 5474936451977225265, guid: a18bb48a30ab2e34fabd6061438174f3,
         type: 3}
@@ -712,12 +712,17 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
         type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 660324313940fcc40a603339867cb41f,
+        type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

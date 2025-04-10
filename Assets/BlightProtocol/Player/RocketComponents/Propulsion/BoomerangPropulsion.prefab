@@ -6,7 +6,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 984467498389963924}
+    m_TransformParent: {fileID: 6869242799872079643}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
@@ -26,17 +26,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 0.008661509
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.4014218
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.018482447
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
@@ -51,7 +51,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
         type: 3}
@@ -67,6 +67,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SM_FrontBoomerang
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 17b33e14aa5ee0b4886f5a0349a9a0b9,
+        type: 3}
+      propertyPath: m_Layer
+      value: 31
       objectReference: {fileID: 0}
     - target: {fileID: -7511558181221131132, guid: 5848af5820905cd49b96f35fbe32c2e0,
         type: 3}
@@ -161,7 +166,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6186127778945037038, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
+    - targetCorrespondingSourceObject: {fileID: 514675241277620577, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 3957098023637619652}
@@ -196,15 +201,15 @@ MonoBehaviour:
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles
   boomerangSideOffset: 40
---- !u!4 &984467498389963924 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6186127778945037038, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
-    type: 3}
-  m_PrefabInstance: {fileID: 6372608355617371770}
-  m_PrefabAsset: {fileID: 0}
 --- !u!2083052967 &5493941438881058025 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 1463224749962279571, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 6372608355617371770}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &6869242799872079643 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 514675241277620577, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
     type: 3}
   m_PrefabInstance: {fileID: 6372608355617371770}
   m_PrefabAsset: {fileID: 0}
