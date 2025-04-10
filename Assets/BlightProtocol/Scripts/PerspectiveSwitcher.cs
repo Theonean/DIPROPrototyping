@@ -78,7 +78,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         PlayerCore playerCore = PlayerCore.Instance;
 
         playerCore.transform.parent = null;
-        playerCore.GetComponent<NavMeshAgent>().enabled = true;
 
         playerCore.transform.position = dronePositionInLoadingBay.position - Harvester.Instance.mover.GetMovementDirection() * 30f; //Position player behind harvester
         playerCore.transform.rotation = Quaternion.identity;
@@ -108,7 +107,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         PlayerCore playerCore = PlayerCore.Instance;
 
         playerCore.transform.parent = dronePositionInHarvester;
-        playerCore.GetComponent<NavMeshAgent>().enabled = false;
         playerCore.transform.localPosition = Vector3.zero;
         playerCore.transform.localRotation = Quaternion.identity;
         playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
