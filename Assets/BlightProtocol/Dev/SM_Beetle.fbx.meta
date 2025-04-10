@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8be795a78986ee34291bcf8a89e856f6
+guid: e8922aa94b66c7e43ad0e56017bbf600
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Rock
-    second: {fileID: 2100000, guid: 2c3e8f1d3b2934141996e2fdb92b6544, type: 2}
+      name: Red
+    second: {fileID: 2100000, guid: 25949c939c7bbaa4cb1b81694a6dabd1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: TextureAtlas
+    second: {fileID: 2100000, guid: f88002d8880192a4abdb45c6ecaff9f4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -37,12 +42,9 @@ ModelImporter:
     extraExposedTransformPaths: []
     extraUserProperties: []
     clipAnimations: []
-    isReadable: 1
+    isReadable: 0
   meshes:
-    lODScreenPercentages:
-    - 0.25
-    - 0.125
-    - 0.01
+    lODScreenPercentages: []
     globalScale: 1
     meshCompression: 0
     addColliders: 0
@@ -78,12 +80,12 @@ ModelImporter:
     useFileScale: 1
     strictVertexDataChecks: 0
   tangentSpace:
-    normalSmoothAngle: 154
+    normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
     normalCalculationMode: 4
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
-    blendShapeNormalImportMode: 0
+    blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
