@@ -22,7 +22,7 @@ public class HarvesterHealth : MonoBehaviour
     void Start()
     {
         health = maxHealth;
-        
+
         foreach (Slider slider in healthSliders)
         {
             slider.maxValue = maxHealth;

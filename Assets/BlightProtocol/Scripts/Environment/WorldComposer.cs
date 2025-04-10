@@ -58,7 +58,7 @@ public class WorldComposer : MonoBehaviour
                     instance.transform.localScale *= scaleFactor;
                 }
 
-                yield return null;
+                yield return null; //Zukunfts robin: differenz zischen null und waitendofframe?
             }
         }
     }
