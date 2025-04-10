@@ -47,64 +47,9 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
---- !u!1 &667440085005339693
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8067225037310336205}
-  - component: {fileID: 8754142292098622537}
-  m_Layer: 20
-  m_Name: TargetPosHitBox
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8067225037310336205
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667440085005339693}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6974876797619073052}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8754142292098622537
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 667440085005339693}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1656572589087357471
 GameObject:
   m_ObjectHideFlags: 0
@@ -152,8 +97,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -204,8 +147,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -256,8 +197,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -272,7 +211,7 @@ GameObject:
   - component: {fileID: 6974876797619073052}
   - component: {fileID: 8193346587931781213}
   - component: {fileID: 1211420780655985805}
-  m_Layer: 20
+  m_Layer: 0
   m_Name: P_TargetPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -302,7 +241,6 @@ Transform:
   - {fileID: 3817802707713650413}
   - {fileID: 8048037216971288284}
   - {fileID: 2081229386024196152}
-  - {fileID: 8067225037310336205}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8193346587931781213
@@ -317,8 +255,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0d2d7e0c36d76534484621c9ddead1b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isOnResourcePoint: 0
-  activeResourcePoint: {fileID: 0}
 --- !u!54 &1211420780655985805
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -393,8 +329,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -445,8 +379,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -460,7 +392,7 @@ GameObject:
   m_Component:
   - component: {fileID: 252134843259275097}
   - component: {fileID: 641698961016048949}
-  m_Layer: 22
+  m_Layer: 0
   m_Name: TargetPosition
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -581,8 +513,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -633,8 +563,6 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
-  enemyPrefab: {fileID: 6235206037039435799, guid: f4eac9b463a268140a116683e65db333,
-    type: 3}
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
