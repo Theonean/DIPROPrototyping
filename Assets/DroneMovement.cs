@@ -1,20 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using FMOD.Studio;
 using UnityEngine;
 using UnityEngine.VFX;
 
+
 public class DroneMovement : MonoBehaviour
 {
+    private enum DroneMovementState
+    {
+        Idle,
+        Moving,
+        DashingStart,
+        ContinuousDash,
+    }
     public static DroneMovement Instance { get; private set; }
-    public bool isDashing = false;
-    public bool isContinuingDash = false;
     public float dashKnockback = 150f;
+    [Tooltip("Maximum degrees the drone can rotate per second while dashing.")]
+    public float maxDegRotationInDash = 90f;
     float dashTime = 0.3f;
     float dashSpeed = 60f;
     float dashCooldown = 1f;
     float dashCooldownTimer;
-    private bool isStandingStill = true;
     public float moveSpeed;
     public float currentSpeed;
     public Vector3 moveDirection;
@@ -28,6 +36,15 @@ public class DroneMovement : MonoBehaviour
     private PlayerCore playerCore;
     private PerspectiveSwitcher perspectiveSwitcher;
     [SerializeField] private Rigidbody rb;
+
+    //State Management
+    private DroneMovementState currentState = DroneMovementState.Idle;
+    public bool IsIdle => currentState == DroneMovementState.Idle;
+    public bool IsMoving => currentState == DroneMovementState.Moving;
+    public bool IsDashing => currentState == DroneMovementState.DashingStart || currentState == DroneMovementState.ContinuousDash;
+    public bool IsStartingDash => currentState == DroneMovementState.DashingStart;
+    public bool IsInContinuousDash => currentState == DroneMovementState.ContinuousDash;
+
 
     private void Awake()
     {
@@ -65,7 +82,7 @@ public class DroneMovement : MonoBehaviour
             }
 
             //Disallows steering while dashig
-            if (!isDashing || isContinuingDash)
+            if (!IsStartingDash)
             {
                 Vector3 input = Vector3.zero;
                 if (Input.GetKey(KeyCode.W)) input += Vector3.forward;
@@ -77,27 +94,21 @@ public class DroneMovement : MonoBehaviour
                 {
                     moveDirection = input.normalized;
                     m_AccelerationTime += Time.deltaTime;
-                    if (isStandingStill)
+                    if (IsIdle)
                     {
-                        isStandingStill = false;
+                        currentState = DroneMovementState.Moving;
                         movementSFXInstance.setParameterByName("Movement", 1f);
                     }
                 }
                 else
                 {
                     moveDirection = Vector3.zero;
+                    rb.velocity = Vector3.zero;
                     m_AccelerationTime = 0f;
-                    isStandingStill = true;
+                    currentState = DroneMovementState.Idle;
                     movementSFXInstance.setParameterByName("Movement", 0f);
                 }
             }
-        }
-        else
-        {
-            moveDirection = Vector3.zero;
-            m_AccelerationTime = 0f;
-            isStandingStill = true;
-            movementSFXInstance.setParameterByName("Movement", 0f);
         }
     }
 
@@ -109,32 +120,43 @@ public class DroneMovement : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (!isDashing)
+        // Skip movement if idle
+        if (IsIdle)
         {
-            currentSpeed = moveSpeed * accelerationCurve.Evaluate(m_AccelerationTime);
-
-            //If current speed is 0, start applying drag
-            if (currentSpeed == 0)
-            {
-                m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, Vector3.zero, 0.3f);
-            }
-            //Otherwise move towards the target velocity based on the current speed
-            else
-            {
-                Vector3 targetVelocity = moveDirection * currentSpeed;
-                m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
-            }
-            rb.velocity = m_CurrentVelocity;
+            rb.velocity = Vector3.zero;
+            return;
         }
-    }
 
+        // Let coroutine handle velocity during dash
+        if (IsDashing)
+        {
+            Vector3 dashVelocity = moveDirection * currentSpeed;
+            rb.velocity = dashVelocity;
+            return;
+        }
+
+        // Normal movement logic
+        currentSpeed = moveSpeed * accelerationCurve.Evaluate(m_AccelerationTime);
+
+        if (currentSpeed == 0)
+        {
+            m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, Vector3.zero, 0.3f);
+        }
+        else
+        {
+            Vector3 targetVelocity = moveDirection * currentSpeed;
+            m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
+        }
+
+        rb.velocity = m_CurrentVelocity;
+    }
 
     private void Dash()
     {
-        if (isDashing || moveDirection == Vector3.zero) return; // Prevent multiple dashes at the same time
+        if (IsDashing || IsIdle) return; // Prevent multiple dashes at the same time
+        currentState = DroneMovementState.DashingStart;
 
         dashCooldownTimer = dashCooldown;
-        isDashing = true;
 
         movementSFXInstance.setParameterByName("Dash", 1f);
 
@@ -150,8 +172,6 @@ public class DroneMovement : MonoBehaviour
         }
 
         StartCoroutine(DashMovement());
-
-        //Trigger Dash Effect here
         StartDashVFX();
     }
 
@@ -159,37 +179,37 @@ public class DroneMovement : MonoBehaviour
     {
         float elapsedTime = 0f;
 
+        // Lock the dash direction
+        Vector3 dashDirection = moveDirection;
+
+        // Initial Dash
         while (elapsedTime < dashTime)
         {
-            // Move the player in the current move direction at the specified dash speed
-            transform.position += moveDirection * dashSpeed * Time.deltaTime * dashCurve.Evaluate(elapsedTime / dashTime);
+            float curveValue = dashCurve.Evaluate(elapsedTime / dashTime);
+            currentSpeed = dashSpeed * curveValue;
+            moveDirection = dashDirection; // lock movement in that direction
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
+        // Optional: transition into Continuous Dash
         if (Input.GetKey(KeyCode.Space))
         {
-            isContinuingDash = true;
-            // Continue dashing in the same direction
+            currentState = DroneMovementState.ContinuousDash;
+            movementSFXInstance.setParameterByName("Dash", 1f);
+
             while (Input.GetKey(KeyCode.Space))
             {
-                transform.position += moveDirection * dashSpeed * Time.deltaTime;
+                currentSpeed = dashSpeed;
                 yield return null;
             }
-            isContinuingDash = false;
         }
 
-        EndDash();
-
-    }
-
-    private void EndDash()
-    {
+        // End dash
+        currentState = moveDirection != Vector3.zero ? DroneMovementState.Moving : DroneMovementState.Idle;
         movementSFXInstance.setParameterByName("Dash", 0f);
-        isDashing = false;
-        StopDashVFX();
+        dashEffect.Stop();
     }
-
 
     private void StartDashVFX()
     {
@@ -197,10 +217,4 @@ public class DroneMovement : MonoBehaviour
         dashEffect.Reinit();
         dashEffect.Play();
     }
-
-    private void StopDashVFX()
-    {
-        dashEffect.Stop();
-    }
-
 }
