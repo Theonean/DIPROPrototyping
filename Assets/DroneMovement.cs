@@ -19,6 +19,7 @@ public class DroneMovement : MonoBehaviour
     public float dashKnockback = 150f;
     [Tooltip("Maximum degrees the drone can rotate per second while dashing.")]
     public float maxDegRotationInDash = 90f;
+    public float distanceFromGround = 3f;
     float dashTime = 0.3f;
     float dashSpeed = 60f;
     float dashCooldown = 1f;
@@ -109,6 +110,10 @@ public class DroneMovement : MonoBehaviour
                     movementSFXInstance.setParameterByName("Movement", 0f);
                 }
             }
+        }
+        else
+        {
+            moveDirection = Vector3.zero;
         }
     }
 

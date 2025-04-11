@@ -67,7 +67,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
     }
 
-
     public void SetTopDownPerspective()
     {
         droneCamera.enabled = true;
@@ -79,7 +78,14 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         playerCore.transform.parent = null;
 
-        playerCore.transform.position = dronePositionInLoadingBay.position - Harvester.Instance.mover.GetMovementDirection() * 30f; //Position player behind harvester
+        Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.mover.GetMovementDirection() * 30f; //Position player behind harvester
+        spawnPosition.y = DroneMovement.Instance.distanceFromGround;
+        playerCore.transform.position = spawnPosition;
+
+        Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
+        playerRB.velocity = Vector3.zero;
+        playerRB.isKinematic = false;
+
         playerCore.transform.rotation = Quaternion.identity;
         playerCore.transform.localScale = new Vector3(1f, 1f, 1f);
         playerCore.shield.SetActive(true);
@@ -90,7 +96,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         {
             pC.enabled = true;
         }
-
 
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
@@ -111,6 +116,10 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.localRotation = Quaternion.identity;
         playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         playerCore.shield.SetActive(false);
+        
+        Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
+        playerRB.velocity = Vector3.zero;
+        playerRB.isKinematic = false;
 
         RocketAimController rocketAimController = playerCore.GetComponentInChildren<RocketAimController>();
         rocketAimController.Rocket1.ReattachRocketToDrone();
