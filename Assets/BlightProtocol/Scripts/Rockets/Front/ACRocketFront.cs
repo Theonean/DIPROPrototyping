@@ -34,10 +34,7 @@ public abstract class ACRocketFront : ACRocketComponent
 
         if (!HasAbilityUsesLeft())
         {
-            if (FrankenGameManager.Instance.destroyRocketsAfterAbiltieUsesDepleted)
-            {
-                parentRocket.Explode();
-            }
+            parentRocket.Explode();
             return;
         }
 

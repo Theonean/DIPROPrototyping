@@ -66,8 +66,8 @@ public class RocketAimController : MonoBehaviour
 
             Logger.Log("Hit tag" + hit.collider.gameObject.tag + " name " + hit.collider.name, LogLevel.INFO, LogType.ROCKETS);
 
-            //Check if a leg was clicked, if yes return
-            if (hit.collider.gameObject.layer == LayerMask.NameToLayer("RocketComponent"))
+            //Check if a Rocket was clicked, if yes return
+            if (hit.collider.gameObject.CompareTag("Rocket"))
             {
                 Rocket rocket = hit.collider.gameObject.GetComponentInParent<Rocket>();
                 if (rocket.CanExplode())

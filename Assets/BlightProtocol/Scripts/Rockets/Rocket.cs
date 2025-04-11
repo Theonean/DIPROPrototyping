@@ -40,26 +40,32 @@ public class Rocket : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (state == RocketState.ATTACHED || state == RocketState.REGROWING) return;
+        if (state == RocketState.ATTACHED || state == RocketState.REGROWING || state == RocketState.IDLE) return;
+        if (other.gameObject.tag == "Ground") return;
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyArmor"))
+        //Collision Logic for Enemies
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy"))
         {
-            switch (frontComponent.GetType().Name)
+            if (other.gameObject.CompareTag("Enemy"))
             {
-                case "BouncingFront":
-                    frontComponent.ActivateAbility(other);
-                    break;
-                case "PenetrativeFront":
-                    frontComponent.ActivateAbility(other);
-                    break;
-                default:
-                    Explode();
-                    break;
+                other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
             }
-            return;
+            else if (other.gameObject.CompareTag("EnemyArmor"))
+            {
+                if (frontComponent.GetType() == typeof(BouncingFront) || frontComponent.GetType() == typeof(PenetrativeFront))
+                {
+                    frontComponent.ActivateAbility(other);
+                }
+                else
+                {
+                    Explode();
+                }
+                return;
+            }
         }
 
-        if (other.gameObject.layer == LayerMask.NameToLayer("Obstacle") || other.gameObject.layer == LayerMask.NameToLayer("Harvester"))
+        //Colision logic for environment and harvester
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnvironmentPhysicalObject") || other.gameObject.layer == LayerMask.NameToLayer("PL_IsHarvester"))
         {
             switch (frontComponent.GetType().Name)
             {
@@ -85,14 +91,7 @@ public class Rocket : MonoBehaviour
 
             frontComponent.ActivateAbility(other);
         }
-
-        //If other has component enemydamagehandler, destroy
-        if (other.GetComponent<EnemyDamageHandler>() != null && state != RocketState.IDLE) 
-        {
-            other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
-        }
     }
-
     public void SetState(RocketState state)
     {
         if (this.state == state) return;
