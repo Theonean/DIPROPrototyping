@@ -42,7 +42,10 @@ public class WorldComposer : MonoBehaviour
                 continue;
             }
 
-            spawnPositions = spawnPositions.OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos)).ToArray();
+            spawnPositions = spawnPositions
+                .Where(pos => Vector3.Distance(Harvester.Instance.transform.position, pos) >= 100f)
+                .OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos))
+                .ToArray();
 
             foreach (Vector3 spawnPos in spawnPositions)
             {
