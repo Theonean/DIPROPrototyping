@@ -116,7 +116,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.localRotation = Quaternion.identity;
         playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
         playerCore.shield.SetActive(false);
-        
+
         Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
         playerRB.velocity = Vector3.zero;
         playerRB.isKinematic = false;
@@ -144,26 +144,28 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
     {
-        //Lerp from harvester to player or vice versa
-        yield return null;
-
         Camera startCam = fromPerspective == CameraPerspective.FPV ? fpCamera : droneCamera;
         Camera endCam = fromPerspective == CameraPerspective.FPV ? droneCamera : fpCamera;
 
+        // Set starting position and lock rotation to the destination
         perspectiveSwitchCamera.transform.position = startCam.transform.position;
-        perspectiveSwitchCamera.transform.rotation = startCam.transform.rotation;
+        perspectiveSwitchCamera.transform.rotation = endCam.transform.rotation;
 
         perspectiveSwitchCamera.enabled = true;
         startCam.enabled = false;
         endCam.enabled = false;
 
-
         float t = 0f;
         while (t < animationDuration)
         {
             t += Time.deltaTime;
-            perspectiveSwitchCamera.transform.position = Vector3.Lerp(startCam.transform.position, endCam.transform.position, animationCurve.Evaluate(t / animationDuration));
-            perspectiveSwitchCamera.transform.rotation = Quaternion.Lerp(startCam.transform.rotation, endCam.transform.rotation, animationCurve.Evaluate(t / animationDuration));
+            perspectiveSwitchCamera.transform.position = Vector3.Lerp(
+                startCam.transform.position,
+                endCam.transform.position,
+                animationCurve.Evaluate(t / animationDuration)
+            );
+
+            // Rotation stays locked to endCam, so no need to lerp it
             yield return null;
         }
 
