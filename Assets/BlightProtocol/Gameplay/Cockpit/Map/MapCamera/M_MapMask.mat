@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: M_MapMask
-  m_Shader: {fileID: -6465566751694194690, guid: 7069a2b3f47954e4ab887753925c8ef4,
+  m_Shader: {fileID: -6465566751694194690, guid: 975c58b88b8da6941ab1c895a5abc84c,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -24,7 +24,7 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Mask:
+    - _MaskTex:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
@@ -42,15 +42,13 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthMax: 0.001
-    - _DepthMin: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _EndColor: {r: 1, g: 1, b: 1, a: 0}
-    - _StartColor: {r: 0, g: 0, b: 0, a: 0}
+    - _WorldBoundsX: {r: -800, g: 800, b: 0, a: 0}
+    - _WorldBoundsZ: {r: -800, g: 800, b: 0, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &4250090791350025937
+--- !u!114 &572515683845684579
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}

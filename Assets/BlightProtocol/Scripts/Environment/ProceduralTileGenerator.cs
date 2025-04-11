@@ -87,7 +87,7 @@ public class ProceduralTileGenerator : MonoBehaviour
         GetComponent<MeshFilter>().mesh = mesh;
         GetComponent<MeshCollider>().sharedMesh = mesh;
 
-        if (mapMask.GetComponent<MeshFilter>() != null && mapMask.GetComponent<MeshCollider>() != null)
+        if (mapMask.GetComponent<MeshFilter>() != null)
         {
             // Clone mesh and add new UVs for the Mask
             Mesh maskMesh = new Mesh
@@ -115,7 +115,6 @@ public class ProceduralTileGenerator : MonoBehaviour
             // Assign the new mesh to the mapMask
             mapMask.GetComponent<MeshFilter>().mesh = maskMesh;
             mapMask.GetComponent<MeshFilter>().mesh.RecalculateNormals();
-            mapMask.GetComponent<MeshCollider>().sharedMesh = maskMesh;
         }
 
 
