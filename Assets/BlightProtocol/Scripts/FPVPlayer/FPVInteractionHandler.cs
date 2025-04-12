@@ -38,6 +38,14 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         fpvCamera = GetComponent<Camera>();
         fpvPlayerCam = GetComponent<FPVPlayerCam>();
+        if (fpvPlayerCam.lookMode == FPVLookMode.FREELOOK)
+        {
+            touchTarget.GetComponent<Renderer>().enabled = true;
+        }
+        else
+        {
+            touchTarget.GetComponent<Renderer>().enabled = false;
+        }
     }
 
     void Update()
@@ -60,28 +68,16 @@ public class FPVInteractionHandler : MonoBehaviour
     void FixedUpdate()
     {
         // Skip raycasting if the camera is looking or an interaction is active
-        if (fpvPlayerCam.isLooking || (activeInteractable != null && interactKeyPressed))
+        if (activeInteractable != null && interactKeyPressed)
             return;
 
         Ray ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
 
         if (Physics.Raycast(ray, out RaycastHit hit, raycastRange, hitMask))
         {
-            // Try to get IFPVInteractable from Rigidbody first
-            IFPVInteractable interactable = null;
-            Rigidbody hitRigidbody = hit.rigidbody;
+            IFPVInteractable interactable = hit.collider.GetComponentInParent<IFPVInteractable>();
 
-            if (hitRigidbody != null)
-            {
-                hitRigidbody.TryGetComponent(out interactable);
-            }
-            else
-            {
-                // Fall back to Collider if no Rigidbody exists
-                hit.collider.TryGetComponent(out interactable);
-            }
-
-            if (interactable != null && hit.collider.CompareTag("FPVInteractable"))
+            if (interactable != null)
             {
                 Hover(interactable);
 
@@ -132,7 +128,8 @@ public class FPVInteractionHandler : MonoBehaviour
         activeInteractable = interactable;
         touchTarget.transform.position = interactable.TouchPoint.position;
         interactable.OnStartInteract();
-        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Confined;
+        fpvPlayerCam.isLooking = false;
     }
 
     private void UpdateInteraction()
@@ -153,7 +150,8 @@ public class FPVInteractionHandler : MonoBehaviour
             activeInteractable.OnEndInteract();
             activeInteractable = null;
         }
-        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        fpvPlayerCam.isLooking = true;
     }
 
     public void AbortInteraction()
@@ -162,7 +160,8 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             touchTarget.transform.position = transform.position;
             activeInteractable = null;
-            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            fpvPlayerCam.isLooking = true;
         }
     }
 }

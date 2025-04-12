@@ -66,7 +66,6 @@ public class MapMask : MonoBehaviour
             InitializeTexture();
 
         Vector2 uvPos = WorldToUV(worldPos);
-        Debug.Log(uvPos);
 
         _material.SetVector("_Coordinates", new Vector4(uvPos.x, uvPos.y, 0, 0));
         _material.SetFloat("_Strength", strength);

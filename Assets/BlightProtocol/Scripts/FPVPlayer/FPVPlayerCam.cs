@@ -2,16 +2,28 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
+public enum FPVLookMode
+{
+    FREELOOK_TOGGLE,
+    FREELOOK,
+    EDGELOOK
+}
 public class FPVPlayerCam : MonoBehaviour
 {
     public static FPVPlayerCam Instance { get; private set; }
-    private KeyCode lookKey = KeyCode.Mouse1;
-    public bool lookIsToggle = false;
+    public FPVLookMode lookMode = FPVLookMode.FREELOOK;
+    [Header("Free Look")]
+    private KeyCode freeLookToggle = KeyCode.E;
+    public float freeSensX = 300f;
+    public float freeSensY = 300f;
     public bool isLooking = false;
+    [Header("Edge Look")]
     public float sensX;
     public float sensY;
-
-    public Transform orientation;
+    public float lookZoneX = 0.1f;
+    public float lookZoneY = 0.1f;
+    public Vector2 xRotationLimit = new Vector2(-30, 30);
+    public Vector2 yRotationLimit = new Vector2(-45, 45);
 
     float xRotation;
     float yRotation;
@@ -38,58 +50,139 @@ public class FPVPlayerCam : MonoBehaviour
         defaultParent = transform.parent.gameObject;
     }
 
+    void Start()
+    {
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
+    }
+
+    void OnPerspectiveSwitched()
+    {
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
+        {
+            switch(lookMode) {
+                case FPVLookMode.FREELOOK:
+                    Cursor.lockState = CursorLockMode.Locked;
+                    Cursor.visible = true;
+                    break;
+                case FPVLookMode.FREELOOK_TOGGLE:
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = true;
+                    break;
+                case FPVLookMode.EDGELOOK:
+                    Cursor.lockState = CursorLockMode.Confined;
+                    Cursor.visible = true;
+                    break;
+            }
+        }
+    }
+
     private void Update()
     {
+        Debug.Log(Cursor.lockState + " " + Cursor.visible);
         if (isLocked)
         {
             return;
         }
-        if (Input.GetKeyDown(lookKey))
-        {
-            if (lookIsToggle && isLooking)
-            {
-                UnlockCursor();
-                isLooking = false;
-            }
-            else
-            {
-                LockCursor();
-                isLooking = true;
-            }
-                
-        }
-        else if (Input.GetKeyUp(lookKey))
-        {
-            if (!lookIsToggle)
-            {
-                UnlockCursor();
-                isLooking = false;
-            }
-        }
 
+        switch (lookMode)
+        {
+            case FPVLookMode.FREELOOK:
+                FreeLook();
+                break;
+
+            case FPVLookMode.FREELOOK_TOGGLE:
+                if (Input.GetKeyDown(freeLookToggle))
+                {
+                    if (isLooking)
+                    {
+                        Cursor.lockState = CursorLockMode.Locked;
+                        Cursor.visible = false;
+                        isLooking = false;
+                    }
+                    else
+                    {
+                        Cursor.lockState = CursorLockMode.Confined;
+                        Cursor.visible = true;
+                        isLooking = true;
+                    }
+                }
+                FreeLook();
+                break;
+
+            case FPVLookMode.EDGELOOK:
+                EdgeLook();
+                break;
+        }
+    }
+
+    private void FreeLook()
+    {
         if (isLooking)
         {
-            float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
-            float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
+            float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * freeSensX;
+            float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * freeSensY;
 
             yRotation += mouseX;
             xRotation -= mouseY;
             xRotation = Mathf.Clamp(xRotation, -90f, 90f);
             transform.localRotation = Quaternion.Euler(xRotation, yRotation, 0);
-            orientation.localRotation = Quaternion.Euler(0, yRotation, 0);
         }
     }
 
-    public void LockCursor()
+    private void EdgeLook()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
-    }
+        Vector2 mousePos = new Vector2(
+                    Input.mousePosition.x / Screen.width,
+                    Input.mousePosition.y / Screen.height
+                );
 
-    public void UnlockCursor()
-    {
-        Cursor.lockState = CursorLockMode.Confined;
-        Cursor.visible = true;
+        float xLookAmount = 0f;
+        float yLookAmount = 0f;
+
+        if (mousePos.x < lookZoneX)
+        {
+            xLookAmount = 1f - (mousePos.x / lookZoneX);
+        }
+        else if (mousePos.x > 1f - lookZoneX)
+        {
+            xLookAmount = (mousePos.x - (1f - lookZoneX)) / lookZoneX;
+        }
+
+        if (mousePos.y < lookZoneY)
+        {
+            yLookAmount = 1f - (mousePos.y / lookZoneY);
+        }
+        else if (mousePos.y > 1f - lookZoneY)
+        {
+            yLookAmount = (mousePos.y - (1f - lookZoneY)) / lookZoneY;
+        }
+
+        float targetXRotation = Mathf.Lerp(
+            -yRotationLimit.x,
+            yRotationLimit.x,
+            (mousePos.x - lookZoneX) / (1f - 2f * lookZoneX)
+        );
+
+        float targetYRotation = Mathf.Lerp(
+            -xRotationLimit.x,
+            xRotationLimit.x,
+            (mousePos.y - lookZoneY) / (1f - 2f * lookZoneY)
+        );
+
+        if (xLookAmount > 0)
+        {
+            xRotation = Mathf.Lerp(xRotation, targetXRotation, sensY * Time.deltaTime * xLookAmount);
+        }
+
+        if (yLookAmount > 0)
+        {
+            yRotation = Mathf.Lerp(yRotation, targetYRotation, sensY * Time.deltaTime * yLookAmount);
+        }
+
+        xRotation = Mathf.Clamp(xRotation, yRotationLimit.x, yRotationLimit.y);
+        yRotation = Mathf.Clamp(yRotation, xRotationLimit.x, xRotationLimit.y);
+
+        transform.localRotation = Quaternion.Euler(yRotation, -xRotation, 0);
     }
 
     public void LockToPosition(Transform targetTransform, bool useInitPos = false, bool reparent = false)
@@ -120,7 +213,6 @@ public class FPVPlayerCam : MonoBehaviour
 
             StartCoroutine(SmoothMove(localTargetRot, localTargetPos));
         }
-        Cursor.lockState = CursorLockMode.Confined;
         Cursor.visible = false;
         FPVUI.Instance.ToggleFPVCrosshair(false);
         FPVUI.Instance.ToggleLookAtText(false);

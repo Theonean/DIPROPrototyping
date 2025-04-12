@@ -98,7 +98,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
 
         Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
     }
 
     public void SetFPVPerspective()
@@ -107,7 +106,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = false;
         fpCamera.gameObject.SetActive(true);
         mapCamera.gameObject.SetActive(true);
-        Cursor.visible = true;
 
         PlayerCore playerCore = PlayerCore.Instance;
 
@@ -137,9 +135,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         {
             pC.enabled = false;
         }
-
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
