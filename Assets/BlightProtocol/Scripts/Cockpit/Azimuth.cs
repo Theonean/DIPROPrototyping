@@ -76,7 +76,6 @@ public class Azimuth : MonoBehaviour, IFPVInteractable
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                FPVPlayerCam.Instance.UnlockPosition();
                 Cursor.lockState = CursorLockMode.Locked;
                 isInFocus = false;
             }
