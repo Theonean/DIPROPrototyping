@@ -78,7 +78,6 @@ public class FPVPlayerCam : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log(Cursor.lockState + " " + Cursor.visible);
         if (isLocked)
         {
             return;

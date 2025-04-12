@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5392931659838410738}
   - component: {fileID: 7183261962073830055}
   - component: {fileID: 7280947935625248088}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -367,7 +367,7 @@ GameObject:
   - component: {fileID: 6840158799920478505}
   - component: {fileID: 8233540479874362694}
   - component: {fileID: 8606068747784501406}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -719,7 +719,7 @@ GameObject:
   - component: {fileID: 918192004061078112}
   - component: {fileID: 472459823666693176}
   - component: {fileID: 2204642402813050946}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1855,6 +1855,59 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3290045621298791775}
   m_Mesh: {fileID: 0}
+--- !u!1 &3592406755903677319
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5861099217431193341}
+  - component: {fileID: 253111058659569847}
+  m_Layer: 23
+  m_Name: Collider
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5861099217431193341
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592406755903677319}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8264495442965251991}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &253111058659569847
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3592406755903677319}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.89835846, y: 0.41699386, z: 0.65384805}
+  m_Center: {x: 0.009451687, y: 0.08, z: -0.08391556}
 --- !u!1 &3686344088190254290
 GameObject:
   m_ObjectHideFlags: 0
@@ -1865,8 +1918,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8264495442965251991}
   - component: {fileID: 4553534805032301025}
-  - component: {fileID: 1261709540231745231}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: P_DroneGoggles
   m_TagString: FPVInteractable
   m_Icon: {fileID: 0}
@@ -1891,6 +1943,7 @@ Transform:
   - {fileID: 5115944789945319148}
   - {fileID: 8751597031769101228}
   - {fileID: 5916657113525819655}
+  - {fileID: 5861099217431193341}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &4553534805032301025
@@ -1908,27 +1961,6 @@ MonoBehaviour:
   lookAtText: Enter Drone Mode
   interactText: 
   _touchPoint: {fileID: 5916657113525819655}
---- !u!65 &1261709540231745231
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3686344088190254290}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.89835846, y: 0.41699386, z: 0.65384805}
-  m_Center: {x: 0.009451687, y: 0.08, z: -0.08391556}
 --- !u!1 &6524090984387941014
 GameObject:
   m_ObjectHideFlags: 0
@@ -1938,7 +1970,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5916657113525819655}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: TouchPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1973,7 +2005,7 @@ GameObject:
   - component: {fileID: 7057567507469568908}
   - component: {fileID: 4042387452187325851}
   - component: {fileID: 3720305037501162093}
-  m_Layer: 0
+  m_Layer: 23
   m_Name: Cylinder (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
