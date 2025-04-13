@@ -132,7 +132,6 @@ MonoBehaviour:
   layerMask:
     serializedVersion: 2
     m_Bits: 8388608
-  edgeSharpness: 5
   revealRadius: 30
   revealStrength: 5
   pulseStrength: 50
@@ -203,7 +202,6 @@ GameObject:
   m_Component:
   - component: {fileID: 76886282673709927}
   - component: {fileID: 84865493371347124}
-  - component: {fileID: 1542474002742999619}
   m_Layer: 30
   m_Name: P_Radar
   m_TagString: Untagged
@@ -245,10 +243,10 @@ MonoBehaviour:
   radarDistance: 300
   layerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1073741824
   radarData: {fileID: 11400000, guid: 630a389cd4ca6724c8a2cb6e0f2589ec, type: 2}
   pulseSeismoEmission: 5
-  pulseTransform: {fileID: 6073445025465992230}
+  pulseSpriteTransform: {fileID: 6073445025465992230}
   revealRangeFactor: 1.5
   revealStartRangeFactor: 0.001
   pulseStrengthCurve:
@@ -309,33 +307,6 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!54 &1542474002742999619
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5735166713790048708}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &6724543014179818560
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +317,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6073445025465992230}
   - component: {fileID: 7182332469768309546}
-  - component: {fileID: 3997024030474340152}
   m_Layer: 30
   m_Name: Pulse
   m_TagString: Untagged
@@ -421,24 +391,3 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!135 &3997024030474340152
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6724543014179818560}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 1.1
-  m_Center: {x: 0, y: 0, z: 0}
