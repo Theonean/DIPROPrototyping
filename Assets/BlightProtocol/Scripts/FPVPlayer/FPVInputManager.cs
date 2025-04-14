@@ -14,6 +14,8 @@ public class FPVInputManager : MonoBehaviour
 
     public bool IsLooking { get; private set; }
     public bool IsInteracting { get; private set; }
+    public bool BlockInteraction { get; set; }
+
 
     private void Awake()
     {
@@ -41,29 +43,32 @@ public class FPVInputManager : MonoBehaviour
             switch (lookMode)
             {
                 case FPVLookMode.FREELOOK:
-                    SetCursorState(true);
+                    SetCursorState(true, false);
                     break;
                 case FPVLookMode.FREELOOK_TOGGLE:
-                    SetCursorState(false);
+                    SetCursorState(true, false);
+                    break;
+                case FPVLookMode.DRAG:
+                    SetCursorState(false, true, true);
                     break;
                 case FPVLookMode.PARALLAX:
-                    SetCursorState(false);
+                    SetCursorState(false, true);
                     break;
             }
         }
         else
         {
-            SetCursorState(false);
+            SetCursorState(false, true);
         }
 
     }
 
-    public void SetCursorState(bool locked)
+    public void SetCursorState(bool locked, bool visible, bool hideCrosshair = false)
     {
         Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.Confined;
-        Cursor.visible = !locked;
+        Cursor.visible = visible;
 
-        if (crosshair != null)
+        if (crosshair != null && !hideCrosshair)
         {
             crosshair.SetActive(locked);
         }
@@ -89,19 +94,25 @@ public class FPVInputManager : MonoBehaviour
     {
         if (lookMode == FPVLookMode.FREELOOK_TOGGLE && Input.GetKeyDown(freeLookToggle))
         {
-            SetCursorState(!IsLooking);
+            SetCursorState(!IsLooking, IsLooking);
         }
         if (IsLooking)
         {
-            if (lookMode == FPVLookMode.FREELOOK || lookMode == FPVLookMode.FREELOOK_TOGGLE)
+            switch (lookMode)
             {
-                fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput());
-            }
-            else if (lookMode == FPVLookMode.PARALLAX)
-            {
-                fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput(true));
+                case FPVLookMode.FREELOOK:
+                case FPVLookMode.FREELOOK_TOGGLE:
+                    fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput());
+                    break;
+
+                case FPVLookMode.PARALLAX:
+                case FPVLookMode.DRAG:
+                    fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput(true));
+                    break;
+
             }
         }
+
     }
 
     public Vector2 GetLookInput(bool normalized = false)

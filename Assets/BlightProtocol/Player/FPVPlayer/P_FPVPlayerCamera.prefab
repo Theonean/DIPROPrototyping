@@ -134,14 +134,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c56af5174f6113e4183c9dc9ab58c1da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  freeSensX: 220
-  freeSensY: 220
-  edgeSensX: 5
-  edgeSensY: 3
-  lookZoneX: 0.1
-  lookZoneY: 0.1
-  xRotationLimit: {x: -10, y: 10}
+  freeSens: 300
+  edgeSens: 5
+  lookZoneX: 0.2
+  lookZoneY: 0.2
+  xRotationLimit: {x: -20, y: 20}
   yRotationLimit: {x: -35, y: 35}
+  dragSens: 100
 --- !u!114 &3307074421802394134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -301,6 +300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d187c7582aafe3440a93fc5f24f0a554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookMode: 0
+  lookMode: 3
   freeLookToggle: 101
   crosshair: {fileID: 0}

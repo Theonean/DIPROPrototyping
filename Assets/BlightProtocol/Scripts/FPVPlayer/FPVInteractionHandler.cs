@@ -14,7 +14,7 @@ public class FPVInteractionHandler : MonoBehaviour
 
     private Camera fpvCamera;
     private IFPVInteractable activeInteractable;
-    private IFPVInteractable hoveredInteractable;
+    public IFPVInteractable hoveredInteractable;
 
     private void Awake()
     {
@@ -40,11 +40,13 @@ public class FPVInteractionHandler : MonoBehaviour
         if (Input.GetKeyUp(interactKey))
         {
             EndInteraction();
+            FPVInputManager.Instance.SetInteractionState(false);
         }
     }
 
     private void FixedUpdate()
     {
+        if (FPVInputManager.Instance.BlockInteraction) return;
         if (FPVInputManager.Instance.IsInteracting && Input.GetKey(interactKey))
         {
             UpdateInteraction();
@@ -124,12 +126,6 @@ public class FPVInteractionHandler : MonoBehaviour
             activeInteractable.OnEndInteract();
             activeInteractable = null;
         }
-        Invoke(nameof(SetInteractionStateDelayed), 0.1f);
-    }
-
-    private void SetInteractionStateDelayed()
-    {
-        FPVInputManager.Instance.SetInteractionState(false);
     }
     public void AbortInteraction()
     {
@@ -138,6 +134,5 @@ public class FPVInteractionHandler : MonoBehaviour
             touchTarget.transform.position = transform.position;
             activeInteractable = null;
         }
-        FPVInputManager.Instance.SetInteractionState(false);
     }
 }
