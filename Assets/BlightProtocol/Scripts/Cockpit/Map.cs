@@ -57,7 +57,7 @@ public class Map : MonoBehaviour, IFPVInteractable
 
     public void OnHover()
     {
-        Vector2 screenSpaceMousePos = new Vector2(Input.mousePosition.x / Screen.width, Input.mousePosition.y / Screen.height);
+        this.DefaultOnHover();
         Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
