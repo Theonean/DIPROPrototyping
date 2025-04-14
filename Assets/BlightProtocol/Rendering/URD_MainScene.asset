@@ -45,17 +45,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: LegVisible
+  m_Name: RocketVisible
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: LegVisible
-    Event: 550
+    passTag: RocketVisible
+    Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 2147483648
       PassNames: []
     overrideMaterial: {fileID: 0}
     overrideMaterialPassIndex: 0
@@ -127,17 +127,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: ShowHiddenLegs
+  m_Name: ShowHiddenRockets
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: ShowHiddenLegs
-    Event: 500
+    passTag: ShowHiddenRockets
+    Event: 300
     filterSettings:
       RenderQueueType: 0
       LayerMask:
         serializedVersion: 2
-        m_Bits: 4096
+        m_Bits: 2147483648
       PassNames: []
     overrideMaterial: {fileID: 2100000, guid: bd30cf05a8f62a64e8c139fb66670278, type: 2}
     overrideMaterialPassIndex: 0
@@ -145,7 +145,7 @@ MonoBehaviour:
     overrideShaderPassIndex: 0
     overrideMode: 1
     overrideDepthState: 1
-    depthCompareFunction: 5
+    depthCompareFunction: 8
     enableWrite: 0
     stencilSettings:
       overrideStencilState: 0
@@ -178,12 +178,11 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: -8144330025311181218}
   - {fileID: -4697082511357255070}
-  - {fileID: -3044827197715456593}
-  - {fileID: 1488714059436220224}
   - {fileID: -1525229892944984331}
   - {fileID: -5820841322543865992}
+  - {fileID: -3044827197715456593}
   - {fileID: 1752997818480444186}
-  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0beafddb8bdcb99bed5405fd3ac8cf9a814f506354e7e4bd5ea789fdb43a83738af1ac38f663ae65318
+  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0bef506354e7e4bd5ea789fdb43a83738afafddb8bdcb99bed51ac38f663ae65318
   m_UseNativeRenderPass: 0
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
@@ -226,26 +225,6 @@ MonoBehaviour:
   m_CopyDepthMode: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
---- !u!114 &1488714059436220224
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6d613f08f173d4dd895bb07b3230baa9, type: 3}
-  m_Name: TopGradient
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 550
-  fetchColorBuffer: 1
-  requirements: 4
-  passMaterial: {fileID: 2100000, guid: c564e746a7a774e48bc8bdb13555c35d, type: 2}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
 --- !u!114 &1752997818480444186
 MonoBehaviour:
   m_ObjectHideFlags: 0
