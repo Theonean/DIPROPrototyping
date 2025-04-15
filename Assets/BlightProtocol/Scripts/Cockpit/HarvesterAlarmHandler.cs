@@ -26,7 +26,7 @@ public class HarvesterAlarmHandler : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy") && !enemyAlarm)
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy") && !enemyAlarm)
         {
             detectedEnemies.Add(other.gameObject);
             enemyAlarm = true;
