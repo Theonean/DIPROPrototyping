@@ -27,11 +27,11 @@ public class BoomerangPropulsion : ACRocketPropulsion
         return length;
     }
 
-    public override IEnumerator FlyToTargetPosition(Vector3 target)
+    public override IEnumerator FlyToTargetPosition()
     {
-        // Phase 1: Outbound arc from current position to target with a side offset.
+        // Phase 1: Outbound arc from current position to TargetPosition with a side offset.
         Vector3 startPos = rocketTransform.position;
-        Vector3 endPos = target;
+        Vector3 endPos = TargetPosition;
         Vector3 midPos = (startPos + endPos) * 0.5f;
 
         // Calculate a perpendicular offset direction.
@@ -68,7 +68,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
             yield return null;
         }
 
-        // Phase 2: Inbound arc from target back to the player's current position.
+        // Phase 2: Inbound arc from TargetPosition back to the player's current position.
         Vector3 returnStart = rocketTransform.position; // Start of the return arc.
         t = 0f;
         while (Vector3.Distance(rocketTransform.position, parentRocket.initialTransform.position) > 1f)
@@ -76,7 +76,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
             // Get the player's current position each frame.
             Vector3 currentTarget = parentRocket.initialTransform.position;
 
-            // Recalculate the mid-point and control point based on the current target.
+            // Recalculate the mid-point and control point based on the current TargetPosition.
             Vector3 returnMid = (returnStart + currentTarget) * 0.5f;
             Vector3 returnControl = returnMid - offsetDir;
 

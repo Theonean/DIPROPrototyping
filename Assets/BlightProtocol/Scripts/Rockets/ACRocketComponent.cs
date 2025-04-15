@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public abstract class ACRocketComponent : MonoBehaviour
 {
@@ -14,7 +15,8 @@ public abstract class ACRocketComponent : MonoBehaviour
             return parentRocket;
         }
     }
-    public int componentLevel = 0;
+    public int componentLevel { get; private set; } = 0;
+    private int maxComponentLevel = 5;
     public string DescriptiveName;
 
     protected Vector3 rocketOriginalScale;
@@ -24,6 +26,8 @@ public abstract class ACRocketComponent : MonoBehaviour
         get { return ParentRocket.transform; }
     }
 
+    protected UnityEvent onComponentLevelUp = new UnityEvent();
+
     private void Awake()
     {
         if (ParentRocket == null)
@@ -31,5 +35,34 @@ public abstract class ACRocketComponent : MonoBehaviour
             return;
         }
         rocketOriginalScale = ParentRocket.transform.localScale;
+    }
+
+    void Start()
+    {
+        SetStatsToLevel();
+    }
+
+    protected virtual void OnEnable()
+    {
+        onComponentLevelUp.AddListener(SetStatsToLevel);
+    }
+
+    protected virtual void OnDisable()
+    {
+        onComponentLevelUp.RemoveListener(SetStatsToLevel);
+    }
+
+    protected abstract void SetStatsToLevel();
+
+    public void LevelUpComponent()
+    {
+        if (componentLevel >= maxComponentLevel)
+        {
+            Debug.LogWarning($"Component {DescriptiveName} has reached its maximum level of {maxComponentLevel}.");
+            return;
+        }
+
+        componentLevel++;
+        onComponentLevelUp?.Invoke();
     }
 }

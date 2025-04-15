@@ -3,8 +3,9 @@ using UnityEngine;
 
 public abstract class ACRocketFront : ACRocketComponent
 {
-    [HideInInspector] public int abilityUsesLeft = 1;
+    public int abilityUsesLeft = 1;
     public int maxAbilityUses = 1;
+    public int[] abilityUsesPerLevel = new int[5] { 1, 2, 3, 4, 5 };
     [Header("Ability Cooldown")]
     public bool hasAbilityCooldown = false;
     public float abilityCooldown = 0f;
@@ -14,18 +15,34 @@ public abstract class ACRocketFront : ACRocketComponent
     [SerializeField] private AnimationCurve depletionAnimationCurve;
     [SerializeField] private GameObject meshToPopOff;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (ParentRocket != null)
+        {
             ParentRocket.OnRocketStateChange.AddListener(ShowFrontMesh);
+        }
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         if (ParentRocket != null)
+        {
             ParentRocket.OnRocketStateChange.RemoveListener(ShowFrontMesh);
+        }
     }
 
+    #region Level Up
+    protected override void SetStatsToLevel()
+    {
+        maxAbilityUses = abilityUsesPerLevel[componentLevel];
+        abilityUsesLeft = maxAbilityUses;
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Max ability uses: {maxAbilityUses}", LogLevel.INFO, LogType.ROCKETS);
+    }
+    
+    #endregion
+    #region  Ability usage
     // This is the public method called from outside
     public void ActivateAbility(Collider collider)
     {
@@ -50,7 +67,6 @@ public abstract class ACRocketFront : ACRocketComponent
         if (hasAbilityCooldown) StartCoroutine(CooldownCoroutine());
     }
 
-    // Abstract method that children must implement
     protected abstract void OnActivateAbility(Collider collider);
 
     public bool HasAbilityUsesLeft()
@@ -71,6 +87,9 @@ public abstract class ACRocketFront : ACRocketComponent
 
         isOnCooldown = false;
     }
+
+    #endregion
+    #region Pop Front off
 
     private void ShowFrontMesh(RocketState state)
     {
@@ -133,4 +152,5 @@ public abstract class ACRocketFront : ACRocketComponent
 
         return point;
     }
+    #endregion
 }

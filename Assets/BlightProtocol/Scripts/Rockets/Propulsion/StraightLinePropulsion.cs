@@ -3,21 +3,21 @@ using UnityEngine;
 
 public class StraightLinePropulsion : ACRocketPropulsion
 {
-    public override IEnumerator FlyToTargetPosition(Vector3 target)
+    public override IEnumerator FlyToTargetPosition()
     {
         Logger.Log("Straight line propulsion activated", LogLevel.INFO, LogType.ROCKETS);
         Vector3 startingPosition = rocketTransform.position;
 
-        // Fly towards the target
-        while (Vector3.Distance(rocketTransform.position, target) > 10f)
+        // Fly towards the TargetPosition
+        while (Vector3.Distance(rocketTransform.position, TargetPosition) > 10f)
         {
-            float totalDistance = Vector3.Distance(startingPosition, target);
+            float totalDistance = Vector3.Distance(startingPosition, TargetPosition);
             float distanceCovered = Vector3.Distance(startingPosition, rocketTransform.position);
             float t = distanceCovered / totalDistance;
 
             rocketTransform.position = Vector3.MoveTowards(
                 rocketTransform.position,
-                target,
+                TargetPosition,
                 ParentRocket.settings.flySpeedCurve.Evaluate(t) * Time.deltaTime * ParentRocket.settings.flySpeed
             );
 
@@ -30,18 +30,18 @@ public class StraightLinePropulsion : ACRocketPropulsion
             yield return null;
         }
 
-        Logger.Log("Rocket reached target", LogLevel.INFO, LogType.ROCKETS);
-        // Raycast to find ground at the target's XZ position
+        Logger.Log("Rocket reached TargetPosition", LogLevel.INFO, LogType.ROCKETS);
+        // Raycast to find ground at the TargetPosition's XZ position
         RaycastHit hit;
         int groundLayerMask = LayerMask.GetMask("PL_IsEnvironmentPhysicalObject");
 
-        // Cast straight down from above the target position
-        Vector3 rayOrigin = target + Vector3.up * 50f;
+        // Cast straight down from above the TargetPosition position
+        Vector3 rayOrigin = TargetPosition + Vector3.up * 50f;
 
         if (Physics.Raycast(rayOrigin, Vector3.down, out hit, 100f, groundLayerMask))
         {
-            // Keep target X and Z, use ground Y
-            Vector3 groundPoint = new Vector3(target.x, hit.point.y, target.z);
+            // Keep TargetPosition X and Z, use ground Y
+            Vector3 groundPoint = new Vector3(TargetPosition.x, hit.point.y, TargetPosition.z);
 
             float descentVelocity = 0f;
             float gravity = 9.81f;
@@ -51,7 +51,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
 
             while (rocketTransform.position.y > groundPoint.y + 0.1f)
             {
-                float totalDistance = Vector3.Distance(startingPosition, target);
+                float totalDistance = Vector3.Distance(startingPosition, TargetPosition);
                 float distanceCovered = Vector3.Distance(startingPosition, rocketTransform.position);
                 float t = distanceCovered / totalDistance;
 
@@ -80,7 +80,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
         }
         else
         {
-            Logger.Log("No ground detected below target position", LogLevel.WARNING, LogType.ROCKETS);
+            Logger.Log("No ground detected below TargetPosition position", LogLevel.WARNING, LogType.ROCKETS);
         }
 
 

@@ -26,16 +26,62 @@ public class UISelectedRocketManager : MonoBehaviour
 
     private void Start()
     {
-        if(setAllRocketsAtOnce) selectedRocketMirrorDummy.gameObject.SetActive(false);
+        if (setAllRocketsAtOnce) selectedRocketMirrorDummy.gameObject.SetActive(false);
 
         SetSelectedRocket(GetComponentsInChildren<Rocket>().FirstOrDefault());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            LevelUpComponent(RocketComponentType.FRONT);
+        }
+        else if (Input.GetKeyDown(KeyCode.K))
+        {
+            LevelUpComponent(RocketComponentType.BODY);
+        }
+        else if (Input.GetKeyDown(KeyCode.L))
+        {
+            LevelUpComponent(RocketComponentType.PROPULSION);
+        }
+    }
+
+    private void LevelUpComponent(RocketComponentType componentType)
+    {
+        PlayerCore playerCore = PlayerCore.Instance;
+        Rocket[] rockets = playerCore.GetComponentsInChildren<Rocket>();
+        switch (componentType)
+        {
+            case RocketComponentType.FRONT:
+                selectedRocketMirrorDummy.frontComponent.LevelUpComponent();
+                foreach (Rocket rocket in rockets)
+                {
+                    rocket.frontComponent.LevelUpComponent();
+                }
+                break;
+            case RocketComponentType.BODY:
+                selectedRocketMirrorDummy.bodyComponent.LevelUpComponent();
+                foreach (Rocket rocket in rockets)
+                {
+                    rocket.bodyComponent.LevelUpComponent();
+                }
+                break;
+            case RocketComponentType.PROPULSION:
+                selectedRocketMirrorDummy.propulsionComponent.LevelUpComponent();
+                foreach (Rocket rocket in rockets)
+                {
+                    rocket.propulsionComponent.LevelUpComponent();
+                }
+                break;
+        }
     }
 
 
     public void SetSelectedRocket(Rocket rocket)
     {
-        if(setAllRocketsAtOnce) return;
-        
+        if (setAllRocketsAtOnce) return;
+
         selectedRocket = rocket;
         equivalentPlayerRocket = PlayerCore.Instance.GetComponentsInChildren<Rocket>().Where(x => x.name == selectedRocket.name).FirstOrDefault();
         Debug.Log("Selected Rocket: " + selectedRocket.name);

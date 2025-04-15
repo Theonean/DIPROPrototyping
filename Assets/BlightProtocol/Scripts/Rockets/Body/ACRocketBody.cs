@@ -11,6 +11,11 @@ public abstract class ACRocketBody : ACRocketComponent
 
     public GameObject explosionPrefab; //The explosion prefab to spawn when the rocket explodes.
     [SerializeField] protected float explosionRadius = 10f; // Radius of the explosion when the rocket explodes.
+    [SerializeField] protected float[] explosionRadiusPerLevel = new float[5] { 10f, 15f, 20f, 25f, 30f }; // Explosion radius per level.
+    public bool canExplode;
+    public float explosionRadiusBase;
+    public float explosionChainDelay;
+    public float regrowDurationAfterExplosion;
 
     //Private settings
     protected abstract void Explode();
@@ -37,10 +42,21 @@ public abstract class ACRocketBody : ACRocketComponent
         while (Vector3.Distance(rocketTransform.localScale, rocketOriginalScale) > 0.1f)
         {
             t += Time.deltaTime;
-            rocketTransform.localScale = Vector3.Lerp(startScale, rocketOriginalScale, t / ParentRocket.settings.regrowDurationAfterExplosion);
+            rocketTransform.localScale = Vector3.Lerp(startScale, rocketOriginalScale, t / regrowDurationAfterExplosion);
             yield return null;
         }
 
         parentRocket.ReattachRocketToDrone();
     }
+
+    protected override void SetStatsToLevel()
+    {
+        explosionRadiusBase = explosionRadiusPerLevel[componentLevel];
+        explosionChainDelay = ParentRocket.settings.explosionChainDelay;
+        explosionRadius = explosionRadiusBase * ParentRocket.transform.localScale.x;
+        canExplode = true;
+
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);
+    }
+
 }

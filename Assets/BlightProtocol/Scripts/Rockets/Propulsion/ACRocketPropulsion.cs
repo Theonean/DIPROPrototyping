@@ -4,28 +4,52 @@ using UnityEngine.VFX;
 
 public abstract class ACRocketPropulsion : ACRocketComponent
 {
+    private Vector3 targetPosition;
+    public Vector3 TargetPosition
+    {
+        get
+        {
+            return targetPosition;
+        }
+        set
+        {
+            targetPosition = new Vector3(value.x, ParentRocket.transform.position.y, value.z);
+        }
+    }
+
+    [SerializeField] protected int[] degreeMoveToMousePerLevel = new int[5] { 0, 10, 20, 30, 40 };
+    private int degreeMoveToMouseBase;
     [Header("VFX")]
     public VisualEffect vfxFlying;
 
     [Header("SFX")]
     public string rocketFlyAwaySFXPath = "event:/SFX/Dron/Shoot";
     public string rocketCallbackSFXPath = "event:/SFX/Dron/Callingback_Missiles";
-    public abstract IEnumerator FlyToTargetPosition(Vector3 targetPos);
+    public abstract IEnumerator FlyToTargetPosition();
 
 
-    void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         if (ParentRocket == null)
             return;
         ParentRocket.OnRocketStateChange.AddListener(RocketChangedState);
     }
 
-    void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         if (ParentRocket == null)
             return;
         ParentRocket.OnRocketStateChange.RemoveListener(RocketChangedState);
     }
+
+    protected override void SetStatsToLevel()
+    {
+        degreeMoveToMouseBase = degreeMoveToMousePerLevel[componentLevel];
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Degree move to mouse: {degreeMoveToMouseBase}", LogLevel.INFO, LogType.ROCKETS);
+    }
+
 
     private void Update()
     {
@@ -40,25 +64,50 @@ public abstract class ACRocketPropulsion : ACRocketComponent
                 FMODAudioManagement.instance.PlayOneShot(rocketCallbackSFXPath, gameObject);
                 StartCoroutine(ReturnToDrone());
             }
+            else if (componentLevel >= 1)
+            {
+                MoveTargetPositionToMouse();
+            }
+        }
+    }
+    private void MoveTargetPositionToMouse()
+    {
+        // Get the mouse position in world space
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Vector3 mousePosition = hit.point;
+
+            // Calculate the direction to the mouse position
+            Vector3 directionToMouse = (mousePosition - rocketTransform.position).normalized;
+
+            // Calculate the new target position with a limited degree step
+            Quaternion currentRotation = Quaternion.LookRotation(rocketTransform.forward);
+            Quaternion targetRotation = Quaternion.LookRotation(directionToMouse);
+            Quaternion limitedRotation = Quaternion.RotateTowards(currentRotation, targetRotation, degreeMoveToMouseBase * Time.deltaTime);
+
+            // Update the target position based on the limited rotation
+            Vector3 newDirection = limitedRotation * Vector3.forward;
+            TargetPosition = rocketTransform.position + newDirection * Vector3.Distance(rocketTransform.position, TargetPosition);
         }
     }
 
     public void Shoot(Vector3 target)
     {
-        Vector3 correctedTarget = new Vector3(target.x, rocketTransform.position.y, target.z);
+        TargetPosition = target;
 
         rocketTransform.SetParent(null);
-        rocketTransform.LookAt(correctedTarget);
+        rocketTransform.LookAt(TargetPosition);
 
         FMODAudioManagement.instance.PlayOneShot(rocketFlyAwaySFXPath, gameObject);
 
-        StartCoroutine(Fly(correctedTarget));
+        StartCoroutine(Fly());
     }
 
-    private IEnumerator Fly(Vector3 target)
+    private IEnumerator Fly()
     {
         StartVFX();
-        yield return StartCoroutine(FlyToTargetPosition(target));
+        yield return StartCoroutine(FlyToTargetPosition());
         StopVFX();
     }
 
