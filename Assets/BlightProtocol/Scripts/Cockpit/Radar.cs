@@ -68,18 +68,15 @@ public class Radar : MonoBehaviour
         {
             ResourceHandler.Instance.ConsumeResource(radarData.pulseCostResource, radarData.pulseCost, false, 1f);
 
-            Collider[] hitColliders = new Collider[100];
-            int numColliders = Physics.OverlapSphereNonAlloc(
+            Collider[] hitColliders = Physics.OverlapSphere(
                 transform.position,
                 radarData.pulseRange * modifier,
-                hitColliders,
                 layerMask
             );
-
-            if (numColliders > 0)
+            if (hitColliders.Length > 0)
             {
                 var sortedColliders = hitColliders
-                    .Take(numColliders)
+                    .Take(hitColliders.Length)
                     .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
                     .ToArray();
 
@@ -111,6 +108,9 @@ public class Radar : MonoBehaviour
         foreach (var collider in colliders)
         {
             if (collider == null) continue;
+            
+            EnergySignature signature = collider.GetComponent<EnergySignature>();
+            if (signature == null) continue;
 
             float distance = Vector3.Distance(transform.position, collider.transform.position);
             float normalizedDistance = distance / maxDistance;
@@ -122,10 +122,7 @@ public class Radar : MonoBehaviour
                 yield return null;
             }
 
-            if (collider.TryGetComponent<EnergySignature>(out EnergySignature signature))
-            {
-                Map.Instance.SetEnergySignature(new Vector3(collider.transform.position.x, 0, collider.transform.position.z), signature);
-            }
+            Map.Instance.SetEnergySignature(new Vector3(collider.transform.position.x, 0, collider.transform.position.z), signature);
 
 
             yield return new WaitForSeconds(signatureDelay);

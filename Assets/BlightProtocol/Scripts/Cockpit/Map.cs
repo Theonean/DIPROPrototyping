@@ -74,8 +74,8 @@ public class Map : MonoBehaviour, IFPVInteractable
             SetTarget(screenPoint);
         }
     }
-    public void OnUpdateInteract() {}
-    public void OnEndInteract() {}
+    public void OnUpdateInteract() { }
+    public void OnEndInteract() { }
 
     public void SetTarget(Vector3 screenPoint)
     {
@@ -83,7 +83,11 @@ public class Map : MonoBehaviour, IFPVInteractable
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 10f, NavMesh.AllAreas))
+            if (hit.collider.CompareTag("ResourcePoint")) {
+                Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
+                Harvester.Instance.mover.SetDestination(targetPos);
+            }
+            else if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 10f, NavMesh.AllAreas))
             {
                 Vector3 targetPos = navMeshHit.position;
                 Harvester.Instance.mover.SetDestination(targetPos);

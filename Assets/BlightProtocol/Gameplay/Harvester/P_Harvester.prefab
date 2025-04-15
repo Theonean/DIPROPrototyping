@@ -648,7 +648,6 @@ GameObject:
   m_Component:
   - component: {fileID: 9125053196288167875}
   - component: {fileID: 7144603520783483735}
-  - component: {fileID: 7103360586420896483}
   - component: {fileID: 2566912450360716628}
   - component: {fileID: 4005462869983009864}
   - component: {fileID: 7518980105915834800}
@@ -693,20 +692,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   layerToLookFor: Player
---- !u!114 &7103360586420896483
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6476196891674240112}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d9ae2f9f5992a0f4d8e1c66fc964df69, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  activeResourcePoint: {fileID: 0}
-  isOnResourcePoint: 0
 --- !u!65 &2566912450360716628
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -5,6 +5,10 @@ public class StartHarvestLever : ACLever
 {
     private Harvester harvester;
     public TextMeshPro harvestButtonFeedback;
+    public float resourcePointDetectionRange = 20f;
+    public LayerMask resourcePointLayer;
+    ResourcePoint closestResourcePoint;
+
 
     void Start()
     {
@@ -16,22 +20,34 @@ public class StartHarvestLever : ACLever
     {
         if (normalizedValue >= 0.9f && !isPulled)
         {
-            if (harvester.GetZoneState() == ZoneState.MOVING) {
-                harvestButtonFeedback.text = "CANNOT HARVEST WHILE MOVING!";
-                ResetLever();
-            }
-            else if (harvester.IsOnResourcePoint()
-            && harvester.GetZoneState() is not (ZoneState.HARVESTING or ZoneState.START_HARVESTING or ZoneState.END_HARVESTING))
+            switch (harvester.GetZoneState())
             {
-                isPulled = true;
-                SetPositionNormalized(1f);
-                Logger.Log("Starting Harvesting", LogLevel.INFO, LogType.HARVESTER);
-                harvester.SetState(new StartHarvestingState(harvester));
-            }
-            else
-            {
-                harvestButtonFeedback.text = "CANNOT HARVEST HERE!";
-                ResetLever();
+                case ZoneState.IDLE:
+                    closestResourcePoint = GetClosestResourcePoint();
+                    if (closestResourcePoint != null)
+                    {
+                        isPulled = true;
+                        SetPositionNormalized(1f);
+                        Logger.Log("Starting Harvesting", LogLevel.INFO, LogType.HARVESTER);
+                        harvester.activeResourcePoint = closestResourcePoint;
+                        harvester.SetState(new StartHarvestingState(harvester));
+                    }
+                    else
+                    {
+                        harvestButtonFeedback.text = "CANNOT HARVEST HERE!";
+                        ResetLever();
+                    }
+                    break;
+
+                case ZoneState.MOVING:
+                    harvestButtonFeedback.text = "CANNOT HARVEST WHILE MOVING!";
+                    ResetLever();
+                    break;
+
+                default:
+                    harvestButtonFeedback.text = "CANNOT HARVEST HERE!";
+                    ResetLever();
+                    break;
             }
         }
     }
@@ -53,6 +69,32 @@ public class StartHarvestLever : ACLever
             default:
                 harvestButtonFeedback.text = "";
                 break;
+        }
+    }
+
+    ResourcePoint GetClosestResourcePoint()
+    {
+        ResourcePoint closestResourcePoint = null;
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, resourcePointDetectionRange, resourcePointLayer);
+
+        if (hitColliders.Length > 0)
+        {
+            foreach (Collider collider in hitColliders)
+            {
+                if (collider.gameObject.CompareTag("ResourcePoint"))
+                {
+                    float distance = Vector3.Distance(transform.position, collider.transform.position);
+                    if (closestResourcePoint == null || distance < Vector3.Distance(transform.position, closestResourcePoint.transform.position))
+                    {
+                        closestResourcePoint = collider.GetComponentInParent<ResourcePoint>();
+                    }
+                }
+            }
+            return closestResourcePoint;
+        }
+        else
+        {
+            return null;
         }
     }
 }

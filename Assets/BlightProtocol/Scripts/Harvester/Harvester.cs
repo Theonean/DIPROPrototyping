@@ -36,7 +36,6 @@ public class Harvester : MonoBehaviour
     public HarvesterMover mover { get; private set; }
     public HarvesterHealth health { get; private set; }
     public HarvesterSFX sFX { get; private set; }
-    public HarvesterResourcePointDetector resourcePointDetector { get; private set; }
 
     // VFX
     [SerializeField] private VisualEffect drillingVFX;
@@ -44,6 +43,7 @@ public class Harvester : MonoBehaviour
     [Header("Resource Harvesting")]
     public float resourceHarvestingSpeed = 1f;
     private HarvesterStateMachine stateMachine;
+    public ResourcePoint activeResourcePoint;
 
     // Harvesting
 
@@ -63,7 +63,6 @@ public class Harvester : MonoBehaviour
         mover = GetComponentInChildren<HarvesterMover>();
         sFX = GetComponentInChildren<HarvesterSFX>();
         health = GetComponentInChildren<HarvesterHealth>();
-        resourcePointDetector = GetComponentInChildren<HarvesterResourcePointDetector>();
     }
 
     void Start()
@@ -97,21 +96,21 @@ public class Harvester : MonoBehaviour
 
     public void UpdateHarvesting()
     {
-        if (resourcePointDetector.activeResourcePoint != null)
+        if (activeResourcePoint != null)
         {
             harvestingTimer += Time.deltaTime;
             foreach (Slider slider in waveProgressSliders)
             {
                 slider.value = harvestingTimer;
             }
-            resourcePointDetector.activeResourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
+            activeResourcePoint.HarvestResource(resourceHarvestingSpeed * Time.deltaTime);
         }
     }
 
     public void BeginHarvesting()
     {
         drillingVFX.Play();
-        timeUntilResourcePointEmpty = resourcePointDetector.activeResourcePoint.resourceAmount / resourceHarvestingSpeed;
+        timeUntilResourcePointEmpty = activeResourcePoint.resourceAmount / resourceHarvestingSpeed;
 
         foreach (Slider slider in waveProgressSliders)
         {
@@ -123,10 +122,10 @@ public class Harvester : MonoBehaviour
 
     public void StopHarvesting()
     {
-        if (resourcePointDetector.activeResourcePoint != null)
+        if (activeResourcePoint != null)
         {
-            Destroy(resourcePointDetector.activeResourcePoint.gameObject);
-            resourcePointDetector.activeResourcePoint = null;
+            Destroy(activeResourcePoint.gameObject);
+            activeResourcePoint = null;
             WaveManager.Instance.IncreaseDifficultyLevel(1);
         }
         drillingVFX.Stop();
@@ -134,7 +133,6 @@ public class Harvester : MonoBehaviour
     }
     public bool HasCompletedHarvest() => harvestingTimer >= timeUntilResourcePointEmpty;
     public bool HasArrivedAtTarget() => Vector3.Distance(transform.position, mover.targetPosObject.transform.position) < 0.5f;
-    public bool IsOnResourcePoint() => resourcePointDetector.activeResourcePoint != null;
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
     {
