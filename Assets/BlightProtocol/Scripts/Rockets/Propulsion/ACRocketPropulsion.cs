@@ -17,8 +17,9 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         }
     }
 
-    [SerializeField] protected int[] degreeMoveToMousePerLevel = new int[5] { 0, 10, 20, 30, 40 };
-    private int degreeMoveToMouseBase;
+    [SerializeField] protected int[] targetMoveStepPerSecondPerLevel = new int[5] { 0, 10, 20, 30, 40 };
+    private int targetMoveStep;
+    private float distanceToTarget;
     [Header("VFX")]
     public VisualEffect vfxFlying;
 
@@ -46,8 +47,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     protected override void SetStatsToLevel()
     {
-        degreeMoveToMouseBase = degreeMoveToMousePerLevel[componentLevel];
-        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Degree move to mouse: {degreeMoveToMouseBase}", LogLevel.INFO, LogType.ROCKETS);
+        targetMoveStep = targetMoveStepPerSecondPerLevel[componentLevel];
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Degree move to mouse: {targetMoveStep}", LogLevel.INFO, LogType.ROCKETS);
     }
 
 
@@ -66,10 +67,11 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             }
             else if (componentLevel >= 1)
             {
-                MoveTargetPositionToMouse();
+                //MoveTargetPositionToMouse();
             }
         }
     }
+    
     private void MoveTargetPositionToMouse()
     {
         // Get the mouse position in world space
@@ -78,23 +80,17 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         {
             Vector3 mousePosition = hit.point;
 
-            // Calculate the direction to the mouse position
-            Vector3 directionToMouse = (mousePosition - rocketTransform.position).normalized;
-
-            // Calculate the new target position with a limited degree step
-            Quaternion currentRotation = Quaternion.LookRotation(rocketTransform.forward);
-            Quaternion targetRotation = Quaternion.LookRotation(directionToMouse);
-            Quaternion limitedRotation = Quaternion.RotateTowards(currentRotation, targetRotation, degreeMoveToMouseBase * Time.deltaTime);
-
-            // Update the target position based on the limited rotation
-            Vector3 newDirection = limitedRotation * Vector3.forward;
-            TargetPosition = rocketTransform.position + newDirection * Vector3.Distance(rocketTransform.position, TargetPosition);
+            Vector2 mapPosition = new Vector2(mousePosition.x, mousePosition.z);
+            Vector2 targetPosition2D = new Vector2(TargetPosition.x, TargetPosition.z);
+            Vector2 newTargetPosition = Vector2.Lerp(targetPosition2D, mapPosition, targetMoveStep * Time.deltaTime);
+            TargetPosition = new Vector3(newTargetPosition.x, ParentRocket.transform.position.y, newTargetPosition.y);
         }
     }
 
     public void Shoot(Vector3 target)
     {
         TargetPosition = target;
+        distanceToTarget = Vector3.Distance(rocketTransform.position, TargetPosition);
 
         rocketTransform.SetParent(null);
         rocketTransform.LookAt(TargetPosition);
@@ -102,6 +98,19 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         FMODAudioManagement.instance.PlayOneShot(rocketFlyAwaySFXPath, gameObject);
 
         StartCoroutine(Fly());
+        StartCoroutine(TrackDistanceToTarget());
+    }
+    
+    private IEnumerator TrackDistanceToTarget()
+    {
+        Vector2 lastPosition = new Vector2(rocketTransform.position.x, rocketTransform.position.z);
+        while (distanceToTarget > 0f)
+        {
+            Vector2 currentPosition = new Vector2(rocketTransform.position.x, rocketTransform.position.z);
+            distanceToTarget -= Vector3.Distance(currentPosition, lastPosition);
+            lastPosition = new Vector2(rocketTransform.position.x, rocketTransform.position.z);
+            yield return null;
+        }
     }
 
     private IEnumerator Fly()

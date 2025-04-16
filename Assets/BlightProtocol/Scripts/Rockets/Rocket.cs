@@ -81,7 +81,7 @@ public class Rocket : MonoBehaviour
 
         if (state == RocketState.FLYING)
         {
-            if (other.gameObject.layer == LayerMask.NameToLayer("Rocket"))
+            if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsRocket"))
             {
                 Rocket otherRocket = other.gameObject.GetComponent<Rocket>();
                 if (otherRocket.state == RocketState.ATTACHED ||

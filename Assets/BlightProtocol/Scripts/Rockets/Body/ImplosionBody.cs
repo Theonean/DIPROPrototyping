@@ -27,12 +27,12 @@ public class ImplosionBody : ACRocketBody
         foreach (var hitCollider in hitColliders)
         {
             int layer = hitCollider.gameObject.layer;
-            if (layer == LayerMask.NameToLayer("Enemy"))
+            if (layer == LayerMask.NameToLayer("PL_IsEnemy"))
             {
                 Debug.Log("Pulling enemy");
                 hitCollider.gameObject.transform.parent.position = rocketTransform.position;
             }
-            else if (layer == LayerMask.NameToLayer("Rocket"))
+            else if (layer == LayerMask.NameToLayer("PL_IsRocket"))
             {
                 Rocket rocket = hitCollider.GetComponent<Rocket>();
                 if (parentRocket.Equals(rocket))

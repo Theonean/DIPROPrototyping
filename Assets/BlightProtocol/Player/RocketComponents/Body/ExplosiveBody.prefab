@@ -175,13 +175,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  componentLevel: 0
   DescriptiveName: 
   debugExplosionSphere: 0
   explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
     type: 3}
   explosionRadius: 10
+  explosionRadiusPerLevel:
+  - 10
+  - 15
+  - 20
+  - 25
+  - 30
+  canExplode: 0
+  explosionRadiusBase: 10
+  explosionChainDelay: 0.25
+  regrowDurationAfterExplosion: 2
 --- !u!4 &3398146033239191419 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6667488749240351468, guid: a022831bb15ee8b4b8514b99ccc646dc,

@@ -52,8 +52,7 @@ public abstract class ACRocketBody : ACRocketComponent
     protected override void SetStatsToLevel()
     {
         explosionRadiusBase = explosionRadiusPerLevel[componentLevel];
-        explosionChainDelay = ParentRocket.settings.explosionChainDelay;
-        explosionRadius = explosionRadiusBase * ParentRocket.transform.localScale.x;
+        explosionRadius = explosionRadiusBase;
         canExplode = true;
 
         Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);

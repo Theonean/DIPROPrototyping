@@ -32,21 +32,26 @@ public class ShrapnelShot : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("EnemyArmor"))
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy"))
         {
-            Destroy(gameObject);
-            return;
-        }
-        
-        if (other.gameObject.layer == LayerMask.NameToLayer("Enemy"))
-        {
-            // Assuming the enemy has a method to take damage
-            EnemyDamageHandler enemyDamageHandler = other.GetComponent<EnemyDamageHandler>();
-            if (enemyDamageHandler != null)
+            if (other.CompareTag("EnemyArmor"))
             {
-                enemyDamageHandler.DestroyEnemy();
+                Destroy(gameObject);
+                return;
             }
-            Destroy(gameObject); // Destroy the shrapnel after hitting an enemy
+            else if (other.CompareTag("Enemy"))
+            {
+
+                // Assuming the enemy has a method to take damage
+                EnemyDamageHandler enemyDamageHandler = other.GetComponent<EnemyDamageHandler>();
+                if (enemyDamageHandler != null)
+                {
+                    enemyDamageHandler.DestroyEnemy();
+                }
+                Destroy(gameObject); // Destroy the shrapnel after hitting an enemy
+            }
+
         }
+
     }
 }

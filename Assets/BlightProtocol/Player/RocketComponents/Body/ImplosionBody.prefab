@@ -180,14 +180,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  componentLevel: 0
   DescriptiveName: 
   debugExplosionSphere: 0
   explosionMaterial: {fileID: -876546973899608171, guid: d7bb4ce55c91ff04ea33066515b56160,
     type: 3}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
     type: 3}
-  explosionRadius: 20
+  explosionRadius: 15
+  explosionRadiusPerLevel:
+  - 15
+  - 20
+  - 25
+  - 30
+  - 35
+  canExplode: 0
+  explosionRadiusBase: 0
+  explosionChainDelay: 0
+  regrowDurationAfterExplosion: 0
   moveToCenterCurve:
     serializedVersion: 2
     m_Curve:

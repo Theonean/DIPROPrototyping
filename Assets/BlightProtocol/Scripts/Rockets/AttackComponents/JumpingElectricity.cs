@@ -25,13 +25,15 @@ public class JumpingElectricity : MonoBehaviour
     private void FindEnemyForJump()
     {
         // Check within physics sphere for colliders on layer enemies, select closest one to jump towards
-        Collider[] hitColliders = Physics.OverlapSphere(transform.position, maxJumpDistance, LayerMask.GetMask("Enemy"));
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, maxJumpDistance, LayerMask.GetMask("PL_IsEnemy"));
         if (hitColliders.Length > 0)
         {
             // Find the closest enemy collider
             float closestDistance = float.MaxValue;
             foreach (var hitCollider in hitColliders)
             {
+                if(hitCollider.CompareTag("EnemyArmor")) continue; // Enemy Armor cant be destroyed by electricity
+
                 float distance = Vector3.Distance(transform.position, hitCollider.transform.position);
                 if (distance < closestDistance)
                 {

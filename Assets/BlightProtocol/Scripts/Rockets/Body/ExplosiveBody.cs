@@ -8,24 +8,24 @@ public class ExplosiveBody : ACRocketBody
     {
         //Create explosion effect
         GameObject explosionEffect = Instantiate(explosionPrefab, rocketTransform.position, Quaternion.identity);
-        explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(ParentRocket.settings.explosionRadius / 10);
+        explosionEffect.GetComponentInChildren<LegExplosionHandler>().SetExplosionRadius(explosionRadius / 10);
 
         if (debugExplosionSphere)
         {
             //Create gizmo with explosionradius, for debugging
             GameObject gizmo = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             gizmo.transform.position = rocketTransform.position;
-            gizmo.transform.localScale = new Vector3(ParentRocket.settings.explosionRadius * 2f, ParentRocket.settings.explosionRadius * 2f, ParentRocket.settings.explosionRadius * 2f);
+            gizmo.transform.localScale = new Vector3(explosionRadius * 2f, explosionRadius * 2f, explosionRadius * 2f);
             gizmo.GetComponent<Renderer>().material = explosionMaterial;
             gizmo.GetComponent<SphereCollider>().enabled = false;
             //Destroy after 5 seconds
             Destroy(gizmo, 5f);
         }
 
-        Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, ParentRocket.settings.explosionRadius);
+        Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, explosionRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy"))
             {
                 Vector3 directionToEnemy = hitCollider.transform.position - rocketTransform.position;
                 //Debug raycast to check if the rocket is in line of sight to the enemy
@@ -34,7 +34,7 @@ public class ExplosiveBody : ACRocketBody
                 RaycastHit hit;
                 if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, out hit, directionToEnemy.magnitude))
                 {
-                    if (hit.collider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+                    if (hit.collider.CompareTag("Enemy"))
                         hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                 }
             }
@@ -51,7 +51,7 @@ public class ExplosiveBody : ACRocketBody
 
     private IEnumerator DaisyChainExplosion(Rocket rocket)
     {
-        yield return new WaitForSeconds(ParentRocket.settings.explosionChainDelay);
+        yield return new WaitForSeconds(explosionChainDelay);
         rocket.Explode();
     }
 }

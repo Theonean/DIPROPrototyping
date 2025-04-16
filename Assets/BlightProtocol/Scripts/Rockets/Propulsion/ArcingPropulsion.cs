@@ -58,7 +58,7 @@ public class ArcingPropulsion : ACRocketPropulsion
         Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, landingExplosionRadius);
         foreach (var hitCollider in hitColliders)
         {
-            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("Enemy"))
+            if (hitCollider.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy") && hitCollider.CompareTag("Enemy"))
             {
                 Vector3 directionToEnemy = hitCollider.transform.position - rocketTransform.position;
                 //Debug raycast to check if the rocket is in line of sight to the enemy
@@ -68,7 +68,7 @@ public class ArcingPropulsion : ACRocketPropulsion
                     hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                 }
             }
-            else if (hitCollider.gameObject.CompareTag("Rocket"))
+            else if (hitCollider.gameObject.CompareTag("PL_IsRocket"))
             {
                 Rocket rocket = hitCollider.gameObject.GetComponentInParent<Rocket>();
                 if (rocket.CanExplode())
