@@ -9,8 +9,7 @@ public class HarvesterAlarmHandler : MonoBehaviour
     public UnityEvent OnHarvesterAlarm;
     public UnityEvent OnHarvesterAlarmDisable;
     public bool enemyAlarm;
-    public float alarmDisableTime = 10f;
-    private List<GameObject> detectedEnemies = new List<GameObject>();
+    public float alarmDisableTime = 2f;
 
     void Awake()
     {
@@ -23,12 +22,10 @@ public class HarvesterAlarmHandler : MonoBehaviour
             Instance = this;
         }
     }
-
-    void OnTriggerEnter(Collider other)
+    void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy") && !enemyAlarm)
         {
-            detectedEnemies.Add(other.gameObject);
             enemyAlarm = true;
             OnHarvesterAlarm.Invoke();
             StartCoroutine(DisableAlarm());
@@ -38,16 +35,7 @@ public class HarvesterAlarmHandler : MonoBehaviour
     private IEnumerator DisableAlarm()
     {
         yield return new WaitForSeconds(alarmDisableTime);
-        foreach (GameObject enemy in detectedEnemies)
-        {
-            if (enemy != null)
-            {
-                StartCoroutine(DisableAlarm());
-                yield break;
-            }
-        }
         enemyAlarm = false;
         OnHarvesterAlarmDisable.Invoke();
-        detectedEnemies.Clear();
     }
 }
