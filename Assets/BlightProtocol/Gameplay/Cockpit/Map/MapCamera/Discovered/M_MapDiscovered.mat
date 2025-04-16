@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_MapCamera
+  m_Name: M_MapDiscovered
   m_Shader: {fileID: -6465566751694194690, guid: e2acf995ec24f4e458da46b14974e804,
     type: 3}
   m_Parent: {fileID: 0}
@@ -37,8 +37,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _CloseIcons:
+        m_Texture: {fileID: 8400000, guid: a4e6f863ce9ec6e469fdd82f6ed54a39, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Mask:
         m_Texture: {fileID: 8400000, guid: 2db3e5b8c4df5cd4b93b62f3422a7cf3, type: 2}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskOverlay:
+        m_Texture: {fileID: 8400000, guid: bd49970fc31bbc048a3cedff1a501c55, type: 2}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -59,12 +67,23 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _DepthMax: 0.29400003
-    - _DepthMin: 0.242
+    - _ColorThreshold: 0.01
+    - _DIscoveredBrightness: 0
+    - _DepthMax: 0.15187989
+    - _DepthMin: 0.12187988
+    - _LineFalloff: 0
+    - _LineRemapMax: 0.0079
+    - _LineTickness: 10.78
+    - _OutlineThickness: 14.44
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
+    - _BackgroundColor: {r: 0, g: 0, b: 0, a: 0}
+    - _DiscoveredColor: {r: 0.735849, g: 0.735849, b: 0.735849, a: 1}
+    - _DiscoveredColor1: {r: 1, g: 1, b: 1, a: 0}
+    - _DiscoveredColor2: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 0}
     - _EndColor: {r: 1, g: 0, b: 0.041268826, a: 1}
+    - _OutlineColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
     - _StartColor: {r: 0.21698111, g: 0.035822347, b: 0.035822347, a: 0}
     - _UndiscoveredColor: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

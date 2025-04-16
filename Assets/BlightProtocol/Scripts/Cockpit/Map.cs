@@ -6,9 +6,10 @@ public class Map : MonoBehaviour, IFPVInteractable
 {
     public static Map Instance { get; private set; }
     public string lookAtText = "E";
-    public string interactText = "[Left Click] Set Target Position";
+    public string interactText = "[Left Click] Set Target Position\n[Right Click Drag] Move Map";
     public bool UpdateHover { get; set; } = true;
-    public bool UpdateInteract { get; set; } = false;
+    public bool UpdateInteract { get; set; } = true;
+
     [SerializeField] private Transform _touchPoint;
     public Transform TouchPoint
     {
@@ -24,7 +25,12 @@ public class Map : MonoBehaviour, IFPVInteractable
     private bool isInFocus = false;
 
     [Header("Display")]
-    public Camera mapCamera;
+    public Camera mapCameraCam;
+    private MapCamera mapCamera;
+    public float dragSpeed = 0.1f;
+    public Vector2 cameraBounds = new Vector2(50f, 50f);
+    private Vector3 dragOrigin;
+    private bool isDragging = false;
 
     [Header("Target Setting")]
     private Ray ray;
@@ -55,13 +61,18 @@ public class Map : MonoBehaviour, IFPVInteractable
         }
     }
 
+    void Start()
+    {
+        mapCamera = mapCameraCam.GetComponent<MapCamera>();
+    }
+
     public void OnHover()
     {
         this.DefaultOnHover();
         Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
-            screenPoint = new Vector3(hit.textureCoord.x * mapCamera.pixelWidth, hit.textureCoord.y * mapCamera.pixelHeight, 0);
+            screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelHeight, 0);
             uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
             TouchPoint.transform.position = hit.point;
         }
@@ -69,21 +80,31 @@ public class Map : MonoBehaviour, IFPVInteractable
 
     public void OnStartInteract()
     {
-        if (screenPoint != null)
+        // Left click - set target
+        if (Input.GetMouseButton(0))
         {
-            SetTarget(screenPoint);
+            if (screenPoint != null)
+            {
+                SetTarget(screenPoint);
+            }
         }
     }
-    public void OnUpdateInteract() { }
-    public void OnEndInteract() { }
+
+    public void OnUpdateInteract()
+    {
+    }
+
+    public void OnEndInteract()
+    { }
 
     public void SetTarget(Vector3 screenPoint)
     {
-        ray = mapCamera.ScreenPointToRay(screenPoint);
+        ray = mapCameraCam.ScreenPointToRay(screenPoint);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
-            if (hit.collider.CompareTag("ResourcePoint")) {
+            if (hit.collider.CompareTag("ResourcePoint"))
+            {
                 Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
                 Harvester.Instance.mover.SetDestination(targetPos);
             }
@@ -108,26 +129,7 @@ public class Map : MonoBehaviour, IFPVInteractable
 
     public void SetEnergySignature(Vector3 position, EnergySignature signature)
     {
-        if (discoveredSignatures.TryGetValue(signature, out GameObject marker))
-        {
-            if (!signature.isStatic)
-            {
-                GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
-                newSignatureMarker.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
-
-                Vector3 lastPosition = marker.transform.position;
-                LineRenderer lineRenderer = newSignatureMarker.GetComponent<EnergySignatureDisplayer>().lineRenderer;
-                lineRenderer.SetPosition(0, new Vector3(position.x, 0, position.z));
-                lineRenderer.SetPosition(1, new Vector3(lastPosition.x, 0, lastPosition.z));
-
-                discoveredSignatures[signature] = newSignatureMarker;
-            }
-            else
-            {
-                marker.GetComponent<EnergySignatureDisplayer>().ResetSignatureColor();
-            }
-        }
-        else
+        if (!discoveredSignatures.TryGetValue(signature, out GameObject marker))
         {
             GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
             newSignatureMarker.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);

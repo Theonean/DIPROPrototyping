@@ -84,12 +84,12 @@ public class Radar : MonoBehaviour
                 StartCoroutine(DisplayPulseRing(modifier));
             }
 
-            mapRevealer.Pulse(
+            /*mapRevealer.Pulse(
                 radarData.pulseStartRange * revealStartRangeFactor,
                 radarData.pulseRange * revealRangeFactor * modifier,
                 radarData.pulseSpeed * revealSpeedFactor,
                 radarData.pulseDuration
-            );
+            );*/
 
             Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
         }

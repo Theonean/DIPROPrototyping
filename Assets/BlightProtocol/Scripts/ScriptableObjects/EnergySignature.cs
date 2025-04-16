@@ -5,5 +5,4 @@ public class EnergySignature : MonoBehaviour
     public int eClass;
     public int eFrequency;
     public int eMagnitude;
-    public bool isStatic = true;
 }

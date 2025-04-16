@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.99999946, g: 0, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 1.3760797, g: 0.72016513, b: 0.3840338, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -2286,6 +2286,11 @@ PrefabInstance:
     - target: {fileID: 7256898789447238450, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: mapCamera
+      value: 
+      objectReference: {fileID: 435688488}
+    - target: {fileID: 7256898789447238450, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: mapCameraCam
       value: 
       objectReference: {fileID: 435688488}
     - target: {fileID: 7310860878507790854, guid: 0b57e7b70314eaf479534b60bc1982ce,
@@ -7290,16 +7295,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7388310429801161662, guid: 05d260b2afbf37b4399e212e1e70d263,
-        type: 3}
-      propertyPath: maxDepthRatio
-      value: 0.0009589041
-      objectReference: {fileID: 0}
-    - target: {fileID: 7388310429801161662, guid: 05d260b2afbf37b4399e212e1e70d263,
-        type: 3}
-      propertyPath: minDepthRatio
-      value: 0.0007534247
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -10478,6 +10473,74 @@ Mesh:
     offset: 0
     size: 0
     path: 
+--- !u!1001 &1998437762
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -69.561066
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 155.31181
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8225746707479584774, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_Name
+      value: DiscoveredDot
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9f8ae703054436a48bbd8f89150c12b6, type: 3}
 --- !u!43 &2022476061
 Mesh:
   m_ObjectHideFlags: 0
@@ -12788,3 +12851,4 @@ SceneRoots:
   - {fileID: 628353594}
   - {fileID: 1229126819}
   - {fileID: 12306837}
+  - {fileID: 1998437762}

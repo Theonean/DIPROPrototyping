@@ -4,6 +4,8 @@ using UnityEngine;
 public class MapCamera : MonoBehaviour
 {
     public float yPos;
+    float xOffset;
+    float zOffset;
     public float minYPos;
     public float maxYPos;
     public FullScreenPassRendererFeature depthPass;
@@ -18,13 +20,18 @@ public class MapCamera : MonoBehaviour
 
     void Update()
     {
-        transform.position = new Vector3(Harvester.Instance.transform.position.x, yPos, Harvester.Instance.transform.position.z);
+        transform.position = new Vector3(Harvester.Instance.transform.position.x + xOffset, yPos, Harvester.Instance.transform.position.z + zOffset);
     }
 
     public void SetHeight(float height)
     {
         yPos = height;
         ApplyDepthValues();
+    }
+
+    public void Move(Vector2 delta) {
+        xOffset += delta.x;
+        zOffset += delta.y;
     }
 
     private void ApplyDepthValues()
