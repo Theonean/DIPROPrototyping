@@ -11,6 +11,8 @@ public class EnemySpawner : MonoBehaviour
         FINISHED //No more enemies to spawn and idle
     }
     public UnityEvent AllEnemiesDead = new UnityEvent();
+    public UnityEvent spawnedEnemy = new UnityEvent();
+    public EnemyType enemyTypesToSpawn = EnemyType.ALL;
     public bool AutoSpawnOverride = false;
 
     //How many enemies per second this spawner generates
@@ -68,9 +70,27 @@ public class EnemySpawner : MonoBehaviour
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = -0.12f;
 
-        GameObject enemy = Instantiate(WaveManager.Instance.GetRandomEnemyPrefab(), spawnPosition, Quaternion.identity);
+        GameObject enemyPrefab;
+        switch (enemyTypesToSpawn)
+        {
+            case EnemyType.REGULAR:
+                enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
+                break;
+            case EnemyType.CHARGER:
+                enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
+                break;
+            case EnemyType.CRABTANK:
+                enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
+                break;
+            default:
+                enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
+                break;
+        }
+
+        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
         m_EnemyCount++;
         enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
+        spawnedEnemy.Invoke();
     }
 
     IEnumerator SpawnEnemyDesynced()
@@ -79,14 +99,18 @@ public class EnemySpawner : MonoBehaviour
         SpawnEnemy();
     }
 
-    public void StartWave(int waveNumber)
+    public void SetSpawnRate(int difficultyLevel)
     {
         //Increase enemies spawned per second by 0.2 per wave
-        spawnRate = 0.1f + waveNumber * 0.05f
-            + Random.Range(-0.15f, 0.15f); //Slightly randome the spawn rate so not all animations are synced across spawners;
+        spawnRate = 0.1f + difficultyLevel * 0.05f
+            + Random.Range(-0.01f, 0.01f); //Slightly randome the spawn rate so not all animations are synced across spawners;
         spawnEnemyInNSeconds = 1f / spawnRate;
+        Logger.Log("Spawner creating " + spawnRate + " enemies per second at an interval of " + spawnEnemyInNSeconds, LogLevel.INFO, LogType.WAVEMANAGEMENT);
+    }
 
-        //Debug.Log("Spawner creating " + spawnRate + " enemies per second at an intervall of" + spawnEnemyInNSeconds);
+    public void StartWave(int waveNumber)
+    {
+        SetSpawnRate(waveNumber);
 
         m_SpawnState = SpawnState.SPAWNING;
 

@@ -6,7 +6,8 @@ public enum EnemyType
     REGULAR,
     CHARGER,
     CRABTANK,
-    NONE
+    NONE,
+    ALL
 }
 
 public class EnemySpawnPosition

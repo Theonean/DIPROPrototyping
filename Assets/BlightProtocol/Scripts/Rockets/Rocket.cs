@@ -43,8 +43,12 @@ public class Rocket : MonoBehaviour
         if (state == RocketState.ATTACHED || state == RocketState.REGROWING || state == RocketState.IDLE) return;
         if (other.gameObject.tag == "Ground") return;
 
+        int enemyLayer = LayerMask.NameToLayer("PL_IsEnemy");
+        int environmentLayer = LayerMask.NameToLayer("PL_IsEnvironmentPhysicalObject");
+        int harvesterLayer = LayerMask.NameToLayer("PL_IsHarvester");
+
         //Collision Logic for Enemies
-        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy"))
+        if (other.gameObject.layer == enemyLayer)
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
@@ -63,19 +67,19 @@ public class Rocket : MonoBehaviour
                 return;
             }
         }
-
-        //Colision logic for environment and harvester
-        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnvironmentPhysicalObject") || other.gameObject.layer == LayerMask.NameToLayer("PL_IsHarvester"))
+        else if (other.gameObject.layer == environmentLayer)
         {
-            switch (frontComponent.GetType().Name)
+            if (other.gameObject.CompareTag("EnemySpawner"))
             {
-                case "BouncingFront":
-                    frontComponent.ActivateAbility(other);
-                    break;
-                default:
-                    Explode();
-                    break;
+                other.GetComponentInParent<EnemyHiveManager>().TakeDamage();
             }
+
+            HandleBouncingFrontException(other);
+            return;
+        }
+        else if (other.gameObject.layer == harvesterLayer)
+        {
+            HandleBouncingFrontException(other);
             return;
         }
 
@@ -92,6 +96,7 @@ public class Rocket : MonoBehaviour
             frontComponent.ActivateAbility(other);
         }
     }
+
     public void SetState(RocketState state)
     {
         if (this.state == state) return;
@@ -187,5 +192,18 @@ public class Rocket : MonoBehaviour
         frontComponent.abilityUsesLeft = frontComponent.maxAbilityUses;
 
         gameObject.layer = LayerMask.NameToLayer("PL_IsPlayer");
+    }
+
+    private void HandleBouncingFrontException(Collider other)
+    {
+        switch (frontComponent.GetType().Name)
+        {
+            case "BouncingFront":
+                frontComponent.ActivateAbility(other);
+                break;
+            default:
+                Explode();
+                break;
+        }
     }
 }
