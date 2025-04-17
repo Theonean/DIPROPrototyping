@@ -8,10 +8,15 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7274966822664590839, guid: de268f323e646984db6613327e4fc930,
+        type: 3}
+      propertyPath: enemyTypeToSpawn
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 8052988391124864695, guid: de268f323e646984db6613327e4fc930,
         type: 3}
       propertyPath: m_Name
-      value: P_EnemySpawnerTemplate
+      value: P_TankEnemyHive
       objectReference: {fileID: 0}
     - target: {fileID: 8965843651787158588, guid: de268f323e646984db6613327e4fc930,
         type: 3}

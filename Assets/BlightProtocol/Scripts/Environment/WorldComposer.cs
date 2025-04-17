@@ -5,7 +5,7 @@ using UnityEngine;
 public class WorldComposer : MonoBehaviour
 {
     public static WorldComposer Instance { get; private set; }
-    public SpawnableEntity[] spawnableResources = new SpawnableEntity[0];
+    public DifficultyRegion[] difficultyRegions = new DifficultyRegion[0];
 
     private Vector2 mapBoundsX;
     private Vector2 mapBoundsZ;
@@ -33,35 +33,38 @@ public class WorldComposer : MonoBehaviour
 
     private IEnumerator GenerateInitialObstacles()
     {
-        foreach (SpawnableEntity spawnable in spawnableResources)
+        foreach (DifficultyRegion region in difficultyRegions)
         {
-            Vector3[] spawnPositions = spawnable.GenerateSpawnPositions(mapBoundsX, mapBoundsZ);
-            if (spawnPositions.Length == 0)
+            foreach (SpawnableEntity spawnable in region.spawnableEntities)
             {
-                Debug.LogWarning($"No spawn positions generated for {spawnable.name}");
-                continue;
-            }
-
-            spawnPositions = spawnPositions
-                .Where(pos => Vector3.Distance(Harvester.Instance.transform.position, pos) >= 100f)
-                .OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos))
-                .ToArray();
-
-            foreach (Vector3 spawnPos in spawnPositions)
-            {
-                // Instantiate the prefab at the generated position.
-                GameObject prefab = spawnable.GetPrefab();
-                Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
-                GameObject instance = Instantiate(prefab, spawnPos, rotation, transform);
-
-                // Optionally apply a random scale variance.
-                if (spawnable.scaleVariance != 0f)
+                Vector3[] spawnPositions = spawnable.GenerateSpawnPositions(mapBoundsX, region.boundsZ);
+                if (spawnPositions.Length == 0)
                 {
-                    float scaleFactor = 1f + Random.Range(-spawnable.scaleVariance, spawnable.scaleVariance);
-                    instance.transform.localScale *= scaleFactor;
+                    Debug.LogWarning($"No spawn positions generated for {spawnable.name}");
+                    continue;
                 }
 
-                yield return null; //Zukunfts robin: differenz zischen null und waitendofframe?
+                spawnPositions = spawnPositions
+                    .Where(pos => Vector3.Distance(Harvester.Instance.transform.position, pos) >= 100f)
+                    .OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos))
+                    .ToArray();
+
+                foreach (Vector3 spawnPos in spawnPositions)
+                {
+                    // Instantiate the prefab at the generated position.
+                    GameObject prefab = spawnable.GetPrefab();
+                    Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
+                    GameObject instance = Instantiate(prefab, spawnPos, rotation, transform);
+
+                    // Optionally apply a random scale variance.
+                    if (spawnable.scaleVariance != 0f)
+                    {
+                        float scaleFactor = 1f + Random.Range(-spawnable.scaleVariance, spawnable.scaleVariance);
+                        instance.transform.localScale *= scaleFactor;
+                    }
+
+                    yield return null;
+                }
             }
         }
     }
