@@ -23,6 +23,7 @@ public enum LogType
     HARVESTER = 32,
     WAVEMANAGEMENT = 64,
     PERSPECTIVESWITCH = 128,
+    COCKPIT = 256,
     //ergänzen wie man sich lustig fühlt :), sollte granular genug sein um Fehler zu finden oder systeme nachzuvollziehen
 }
 

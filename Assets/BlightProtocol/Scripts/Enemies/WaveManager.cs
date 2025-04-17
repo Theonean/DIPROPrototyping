@@ -141,7 +141,7 @@ public class WaveManager : MonoBehaviour
         }
 
         harvesterState = zoneState;
-        float? numFuel = ResourceHandler.Instance.CheckResource(ResourceHandler.Instance.fuelResource);
+        float? numFuel = ResourceHandler.Instance.GetAmount(ResourceHandler.Instance.fuelResource);
         difficultyLevel = numFuel.HasValue ? Mathf.FloorToInt(numFuel.Value / 100) : 0;
 
         switch (harvesterState)

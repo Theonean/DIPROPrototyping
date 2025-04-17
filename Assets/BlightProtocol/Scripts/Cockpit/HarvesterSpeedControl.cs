@@ -60,10 +60,14 @@ public class HarvesterSpeedControl : MonoBehaviour
         if (speedSteps.Count > 0)
         {
             HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
+            
+            if (currentStep.fuelCost > 0) {
+                return;
+            }
 
-            if (ResourceHandler.Instance.CheckResource(fuelResource) >= currentStep.fuelCost * Time.deltaTime)
+            if (ResourceHandler.Instance.GetAmount(fuelResource) >= currentStep.fuelCost * Time.deltaTime)
             {
-                ResourceHandler.Instance.ConsumeResource(fuelResource, currentStep.fuelCost * Time.deltaTime, true);
+                ResourceHandler.Instance.Consume(fuelResource, currentStep.fuelCost * Time.deltaTime);
             }
             else if (currentSpeedStepIndex > 0)
             {

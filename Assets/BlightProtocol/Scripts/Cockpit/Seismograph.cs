@@ -17,6 +17,13 @@ public class OtherEmission
     public float strength;
 }
 
+[System.Serializable]
+public class VibrationDangerLevel
+{
+    public float threshold;
+    public Color color;
+}
+
 public class Seismograph : MonoBehaviour
 {
     private Harvester harvester;
@@ -30,6 +37,8 @@ public class Seismograph : MonoBehaviour
     public UnityEvent vibrationChanged;
 
     public float totalVibration = 0f;
+    public int currentDangerLevel = 0;
+    [SerializeField] public List<VibrationDangerLevel> vibrationDangerLevels = new List<VibrationDangerLevel>();
 
     void Awake()
     {
@@ -113,5 +122,14 @@ public class Seismograph : MonoBehaviour
     public float GetTotalVibration()
     {
         return totalVibration;
+    }
+
+    public int GetCurrentDangerLevel() {
+        foreach (var level in vibrationDangerLevels) {
+            if (totalVibration >= level.threshold) {
+                currentDangerLevel = vibrationDangerLevels.IndexOf(level);
+            }
+        }
+        return currentDangerLevel;
     }
 }

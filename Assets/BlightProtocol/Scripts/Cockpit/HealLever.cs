@@ -23,10 +23,10 @@ public class HealLever : ACLever
                 healFeedback.text = "Already at full health!";
                 ResetLever();
             }
-            else if (resourceHandler.CheckResource(resourceHandler.fuelResource) > cost)
+            else if (resourceHandler.GetAmount(resourceHandler.fuelResource) > cost)
             {
                 harvester.health.Heal(healAmount);
-                resourceHandler.ConsumeResource(resourceHandler.fuelResource, cost, false);
+                resourceHandler.Consume(resourceHandler.fuelResource, cost, 1f);
                 isPulled = true;
                 ResetLever();
             }

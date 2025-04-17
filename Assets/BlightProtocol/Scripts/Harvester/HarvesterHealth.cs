@@ -28,6 +28,9 @@ public class HarvesterHealth : MonoBehaviour
             slider.maxValue = maxHealth;
             slider.value = maxHealth;
         }
+
+        CockpitScreenHandler.Instance.SetValue(ScreenType.HEALTH, health);
+        CockpitScreenHandler.Instance.SetMaxValue(ScreenType.HEALTH, maxHealth);
     }
 
     void OnTriggerEnter(Collider other)
@@ -56,6 +59,7 @@ public class HarvesterHealth : MonoBehaviour
         {
             slider.value = health;
         }
+        CockpitScreenHandler.Instance.SetValue(ScreenType.HEALTH, health);
 
         if (health <= 0)
         {

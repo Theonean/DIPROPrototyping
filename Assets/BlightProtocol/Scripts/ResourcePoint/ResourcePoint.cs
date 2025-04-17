@@ -15,7 +15,7 @@ public class ResourcePoint : MonoBehaviour
         if(resourceAmount <= 0f)
             return false;
 
-        ResourceHandler.Instance.CollectResource(resourceData, amount);
+        ResourceHandler.Instance.Add(resourceData, amount);
         resourceAmount -= amount;
 
         return true;

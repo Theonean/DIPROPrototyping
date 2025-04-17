@@ -64,9 +64,9 @@ public class Radar : MonoBehaviour
 
     public void Pulse(float modifier)
     {
-        if (ResourceHandler.Instance.CheckResource(radarData.pulseCostResource) > radarData.pulseCost)
+        if (ResourceHandler.Instance.GetAmount(radarData.pulseCostResource) > radarData.pulseCost)
         {
-            ResourceHandler.Instance.ConsumeResource(radarData.pulseCostResource, radarData.pulseCost, false, 1f);
+            ResourceHandler.Instance.Consume(radarData.pulseCostResource, radarData.pulseCost, 1f);
 
             Collider[] hitColliders = Physics.OverlapSphere(
                 transform.position,
