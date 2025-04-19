@@ -5,7 +5,8 @@ public enum ScreenType
 {
     GAS,
     HEALTH,
-    SEISMOGRAPH
+    SEISMOGRAPH,
+    SPEED
 }
 
 public class CockpitScreenHandler : MonoBehaviour

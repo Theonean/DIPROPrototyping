@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -24,7 +25,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     private int currentSpeedStepIndex = 0;
     private float displaySpeed = 0f; // Smoothed speed for UI
     private SpeedSlider speedSlider;
-    public TMP_Text feedbackText;
+    public UnityEvent inputDenied;
 
     void Awake()
     {
@@ -57,6 +58,7 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     void Update()
     {
+        // reset speed to base speed if fuel is empty
         if (speedSteps.Count > 0)
         {
             HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
@@ -74,14 +76,9 @@ public class HarvesterSpeedControl : MonoBehaviour
                 currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
                 SetSpeed();
                 OverrideSpeedStep(currentSpeedStepIndex);
-                feedbackText.text = "Not enough fuel!";
-                Invoke(nameof(ClearFeedbackText), 2f);
+                inputDenied.Invoke();
             }
         }
-    }
-
-    private void ClearFeedbackText() {
-        feedbackText.text = "";
     }
 
     private void OnHarvesterStateChanged(ZoneState state)
@@ -100,10 +97,11 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     public void OverrideSpeedStep(int index)
     {
+        // Set slider in case of harvester state change
         if (index >= 0 && index < speedSteps.Count)
         {
             currentSpeedStepIndex = index;
-            speedSlider.SetSliderPositionIndex(index);
+            speedSlider.SetPositionByIndex(index);
             Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
         }
     }
@@ -114,7 +112,7 @@ public class HarvesterSpeedControl : MonoBehaviour
         {
             if (Harvester.Instance.HasArrivedAtTarget()) {
                 OverrideSpeedStep(0);
-                feedbackText.text = "No Target set!";
+                inputDenied.Invoke();
             }
             currentSpeedStepIndex = index;
             SetSpeed();

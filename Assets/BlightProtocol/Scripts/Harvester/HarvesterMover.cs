@@ -72,6 +72,7 @@ public class HarvesterMover : MonoBehaviour
         else
         {
             harvester.SetState(new IdleState(harvester));
+            isMoving = false;
         }
     }
 

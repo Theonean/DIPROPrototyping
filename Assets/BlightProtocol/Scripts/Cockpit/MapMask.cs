@@ -14,6 +14,7 @@ public class MapMask : MonoBehaviour
     public int resolution = 1024;
     private Vector2 _mapBoundsX;
     private Vector2 _mapBoundsZ;
+    private float _aspectRatio;
     public RenderObjectsPass maskPass;
     private Renderer renderer;
 
@@ -28,15 +29,27 @@ public class MapMask : MonoBehaviour
         renderer = GetComponent<Renderer>();
         InitializeTexture();
     }
+
     private void InitializeTexture()
     {
+        var generator = ProceduralTileGenerator.Instance;
+        _mapBoundsX = new Vector2(generator.mapBoundsX.x, generator.mapBoundsX.y);
+        _mapBoundsZ = new Vector2(generator.mapBoundsZ.x, generator.mapBoundsZ.y);
+        
+        // Calculate proper aspect ratio
+        float width = _mapBoundsX.y - _mapBoundsX.x;
+        float height = _mapBoundsZ.y - _mapBoundsZ.x;
+        _aspectRatio = width / height;
+        
         if (_maskTexture != null)
         {
             _maskTexture.Release();
             Destroy(_maskTexture);
         }
 
-        _maskTexture = new RenderTexture(resolution, resolution, 0, RenderTextureFormat.ARGBFloat)
+        // Create texture with proper aspect ratio
+        int textureWidth = Mathf.FloorToInt(resolution * _aspectRatio);
+        _maskTexture = new RenderTexture(textureWidth, resolution, 0, RenderTextureFormat.ARGBFloat)
         {
             enableRandomWrite = true
         };
@@ -44,10 +57,7 @@ public class MapMask : MonoBehaviour
 
         if (_material != null) Destroy(_material);
         _material = new Material(maskShader);
-
-        var generator = ProceduralTileGenerator.Instance;
-        _mapBoundsX = new Vector2(generator.mapBoundsX.x, generator.mapBoundsX.y);
-        _mapBoundsZ = new Vector2(generator.mapBoundsZ.x, generator.mapBoundsZ.y);
+        _material.SetFloat("_AspectRatio", _aspectRatio);
 
         ClearTexture(_maskTexture, Color.clear);
         renderer.material.SetTexture("_MaskTex", _maskTexture);
@@ -70,19 +80,15 @@ public class MapMask : MonoBehaviour
         _material.SetVector("_Coordinates", new Vector4(uvPos.x, uvPos.y, 0, 0));
         _material.SetFloat("_Strength", strength);
         _material.SetFloat("_Size", radius);
+        _material.SetFloat("_AspectRatio", _aspectRatio);
 
         RenderTexture temp1 = RenderTexture.GetTemporary(_maskTexture.descriptor);
         RenderTexture temp2 = RenderTexture.GetTemporary(_maskTexture.descriptor);
 
         try
         {
-            // First pass: Copy current mask
             Graphics.Blit(_maskTexture, temp1);
-
-            // Second pass: Apply paint
             Graphics.Blit(temp1, temp2, _material);
-
-            // Final pass: Write back to main texture
             Graphics.Blit(temp2, _maskTexture);
         }
         finally

@@ -16,4 +16,5 @@ public class ScreenValueSlider : ScreenValueDisplayer
         Value = Mathf.Min(targetValue, maxValue);
         slider.value = Value / maxValue;
     }
+
 }

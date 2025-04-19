@@ -241,7 +241,9 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 3347895019395744331, guid: 7a7a22707f8742f42bdac0c640103b07, type: 3}
+    - {fileID: 3060564730476940002, guid: 7a7a22707f8742f42bdac0c640103b07, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 7860786976945023506, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
@@ -250,11 +252,11 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 3605333566551954773, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 5179377071483703924}
     - targetCorrespondingSourceObject: {fileID: 3605333566551954773, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
-      insertIndex: 2
+      insertIndex: -1
       addedObject: {fileID: 5544008809148348749}
   m_SourcePrefab: {fileID: 100100000, guid: 7a7a22707f8742f42bdac0c640103b07, type: 3}
 --- !u!4 &777820660244700424 stripped
@@ -281,18 +283,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6322813216805520300}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4728431382463973804 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1594808994609072640, guid: 7a7a22707f8742f42bdac0c640103b07,
-    type: 3}
-  m_PrefabInstance: {fileID: 6322813216805520300}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &6059603562916100056 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 263227804657169524, guid: 7a7a22707f8742f42bdac0c640103b07,
@@ -334,7 +324,10 @@ MonoBehaviour:
     isBaseSpeed: 0
     seismoEmission: 5
   maxSpeed: 10
-  feedbackText: {fileID: 4728431382463973804}
+  feedbackText: {fileID: 0}
+  inputDenied:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &5544008809148348749
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -377,4 +370,4 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  stepContainer: {fileID: 1129812410523608972}
+  adjustSpeed: 0.2

@@ -8,6 +8,7 @@ Shader "Unlit/S_MapMask"
         _Strength("Strength", Range(0,1)) = 1
         _Size("Size", Range(1,500)) = 0
         _EdgeSharpness("Edge Sharpness", Range(1,500)) = 5
+        _AspectRatio("Aspect Ratio", Float) = 1
     }
     SubShader
     {
@@ -39,7 +40,7 @@ Shader "Unlit/S_MapMask"
             sampler2D _MainTex;
             float4 _MainTex_ST;
             fixed4 _Coordinates, _Color;
-            half _Size, _Strength, _EdgeSharpness;
+            half _Size, _Strength, _EdgeSharpness, _AspectRatio;
 
             v2f vert (appdata v)
             {
@@ -54,7 +55,13 @@ Shader "Unlit/S_MapMask"
             {
                 fixed4 prevMask = tex2D(_MainTex, i.uv);
 
-                float dist = distance(i.uv, _Coordinates.xy);
+                // Adjust for aspect ratio in distance calculation
+                float2 adjustedUV = i.uv;
+                adjustedUV.x *= _AspectRatio;
+                float2 adjustedCoord = _Coordinates.xy;
+                adjustedCoord.x *= _AspectRatio;
+                
+                float dist = distance(adjustedUV, adjustedCoord);
 
                 float draw = pow(saturate(1 - (dist * _EdgeSharpness)), 500 / _Size);
                 draw = smoothstep(0.0, 1.0 / _EdgeSharpness, draw);

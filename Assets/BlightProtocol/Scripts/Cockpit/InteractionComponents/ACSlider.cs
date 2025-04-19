@@ -33,6 +33,7 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
     public Transform maxPos;
     public Transform minPos;
     public AnimationCurve adjustCurve;
+    [SerializeField] private float adjustSpeed = 1f;
 
     protected float progress = 0f; // Value between 0 and 1
     protected Vector2[] screenSpaceBounds;
@@ -50,8 +51,7 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
     }
 
     public virtual void OnEndInteract()
-    {
-    }
+    {}
 
     public virtual void OnHover()
     {
@@ -68,10 +68,10 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
         OnValueChanged(progress);
     }
 
-    public void SetPositionNormalized(float normalizedValue)
+    public virtual void SetPositionNormalized(float normalizedValue)
     {
         normalizedValue = Mathf.Clamp01(normalizedValue);
-        StartCoroutine(LerpPosition(normalizedValue, 1f));
+        StartCoroutine(LerpPosition(normalizedValue, adjustSpeed));
     }
 
     protected virtual IEnumerator LerpPosition(float targetProgress, float duration)
@@ -100,7 +100,7 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
         OnValueChanged(targetProgress);
     }
 
-    private Vector3 GetPosition(float progress)
+    protected virtual Vector3 GetPosition(float progress)
     {
         return Vector3.Lerp(minPos.position, maxPos.position, progress);
     }
