@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Collections;
 
-public class SeismographVisualizer : ScreenValueDisplayer
+public class SeismographVisualizer : ACScreenValueDisplayer
 {
     [Header("Seismograph Settings")]
     [SerializeField] private float maxVibration = 30f;
     [SerializeField] private float adjustDuration = 0.5f;
-    
+
     [Header("Line Renderer Settings")]
     [SerializeField] private LineRenderer lineRenderer;
     [SerializeField] private Transform boundsStart;
     [SerializeField] private Transform boundsEnd;
     [SerializeField] private int pointAmount = 50;
-    
+
     [Header("Wave Settings")]
     [SerializeField] private float vibrationFrequency = 20f;
     [SerializeField] private float overlay1Frequency = 45f;
@@ -28,11 +28,12 @@ public class SeismographVisualizer : ScreenValueDisplayer
     private float height;
     private Queue<float> vibrationHistory = new Queue<float>();
 
-    
+
     private void Start()
     {
         InitializeSeismograph();
         UpdateValue(Seismograph.Instance.GetTotalVibration());
+        Seismograph.Instance.vibrationChanged.AddListener(OnVibrationChanged);
     }
 
     private void InitializeSeismograph()
@@ -47,8 +48,19 @@ public class SeismographVisualizer : ScreenValueDisplayer
         {
             vibrationHistory.Enqueue(0f);
         }
+    }
 
-        Seismograph.Instance.vibrationChanged.AddListener(OnVibrationChanged);
+    void OnEnable()
+    {
+        if (Seismograph.Instance != null)
+        {
+            Seismograph.Instance.vibrationChanged.RemoveListener(OnVibrationChanged);
+            Seismograph.Instance.vibrationChanged.AddListener(OnVibrationChanged);
+        }
+    }
+    void OnDisable()
+    {
+        Seismograph.Instance.vibrationChanged.RemoveListener(OnVibrationChanged);
     }
 
 

@@ -24,7 +24,7 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     private int currentSpeedStepIndex = 0;
     private float displaySpeed = 0f; // Smoothed speed for UI
-    private SpeedSlider speedSlider;
+    [SerializeField] private SpeedSlider speedSlider;
     public UnityEvent inputDenied;
 
     void Awake()
@@ -42,12 +42,23 @@ public class HarvesterSpeedControl : MonoBehaviour
     void Start()
     {
         fuelResource = ResourceHandler.Instance.fuelResource;
-        speedSlider = GetComponent<SpeedSlider>();
 
         // Initialize display speed to match the first step
         displaySpeed = speedSteps[currentSpeedStepIndex].speed;
         SetSpeed();
         Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
+    }
+
+    void OnEnable() {
+        if (Harvester.Instance != null) {
+            Harvester.Instance.changedState.RemoveListener(OnHarvesterStateChanged);
+            Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
+        }
+    }
+
+    void OnDisable()
+    {
+        Harvester.Instance.changedState.RemoveListener(OnHarvesterStateChanged);
     }
 
     private void SetSpeed()
@@ -62,8 +73,9 @@ public class HarvesterSpeedControl : MonoBehaviour
         if (speedSteps.Count > 0)
         {
             HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
-            
-            if (currentStep.fuelCost > 0) {
+
+            if (currentStep.fuelCost <= 0)
+            {
                 return;
             }
 
@@ -110,7 +122,8 @@ public class HarvesterSpeedControl : MonoBehaviour
     {
         if (index >= 0 && index < speedSteps.Count && index != currentSpeedStepIndex)
         {
-            if (Harvester.Instance.HasArrivedAtTarget()) {
+            if (Harvester.Instance.HasArrivedAtTarget())
+            {
                 OverrideSpeedStep(0);
                 inputDenied.Invoke();
             }

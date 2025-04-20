@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ScreenValueSlider : ScreenValueDisplayer
+public class ScreenValueSlider : ACScreenValueDisplayer
 {
-    [SerializeField] private Slider slider;
+    public Slider slider;
 
     protected void Awake()
     {

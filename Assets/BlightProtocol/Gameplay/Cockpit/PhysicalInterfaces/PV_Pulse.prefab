@@ -150,7 +150,8 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 2568338598945477033, guid: 26ca7adc8dac574448493ba8a6d6a327, type: 3}
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 4963053133225121444, guid: 26ca7adc8dac574448493ba8a6d6a327, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6514100043750109896, guid: 26ca7adc8dac574448493ba8a6d6a327,
@@ -185,31 +186,9 @@ MonoBehaviour:
   lookAtText: Pulse
   interactText: 
   _touchPoint: {fileID: 490599680297222215}
-  slider: {fileID: 4494320953299949683}
-  sweetSpotOverlay: {fileID: 4902177770514033609}
-  sweetSpotMinMax: {x: 0.5, y: 0.8}
   chargeTime: 1
   isCharging: 0
-  normalColor: {r: 0, g: 1, b: 0.9197531, a: 1}
-  succeedColor: {r: 0.015686274, g: 1, b: 0.21017107, a: 1}
-  failColor: {r: 1, g: 0, b: 0, a: 1}
+  sweetSpotMinMax: {x: 0.5, y: 0.8}
   chargeSuccededModifier: 1.5
   chargeFailedModifier: 0.8
---- !u!114 &4494320953299949683 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6518905083779664429, guid: 26ca7adc8dac574448493ba8a6d6a327,
-    type: 3}
-  m_PrefabInstance: {fileID: 7217234709412385374}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!224 &4902177770514033609 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 2315074574714878359, guid: 26ca7adc8dac574448493ba8a6d6a327,
-    type: 3}
-  m_PrefabInstance: {fileID: 7217234709412385374}
-  m_PrefabAsset: {fileID: 0}
+  pulseSlider: {fileID: 0}

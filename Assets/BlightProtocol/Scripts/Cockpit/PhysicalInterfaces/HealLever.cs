@@ -26,7 +26,7 @@ public class HealLever : ACLever
             else if (resourceHandler.GetAmount(resourceHandler.fuelResource) > cost)
             {
                 harvester.health.Heal(healAmount);
-                resourceHandler.Consume(resourceHandler.fuelResource, cost, 1f);
+                resourceHandler.Consume(resourceHandler.fuelResource, cost, true, 1f);
                 isPulled = true;
                 ResetLever();
             }

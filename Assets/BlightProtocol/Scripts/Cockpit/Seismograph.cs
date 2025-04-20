@@ -54,7 +54,6 @@ public class Seismograph : MonoBehaviour
     void Start()
     {
         harvester = Harvester.Instance;
-        harvester.changedState.AddListener(UpdateHarvesterEmission);
 
         ZoneState initialState = harvester.GetZoneState();
         currentHarvesterEmission = harvesterEmissions.Find(e => e.zoneState == initialState);
@@ -63,6 +62,22 @@ public class Seismograph : MonoBehaviour
             totalVibration = currentHarvesterEmission.strength;
             vibrationChanged.Invoke();
         }
+
+        harvester.changedState.AddListener(UpdateHarvesterEmission);
+    }
+
+    void OnEnable()
+    {
+        if (harvester != null)
+        {
+            harvester.changedState.RemoveListener(UpdateHarvesterEmission);
+            harvester.changedState.AddListener(UpdateHarvesterEmission);
+        }
+    }
+
+    void OnDisable()
+    {
+        harvester.changedState.RemoveListener(UpdateHarvesterEmission);
     }
 
     private void UpdateHarvesterEmission(ZoneState newZoneState)
@@ -83,12 +98,13 @@ public class Seismograph : MonoBehaviour
 
     public void SetOtherEmission(string sourceId, float strength, float? duration = null)
     {
-        
+
         if (!otherEmissions.ContainsKey(sourceId))
         {
             otherEmissionsList.Add(new OtherEmission { sourceId = sourceId, strength = strength });
         }
-        else {
+        else
+        {
             totalVibration -= otherEmissions[sourceId];
             otherEmissionsList.Find(e => e.sourceId == sourceId).strength = strength;
         }
@@ -124,9 +140,12 @@ public class Seismograph : MonoBehaviour
         return totalVibration;
     }
 
-    public int GetCurrentDangerLevel() {
-        foreach (var level in vibrationDangerLevels) {
-            if (totalVibration >= level.threshold) {
+    public int GetCurrentDangerLevel()
+    {
+        foreach (var level in vibrationDangerLevels)
+        {
+            if (totalVibration >= level.threshold)
+            {
                 currentDangerLevel = vibrationDangerLevels.IndexOf(level);
             }
         }

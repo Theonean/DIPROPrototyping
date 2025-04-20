@@ -4,7 +4,10 @@ using UnityEngine.UI;
 public class SpeedSlider : ACSlider
 {
     private int speedStepCount;
-    private float[] speedstepPositions;
+    private float[] speedstepPositions = new float[1];
+
+    [Header("Visualization")]
+    [SerializeField] private ACScreenValueDisplayer speedDisplayer;
 
 
     void Start()
@@ -44,7 +47,7 @@ public class SpeedSlider : ACSlider
 
     protected override Vector3 GetPosition(float progress)
     {
-        CockpitScreenHandler.Instance.SetValue(ScreenType.SPEED, progress);
+        speedDisplayer.SetValue(progress);
         return Vector3.Lerp(minPos.position, maxPos.position, progress);
     }
 }

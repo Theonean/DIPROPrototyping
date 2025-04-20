@@ -16,7 +16,7 @@ public class MapMask : MonoBehaviour
     private Vector2 _mapBoundsZ;
     private float _aspectRatio;
     public RenderObjectsPass maskPass;
-    private Renderer renderer;
+    private Renderer _renderer;
 
 #if UNITY_EDITOR
     [Header("Editor Preview")]
@@ -26,7 +26,7 @@ public class MapMask : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<Renderer>();
+        _renderer = GetComponent<Renderer>();
         InitializeTexture();
     }
 
@@ -60,7 +60,7 @@ public class MapMask : MonoBehaviour
         _material.SetFloat("_AspectRatio", _aspectRatio);
 
         ClearTexture(_maskTexture, Color.clear);
-        renderer.material.SetTexture("_MaskTex", _maskTexture);
+        _renderer.material.SetTexture("_MaskTex", _maskTexture);
     }
 
     public Vector2 GetBounds(int axis)

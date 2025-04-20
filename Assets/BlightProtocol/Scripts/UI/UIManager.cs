@@ -8,7 +8,7 @@ public class UIHandler : MonoBehaviour
     public GameObject topDownUI;
     public GameObject fpvUI;
     public GameObject generalUI;
-    
+
     public static UIHandler Instance { get; private set; }
 
     void Awake()
@@ -26,11 +26,25 @@ public class UIHandler : MonoBehaviour
     void Start()
     {
         perspectiveSwitcher = PerspectiveSwitcher.Instance;
+        SwitchUI();
+        perspectiveSwitcher.onPerspectiveSwitched.AddListener(SwitchUI);
+    }
+
+    void OnEnable()
+    {
         if (perspectiveSwitcher != null)
         {
+            perspectiveSwitcher.onPerspectiveSwitched.RemoveListener(SwitchUI);
             perspectiveSwitcher.onPerspectiveSwitched.AddListener(SwitchUI);
         }
-        SwitchUI();
+    }
+
+    void OnDisable()
+    {
+        if (perspectiveSwitcher != null)
+        {
+            perspectiveSwitcher.onPerspectiveSwitched.RemoveListener(SwitchUI);
+        }
     }
 
     void SwitchUI()

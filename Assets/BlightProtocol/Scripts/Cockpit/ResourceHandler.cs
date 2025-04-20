@@ -1,25 +1,29 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Events;
 
 [System.Serializable]
 public class Resource
 {
     public ResourceData data;
-    public ScreenType screenType;
+    public ACScreenValueDisplayer displayer;
     public float amount;
     public float maxCapacity = 10000;
     [HideInInspector] public float lastAmount;
-    [HideInInspector] public float delta;
-    [HideInInspector] public bool wasFullLastCheck;
-    [HideInInspector] public bool wasEmptyLastCheck;
+    public float delta;
 }
 
 public class ResourceHandler : MonoBehaviour
 {
     public static ResourceHandler Instance { get; private set; }
-
     [SerializeField] private Resource[] resources;
+    [SerializeField] public Resource fuel;
     public ResourceData fuelResource;
+
+    [Header("Visualization")]
+    public UnityEvent<ResourceData, float, float> OnFuelConsumptionChanged;
+    [SerializeField] private float consumptionEventInterval = 2f;
+    private float timeSinceLastEvent;
 
     void Awake()
     {
@@ -31,21 +35,46 @@ public class ResourceHandler : MonoBehaviour
         
         Instance = this;
         Initialize();
+        FindResource(fuelResource, out fuel);
     }
 
     void Initialize()
     {
+        // update displayers
         foreach (var r in resources)
         {
-            CockpitScreenHandler.Instance.SetMaxValue(r.screenType, r.maxCapacity);
-            CockpitScreenHandler.Instance.SetValue(r.screenType, r.amount);
+            if (r.displayer != null) {
+                r.displayer.SetMaxValue(r.maxCapacity);
+                r.displayer.SetValue(r.amount);
+            }
             r.lastAmount = r.amount;
-            r.wasFullLastCheck = (r.amount >= r.maxCapacity);
-            r.wasEmptyLastCheck = (r.amount <= 0);
         }
     }
 
-    void Update() => CalculateDeltas();
+    void Update()
+    {
+        CalculateDeltas();
+        // flash display if fuel is being consumed
+        HandleFuelEvents();
+    }
+
+    void HandleFuelEvents()
+    {
+        timeSinceLastEvent += Time.deltaTime;
+        
+        if (timeSinceLastEvent >= consumptionEventInterval)
+        {
+            if (Mathf.Abs(fuel.delta) > 0.0001f)
+            {
+                OnFuelConsumptionChanged.Invoke(
+                    fuel.data, 
+                    fuel.amount, 
+                    fuel.delta
+                );
+            }
+            timeSinceLastEvent = 0f;
+        }
+    }
 
     void CalculateDeltas()
     {
@@ -53,32 +82,6 @@ public class ResourceHandler : MonoBehaviour
         {
             r.delta = r.amount - r.lastAmount;
             r.lastAmount = r.amount;
-
-            // Check capacity warnings
-            if (r.amount >= r.maxCapacity && !r.wasFullLastCheck)
-            {
-                Logger.Log($"{r.data.displayName} reached maximum capacity!", 
-                          LogLevel.WARNING, 
-                          LogType.RESOURCE);
-                r.wasFullLastCheck = true;
-            }
-            else if (r.amount < r.maxCapacity)
-            {
-                r.wasFullLastCheck = false;
-            }
-
-            // Check empty warnings (only for fuel)
-            if (r.data == fuelResource && r.amount <= 0 && !r.wasEmptyLastCheck)
-            {
-                Logger.Log("Fuel depleted!", 
-                          LogLevel.WARNING, 
-                          LogType.RESOURCE);
-                r.wasEmptyLastCheck = true;
-            }
-            else if (r.amount > 0)
-            {
-                r.wasEmptyLastCheck = false;
-            }
         }
     }
 
@@ -92,30 +95,23 @@ public class ResourceHandler : MonoBehaviour
     {
         if (!FindResource(data, out var r)) return;
         
-        float newAmount = Mathf.Min(r.amount + amount, r.maxCapacity);
-        if (newAmount == r.maxCapacity && r.amount != r.maxCapacity)
-        {
-            Logger.Log($"{data.displayName} reached maximum capacity!", 
-                      LogLevel.WARNING, 
-                      LogType.RESOURCE);
-        }
-        r.amount = newAmount;
+        r.amount = Mathf.Min(r.amount + amount, r.maxCapacity);
         UpdateDisplay(r);
     }
 
-    public void Consume(ResourceData data, float amount, float duration = 0f)
+    // scripts that call this should always check if there are enough resources
+    public void Consume(ResourceData data, float amount, bool displayFlash = false, float duration = 0f)
     {
         if (!FindResource(data, out var r)) return;
-        
-        if (r.amount <= 0)
-        {
-            if (data == fuelResource)
-            {
-                Logger.Log("Attempted to consume fuel when empty!", 
-                          LogLevel.WARNING, 
-                          LogType.RESOURCE);
-            }
-            return;
+        if (displayFlash) {
+            OnFuelConsumptionChanged.Invoke(
+                    fuel.data, 
+                    fuel.amount, 
+                    fuel.delta
+                );
+        }
+        if (r.amount <= 0) {
+            Logger.Log("Not enough Resources of type: " + r.data.ToString(), LogLevel.WARNING, LogType.RESOURCE);
         }
 
         if (duration > 0f) 
@@ -124,13 +120,8 @@ public class ResourceHandler : MonoBehaviour
         }
         else
         {
-            r.amount = Mathf.Max(0, r.amount - amount);
-            if (r.amount <= 0 && data == fuelResource)
-            {
-                Logger.Log("Fuel depleted!", 
-                          LogLevel.WARNING, 
-                          LogType.RESOURCE);
-            }
+            float consumedAmount = Mathf.Min(amount, r.amount);
+            r.amount -= consumedAmount;
             UpdateDisplay(r);
         }
     }
@@ -150,17 +141,11 @@ public class ResourceHandler : MonoBehaviour
         }
 
         r.amount = endAmount;
-        if (r.amount <= 0 && r.data == fuelResource)
-        {
-            Logger.Log("Fuel depleted during gradual consumption!", 
-                      LogLevel.WARNING, 
-                      LogType.RESOURCE);
-        }
         UpdateDisplay(r);
     }
 
     void UpdateDisplay(Resource r) => 
-        CockpitScreenHandler.Instance.SetValue(r.screenType, r.amount);
+        r.displayer.SetValue(r.amount);
 
     bool FindResource(ResourceData data, out Resource resource)
     {
@@ -173,21 +158,7 @@ public class ResourceHandler : MonoBehaviour
             }
         }
         
-        Logger.Log($"Resource not found: {data.displayName}", 
-                  LogLevel.WARNING, 
-                  LogType.RESOURCE);
         resource = null;
         return false;
-    }
-
-    public Resource GetFuelResource()
-    {
-        if (!FindResource(fuelResource, out var r))
-        {
-            Logger.Log("Fuel resource reference is missing!", 
-                      LogLevel.ERROR, 
-                      LogType.RESOURCE);
-        }
-        return r;
     }
 }

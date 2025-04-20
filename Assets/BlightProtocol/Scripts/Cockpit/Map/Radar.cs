@@ -64,39 +64,25 @@ public class Radar : MonoBehaviour
 
     public void Pulse(float modifier)
     {
-        if (ResourceHandler.Instance.GetAmount(radarData.pulseCostResource) > radarData.pulseCost)
+        ResourceHandler.Instance.Consume(radarData.pulseCostResource, radarData.pulseCost, true, 1f);
+
+        Collider[] hitColliders = Physics.OverlapSphere(
+            transform.position,
+            radarData.pulseRange * modifier,
+            layerMask
+        );
+        if (hitColliders.Length > 0)
         {
-            ResourceHandler.Instance.Consume(radarData.pulseCostResource, radarData.pulseCost, 1f);
+            var sortedColliders = hitColliders
+                .Take(hitColliders.Length)
+                .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
+                .ToArray();
 
-            Collider[] hitColliders = Physics.OverlapSphere(
-                transform.position,
-                radarData.pulseRange * modifier,
-                layerMask
-            );
-            if (hitColliders.Length > 0)
-            {
-                var sortedColliders = hitColliders
-                    .Take(hitColliders.Length)
-                    .OrderBy(c => (transform.position - c.transform.position).sqrMagnitude)
-                    .ToArray();
-
-                StartCoroutine(DisplayPulseMarkers(sortedColliders, modifier));
-                StartCoroutine(DisplayPulseRing(modifier));
-            }
-
-            /*mapRevealer.Pulse(
-                radarData.pulseStartRange * revealStartRangeFactor,
-                radarData.pulseRange * revealRangeFactor * modifier,
-                radarData.pulseSpeed * revealSpeedFactor,
-                radarData.pulseDuration
-            );*/
-
-            Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
+            StartCoroutine(DisplayPulseMarkers(sortedColliders, modifier));
+            StartCoroutine(DisplayPulseRing(modifier));
         }
-        else
-        {
-            Debug.LogWarning("Not enough Resources!");
-        }
+
+        Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
     }
 
     private IEnumerator DisplayPulseMarkers(Collider[] colliders, float modifier)
@@ -108,7 +94,7 @@ public class Radar : MonoBehaviour
         foreach (var collider in colliders)
         {
             if (collider == null) continue;
-            
+
             EnergySignature signature = collider.GetComponent<EnergySignature>();
             if (signature == null) continue;
 
@@ -128,17 +114,19 @@ public class Radar : MonoBehaviour
             yield return new WaitForSeconds(signatureDelay);
         }
     }
-    private IEnumerator DisplayPulseRing(float modifier) {
+    private IEnumerator DisplayPulseRing(float modifier)
+    {
         pulseSpriteRenderer.enabled = true;
         float elapsedTime = 0f;
-        while (elapsedTime < radarData.pulseDuration) {
+        while (elapsedTime < radarData.pulseDuration)
+        {
             float normalizedTime = elapsedTime / radarData.pulseDuration;
             float currentSpeed = pulseSpeedCurve.Evaluate(normalizedTime) * radarData.pulseSpeed;
             float currentStrength = pulseStrengthCurve.Evaluate(normalizedTime / radarData.pulseDuration);
 
-            pulseSpriteTransform.localScale = Vector3.one * Mathf.Lerp(radarData.pulseStartRange, radarData.pulseRange * modifier, normalizedTime); 
+            pulseSpriteTransform.localScale = Vector3.one * Mathf.Lerp(radarData.pulseStartRange, radarData.pulseRange * modifier, normalizedTime);
             pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, currentStrength);
-            
+
             elapsedTime += Time.deltaTime * currentSpeed;
             yield return null;
         }

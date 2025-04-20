@@ -44,13 +44,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042cc2ba391a10749a67da08b01e2953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnFuelConsumptionChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  _consumptionEventInterval: 2
   resources:
   - data: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
-    displayID: gas
+    screenType: 0
     amount: 300
     maxCapacity: 1000
     lastAmount: 0
     delta: 0
-    wasFullLastCheck: 0
-    wasEmptyLastCheck: 0
   fuelResource: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}

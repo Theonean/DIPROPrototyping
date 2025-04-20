@@ -35,6 +35,21 @@ public class FPVInputManager : MonoBehaviour
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(InitialiseLookMode);
     }
 
+    void OnEnable()
+    {
+        if (PerspectiveSwitcher.Instance != null)
+        {
+            PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(InitialiseLookMode);
+            PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(InitialiseLookMode);
+        }
+
+    }
+
+    void OnDisable()
+    {
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(InitialiseLookMode);
+    }
+
     private void InitialiseLookMode()
     {
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)

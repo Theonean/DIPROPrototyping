@@ -16,6 +16,21 @@ public class StartHarvestLever : ACLever
         harvester.changedState.AddListener(HarvesterChangedState);
     }
 
+    void OnEnable()
+    {
+        if (harvester != null)
+        {
+            harvester.changedState.RemoveListener(HarvesterChangedState);
+            harvester.changedState.AddListener(HarvesterChangedState);
+        }
+
+    }
+
+    void OnDisable()
+    {
+        harvester.changedState.RemoveListener(HarvesterChangedState);
+    }
+
     protected override void OnPulled(float normalizedValue)
     {
         if (normalizedValue >= 0.9f && !isPulled)

@@ -10,13 +10,17 @@ public class HarvesterHealth : MonoBehaviour
     public int health;
     private bool dead = false;
 
-    public List<Slider> healthSliders = new List<Slider>();
+    
 
     [SerializeField]
     private GameObject m_carrierBalloon;
 
     public UnityEvent<GameObject> tookDamage;
     public UnityEvent died;
+
+    [Header("Visualization")]
+    public List<Slider> healthSliders = new List<Slider>();
+    [SerializeField] private ACScreenValueDisplayer healthDisplayer;
 
     // Start is called before the first frame update
     void Start()
@@ -29,8 +33,8 @@ public class HarvesterHealth : MonoBehaviour
             slider.value = maxHealth;
         }
 
-        CockpitScreenHandler.Instance.SetValue(ScreenType.HEALTH, health);
-        CockpitScreenHandler.Instance.SetMaxValue(ScreenType.HEALTH, maxHealth);
+        healthDisplayer.SetValue(health);
+        healthDisplayer.SetMaxValue(maxHealth);
     }
 
     void OnTriggerEnter(Collider other)
@@ -59,7 +63,8 @@ public class HarvesterHealth : MonoBehaviour
         {
             slider.value = health;
         }
-        CockpitScreenHandler.Instance.SetValue(ScreenType.HEALTH, health);
+        healthDisplayer.SetValue(health);
+        healthDisplayer.OnFeedback();
 
         if (health <= 0)
         {
