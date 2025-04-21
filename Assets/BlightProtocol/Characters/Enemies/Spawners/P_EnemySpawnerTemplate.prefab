@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e852302a7dd2fd64fa3f18fa27fdfa5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -238,7 +238,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e852302a7dd2fd64fa3f18fa27fdfa5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -360,7 +360,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e852302a7dd2fd64fa3f18fa27fdfa5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -536,7 +536,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: e852302a7dd2fd64fa3f18fa27fdfa5c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -890,6 +890,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EnergySignature
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: eClass
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: eFrequency
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: eMagnitude
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

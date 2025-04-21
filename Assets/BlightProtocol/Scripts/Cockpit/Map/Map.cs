@@ -123,7 +123,7 @@ public class Map : MonoBehaviour, IFPVInteractable
             Destroy(customMarkers[0]);
             customMarkers.RemoveAt(0);
         }
-        GameObject newMarker = Instantiate(customMarker, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+        GameObject newMarker = Instantiate(customMarker, new Vector3(position.x, 0, position.z), Quaternion.identity);
         customMarkers.Add(newMarker);
     }
 

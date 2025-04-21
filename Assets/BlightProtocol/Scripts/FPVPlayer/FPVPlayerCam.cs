@@ -13,6 +13,8 @@ public class FPVPlayerCam : MonoBehaviour
     public static FPVPlayerCam Instance { get; private set; }
     private FPVInteractionHandler interactionHandler;
 
+    public bool isLocked;
+
     [Header("Free Look")]
     public float freeSens = 300f;
 
@@ -48,6 +50,7 @@ public class FPVPlayerCam : MonoBehaviour
 
     public void UpdateCameraRotation(FPVLookMode lookMode, Vector2 input)
     {
+        if (isLocked) return;
         switch (lookMode)
         {
             case FPVLookMode.FREELOOK:

@@ -108,7 +108,7 @@ public class Radar : MonoBehaviour
                 yield return null;
             }
 
-            Map.Instance.SetEnergySignature(new Vector3(collider.transform.position.x, 0, collider.transform.position.z), signature);
+            Map.Instance.SetEnergySignature(new Vector3(collider.transform.position.x, 0.1f, collider.transform.position.z), signature);
 
 
             yield return new WaitForSeconds(signatureDelay);
