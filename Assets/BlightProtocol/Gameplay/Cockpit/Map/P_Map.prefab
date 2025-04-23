@@ -219,7 +219,9 @@ MonoBehaviour:
   interactText: '[Left Click] Set Target Position'
   _touchPoint: {fileID: 6229622761052047826}
   cameraLockPos: {fileID: 7489744427844457229}
-  mapCamera: {fileID: 0}
+  mapCameraCam: {fileID: 0}
+  dragSpeed: 0.1
+  cameraBounds: {x: 50, y: 50}
   hitMask:
     serializedVersion: 2
     m_Bits: 16777216

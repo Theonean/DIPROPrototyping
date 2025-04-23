@@ -9,7 +9,7 @@ public class Periscope : ACButton
     [SerializeField] private float deadZone;
     [SerializeField] private Camera periscopeCamera;
     [SerializeField] private GameObject mesh;
-    private Collider mainCollider;
+    [SerializeField] private Collider mainCollider;
     private Animator meshAnimator;
     Ray ray;
     RaycastHit hit;
@@ -35,7 +35,6 @@ public class Periscope : ACButton
     {
         markerHitMask = Map.Instance.hitMask;
         meshAnimator = mesh.GetComponent<Animator>();
-        mainCollider = mesh.GetComponent<Collider>();
     }
 
     public override void OnHover()
@@ -53,10 +52,8 @@ public class Periscope : ACButton
                     targetIcon.anchoredPosition = screenPoint;
                     TouchPoint.transform.position = hit.point;
                 }
-
             }
         }
-
     }
 
     public override void OnStartInteract()
