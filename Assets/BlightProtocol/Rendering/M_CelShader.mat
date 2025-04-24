@@ -47,13 +47,18 @@ Material:
     m_Ints: []
     m_Floats:
     - _AmbientStrength: 0.7
+    - _Bottom_Blend_Size: 1
+    - _Bottom_Height: 0
     - _FalloffAmount: 0
+    - _Falloff_Amount: 0
     - _Fog_Density: 0
     - _FresnelSize: 0
+    - _Fresnel_Size: 0.2
     - _GradientFalloff: 1
     - _Gradient_Position: 0
     - _LightingCutoff: 0.01
     - _Lighting_Cutoff: 0.585
+    - _Normal_Step: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _RampOffset: 0
@@ -63,19 +68,28 @@ Material:
     - _Smoothness: 729.7
     - _Step_2_Brightness: 0.851
     - _Step_2_Percent: 0.676
+    - _Top_Blend_Size: 1
+    - _Top_Height: 0
     - _UseColor: 0
     - _UseGradientOverlay: 0
     - _UseSpecular: 0
+    - _Use_Specular: 0
+    - _Use_Triplanar_Bottom: 0
+    - _Use_Triplanar_Top: 0
     m_Colors:
+    - _Bottom_Color: {r: 0, g: 0, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DiffuseColor: {r: 1, g: 1, b: 1, a: 0}
     - _Emission_Color: {r: 0, g: 0, b: 0, a: 0}
     - _FresnelColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Fresnel_Color: {r: 0, g: 0, b: 0, a: 0}
     - _GroundColor: {r: 0, g: 0, b: 0, a: 0}
+    - _Modifier_Color: {r: 1, g: 1, b: 1, a: 0}
     - _RampTinting: {r: 0.35686275, g: 0.12156863, b: 0.30588236, a: 1}
-    - _ShadowTint: {r: 0.8784314, g: 0.43529412, b: 0.78039217, a: 1}
+    - _ShadowTint: {r: 0.8679245, g: 0.70825917, b: 0.8326003, a: 1}
     - _Shadow_Tint: {r: 0.7264151, g: 0.620194, b: 0.70061857, a: 1}
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 0}
+    - _Top_Blend_Color: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &7781299155573986741
 MonoBehaviour:
