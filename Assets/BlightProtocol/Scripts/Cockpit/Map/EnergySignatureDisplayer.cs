@@ -1,37 +1,37 @@
 using System.Collections.Generic;
-using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class EnergySignatureDisplayer : MonoBehaviour
 {
-    [SerializeField] private List<EnergySignatureBase> classSprites;
-    [SerializeField] private List<GameObject> frequencySprites;
-    [SerializeField] private SpriteRenderer frequencySprite;
+    [SerializeField] private List<EnergySignatureBase> baseSprites;
     [SerializeField] private List<GameObject> magnitudeSprites;
 
     [SerializeField] private float fadeDelay = 5f;
     [SerializeField] private float fadeDuration = 5f;
-
-    private SpriteRenderer activeClass;
-    private SpriteRenderer activeFrequency;
-    private SpriteRenderer[] activeMagnitudes;
-    [SerializeField] float lifeTime = 30f; 
+    [SerializeField] float lifeTime = 30f;
     public LineRenderer lineRenderer;
 
     public void DisplaySignature(EnergySignature signature)
     {
-        classSprites[signature.eClass].gameObject.SetActive(true);
-        activeClass = classSprites[signature.eClass].GetComponent<SpriteRenderer>();
-
-        frequencySprites[signature.eFrequency].SetActive(true); ;
-        activeFrequency = frequencySprites[signature.eFrequency].GetComponent<SpriteRenderer>();
-
-        activeMagnitudes = new SpriteRenderer[signature.eMagnitude];
-        for (int i = 0; i < signature.eMagnitude; i++)
+        Debug.Log(signature.eMagnitude);
+        signature.onDestroy.AddListener(DestroyThis);
+        EnergySignatureBase baseSprite = baseSprites.FirstOrDefault(b => b.type == signature.baseType);
+        baseSprite.gameObject.SetActive(true);
+        if (signature.eMagnitude > 0)
         {
-            magnitudeSprites[i].SetActive(true);
-            magnitudeSprites[i].transform.position = classSprites[signature.eClass].magnitudePositions[i].position;
-            activeMagnitudes[i] = magnitudeSprites[i].GetComponent<SpriteRenderer>();
+            for (int i = 0; i < signature.eMagnitude; i++)
+            {
+                magnitudeSprites[i].SetActive(true);
+                magnitudeSprites[i].transform.position = baseSprite.magnitudePositions[i].position;
+                magnitudeSprites[i].transform.rotation = baseSprite.magnitudePositions[i].rotation;
+            }
         }
+
+    }
+
+    private void DestroyThis()
+    {
+        Destroy(gameObject);
     }
 }

@@ -1,8 +1,15 @@
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 [System.Serializable]
 public class EnergySignature : MonoBehaviour
 {
-    public int eClass;
-    public int eFrequency;
+    public EnergySignatureBaseType baseType;
     public int eMagnitude;
+
+    public UnityEvent onDestroy;
+
+    void OnDestroy() {
+        onDestroy.Invoke();
+    }
 }
