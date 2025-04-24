@@ -52,7 +52,7 @@ MonoBehaviour:
   mapMask: {fileID: 9109117577764644604}
   biomeColor: {r: 0.6603774, g: 0.2574751, b: 0.14017446, a: 1}
   mapBoundsX: {x: -800, y: 800}
-  mapBoundsZ: {x: -300, y: 1300}
+  mapBoundsZ: {x: -300, y: 5500}
   tileSize: 50
 --- !u!23 &3257321921656381280
 MeshRenderer:
@@ -154,11 +154,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8953171067687354571}
-  - component: {fileID: 1811028198314671644}
-  - component: {fileID: 3820853898020919127}
-  - component: {fileID: 694807753515804190}
-  m_Layer: 4
-  m_Name: MapMask
+  - component: {fileID: 7723201259638873640}
+  - component: {fileID: 5095087302608209388}
+  m_Layer: 30
+  m_Name: PlayerTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,7 +178,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4039918833565982375}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1811028198314671644
+--- !u!114 &7723201259638873640
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -188,23 +187,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 9109117577764644604}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f463a70860ba4e94a876606adc669f8e, type: 3}
+  m_Script: {fileID: 11500000, guid: e5ada9bf6312e884da3beeb64064e9be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maskShader: {fileID: 4800000, guid: bc305bd759a8a4f458c003ad7d11ace3, type: 3}
-  resolution: 1024
-  _previewSize: 256
-  _showPreview: 1
---- !u!33 &3820853898020919127
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9109117577764644604}
-  m_Mesh: {fileID: 0}
---- !u!23 &694807753515804190
-MeshRenderer:
+  lineRenderer: {fileID: 5095087302608209388}
+  recordInterval: 1
+  maxPositions: 1000
+--- !u!120 &5095087302608209388
+LineRenderer:
+  serializedVersion: 2
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -215,15 +206,15 @@ MeshRenderer:
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
+  m_MotionVectors: 0
+  m_LightProbeUsage: 0
+  m_ReflectionProbeUsage: 0
+  m_RayTracingMode: 0
   m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c0371c7ae827bb64d98ee3ea127b5fb3, type: 2}
+  - {fileID: 2100000, guid: 6ff3a7e2cfa5a79438166ce317eee3f4, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -244,4 +235,65 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
+  m_Positions:
+  - {x: 0, y: 0, z: 0}
+  - {x: 100, y: 0, z: 0}
+  m_Parameters:
+    serializedVersion: 3
+    widthMultiplier: 4
+    widthCurve:
+      serializedVersion: 2
+      m_Curve:
+      - serializedVersion: 3
+        time: 0
+        value: 1
+        inSlope: 0
+        outSlope: 0
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0.33333334
+        outWeight: 0.33333334
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+    colorGradient:
+      serializedVersion: 2
+      key0: {r: 0.6320754, g: 2, b: 1.8927118, a: 1}
+      key1: {r: 0.5, g: 0.5, b: 0.5, a: 0.8}
+      key2: {r: 0, g: 0, b: 0, a: 0}
+      key3: {r: 0, g: 0, b: 0, a: 0}
+      key4: {r: 0, g: 0, b: 0, a: 0}
+      key5: {r: 0, g: 0, b: 0, a: 0}
+      key6: {r: 0, g: 0, b: 0, a: 0}
+      key7: {r: 0, g: 0, b: 0, a: 0}
+      ctime0: 22040
+      ctime1: 65535
+      ctime2: 0
+      ctime3: 0
+      ctime4: 0
+      ctime5: 0
+      ctime6: 0
+      ctime7: 0
+      atime0: 0
+      atime1: 22430
+      atime2: 65535
+      atime3: 0
+      atime4: 0
+      atime5: 0
+      atime6: 0
+      atime7: 0
+      m_Mode: 0
+      m_ColorSpace: 0
+      m_NumColorKeys: 2
+      m_NumAlphaKeys: 3
+    numCornerVertices: 0
+    numCapVertices: 0
+    alignment: 0
+    textureMode: 1
+    textureScale: {x: 0.14, y: 1}
+    shadowBias: 0.5
+    generateLightingData: 0
+  m_MaskInteraction: 0
+  m_UseWorldSpace: 1
+  m_Loop: 0
+  m_ApplyActiveColorSpace: 1

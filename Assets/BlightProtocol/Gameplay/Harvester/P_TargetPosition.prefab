@@ -47,6 +47,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -97,6 +101,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -147,6 +155,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -197,6 +209,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -328,6 +344,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -378,6 +398,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -408,7 +432,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0.11, z: 0}
-  m_LocalScale: {x: 5, y: 5, z: 5}
+  m_LocalScale: {x: 10, y: 10, z: 10}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 6974876797619073052}
@@ -455,7 +479,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 10
   m_Sprite: {fileID: 21300000, guid: 47e55e4d7f5651242a1593957ee95b8d, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 0, g: 1, b: 0.9197531, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -512,6 +536,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2
@@ -562,6 +590,10 @@ MonoBehaviour:
   AllEnemiesDead:
     m_PersistentCalls:
       m_Calls: []
+  spawnedEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  enemyTypesToSpawn: 4
   AutoSpawnOverride: 0
   spawnRadius: 20
   enemyScale: 2

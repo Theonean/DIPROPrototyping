@@ -15,7 +15,6 @@ public class Radar : MonoBehaviour
 
     [Header("Pulse")]
     public RadarPulseData radarData;
-    private MapRevealer mapRevealer;
     public float pulseSeismoEmission = 5f;
 
     // Collider & Sprite
@@ -52,14 +51,6 @@ public class Radar : MonoBehaviour
         }
 
         pulseSpriteRenderer = pulseSpriteTransform.GetComponent<SpriteRenderer>();
-        mapRevealer = GetComponentInChildren<MapRevealer>();
-        InitiateMapRevealer();
-    }
-
-    private void InitiateMapRevealer()
-    {
-        mapRevealer.pulseStrengthCurve = pulseStrengthCurve;
-        mapRevealer.pulseSpeedCurve = pulseSpeedCurve;
     }
 
     public void Pulse(float modifier)
