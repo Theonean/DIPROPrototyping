@@ -145,6 +145,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2425880987206794547, guid: 7a7a22707f8742f42bdac0c640103b07,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3605333566551954773, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
       propertyPath: m_Name
@@ -371,3 +376,4 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   adjustSpeed: 0.2
+  speedDisplayer: {fileID: 0}
