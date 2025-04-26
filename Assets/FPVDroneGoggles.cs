@@ -61,7 +61,6 @@ public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
 
     void EnterDroneMode()
     {
-        Debug.Log("enterDrone");
         PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
     }
 
@@ -69,7 +68,6 @@ public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
     {
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV && isActive)
         {
-            Debug.Log("exitDrone");
             meshAnimator.SetTrigger("deactivate");
             isAnimating = true;
             isActive = false;
