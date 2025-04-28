@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class MapCamera : MonoBehaviour
 {
-    private Camera cam;
+    [SerializeField] private Camera cam;
     public float yPos;
     float xOffset;
     float zOffset;
@@ -23,7 +23,6 @@ public class MapCamera : MonoBehaviour
     {
         harvester = Harvester.Instance; 
         yPos = transform.position.y;
-        cam = GetComponent<Camera>();
         ApplyDepthValues();
         ApplyRevealRadius();      
     }

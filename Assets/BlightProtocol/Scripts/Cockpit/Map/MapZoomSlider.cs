@@ -10,7 +10,7 @@ public class MapZoomSlider : ACSlider
 
     void Start()
     {
-        SetPositionNormalized((mapCamera.yPos - minHeight) / (maxHeight - minHeight));
+        SetPositionNormalized((mapCamera.transform.position.y - minHeight) / (maxHeight - minHeight));
         mapCamera.maxYPos = maxHeight;
         mapCamera.minYPos = minHeight;
     }
