@@ -12,5 +12,5 @@ public enum EnergySignatureBaseType
 public class EnergySignatureBase : MonoBehaviour
 {
     public EnergySignatureBaseType type;
-    public List<Transform> magnitudePositions;
+    public List<GameObject> magnitudeSprites;
 }

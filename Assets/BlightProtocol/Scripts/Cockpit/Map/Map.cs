@@ -131,7 +131,7 @@ public class Map : MonoBehaviour, IFPVInteractable
     {
         if (!discoveredSignatures.TryGetValue(signature, out GameObject marker))
         {
-            GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.Euler(90, 0, 0));
+            GameObject newSignatureMarker = Instantiate(energySignaturePing, new Vector3(position.x, 0, position.z), Quaternion.identity);
             newSignatureMarker.GetComponent<EnergySignatureDisplayer>().DisplaySignature(signature);
 
             discoveredSignatures[signature] = newSignatureMarker;
