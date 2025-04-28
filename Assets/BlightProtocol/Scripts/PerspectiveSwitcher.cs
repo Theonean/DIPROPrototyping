@@ -83,7 +83,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.position = spawnPosition;
 
         Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
-        playerRB.velocity = Vector3.zero;
+        playerRB.linearVelocity = Vector3.zero;
         playerRB.isKinematic = false;
 
         playerCore.transform.rotation = Quaternion.identity;
@@ -116,7 +116,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.shield.SetActive(false);
 
         Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
-        playerRB.velocity = Vector3.zero;
+        playerRB.linearVelocity = Vector3.zero;
         playerRB.isKinematic = false;
 
         RocketAimController rocketAimController = playerCore.GetComponentInChildren<RocketAimController>();

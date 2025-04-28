@@ -104,7 +104,7 @@ public class DroneMovement : MonoBehaviour
                 else
                 {
                     moveDirection = Vector3.zero;
-                    rb.velocity = Vector3.zero;
+                    rb.linearVelocity = Vector3.zero;
                     m_AccelerationTime = 0f;
                     currentState = DroneMovementState.Idle;
                     movementSFXInstance.setParameterByName("Movement", 0f);
@@ -128,7 +128,7 @@ public class DroneMovement : MonoBehaviour
         // Skip movement if idle
         if (IsIdle)
         {
-            rb.velocity = Vector3.zero;
+            rb.linearVelocity = Vector3.zero;
             return;
         }
 
@@ -136,7 +136,7 @@ public class DroneMovement : MonoBehaviour
         if (IsDashing)
         {
             Vector3 dashVelocity = moveDirection * currentSpeed;
-            rb.velocity = dashVelocity;
+            rb.linearVelocity = dashVelocity;
             return;
         }
 
@@ -153,7 +153,7 @@ public class DroneMovement : MonoBehaviour
             m_CurrentVelocity = Vector3.MoveTowards(m_CurrentVelocity, targetVelocity, currentSpeed);
         }
 
-        rb.velocity = m_CurrentVelocity;
+        rb.linearVelocity = m_CurrentVelocity;
     }
 
     private void Dash()

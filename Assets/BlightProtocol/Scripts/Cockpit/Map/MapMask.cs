@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.Rendering;
-using UnityEngine.Experimental.Rendering.Universal;
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -15,7 +15,7 @@ public class MapMask : MonoBehaviour
     private Vector2 _mapBoundsX;
     private Vector2 _mapBoundsZ;
     private float _aspectRatio;
-    public RenderObjectsPass maskPass;
+    public UnityEngine.Rendering.Universal.RenderObjectsPass maskPass;
     private Renderer _renderer;
 
 #if UNITY_EDITOR

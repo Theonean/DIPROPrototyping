@@ -9,13 +9,13 @@ public class MapCamera : MonoBehaviour
     float zOffset;
     public float minYPos;
     public float maxYPos;
-    public FullScreenPassRendererFeature depthPass;
+    public UnityEngine.Rendering.Universal.FullScreenPassRendererFeature depthPass;
 
     public Vector2 minDepthRange = new(0.11f, 0.57f);
     public Vector2 maxDepthRange = new(0.14f, 0.61f);
 
     [Header("Reveal Radius")]
-    [SerializeField] private FullScreenPassRendererFeature maskCompositing;
+    [SerializeField] private UnityEngine.Rendering.Universal.FullScreenPassRendererFeature maskCompositing;
     [SerializeField] private float  revealRadius = 10f;
     private Harvester harvester;
 

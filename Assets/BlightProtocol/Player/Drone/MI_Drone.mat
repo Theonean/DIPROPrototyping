@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0353a89b1f911e48b9e16bdc9f2e058, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  version: 7
+  version: 9
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MI_Drone
-  m_Shader: {fileID: -6465566751694194690, guid: 5fbc074a51565b743bcee7f17dc971ec,
+  m_Shader: {fileID: -6465566751694194690, guid: 98c955782fd8b6d40a49588d87bca5bc,
     type: 3}
   m_Parent: {fileID: 2100000, guid: 32e705e2917b1ba4384470a101dcdd1a, type: 2}
   m_ModifiedSerializedProperties: 0
@@ -32,7 +32,8 @@ Material:
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
-  disabledShaderPasses: []
+  disabledShaderPasses:
+  - MOTIONVECTORS
   m_LockedProperties: 
   m_SavedProperties:
     serializedVersion: 3
@@ -50,3 +51,4 @@ Material:
     m_Colors:
     - _Emission_Color: {r: 0, g: 1, b: 0.9197531, a: 1}
   m_BuildTextureStacks: []
+  m_AllowLocking: 1
