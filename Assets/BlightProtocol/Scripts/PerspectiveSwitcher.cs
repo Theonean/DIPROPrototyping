@@ -160,7 +160,14 @@ public class PerspectiveSwitcher : MonoBehaviour
                 animationCurve.Evaluate(t / animationDuration)
             );
 
-            // Rotation stays locked to endCam, so no need to lerp it
+            if (fromPerspective == CameraPerspective.DRONE)
+            {
+                perspectiveSwitchCamera.transform.rotation = Quaternion.Lerp(
+                    startCam.transform.rotation,
+                    endCam.transform.rotation,
+                    animationCurve.Evaluate(t / animationDuration)
+                );
+            }
             yield return null;
         }
 
