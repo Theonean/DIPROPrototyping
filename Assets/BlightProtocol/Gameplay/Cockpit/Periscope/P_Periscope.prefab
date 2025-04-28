@@ -325,7 +325,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6302766562471432465
 Transform:
   m_ObjectHideFlags: 0
@@ -540,9 +540,9 @@ MonoBehaviour:
   interactText: 
   _touchPoint: {fileID: 8653099844254242479}
   targetIcon: {fileID: 3215432995733610699}
-  deadZone: 0
   periscopeCamera: {fileID: 3436149213771014179}
   mesh: {fileID: 3141331742080312497}
+  screen: {fileID: 5587162731457379133}
   mainCollider: {fileID: 6222325766431435234}
   hitMask:
     serializedVersion: 2
@@ -826,6 +826,12 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!23 &5587162731457379133 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: -1526509560930016547, guid: 849597ac300f67949a9a42f18d70156a,
+    type: 3}
+  m_PrefabInstance: {fileID: 2835342806339688928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5266471949391781269
 PrefabInstance:
   m_ObjectHideFlags: 0

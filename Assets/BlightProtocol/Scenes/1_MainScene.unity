@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 410087040}
-  m_IndirectSpecularColor: {r: 0.99999946, g: 0, b: 0.99999946, a: 1}
+  m_IndirectSpecularColor: {r: 1.3760797, g: 0.72016513, b: 0.3840338, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1376,6 +1376,11 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2733438934867278994, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2830769559891424739, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: crosshair
@@ -1591,6 +1596,11 @@ PrefabInstance:
       propertyPath: mapCamera
       value: 
       objectReference: {fileID: 2101371582}
+    - target: {fileID: 7968526060356177303, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8038706047492797719, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_LocalScale.x
