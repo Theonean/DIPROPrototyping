@@ -22,7 +22,6 @@ public class Map : MonoBehaviour, IFPVInteractable
 
     public Transform cameraLockPos;
     public bool IsCurrentlyInteractable { get; set; } = true;
-    private bool isInFocus = false;
 
     [Header("Display")]
     public Camera mapCameraCam;
@@ -30,7 +29,6 @@ public class Map : MonoBehaviour, IFPVInteractable
     public float dragSpeed = 0.1f;
     public Vector2 cameraBounds = new Vector2(50f, 50f);
     private Vector3 dragOrigin;
-    private bool isDragging = false;
 
     [Header("Target Setting")]
     private Ray ray;

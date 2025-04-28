@@ -28,10 +28,19 @@ public class HarvesterTrailTracker : MonoBehaviour
         switch (zoneState)
         {
             case ZoneState.MOVING:
-                isRecording = true;
+                if (!isRecording)
+                {
+                    StopAllCoroutines();
+                    isRecording = true;
+                    StartCoroutine(RecordPath());
+                }
                 break;
             default:
-                isRecording = false;
+                if (isRecording)
+                {
+                    StopAllCoroutines();
+                    isRecording = false;
+                }
                 break;
         }
     }
