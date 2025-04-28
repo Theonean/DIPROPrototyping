@@ -62,6 +62,9 @@ public class MapCamera : MonoBehaviour
 
     private void ApplyRevealRadius() {
         // transform range from world to screen space
+        if (harvester == null) {
+            harvester = Harvester.Instance;
+        }
         Vector3 worldSpaceRangeEnd = harvester.transform.position + new Vector3(0f, 0f, revealRadius);
         float screenSpaceRange = cam.WorldToViewportPoint(worldSpaceRangeEnd).y - 0.5f;
         maskCompositing.passMaterial.SetFloat("_RingSize", screenSpaceRange);

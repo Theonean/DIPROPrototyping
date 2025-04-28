@@ -24,6 +24,10 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _MainTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -38,12 +42,15 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Normal_Amplification: 1
+    - _ColorVariation: 2
+    - _EdgeThickness: 1
+    - _Normal_Amplification: 0
     - _Object_Pos_Influence: 1
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _World_Modulo: 1500
-    m_Colors: []
+    - _World_Modulo: 100
+    m_Colors:
+    - _EdgeColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &46382781378778832
 MonoBehaviour:
