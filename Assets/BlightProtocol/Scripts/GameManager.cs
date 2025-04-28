@@ -83,7 +83,7 @@ public class FrankenGameManager : MonoBehaviour
 
         m_GameState = GameState.GAMEOVER;
 
-        PlayerCore playerCore = FindObjectOfType<PlayerCore>();
+        PlayerCore playerCore = PlayerCore.Instance;
         playerCore.enabled = false;
 
         resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
