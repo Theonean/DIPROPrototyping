@@ -73,6 +73,10 @@ public class Rocket : MonoBehaviour
             {
                 other.GetComponentInParent<EnemyHiveManager>().TakeDamage();
             }
+            if (other.gameObject.CompareTag("CrystalRock"))
+            {
+                other.GetComponent<CrystalRock>().SpawnCrystals();
+            }
 
             HandleBouncingFrontException(other);
             return;
