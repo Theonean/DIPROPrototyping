@@ -34,7 +34,6 @@ public class FPVPlayerCam : MonoBehaviour
     private float yRotation;
     [Header("Fixed Positions")]
     [SerializeField] List<Transform> fixedPositions;
-    private int currentPosition = 0;
 
     void Awake()
     {
