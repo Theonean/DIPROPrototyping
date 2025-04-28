@@ -321,7 +321,7 @@ GameObject:
   - component: {fileID: 7859764705768809498}
   m_Layer: 0
   m_Name: FPVPlayerCam
-  m_TagString: Untagged
+  m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -543,6 +543,7 @@ MonoBehaviour:
   lookMode: 3
   freeLookToggle: 101
   crosshair: {fileID: 0}
+  fPVCamRotator: {fileID: 3213562045665057296}
 --- !u!1 &8905023374743348437
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,6 +618,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   transitionTime: 1
+  fpvCam: {fileID: 4507141996083591843}
 --- !u!1001 &3055001021720175858
 PrefabInstance:
   m_ObjectHideFlags: 0

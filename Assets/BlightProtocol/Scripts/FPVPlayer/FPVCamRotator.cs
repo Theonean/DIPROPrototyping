@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FPCCamRotator : MonoBehaviour
+public class FPVCamRotator : MonoBehaviour
 {
     [SerializeField] private List<Transform> positions;
     [SerializeField] private AnimationCurve animationCurve;

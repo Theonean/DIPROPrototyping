@@ -6,9 +6,9 @@ public class Periscope : ACButton
     public static Periscope Instance { get; private set; }
     [SerializeField] private RectTransform targetIcon;
     private Vector2 screenPoint;
-    [SerializeField] private float deadZone;
     [SerializeField] private Camera periscopeCamera;
     [SerializeField] private GameObject mesh;
+    [SerializeField] private Renderer screen;
     [SerializeField] private Collider mainCollider;
     private Animator meshAnimator;
     Ray ray;
@@ -42,7 +42,7 @@ public class Periscope : ACButton
         this.DefaultOnHover();
         if (isActive)
         {
-            Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, 100f, hitMask))
             {
@@ -74,6 +74,10 @@ public class Periscope : ACButton
             isAnimating = true;
             isActive = true;
             mainCollider.enabled = false;
+
+            // enable screen
+            periscopeCamera.enabled = true;
+            screen.material.SetColor("_BaseColor", Color.white);
         }
 
     }
@@ -89,6 +93,10 @@ public class Periscope : ACButton
         isAnimating = true;
         isActive = false;
         mainCollider.enabled = true;
+
+        // disable screen
+        periscopeCamera.enabled = false;
+        screen.material.SetColor("_BaseColor", Color.black);
     }
 
     void Update()
@@ -100,18 +108,5 @@ public class Periscope : ACButton
         {
             isAnimating = false;
         }
-
-        /*mouseY = Input.mousePosition.y;
-        Vector3 targetIconPos = new Vector3(0f, Mathf.Clamp(mouseY, deadZone, Screen.height - deadZone), 0f);
-        targetIcon.anchoredPosition = targetIconPos;
-
-        ray = persicopeCamera.ScreenPointToRay(new Vector3(Screen.width / 2, targetIconPos.y, 0f));
-
-        if (Input.GetKeyDown(KeyCode.Mouse0)) {
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask)) {
-                Debug.Log(hit.point);
-                Map.Instance.SetCustomMarker(hit.point);
-            }
-        }*/
     }
 }
