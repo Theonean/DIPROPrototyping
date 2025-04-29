@@ -11,10 +11,12 @@ public class FPVInputManager : MonoBehaviour
     [Header("References")]
     [SerializeField] private GameObject crosshair;
     private FPVPlayerCam fpvPlayerCam;
+    private FPVCamRotator fpvCamRotator;
 
     public bool IsLooking { get; private set; }
     public bool IsInteracting { get; private set; }
     public bool BlockInteraction { get; set; }
+    private bool IsActive;
 
 
     private void Awake()
@@ -32,6 +34,7 @@ public class FPVInputManager : MonoBehaviour
     private void Start()
     {
         fpvPlayerCam = FPVPlayerCam.Instance;
+        fpvCamRotator = GetComponentInChildren<FPVCamRotator>();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(InitialiseLookMode);
     }
 
@@ -55,6 +58,7 @@ public class FPVInputManager : MonoBehaviour
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
         {
             IsLooking = true;
+            IsActive = true;
             switch (lookMode)
             {
                 case FPVLookMode.FREELOOK:
@@ -74,6 +78,7 @@ public class FPVInputManager : MonoBehaviour
         else
         {
             SetCursorState(false, true);
+            IsActive = false;
         }
 
     }
@@ -107,6 +112,7 @@ public class FPVInputManager : MonoBehaviour
 
     public void Update()
     {
+        if (!IsActive) return;
         if (lookMode == FPVLookMode.FREELOOK_TOGGLE && Input.GetKeyDown(freeLookToggle))
         {
             SetCursorState(!IsLooking, IsLooking);
@@ -127,6 +133,9 @@ public class FPVInputManager : MonoBehaviour
 
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.A)) fpvCamRotator.ChangePosition(-1);
+        if (Input.GetKeyDown(KeyCode.D)) fpvCamRotator.ChangePosition(1);
 
     }
 

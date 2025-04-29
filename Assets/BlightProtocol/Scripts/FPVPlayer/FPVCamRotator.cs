@@ -10,13 +10,7 @@ public class FPVCamRotator : MonoBehaviour
 
     private int currentPosition = 0;
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.A)) ChangePosition(-1);
-        if (Input.GetKeyDown(KeyCode.D)) ChangePosition(1);
-    }
-
-    void ChangePosition(int direction)
+    public void ChangePosition(int direction)
     {
         currentPosition += direction;
         if (currentPosition >= positions.Count)
