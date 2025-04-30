@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Events;
+using UnityEngine.Rendering.Universal;
 
 public enum CameraPerspective
 {
@@ -23,6 +24,8 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Transform dronePositionInHarvester;
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
     public UnityEvent onPerspectiveSwitched;
+    [Header("Visuals")]
+    [SerializeField] private FullScreenPassRendererFeature dissolveEffect;
 
     void Awake()
     {
@@ -140,7 +143,9 @@ public class PerspectiveSwitcher : MonoBehaviour
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
     {
         Camera startCam = fromPerspective == CameraPerspective.FPV ? fpCamera : droneCamera;
+        float startFOV = startCam.fieldOfView;
         Camera endCam = fromPerspective == CameraPerspective.FPV ? droneCamera : fpCamera;
+        float endFOV = endCam.fieldOfView;
 
         // Set starting position and lock rotation to the destination
         perspectiveSwitchCamera.transform.position = startCam.transform.position;
@@ -149,6 +154,14 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = true;
         startCam.enabled = false;
         endCam.enabled = false;
+        
+        float startDissolve = dissolveEffect.passMaterial.GetFloat("_GridDissolve");
+        float dissolve = startDissolve;
+        float endDissolve = 0f;
+        // set visuals target depending on fromPerspective
+        if (fromPerspective == CameraPerspective.DRONE) endDissolve = 1f;
+        else endDissolve = 0f;
+
 
         float t = 0f;
         while (t < animationDuration)
@@ -160,6 +173,8 @@ public class PerspectiveSwitcher : MonoBehaviour
                 animationCurve.Evaluate(t / animationDuration)
             );
 
+            perspectiveSwitchCamera.fieldOfView = Mathf.Lerp(startFOV, endFOV, animationCurve.Evaluate(t / animationDuration));
+
             if (fromPerspective == CameraPerspective.DRONE)
             {
                 perspectiveSwitchCamera.transform.rotation = Quaternion.Lerp(
@@ -168,6 +183,10 @@ public class PerspectiveSwitcher : MonoBehaviour
                     animationCurve.Evaluate(t / animationDuration)
                 );
             }
+            dissolve = Mathf.Lerp(startDissolve, endDissolve, animationCurve.Evaluate(t / animationDuration));
+            // will properly implement later
+            //dissolveEffect.passMaterial.SetFloat("_GridDissolve", dissolve);
+
             yield return null;
         }
 

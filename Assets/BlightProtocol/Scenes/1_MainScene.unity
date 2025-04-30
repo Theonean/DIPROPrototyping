@@ -1611,7 +1611,7 @@ PrefabInstance:
     - target: {fileID: 7393997915790091810, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 9623
+      value: 9629
       objectReference: {fileID: 0}
     - target: {fileID: 7612502052822836832, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -3232,7 +3232,7 @@ MonoBehaviour:
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []
-  m_RendererIndex: -1
+  m_RendererIndex: 7
   m_VolumeLayerMask:
     serializedVersion: 2
     m_Bits: 1
@@ -3728,6 +3728,8 @@ MonoBehaviour:
   onPerspectiveSwitched:
     m_PersistentCalls:
       m_Calls: []
+  dissolveEffect: {fileID: -1231489967761161615, guid: e9b50229d208eab478a5a6cb80b7d2e5,
+    type: 2}
 --- !u!4 &1125150884
 Transform:
   m_ObjectHideFlags: 0
