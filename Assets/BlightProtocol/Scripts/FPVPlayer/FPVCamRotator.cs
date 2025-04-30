@@ -8,7 +8,20 @@ public class FPVCamRotator : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private float transitionTime = 1f;
 
-    private int currentPosition = 0;
+    private int currentPosition = 1;
+
+    void Start()
+    {
+        SetPosition(1);
+    }
+
+    private void SetPosition(int position) {
+        if (position > 0 && position < positions.Count) {
+            Vector3 lookDir = positions[currentPosition].localPosition - transform.localPosition;
+            float targetY = Quaternion.LookRotation(lookDir).eulerAngles.y;
+            transform.localRotation = Quaternion.Euler(0, targetY, 0);
+        }
+    }
 
     public void ChangePosition(int direction)
     {

@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class Periscope : ACButton
+public class Periscope : ACInteractable
 {
     public static Periscope Instance { get; private set; }
     [SerializeField] private RectTransform targetIcon;
@@ -31,15 +31,15 @@ public class Periscope : ACButton
         UpdateHover = true;
     }
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         markerHitMask = Map.Instance.hitMask;
         meshAnimator = mesh.GetComponent<Animator>();
     }
 
-    public override void OnHover()
+    public override void OnUpdateHover()
     {
-        this.DefaultOnHover();
         if (isActive)
         {
             ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);

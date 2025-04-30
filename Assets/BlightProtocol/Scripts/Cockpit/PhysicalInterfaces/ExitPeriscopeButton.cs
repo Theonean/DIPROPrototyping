@@ -2,12 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitPeriscopeButton : ACButton
+public class ExitPeriscopeButton : ACInteractable
 {
     private Periscope periscope;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         periscope = Periscope.Instance;
     }
 

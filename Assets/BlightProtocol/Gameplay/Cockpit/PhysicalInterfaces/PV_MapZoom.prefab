@@ -8,10 +8,30 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1594808994609072640, guid: 7a7a22707f8742f42bdac0c640103b07,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 3605333566551954773, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
       propertyPath: m_Name
       value: PV_MapZoom
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734142419548167844, guid: 7a7a22707f8742f42bdac0c640103b07,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6734142419548167844, guid: 7a7a22707f8742f42bdac0c640103b07,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6830806969184360390, guid: 7a7a22707f8742f42bdac0c640103b07,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
       objectReference: {fileID: 0}
     - target: {fileID: 7860786976945023506, guid: 7a7a22707f8742f42bdac0c640103b07,
         type: 3}
@@ -84,6 +104,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8540969458602549291}
   m_PrefabAsset: {fileID: 0}
+--- !u!23 &4107525795517221650 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5730622214327888697, guid: 7a7a22707f8742f42bdac0c640103b07,
+    type: 3}
+  m_PrefabInstance: {fileID: 8540969458602549291}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4114850636146126721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5736878537146666922, guid: 7a7a22707f8742f42bdac0c640103b07,
@@ -108,9 +134,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c230c8a8bfcb6da4c90aeb22fc2315d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: Zoom
-  interactText: 
-  _touchPoint: {fileID: 3262449656624984602}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 3262449656624984602}
+  hullRenderer: {fileID: 4107525795517221650}
   head: {fileID: 3167126349445463695}
   maxPos: {fileID: 8439941635263927391}
   minPos: {fileID: 4114850636146126721}

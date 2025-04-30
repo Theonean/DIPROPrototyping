@@ -10,8 +10,9 @@ public class SpeedSlider : ACSlider
     [SerializeField] private ACScreenValueDisplayer speedDisplayer;
 
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         speedStepCount = HarvesterSpeedControl.Instance.GetSpeedStepCount();
         speedstepPositions = new float[speedStepCount];
         InitializeStepPositions();

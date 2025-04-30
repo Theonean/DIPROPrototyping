@@ -28,6 +28,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 23
       objectReference: {fileID: 0}
+    - target: {fileID: 2256027966432836039, guid: 26ca7adc8dac574448493ba8a6d6a327,
+        type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 2329107976647546816, guid: 26ca7adc8dac574448493ba8a6d6a327,
         type: 3}
       propertyPath: m_Layer
@@ -156,8 +161,12 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 6514100043750109896, guid: 26ca7adc8dac574448493ba8a6d6a327,
         type: 3}
-      insertIndex: 1
+      insertIndex: -1
       addedObject: {fileID: 4992507945903850613}
+    - targetCorrespondingSourceObject: {fileID: 6710413194080706915, guid: 26ca7adc8dac574448493ba8a6d6a327,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2645845972197753545}
   m_SourcePrefab: {fileID: 100100000, guid: 26ca7adc8dac574448493ba8a6d6a327, type: 3}
 --- !u!4 &490599680297222215 stripped
 Transform:
@@ -165,6 +174,68 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7217234709412385374}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4109791421213668157 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6710413194080706915, guid: 26ca7adc8dac574448493ba8a6d6a327,
+    type: 3}
+  m_PrefabInstance: {fileID: 7217234709412385374}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2645845972197753545
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4109791421213668157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 1
+  bakeKeys:
+  - {fileID: 0}
+  bakeValues:
+  - data:
+    - {x: 0.8944272, y: -0.4472136, z: 0}
+    - {x: 0.8944272, y: 0.4472136, z: 0}
+    - {x: 0.45142776, y: -0.4472136, z: 0.7721483}
+    - {x: 0.45142776, y: 0.4472136, z: 0.7721483}
+    - {x: 0.45142776, y: -0.4472136, z: 0.7721483}
+    - {x: 0.45142776, y: 0.4472136, z: 0.7721483}
+    - {x: -0.4514278, y: -0.4472136, z: 0.7721483}
+    - {x: -0.4514278, y: 0.4472136, z: 0.7721483}
+    - {x: -0.4514278, y: -0.4472136, z: 0.7721483}
+    - {x: -0.4514278, y: 0.4472136, z: 0.7721483}
+    - {x: -0.70710677, y: -0.70710677, z: -0.000000072548325}
+    - {x: -0.70710677, y: 0.70710677, z: -0.000000072548325}
+    - {x: -0.4514277, y: -0.4472136, z: -0.7721483}
+    - {x: -0.4514277, y: 0.4472136, z: -0.7721483}
+    - {x: -0.4514277, y: -0.4472136, z: -0.7721483}
+    - {x: -0.4514277, y: 0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: -0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: 0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: -0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: 0.4472136, z: -0.7721483}
+    - {x: 0.8944272, y: -0.4472136, z: 0}
+    - {x: 0.8944272, y: 0.4472136, z: 0}
+    - {x: 0.45142776, y: -0.4472136, z: 0.7721483}
+    - {x: 0, y: -1, z: 0}
+    - {x: 0.8944272, y: -0.4472136, z: 0}
+    - {x: -0.4514278, y: -0.4472136, z: 0.7721483}
+    - {x: -0.70710677, y: -0.70710677, z: -0.000000072548325}
+    - {x: -0.4514277, y: -0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: -0.4472136, z: -0.7721483}
+    - {x: 0.8944272, y: 0.4472136, z: 0}
+    - {x: 0, y: 1, z: 0}
+    - {x: 0.45142776, y: 0.4472136, z: 0.7721483}
+    - {x: -0.4514278, y: 0.4472136, z: 0.7721483}
+    - {x: -0.70710677, y: 0.70710677, z: -0.000000072548325}
+    - {x: -0.4514277, y: 0.4472136, z: -0.7721483}
+    - {x: 0.45142776, y: 0.4472136, z: -0.7721483}
 --- !u!1 &4489666344504123542 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6514100043750109896, guid: 26ca7adc8dac574448493ba8a6d6a327,
@@ -183,9 +254,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdbcf4ec0afb704386c76ce903138de, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: Pulse
-  interactText: 
-  _touchPoint: {fileID: 490599680297222215}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 490599680297222215}
   chargeTime: 1
   isCharging: 0
   sweetSpotMinMax: {x: 0.5, y: 0.8}

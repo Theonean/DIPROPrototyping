@@ -203,9 +203,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05eff288308c2ab4fa16546e36f893da, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: Heal
-  interactText: 
-  _touchPoint: {fileID: 846398940083111259}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 846398940083111259}
+  outline: {fileID: 6943335044187852710}
   head: {fileID: 1684078168735557980}
   maxPos: {fileID: 1520227602857709106}
   minPos: {fileID: 7715579840261393476}
@@ -215,6 +217,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  adjustSpeed: 1
   leverPivot: {fileID: 6292407508825485821}
   leverMinAngle: 0
   leverMaxAngle: 180
@@ -240,6 +243,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8612323010364374993}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6943335044187852710 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1720005942443405431, guid: 794f81c0ff163a540b5a36d19c209a04,
+    type: 3}
+  m_PrefabInstance: {fileID: 8612323010364374993}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7715579840261393476 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2059869998184330133, guid: 794f81c0ff163a540b5a36d19c209a04,

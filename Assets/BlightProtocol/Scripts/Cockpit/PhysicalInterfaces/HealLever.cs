@@ -9,8 +9,9 @@ public class HealLever : ACLever
     public int healAmount = 10;
     public int cost = 100;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         harvester = Harvester.Instance;
         resourceHandler = ResourceHandler.Instance;
     }

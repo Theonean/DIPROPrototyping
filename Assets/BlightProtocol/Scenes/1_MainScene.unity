@@ -1347,7 +1347,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2036542008}
+      objectReference: {fileID: 2066695950}
     - target: {fileID: 948259854138839442, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_Mesh
@@ -1468,6 +1468,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3342389746040986996, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 3356291284854507111, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_IsActive
@@ -1521,7 +1526,7 @@ PrefabInstance:
     - target: {fileID: 4573711933651059395, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4648915008057216363, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1536,7 +1541,7 @@ PrefabInstance:
     - target: {fileID: 4741413974353239091, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4854128659489790020, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1602,11 +1607,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 2036542008}
+      objectReference: {fileID: 2066695950}
     - target: {fileID: 7393997915790091810, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 9158
+      value: 9581
       objectReference: {fileID: 0}
     - target: {fileID: 7612502052822836832, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -1661,7 +1666,7 @@ PrefabInstance:
     - target: {fileID: 7879960597532953639, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7931201647149493366, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -5412,13 +5417,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &2036542008
+--- !u!43 &2066695950
 Mesh:
   m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: pb_Mesh-1556184(Clone)
+  m_Name: pb_Mesh-288820
   serializedVersion: 11
   m_SubMeshes:
   - serializedVersion: 2
@@ -6705,13 +6710,8 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3152930537164012693, guid: 8de0626cc76de2a4985961779ec64a50,
         type: 3}
-      propertyPath: field of view
-      value: 40
-      objectReference: {fileID: 0}
-    - target: {fileID: 3152930537164012693, guid: 8de0626cc76de2a4985961779ec64a50,
-        type: 3}
       propertyPath: near clip plane
-      value: 40
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 4945401053796915340, guid: 8de0626cc76de2a4985961779ec64a50,
         type: 3}

@@ -13,8 +13,8 @@ public class FPVInteractionHandler : MonoBehaviour
     [SerializeField] private GameObject touchTarget;
 
     private Camera fpvCamera;
-    private IFPVInteractable activeInteractable;
-    public IFPVInteractable hoveredInteractable;
+    private ACInteractable activeInteractable;
+    public ACInteractable hoveredInteractable;
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ public class FPVInteractionHandler : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, raycastRange, hitMask))
         {
-            var interactable = hit.collider.GetComponentInParent<IFPVInteractable>();
+            var interactable = hit.collider.GetComponentInParent<ACInteractable>();
             if (interactable != null)
             {
                 HandleHover(interactable);
@@ -78,17 +78,17 @@ public class FPVInteractionHandler : MonoBehaviour
         }
     }
 
-    private void HandleHover(IFPVInteractable interactable)
+    private void HandleHover(ACInteractable interactable)
     {
-        if (interactable != hoveredInteractable)
+        if (interactable != null && interactable != hoveredInteractable)
         {
             ClearHover();
             hoveredInteractable = interactable;
-            hoveredInteractable.OnHover();
+            hoveredInteractable.OnStartHover();
         }
         else if (interactable.UpdateHover)
         {
-            interactable.OnHover();
+            interactable.OnUpdateHover();
         }
     }
 
@@ -97,11 +97,12 @@ public class FPVInteractionHandler : MonoBehaviour
         if (hoveredInteractable != null)
         {
             FPVUI.Instance?.ClearLookAtText();
+            hoveredInteractable.OnEndHover();
             hoveredInteractable = null;
         }
     }
 
-    private void StartInteraction(IFPVInteractable interactable)
+    private void StartInteraction(ACInteractable interactable)
     {
         activeInteractable = interactable;
         touchTarget.transform.position = interactable.TouchPoint.position;

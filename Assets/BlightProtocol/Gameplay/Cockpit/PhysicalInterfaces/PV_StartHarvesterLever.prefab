@@ -101,9 +101,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6dddef5787e718c4ea0179700b388bc1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: Start Harvest
-  interactText: 
-  _touchPoint: {fileID: 6238549923419984165}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 6238549923419984165}
+  hullRenderer: {fileID: 7352169315062061740}
   head: {fileID: 5364850847235702050}
   maxPos: {fileID: 5202824921943972428}
   minPos: {fileID: 3909113191495686202}
@@ -131,12 +133,13 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  adjustSpeed: 1
   leverPivot: {fileID: 756556403088156035}
   leverMinAngle: 0
   leverMaxAngle: 180
   isPulled: 0
   harvestButtonFeedback: {fileID: 1334296846481413530}
-  resourcePointDetectionRange: 100
+  resourcePointDetectionRange: 50
   resourcePointLayer:
     serializedVersion: 2
     m_Bits: 16777216
@@ -173,6 +176,12 @@ Transform:
 --- !u!4 &6238549923419984165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8951499644313746058, guid: 794f81c0ff163a540b5a36d19c209a04,
+    type: 3}
+  m_PrefabInstance: {fileID: 3074222854597127087}
+  m_PrefabAsset: {fileID: 0}
+--- !u!23 &7352169315062061740 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5521961164213006595, guid: 794f81c0ff163a540b5a36d19c209a04,
     type: 3}
   m_PrefabInstance: {fileID: 3074222854597127087}
   m_PrefabAsset: {fileID: 0}

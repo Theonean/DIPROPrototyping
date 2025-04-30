@@ -2,32 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class ACSlider : MonoBehaviour, IFPVInteractable
+public abstract class ACSlider : ACInteractable
 {
-    public bool IsCurrentlyInteractable { get; set; } = true;
-    public string lookAtText = "E";
-    public string interactText = "";
-    public bool UpdateHover { get; set; } = false;
-    public bool UpdateInteract { get; set; } = true;
-
-    [SerializeField] private Transform _touchPoint;
-    public Transform TouchPoint
-    {
-        get => _touchPoint;
-        set => _touchPoint = value;
-    }
-
-    public string LookAtText
-    {
-        get => lookAtText;
-        set => lookAtText = value;
-    }
-
-    public string InteractText
-    {
-        get => interactText;
-        set => interactText = value;
-    }
 
     public Transform head;
     public Transform maxPos;
@@ -38,29 +14,26 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
     protected float progress = 0f; // Value between 0 and 1
     protected Vector2[] screenSpaceBounds;
 
-    protected abstract void OnValueChanged(float normalizedValue);
-
-    public virtual void OnStartInteract()
-    {
-        screenSpaceBounds = this.GetScreenSpaceBounds(minPos.position, maxPos.position, FPVPlayerCam.Instance.GetComponent<Camera>());
+    protected override void Start() {
+        base.Start();
+        UpdateInteract = true;
     }
 
-    public virtual void OnUpdateInteract()
+    protected abstract void OnValueChanged(float normalizedValue);
+
+    public override void OnStartInteract()
+    {
+        screenSpaceBounds = GetScreenSpaceBounds(minPos.position, maxPos.position, FPVPlayerCam.Instance.GetComponent<Camera>());
+    }
+
+    public override void OnUpdateInteract()
     {
         Drag();
     }
 
-    public virtual void OnEndInteract()
-    {}
-
-    public virtual void OnHover()
-    {
-        this.DefaultOnHover();
-    }
-
     public virtual void Drag()
     {
-        progress = this.GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
+        progress = GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
         progress = Mathf.Clamp01(progress);
 
         Vector3 newPos = GetPosition(progress);
@@ -103,6 +76,33 @@ public abstract class ACSlider : MonoBehaviour, IFPVInteractable
     protected virtual Vector3 GetPosition(float progress)
     {
         return Vector3.Lerp(minPos.position, maxPos.position, progress);
+    }
+
+    public static Vector2[] GetScreenSpaceBounds(Vector3 worldPosMin, Vector3 worldPosMax, Camera camera)
+    {
+        Vector3 screenMin = camera.WorldToScreenPoint(worldPosMin);
+        Vector3 screenMax = camera.WorldToScreenPoint(worldPosMax);
+        return new Vector2[2] { screenMin, screenMax };
+    }
+
+    public static float GetMouseProgressOnSlider(Vector2 screenSpaceMin, Vector2 screenSpaceMax, Vector2 MousePos)
+    {
+        // Direction vector of the bounds (A)
+        Vector2 boundsVector = screenSpaceMax - screenSpaceMin;
+
+        // Vector from min to MousePos (AP)
+        Vector2 AP = MousePos - screenSpaceMin;
+
+        // Projection of AP onto A: t = (AP • A) / (A • A)
+        float t = Vector2.Dot(AP, boundsVector) / Vector2.Dot(boundsVector, boundsVector);
+
+        // Clamp t to ensure C stays within the bounds segment
+        t = Mathf.Clamp01(t);
+
+        // Compute C as min + t * boundsVector
+        Vector2 C = screenSpaceMin + t * boundsVector;
+
+        return t;
     }
 }
 

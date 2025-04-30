@@ -1,22 +1,20 @@
 using UnityEngine;
 
-public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
+public class FPVDroneGoggles : ACInteractable
 {
-    public bool IsCurrentlyInteractable { get; set; } = true;
-    public string lookAtText = "E";
-    public string interactText = "";
-    public bool UpdateHover { get; set; } = false;
-    public bool UpdateInteract { get; set; } = false;
-    [SerializeField] private Transform _touchPoint;
     [SerializeField] private GameObject mesh;
     private Animator meshAnimator;
     private bool isActive = false;
     private bool isAnimating = false;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         meshAnimator = mesh.GetComponent<Animator>();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
+        meshAnimator.SetTrigger("activate");
+        isAnimating = true;
+        isActive = true;
     }
 
     void Update()
@@ -30,24 +28,7 @@ public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
         }
     }
 
-    public Transform TouchPoint
-    {
-        get => _touchPoint;
-        set => _touchPoint = value;
-    }
-    public string LookAtText
-    {
-        get => lookAtText;
-        set => lookAtText = value;
-    }
-
-    public string InteractText
-    {
-        get => interactText;
-        set => interactText = value;
-    }
-
-    public void OnStartInteract()
+    public override void OnStartInteract()
     {
         if (isAnimating) return;
         else
@@ -72,12 +53,5 @@ public class FPVDroneGoggles : MonoBehaviour, IFPVInteractable
             isAnimating = true;
             isActive = false;
         }
-    }
-    public void OnUpdateInteract() { }
-    public void OnEndInteract() { }
-
-    public void OnHover()
-    {
-        this.DefaultOnHover();
     }
 }

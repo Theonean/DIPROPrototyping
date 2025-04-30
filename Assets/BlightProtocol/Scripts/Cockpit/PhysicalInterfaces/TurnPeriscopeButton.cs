@@ -2,13 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnPeriscopeButton : ACButton
+public class TurnPeriscopeButton : ACInteractable
 {
     [SerializeField] private Vector3 direction;
     private PersicopeCamera persicopeCamera;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         persicopeCamera = PersicopeCamera.Instance;
         UpdateInteract = true;
     }

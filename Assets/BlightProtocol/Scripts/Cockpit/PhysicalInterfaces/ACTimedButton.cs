@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections;
 
-public abstract class ACTimedButton : ACButton
+public abstract class ACTimedButton : ACInteractable
 {
     public float chargeTime = 1f;
     public bool isCharging = false;

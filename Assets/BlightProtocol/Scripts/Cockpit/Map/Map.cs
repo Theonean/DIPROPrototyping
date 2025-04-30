@@ -2,26 +2,11 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
 
-public class Map : MonoBehaviour, IFPVInteractable
+public class Map : ACInteractable
 {
     public static Map Instance { get; private set; }
-    public string lookAtText = "E";
-    public string interactText = "[Left Click] Set Target Position\n[Right Click Drag] Move Map";
-    public bool UpdateHover { get; set; } = true;
-    public bool UpdateInteract { get; set; } = true;
-
-    [SerializeField] private Transform _touchPoint;
-    public Transform TouchPoint
-    {
-        get => _touchPoint;
-        set => _touchPoint = value;
-    }
-
-    public string LookAtText { get => lookAtText; set => lookAtText = value; }
-    public string InteractText { get => interactText; set => interactText = value; }
 
     public Transform cameraLockPos;
-    public bool IsCurrentlyInteractable { get; set; } = true;
 
     [Header("Display")]
     public Camera mapCameraCam;
@@ -62,11 +47,16 @@ public class Map : MonoBehaviour, IFPVInteractable
     void Start()
     {
         mapCamera = mapCameraCam.GetComponent<MapCamera>();
+        UpdateHover = true;
     }
 
-    public void OnHover()
+    public override void OnStartHover()
     {
-        this.DefaultOnHover();
+        base.OnStartHover();
+    }
+
+    public override void OnUpdateHover()
+    {
         Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
         {
@@ -76,7 +66,7 @@ public class Map : MonoBehaviour, IFPVInteractable
         }
     }
 
-    public void OnStartInteract()
+    public override void OnStartInteract()
     {
         // Left click - set target
         if (Input.GetMouseButton(0))
@@ -87,13 +77,6 @@ public class Map : MonoBehaviour, IFPVInteractable
             }
         }
     }
-
-    public void OnUpdateInteract()
-    {
-    }
-
-    public void OnEndInteract()
-    { }
 
     public void SetTarget(Vector3 screenPoint)
     {

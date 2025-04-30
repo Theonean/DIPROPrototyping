@@ -10,8 +10,9 @@ public class StartHarvestLever : ACLever
     ResourcePoint closestResourcePoint;
 
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         harvester = Harvester.Instance;
         harvester.changedState.AddListener(HarvesterChangedState);
     }

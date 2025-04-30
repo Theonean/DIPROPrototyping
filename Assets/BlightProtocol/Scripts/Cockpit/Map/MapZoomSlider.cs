@@ -8,8 +8,9 @@ public class MapZoomSlider : ACSlider
     public float minHeight = 100f;
     public float maxHeight = 300;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         SetPositionNormalized((mapCamera.transform.position.y - minHeight) / (maxHeight - minHeight));
         mapCamera.maxYPos = maxHeight;
         mapCamera.minYPos = minHeight;

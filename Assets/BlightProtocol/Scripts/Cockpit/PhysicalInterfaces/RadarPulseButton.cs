@@ -11,8 +11,9 @@ public class RadarPulseButton : ACTimedButton
 
     private Image _fillImage;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         if (pulseSlider != null)
         {
             _fillImage = pulseSlider.slider.fillRect.GetComponent<Image>();

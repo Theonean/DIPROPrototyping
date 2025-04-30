@@ -32,7 +32,7 @@ public abstract class ACLever : ACSlider
 
     public override void Drag() {
         if (!IsCurrentlyInteractable) return;
-        progress = this.GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
+        progress = GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
         float angle = GetAngle(progress);
 
         leverPivot.localRotation = Quaternion.AngleAxis(angle, Vector3.right);

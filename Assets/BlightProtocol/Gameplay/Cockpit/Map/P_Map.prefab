@@ -59,6 +59,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -215,9 +218,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27fe3df1f89520b44a99ed1be97a7cc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: Set Target
-  interactText: '[Left Click] Set Target Position'
-  _touchPoint: {fileID: 6229622761052047826}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 6229622761052047826}
   cameraLockPos: {fileID: 7489744427844457229}
   mapCameraCam: {fileID: 0}
   dragSpeed: 0.1
