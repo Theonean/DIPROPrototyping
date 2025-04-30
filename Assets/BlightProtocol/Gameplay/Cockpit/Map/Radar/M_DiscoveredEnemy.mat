@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: M_EnergySignature
+  m_Name: M_DiscoveredEnemy
   m_Shader: {fileID: -6465566751694194690, guid: 84e4ddc2019ba20479be8f44f5e3a254,
     type: 3}
   m_Parent: {fileID: 0}
@@ -56,13 +56,18 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Fill: 0
+    - _Hatch: 0
+    - _LineAngle: -0.69
+    - _LineDensity: 100
+    - _LineThickness: -0.7
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Ring: 0
     - _RingFalloff: 0.08
-    - _RingSize: 0.21
-    - _RingThickness: 0.21
+    - _RingSize: 0.24
+    - _RingThickness: 0.02
     m_Colors:
-    - _Color: {r: 1, g: 0.0916364, b: 0, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

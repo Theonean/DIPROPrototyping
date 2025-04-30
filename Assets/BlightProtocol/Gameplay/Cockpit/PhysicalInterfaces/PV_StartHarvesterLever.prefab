@@ -13,6 +13,31 @@ PrefabInstance:
       propertyPath: m_text
       value: Harvest
       objectReference: {fileID: 0}
+    - target: {fileID: 1160621274356738805, guid: 794f81c0ff163a540b5a36d19c209a04,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1160621274356738805, guid: 794f81c0ff163a540b5a36d19c209a04,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362979314226225706, guid: 794f81c0ff163a540b5a36d19c209a04,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362979314226225706, guid: 794f81c0ff163a540b5a36d19c209a04,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.397
+      objectReference: {fileID: 0}
+    - target: {fileID: 1362979314226225706, guid: 794f81c0ff163a540b5a36d19c209a04,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.464
+      objectReference: {fileID: 0}
     - target: {fileID: 2448333288546938124, guid: 794f81c0ff163a540b5a36d19c209a04,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -105,7 +130,6 @@ MonoBehaviour:
   UpdateHover: 0
   UpdateInteract: 0
   TouchPoint: {fileID: 6238549923419984165}
-  hullRenderer: {fileID: 7352169315062061740}
   head: {fileID: 5364850847235702050}
   maxPos: {fileID: 5202824921943972428}
   minPos: {fileID: 3909113191495686202}
@@ -176,12 +200,6 @@ Transform:
 --- !u!4 &6238549923419984165 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8951499644313746058, guid: 794f81c0ff163a540b5a36d19c209a04,
-    type: 3}
-  m_PrefabInstance: {fileID: 3074222854597127087}
-  m_PrefabAsset: {fileID: 0}
---- !u!23 &7352169315062061740 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5521961164213006595, guid: 794f81c0ff163a540b5a36d19c209a04,
     type: 3}
   m_PrefabInstance: {fileID: 3074222854597127087}
   m_PrefabAsset: {fileID: 0}
