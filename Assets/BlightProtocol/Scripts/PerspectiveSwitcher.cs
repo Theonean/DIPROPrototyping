@@ -99,6 +99,8 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
 
         Cursor.lockState = CursorLockMode.None;
+
+        Shader.SetGlobalFloat("_isTopDown", 1);
     }
 
     public void SetFPVPerspective()
@@ -136,10 +138,12 @@ public class PerspectiveSwitcher : MonoBehaviour
         {
             pC.enabled = false;
         }
+        Shader.SetGlobalFloat("_isTopDown", 0);
     }
 
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
     {
+        Shader.SetGlobalFloat("_isTopDown", 0);
         Camera startCam = fromPerspective == CameraPerspective.FPV ? fpCamera : droneCamera;
         float startFOV = startCam.fieldOfView;
         Camera endCam = fromPerspective == CameraPerspective.FPV ? droneCamera : fpCamera;
