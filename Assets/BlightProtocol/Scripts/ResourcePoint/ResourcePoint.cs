@@ -6,11 +6,7 @@ public class ResourcePoint : MonoBehaviour
     public float resourceAmount = 100f;
     private bool isAboveGround = false;
     public GameObject aboveGround;
-    void Start()
-    {
-        isAboveGround = Random.value > 0.5f;
-        aboveGround.SetActive(isAboveGround); 
-    }
+    
     public bool HarvestResource(float amount) {
         if(resourceAmount <= 0f)
             return false;

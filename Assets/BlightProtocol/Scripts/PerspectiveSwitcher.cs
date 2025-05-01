@@ -24,8 +24,6 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Transform dronePositionInHarvester;
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
     public UnityEvent onPerspectiveSwitched;
-    [Header("Visuals")]
-    [SerializeField] private FullScreenPassRendererFeature dissolveEffect;
 
     void Awake()
     {
@@ -154,13 +152,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = true;
         startCam.enabled = false;
         endCam.enabled = false;
-        
-        float startDissolve = dissolveEffect.passMaterial.GetFloat("_GridDissolve");
-        float dissolve = startDissolve;
-        float endDissolve = 0f;
-        // set visuals target depending on fromPerspective
-        if (fromPerspective == CameraPerspective.DRONE) endDissolve = 1f;
-        else endDissolve = 0f;
+
 
 
         float t = 0f;
@@ -183,9 +175,6 @@ public class PerspectiveSwitcher : MonoBehaviour
                     animationCurve.Evaluate(t / animationDuration)
                 );
             }
-            dissolve = Mathf.Lerp(startDissolve, endDissolve, animationCurve.Evaluate(t / animationDuration));
-            // will properly implement later
-            //dissolveEffect.passMaterial.SetFloat("_GridDissolve", dissolve);
 
             yield return null;
         }

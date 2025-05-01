@@ -121,5 +121,6 @@ public class Radar : MonoBehaviour
             elapsedTime += Time.deltaTime * currentSpeed;
             yield return null;
         }
+        pulseSpriteRenderer.color = new Color(pulseSpriteRenderer.color.r, pulseSpriteRenderer.color.g, pulseSpriteRenderer.color.b, 0f);
     }
 }

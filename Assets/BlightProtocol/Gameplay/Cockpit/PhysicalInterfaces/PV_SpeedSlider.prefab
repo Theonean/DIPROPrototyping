@@ -282,12 +282,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6322813216805520300}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &1745258742203508885 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5730622214327888697, guid: 7a7a22707f8742f42bdac0c640103b07,
-    type: 3}
-  m_PrefabInstance: {fileID: 6322813216805520300}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4226633771719698878 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7860786976945023506, guid: 7a7a22707f8742f42bdac0c640103b07,
@@ -324,12 +318,12 @@ MonoBehaviour:
     displayColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
     isBaseSpeed: 0
     seismoEmission: 0
-  - speed: 5
+  - speed: 6
     fuelCost: 0
     displayColor: {r: 0.6240406, g: 1, b: 0, a: 1}
     isBaseSpeed: 1
     seismoEmission: 0
-  - speed: 10
+  - speed: 12
     fuelCost: 20
     displayColor: {r: 1, g: 0, b: 0, a: 1}
     isBaseSpeed: 0
@@ -355,7 +349,6 @@ MonoBehaviour:
   UpdateHover: 0
   UpdateInteract: 0
   TouchPoint: {fileID: 900218324583682461}
-  hullRenderer: {fileID: 1745258742203508885}
   head: {fileID: 777820660244700424}
   maxPos: {fileID: 6059603562916100056}
   minPos: {fileID: 1739051072907250694}

@@ -170,7 +170,7 @@ Shader "Unlit/S_SpriteUnlitRadar"
                 half4 debugColor = 0;
 
                 InitializeSurfaceData(mainTex.rgb, mainTex.a, surfaceData);
-                InitializeInputData(i.uv, inputData);
+                InitializeInputData(i.uv, inputData, mainTex.a);
                 SETUP_DEBUG_DATA_2D(inputData, i.positionWS);
 
                 if(CanDebugOverrideOutputColor(surfaceData, inputData, debugColor))

@@ -24,7 +24,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 459ee94473c3cf4438bea23bc4886e41, type: 2}
   - {fileID: 11400000, guid: 0233f77fdca60c54c958ee21ecab1dc6, type: 2}
   - {fileID: 11400000, guid: 489dd58ce19b9604f8e48781ed526627, type: 2}
-  - {fileID: 11400000, guid: e9b50229d208eab478a5a6cb80b7d2e5, type: 2}
   m_DefaultRendererIndex: 0
   m_RequireDepthTexture: 1
   m_RequireOpaqueTexture: 0
@@ -107,16 +106,16 @@ MonoBehaviour:
       m_Keys: []
       m_Values: 
   m_PrefilteringModeMainLightShadows: 3
-  m_PrefilteringModeAdditionalLight: 3
+  m_PrefilteringModeAdditionalLight: 0
   m_PrefilteringModeAdditionalLightShadows: 2
   m_PrefilterXRKeywords: 1
-  m_PrefilteringModeForwardPlus: 0
+  m_PrefilteringModeForwardPlus: 2
   m_PrefilteringModeDeferredRendering: 0
   m_PrefilteringModeScreenSpaceOcclusion: 1
   m_PrefilterDebugKeywords: 1
   m_PrefilterWriteRenderingLayers: 1
   m_PrefilterHDROutput: 1
-  m_PrefilterAlphaOutput: 0
+  m_PrefilterAlphaOutput: 1
   m_PrefilterSSAODepthNormals: 0
   m_PrefilterSSAOSourceDepthLow: 1
   m_PrefilterSSAOSourceDepthMedium: 1
@@ -128,14 +127,14 @@ MonoBehaviour:
   m_PrefilterSSAOSampleCountHigh: 1
   m_PrefilterDBufferMRT1: 1
   m_PrefilterDBufferMRT2: 1
-  m_PrefilterDBufferMRT3: 1
+  m_PrefilterDBufferMRT3: 0
   m_PrefilterSoftShadowsQualityLow: 1
   m_PrefilterSoftShadowsQualityMedium: 1
   m_PrefilterSoftShadowsQualityHigh: 1
   m_PrefilterSoftShadows: 0
   m_PrefilterScreenCoord: 1
   m_PrefilterNativeRenderPass: 1
-  m_PrefilterUseLegacyLightmaps: 0
+  m_PrefilterUseLegacyLightmaps: 1
   m_ShaderVariantLogLevel: 0
   m_ShadowCascades: 1
   m_Textures:

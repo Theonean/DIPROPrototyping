@@ -49,7 +49,8 @@ MonoBehaviour:
   m_RendererFeatures:
   - {fileID: 7002570757716465652}
   - {fileID: -592686548684066005}
-  m_RendererFeatureMap: f4573ac000212e612bb38862b95ac6f7
+  - {fileID: 7352677341370909285}
+  m_RendererFeatureMap: f4573ac000212e612bb38862b95ac6f765027af815f50966
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -92,6 +93,26 @@ MonoBehaviour:
   fetchColorBuffer: 1
   requirements: 0
   passMaterial: {fileID: 2100000, guid: 7975e7c679e4ac44881af37510b34957, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
+--- !u!114 &7352677341370909285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: Outline
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  injectionPoint: 600
+  fetchColorBuffer: 1
+  requirements: 7
+  passMaterial: {fileID: 2100000, guid: 62386241297cc6f42828e6319cd14e1f, type: 2}
   passIndex: 0
   bindDepthStencilAttachment: 0
   m_Version: 1
