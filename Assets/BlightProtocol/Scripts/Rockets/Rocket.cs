@@ -75,10 +75,10 @@ public class Rocket : MonoBehaviour
             }
             if (other.gameObject.CompareTag("CrystalRock"))
             {
-                other.GetComponent<CrystalRock>().SpawnCrystals();
+                other.GetComponent<ItemDropper>().DropItems();
             }
 
-            HandleBouncingFrontException(other);
+                HandleBouncingFrontException(other);
             return;
         }
         else if (other.gameObject.layer == harvesterLayer)

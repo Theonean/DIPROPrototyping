@@ -51,8 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystalPrefab: {fileID: 7055385458625285284, guid: 613b6cf75e741c44f92c1890cd29a2b3,
-    type: 3}
+  itemToSpawn: {fileID: 11400000, guid: b2841d94f909ceb4eb44ae9c5b968359, type: 2}
   numberOfCrystals: 5
   spawnRadius: 5
   throwForceRange: {x: 5, y: 30}
@@ -162,6 +161,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -245,6 +247,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -328,6 +333,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -411,6 +419,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -496,7 +507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -5147760304290889454, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 88ea8775a979bff4c90ee325ade4a444, type: 2}
     - target: {fileID: -2699922579773320111, guid: 8be795a78986ee34291bcf8a89e856f6,
@@ -511,17 +522,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -150843040084215063, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 266038113189829920, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 797658409950097719, guid: 8be795a78986ee34291bcf8a89e856f6,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     - target: {fileID: 919132149155446097, guid: 8be795a78986ee34291bcf8a89e856f6,

@@ -5001,6 +5001,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9185269845558177096}
   - component: {fileID: 8490830819345528117}
+  - component: {fileID: 7469555676842866642}
   m_Layer: 26
   m_Name: P_EnemyBaseTemplate
   m_TagString: Enemy
@@ -5049,6 +5050,22 @@ NavMeshAgent:
   m_BaseOffset: 0.5
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 2
+--- !u!114 &7469555676842866642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6235206037039435799}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemToSpawn: {fileID: 11400000, guid: 0a3c7888c0cc37244a044e3fe3b74b8c, type: 2}
+  numberOfCrystals: 5
+  spawnRadius: 5
+  throwForceRange: {x: 5, y: 10}
 --- !u!1 &8491972547278981059
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,19 +1,21 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
-
-[RequireComponent(typeof(Collider))]
-public class ACPlayerCollectibleItem : MonoBehaviour
+public class CollectibleItem : MonoBehaviour
 {
     public EItemTypes itemType;
+    public SOItem itemData;
+    public UnityEvent<CollectibleItem> arrivedAtPlayer = new UnityEvent<CollectibleItem>();
 
-    private void OnTriggerEnter(Collider other)
+    private bool flyingToPlayer = false;
+
+    public void StartflyingToPlayer()
     {
-        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsPlayer"))
-        {
-            // Start the fly effect towards the player
-            StartCoroutine(FlyToPlayer());
-        }
+        if (flyingToPlayer) return;
+        flyingToPlayer = true;
+
+        StartCoroutine(FlyToPlayer());
     }
 
     private IEnumerator FlyToPlayer()
@@ -22,13 +24,14 @@ public class ACPlayerCollectibleItem : MonoBehaviour
         float duration = 1f; // Duration of the fly effect
         float elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (Vector3.Distance(targetPosition, transform.position) > 1f)
         {
             transform.position = Vector3.Lerp(transform.position, targetPosition, (elapsedTime / duration));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
+        arrivedAtPlayer.Invoke(this);
         Destroy(gameObject); // Destroy the item after flying to the player
     }
 }
