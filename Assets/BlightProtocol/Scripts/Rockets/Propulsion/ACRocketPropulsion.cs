@@ -13,7 +13,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         }
         set
         {
-            targetPosition = new Vector3(value.x, ParentRocket.transform.position.y, value.z);
+            targetPosition = new Vector3(value.x, 0.5f, value.z);
         }
     }
 
@@ -27,6 +27,16 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     public string rocketFlyAwaySFXPath = "event:/SFX/Dron/Shoot";
     public string rocketCallbackSFXPath = "event:/SFX/Dron/Callingback_Missiles";
     public abstract IEnumerator FlyToTargetPosition();
+
+    private GameObject debugTargetPosition;
+
+    protected void Start()
+    {
+        debugTargetPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        debugTargetPosition.name = "DebugTargetSphere";
+        debugTargetPosition.transform.position = Vector3.zero;
+        debugTargetPosition.transform.localScale = Vector3.one * 0.5f; // Small sphere
+    }
 
 
     protected override void OnEnable()
@@ -67,8 +77,13 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             }
             else if (componentLevel >= 1)
             {
-                //MoveTargetPositionToMouse();
+                MoveTargetPositionToMouse();
             }
+        }
+
+        if(parentRocket.state == RocketState.FLYING)
+        {
+            debugTargetPosition.transform.position = targetPosition;
         }
     }
     
@@ -82,8 +97,10 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
             Vector2 mapPosition = new Vector2(mousePosition.x, mousePosition.z);
             Vector2 targetPosition2D = new Vector2(TargetPosition.x, TargetPosition.z);
-            Vector2 newTargetPosition = Vector2.Lerp(targetPosition2D, mapPosition, targetMoveStep * Time.deltaTime);
-            TargetPosition = new Vector3(newTargetPosition.x, ParentRocket.transform.position.y, newTargetPosition.y);
+            Vector2 moveDirection = (mapPosition - targetPosition2D).normalized;
+
+            Vector2 newTargetPosition = Vector2.Lerp(targetPosition2D, targetPosition2D + moveDirection * targetMoveStep, Time.deltaTime);
+            TargetPosition = new Vector3(newTargetPosition.x, 0f, newTargetPosition.y);
         }
     }
 
@@ -151,11 +168,6 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             {
                 rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * ParentRocket.settings.flySpeed * 2f);
             }
-
-
-            // Update the rotation of the rocket to smoothly return to its initial rotation
-            //rocketTransform.rotation = Quaternion.RotateTowards(rocketTransform.rotation, ParentRocket.initialTransform.rotation, 1f * Time.deltaTime);
-            //rocketTransform.localScale = Vector3.MoveTowards(rocketTransform.localScale, rocketOriginalScale, 0.1f * Time.deltaTime * ParentRocket.settings.flySpeed * 1.5f);
 
             if (distanceToUpdatedTarget < 1f)
             {

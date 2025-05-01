@@ -29,69 +29,66 @@ public class BoomerangPropulsion : ACRocketPropulsion
 
     public override IEnumerator FlyToTargetPosition()
     {
-        // Phase 1: Outbound arc from current position to TargetPosition with a side offset.
+        // Phase 1: Outbound arc — dynamically track target position.
         Vector3 startPos = rocketTransform.position;
-        Vector3 endPos = TargetPosition;
-        Vector3 midPos = (startPos + endPos) * 0.5f;
 
-        // Calculate a perpendicular offset direction.
-        Vector3 travelDir = endPos - startPos;
-        Vector3 offsetDir = Vector3.Cross(travelDir, Vector3.up);
+        // Calculate fixed offset direction once using initial outbound direction
+        Vector3 initialTarget = TargetPosition;
+        Vector3 initialTravelDir = initialTarget - startPos;
+        Vector3 offsetDir = Vector3.Cross(initialTravelDir, Vector3.up);
         if (offsetDir == Vector3.zero)
         {
             offsetDir = Vector3.right;
         }
         offsetDir = offsetDir.normalized * boomerangSideOffset;
 
-        // Control point for the Bézier curve.
-        Vector3 controlPoint = midPos + offsetDir;
-
-        // Estimate arc length and determine how much to increment t based on flyspeed.
-        float outboundArcLength = EstimateBezierArcLength(startPos, controlPoint, endPos);
         float t = 0f;
+
         while (t < 1f)
         {
-            // Increment t based on the flyspeed (units per second).
-            t += (parentRocket.settings.flySpeed * Time.deltaTime) / outboundArcLength;
+            Vector3 currentTarget = TargetPosition;
+
+            Vector3 midPos = (startPos + currentTarget) * 0.5f;
+            Vector3 controlPoint = midPos + offsetDir;
+
+            float arcLength = EstimateBezierArcLength(startPos, controlPoint, currentTarget);
+            t += (parentRocket.settings.flySpeed * Time.deltaTime) / arcLength;
             t = Mathf.Clamp01(t);
-            Vector3 pos = QuadraticBezier(t, startPos, controlPoint, endPos);
+
+            Vector3 pos = QuadraticBezier(t, startPos, controlPoint, currentTarget);
             rocketTransform.position = pos;
 
-            // Compute an approximate derivative for smooth rotation.
+            // Smooth rotation
             float deltaT = 0.001f;
-            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), startPos, controlPoint, endPos);
+            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), startPos, controlPoint, currentTarget);
             Vector3 derivative = posAhead - pos;
             if (derivative != Vector3.zero)
             {
                 rocketTransform.rotation = Quaternion.LookRotation(derivative.normalized);
             }
+
             yield return null;
         }
 
-        // Phase 2: Inbound arc from TargetPosition back to the player's current position.
-        Vector3 returnStart = rocketTransform.position; // Start of the return arc.
+        // Phase 2: Return arc
+        Vector3 returnStart = rocketTransform.position;
         t = 0f;
+
         while (Vector3.Distance(rocketTransform.position, parentRocket.initialTransform.position) > 1f)
         {
-            // Get the player's current position each frame.
             Vector3 currentTarget = parentRocket.initialTransform.position;
-
-            // Recalculate the mid-point and control point based on the current TargetPosition.
             Vector3 returnMid = (returnStart + currentTarget) * 0.5f;
+
+            // Mirror the outbound offset direction
             Vector3 returnControl = returnMid - offsetDir;
 
-            // Estimate the arc length for the current curve.
             float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl, currentTarget);
-
-            // Increment t based on the fly speed and current arc length.
             t += (parentRocket.settings.flySpeed * Time.deltaTime) / inboundArcLength;
             t = Mathf.Clamp01(t);
 
-            // Compute the new position along the bezier curve.
             Vector3 pos = QuadraticBezier(t, returnStart, returnControl, currentTarget);
             rocketTransform.position = pos;
 
-            // Update the rotation based on the derivative of the curve.
             float deltaT = 0.001f;
             Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), returnStart, returnControl, currentTarget);
             Vector3 derivative = posAhead - pos;
