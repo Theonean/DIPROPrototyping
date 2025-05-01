@@ -77,6 +77,10 @@ public class Rocket : MonoBehaviour
             {
                 other.GetComponent<ItemDropper>().DropItems();
             }
+            if (other.gameObject.CompareTag("ResourcePoint"))
+            {
+                other.GetComponentInChildren<ItemDropper>().DropItems();
+            }
 
                 HandleBouncingFrontException(other);
             return;

@@ -4,9 +4,8 @@ public class ResourcePoint : MonoBehaviour
 {
     public ResourceData resourceData;
     public float resourceAmount = 100f;
-    private bool isAboveGround = false;
     public GameObject aboveGround;
-    
+
     public bool HarvestResource(float amount) {
         if(resourceAmount <= 0f)
             return false;
@@ -19,8 +18,8 @@ public class ResourcePoint : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Harvester")) {
-            Destroy(aboveGround);
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsHarvester")) {
+            aboveGround.GetComponent<ItemDropper>().DropItems();
         }       
     }
 }

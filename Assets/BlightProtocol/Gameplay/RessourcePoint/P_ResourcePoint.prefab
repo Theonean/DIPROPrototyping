@@ -156,8 +156,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152193725867872449}
+  - component: {fileID: 3321158374397718325}
   m_Layer: 24
-  m_Name: AboveGround
+  m_Name: AboveGroundCrystals
   m_TagString: ResourcePoint
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -179,6 +180,77 @@ Transform:
   - {fileID: 1568446273182609937}
   m_Father: {fileID: 7381570951520329136}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3321158374397718325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1737457711817801451}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemToSpawn: {fileID: 11400000, guid: b2841d94f909ceb4eb44ae9c5b968359, type: 2}
+  numberOfCrystals: 10
+  spawnRadius: 5
+  throwForceRange: {x: 5, y: 10}
+--- !u!1 &2388490945213612841
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9057954793843409793}
+  - component: {fileID: 4017295494214712763}
+  m_Layer: 24
+  m_Name: PlayerBlockingColliders
+  m_TagString: CrystalRock
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9057954793843409793
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388490945213612841}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 10.94, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4868336868686352234}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!136 &4017295494214712763
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2388490945213612841}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 4.3
+  m_Height: 24.9
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3368552263866829622
 GameObject:
   m_ObjectHideFlags: 0
@@ -222,6 +294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4868336868686352234}
   - component: {fileID: 1760140524580456193}
+  - component: {fileID: 3667103252080635661}
   m_Layer: 24
   m_Name: P_ResourcePoint
   m_TagString: ResourcePoint
@@ -242,10 +315,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 9057954793843409793}
   - {fileID: 7381570951520329136}
   - {fileID: 5929023742738594007}
   - {fileID: 7215750521783058725}
-  - {fileID: 8891981508661858310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1760140524580456193
@@ -263,45 +336,13 @@ MonoBehaviour:
   resourceData: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
   resourceAmount: 300
   aboveGround: {fileID: 1737457711817801451}
---- !u!1 &8102828230784095520
-GameObject:
+--- !u!136 &3667103252080635661
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 8891981508661858310}
-  - component: {fileID: 5326592677073869430}
-  m_Layer: 24
-  m_Name: BlockingCollider
-  m_TagString: ResourcePoint
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &8891981508661858310
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8102828230784095520}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.76, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4868336868686352234}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &5326592677073869430
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8102828230784095520}
+  m_GameObject: {fileID: 7858307912075322005}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -310,12 +351,14 @@ SphereCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Radius: 4.3
+  m_Height: 24.9
+  m_Direction: 1
+  m_Center: {x: 0, y: 10.46, z: 0}
 --- !u!1001 &860566577951826437
 PrefabInstance:
   m_ObjectHideFlags: 0
