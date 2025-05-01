@@ -33,39 +33,55 @@ public class WorldComposer : MonoBehaviour
 
     private IEnumerator GenerateInitialObstacles()
     {
+        SpatialHashGrid hashGrid = new SpatialHashGrid(cellSize: 40f);
+
         foreach (DifficultyRegion region in difficultyRegions)
         {
             foreach (SpawnableEntity spawnable in region.spawnableEntities)
             {
-                Vector3[] spawnPositions = spawnable.GenerateSpawnPositions(mapBoundsX, region.boundsZ);
-                if (spawnPositions.Length == 0)
+                float spacing = spawnable.boundingRadius * 2f;
+                int placedCount = 0;
+                int attemptsPerEntity = 3;
+
+                while (placedCount < spawnable.numEntities)
                 {
-                    Debug.LogWarning($"No spawn positions generated for {spawnable.name}");
-                    continue;
-                }
+                    bool success = false;
 
-                spawnPositions = spawnPositions
-                    .Where(pos => Vector3.Distance(Harvester.Instance.transform.position, pos) >= 100f)
-                    .OrderBy(pos => Vector3.Distance(Harvester.Instance.transform.position, pos))
-                    .ToArray();
-
-                foreach (Vector3 spawnPos in spawnPositions)
-                {
-                    // Instantiate the prefab at the generated position.
-                    GameObject prefab = spawnable.GetPrefab();
-                    Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
-                    GameObject instance = Instantiate(prefab, spawnPos, rotation, transform);
-
-                    // Optionally apply a random scale variance.
-                    if (spawnable.scaleVariance != 0f)
+                    for (int attempt = 0; attempt < attemptsPerEntity; attempt++)
                     {
-                        float scaleFactor = 1f + Random.Range(-spawnable.scaleVariance, spawnable.scaleVariance);
-                        instance.transform.localScale *= scaleFactor;
+                        Vector3 tryPos = spawnable.GenerateSingleSpawnPosition(mapBoundsX, region.boundsZ);
+
+                        if (Vector3.Distance(Harvester.Instance.transform.position, tryPos) < 100f)
+                            continue;
+
+                        if (!hashGrid.IsPositionOccupied(tryPos, spacing))
+                        {
+                            GameObject prefab = spawnable.GetPrefab();
+                            Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
+                            GameObject instance = Instantiate(prefab, tryPos, rotation, transform);
+
+                            if (spawnable.scaleVariance != 0f)
+                            {
+                                float scaleFactor = 1f + Random.Range(-spawnable.scaleVariance, spawnable.scaleVariance);
+                                instance.transform.localScale *= scaleFactor;
+                            }
+
+                            hashGrid.AddPosition(tryPos);
+                            placedCount++;
+                            success = true;
+                            break;
+                        }
                     }
 
-                    yield return null;
+                    if (!success)
+                    {
+                        Debug.LogWarning($"[{spawnable.name}] Could not place entity {placedCount + 1}/{spawnable.numEntities} after {attemptsPerEntity} tries.");
+                        placedCount++; // Move on to avoid infinite loop
+                    }
                 }
             }
+
+            yield return null;
         }
     }
 }

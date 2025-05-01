@@ -1,4 +1,5 @@
 using System.ComponentModel;
+using System.Linq;
 using UnityEngine;
 
 public enum SpawnStrategy
@@ -29,124 +30,154 @@ public class SpawnableEntity : ScriptableObject
     [Description("Scale will be increased / decreased by a random value between -scaleVariance and scaleVariance.")]
     public float scaleVariance = 0f;
 
+    [Description("Auto-Calculated Bounds radius for better position generation")]
+    public float boundingRadius = 1f; // Auto-calculated
+
     public GameObject GetPrefab()
     {
         return worldEntityPrefabs[Random.Range(0, worldEntityPrefabs.Length)];
     }
 
-
     public Vector3[] GenerateSpawnPositions(Vector2 mapBoundsX, Vector2 mapBoundsZ)
     {
+        Vector3[] positions = new Vector3[numEntities];
         Vector3 spawnPos = Vector3.zero;
+        for (int i = 0; i < numEntities; i++)
+        {
+            switch (spawnStrategy)
+            {
+                case SpawnStrategy.Random:
+                    {
+                        positions[i] = GenerateRandomSpawnPosition(mapBoundsX, mapBoundsZ);
+                        break;
+                    }
+                case SpawnStrategy.Noise:
+                    {
+                        positions[i] = GenerateNoiseSpawnPosition(mapBoundsX, mapBoundsZ);
+                        break;
+                    }
+                case SpawnStrategy.RandomCustomArea:
+                    {
+                        positions[i] = GenerateRandomCustomSpawnPosition();
+                        break;
+                    }
+                case SpawnStrategy.VoronoiNoise:
+                    {
+                        positions[i] = GenerateVoronoiSpawnPosition(mapBoundsX, mapBoundsZ);
+                        break;
+                    }
+                default:
+                    {
+                        Debug.LogError("Invalid spawn strategy selected. Defaulting to Random.");
+                        positions[i] = Vector3.zero;
+                        break;
+                    }
+            }
+
+        }
+        return positions;
+    }
+
+
+    public Vector3 GenerateSingleSpawnPosition(Vector2 mapBoundsX, Vector2 mapBoundsZ)
+    {
         switch (spawnStrategy)
         {
             case SpawnStrategy.Random:
-                {
-                    return GenerateRandomSpawnPositions(mapBoundsX, mapBoundsZ);
-                }
+                return GenerateRandomSpawnPosition(mapBoundsX, mapBoundsZ);
             case SpawnStrategy.Noise:
-                {
-                    return GenerateNoiseSpawnPositions(mapBoundsX, mapBoundsZ);
-                }
+                return GenerateNoiseSpawnPosition(mapBoundsX, mapBoundsZ);
             case SpawnStrategy.RandomCustomArea:
-                {
-                    return GenerateCustomSpawnPositions();
-                }
+                return GenerateRandomCustomSpawnPosition();
             case SpawnStrategy.VoronoiNoise:
-                {
-                    return GenerateVoronoiNoiseSpawnPositions(mapBoundsX, mapBoundsZ);
-                }
+                return GenerateVoronoiSpawnPosition(mapBoundsX, mapBoundsZ);
             default:
-                {
-                    Debug.LogError("Invalid spawn strategy selected. Defaulting to Random.");
-                    return new Vector3[0];
-                }
+                return Vector3.zero;
         }
     }
 
-    private Vector3[] GenerateRandomSpawnPositions(Vector2 mapBoundsX, Vector2 mapBoundsZ)
+    private Vector3 GenerateRandomSpawnPosition(Vector2 xBounds, Vector2 zBounds)
     {
-        Vector3[] spawnPositions = new Vector3[numEntities];
-        for (int i = 0; i < numEntities; i++)
-        {
-            float xPos = Random.Range(mapBoundsX.x, mapBoundsX.y);
-            float zPos = Random.Range(mapBoundsZ.x, mapBoundsZ.y);
-            spawnPositions[i] = new Vector3(xPos, 0, zPos);
-        }
-        return spawnPositions;
+        return new Vector3(
+            Random.Range(xBounds.x, xBounds.y),
+            0f,
+            Random.Range(zBounds.x, zBounds.y));
     }
 
-    private Vector3[] GenerateCustomSpawnPositions()
+    private Vector3 GenerateRandomCustomSpawnPosition()
     {
-        Vector3[] spawnPositions = new Vector3[numEntities];
-        for (int i = 0; i < numEntities; i++)
-        {
-            float xPos = Random.Range(customSpawnAreaBoundsX.x, customSpawnAreaBoundsX.y);
-            float zPos = Random.Range(customSpawnAreaBoundsZ.x, customSpawnAreaBoundsZ.y);
-            spawnPositions[i] = new Vector3(xPos, 0, zPos);
-        }
-        return spawnPositions;
+        return new Vector3(
+            Random.Range(customSpawnAreaBoundsX.x, customSpawnAreaBoundsX.y),
+            0f,
+            Random.Range(customSpawnAreaBoundsZ.x, customSpawnAreaBoundsZ.y));
     }
 
-    private Vector3[] GenerateNoiseSpawnPositions(Vector2 mapBoundsX, Vector2 mapBoundsZ)
+    private Vector3 GenerateNoiseSpawnPosition(Vector2 xBounds, Vector2 zBounds)
     {
-        Vector3[] spawnPositions = new Vector3[numEntities];
-        for (int i = 0; i < numEntities; i++)
-        {
-            float noiseX = Mathf.PerlinNoise(Random.value, Random.value) * (mapBoundsX.y - mapBoundsX.x) + mapBoundsX.x;
-            float noiseZ = Mathf.PerlinNoise(Random.value, Random.value) * (mapBoundsZ.y - mapBoundsZ.x) + mapBoundsZ.x;
-            spawnPositions[i] = new Vector3(noiseX, 0, noiseZ);
-        }
-        return spawnPositions;
+        float x = Mathf.PerlinNoise(Random.value, Random.value) * (xBounds.y - xBounds.x) + xBounds.x;
+        float z = Mathf.PerlinNoise(Random.value, Random.value) * (zBounds.y - zBounds.x) + zBounds.x;
+        return new Vector3(x, 0f, z);
     }
 
-    private Vector3[] GenerateVoronoiNoiseSpawnPositions(Vector2 mapBoundsX, Vector2 mapBoundsZ)
+    private Vector3 GenerateVoronoiSpawnPosition(Vector2 xBounds, Vector2 zBounds)
     {
-        Vector3[] spawnPositions = new Vector3[numEntities];
-        int numSites = Mathf.Max(1, voronoiSiteCount); // Allow 1 if needed
+        int siteCount = Mathf.Max(1, voronoiSiteCount);
+        Vector2[] sites = new Vector2[siteCount];
 
-        // Generate Voronoi sites (random points in bounds)
-        Vector2[] sites = new Vector2[numSites];
-        for (int i = 0; i < numSites; i++)
+        for (int i = 0; i < siteCount; i++)
+            sites[i] = new Vector2(Random.Range(xBounds.x, xBounds.y), Random.Range(zBounds.x, zBounds.y));
+
+        Vector2 randPoint = new Vector2(Random.Range(xBounds.x, xBounds.y), Random.Range(zBounds.x, zBounds.y));
+        Vector2 closestSite = sites.OrderBy(s => Vector2.SqrMagnitude(s - randPoint)).First();
+        Vector2 jittered = closestSite + Random.insideUnitCircle * siteSpreadRadius + Random.insideUnitCircle * siteJitter;
+
+        return new Vector3(
+            Mathf.Clamp(jittered.x, xBounds.x, xBounds.y),
+            0f,
+            Mathf.Clamp(jittered.y, zBounds.x, zBounds.y));
+    }
+
+
+
+#if UNITY_EDITOR
+    [ContextMenu("Recalculate Bounding Radius")]
+    public void RecalculateBoundingRadius()
+    {
+        float maxRadius = 0f;
+
+        foreach (GameObject prefab in worldEntityPrefabs)
         {
-            float x = Random.Range(mapBoundsX.x, mapBoundsX.y);
-            float z = Random.Range(mapBoundsZ.x, mapBoundsZ.y);
-            sites[i] = new Vector2(x, z);
-        }
+            if (prefab == null) continue;
 
-        // Assign each entity to the nearest Voronoi site
-        for (int i = 0; i < numEntities; i++)
-        {
-            // Generate a random point within bounds
-            float randX = Random.Range(mapBoundsX.x, mapBoundsX.y);
-            float randZ = Random.Range(mapBoundsZ.x, mapBoundsZ.y);
-            Vector2 randPoint = new Vector2(randX, randZ);
+            // Use Renderer bounds if available
+            Renderer[] renderers = prefab.GetComponentsInChildren<Renderer>();
+            Bounds combinedBounds = new Bounds(prefab.transform.position, Vector3.zero);
 
-            // Find closest site
-            Vector2 closestSite = sites[0];
-            float closestDist = Vector2.Distance(randPoint, closestSite);
-            for (int j = 1; j < sites.Length; j++)
+            foreach (Renderer renderer in renderers)
             {
-                float dist = Vector2.Distance(randPoint, sites[j]);
-                if (dist < closestDist)
+                combinedBounds.Encapsulate(renderer.bounds);
+            }
+
+            // Fallback to colliders if no renderers
+            if (renderers.Length == 0)
+            {
+                Collider[] colliders = prefab.GetComponentsInChildren<Collider>();
+                foreach (Collider collider in colliders)
                 {
-                    closestDist = dist;
-                    closestSite = sites[j];
+                    combinedBounds.Encapsulate(collider.bounds);
                 }
             }
 
-            // Place entity near the site with some jitter/spread
-            Vector2 offset = Random.insideUnitCircle * siteSpreadRadius;
-            offset += Random.insideUnitCircle * siteJitter; // optional noise
-
-            float finalX = Mathf.Clamp(closestSite.x + offset.x, mapBoundsX.x, mapBoundsX.y);
-            float finalZ = Mathf.Clamp(closestSite.y + offset.y, mapBoundsZ.x, mapBoundsZ.y);
-
-            spawnPositions[i] = new Vector3(finalX, 0f, finalZ);
+            float radius = combinedBounds.extents.magnitude;
+            if (radius > maxRadius)
+                maxRadius = radius;
         }
 
-        return spawnPositions;
+        boundingRadius = maxRadius;
+        Debug.Log($"[{name}] Bounding radius recalculated: {boundingRadius}");
+        UnityEditor.EditorUtility.SetDirty(this);
     }
+#endif
 
 
 }
