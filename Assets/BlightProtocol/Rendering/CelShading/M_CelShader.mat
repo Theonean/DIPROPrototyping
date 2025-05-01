@@ -3,7 +3,7 @@
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -50,6 +50,8 @@ Material:
     - _AmbientStrength: 0.7
     - _Bottom_Blend_Size: 1
     - _Bottom_Height: 0
+    - _Fade: 0.51
+    - _FadeFalloff: 0.09
     - _FalloffAmount: 0
     - _Falloff_Amount: 0
     - _Fog_Density: 0
@@ -59,6 +61,9 @@ Material:
     - _Gradient_Position: 0
     - _LightingCutoff: 0.01
     - _Lighting_Cutoff: 0.585
+    - _MaxDistance: 125.53
+    - _MaxFadedHeight: 80
+    - _MinDistance: 0
     - _Normal_Step: 0
     - _QueueControl: 0
     - _QueueOffset: 0
