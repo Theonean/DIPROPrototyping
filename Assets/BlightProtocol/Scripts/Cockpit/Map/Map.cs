@@ -44,7 +44,7 @@ public class Map : ACInteractable
         }
     }
 
-    void Start()
+    protected override void Start()
     {
         mapCamera = mapCameraCam.GetComponent<MapCamera>();
         UpdateHover = true;
@@ -81,15 +81,17 @@ public class Map : ACInteractable
     public void SetTarget(Vector3 screenPoint)
     {
         ray = mapCameraCam.ScreenPointToRay(screenPoint);
+        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.green, 5f);
 
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
         {
+            Debug.Log(hit.collider.name);
             if (hit.collider.CompareTag("ResourcePoint"))
             {
                 Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
                 Harvester.Instance.mover.SetDestination(targetPos);
             }
-            else if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 10f, NavMesh.AllAreas))
+            else if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas))
             {
                 Vector3 targetPos = navMeshHit.position;
                 Harvester.Instance.mover.SetDestination(targetPos);

@@ -1366,6 +1366,31 @@
 }
 
 {
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "0da4214be29b4071a95c397df4f25a05",
+    "m_Id": 3,
+    "m_DisplayName": "Diffuse",
+    "m_SlotType": 1,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "Diffuse",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
+}
+
+{
     "m_SGVersion": 1,
     "m_Type": "UnityEditor.ShaderGraph.Internal.Vector2ShaderProperty",
     "m_ObjectId": "0f47ddc9e62649258c76dcf8e623c0d6",
@@ -2202,7 +2227,7 @@
     "m_SlotType": 0,
     "m_Hidden": false,
     "m_ShaderOutputName": "_isTopDown",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": true,
     "m_DefaultValue": false
 }
@@ -3342,7 +3367,7 @@
     "m_ObjectId": "58d93702a01e4285b29f613bf0b24261",
     "m_Title": "Texture",
     "m_Position": {
-        "x": 3536.000244140625,
+        "x": 3536.0,
         "y": -289.0
     }
 }
@@ -3353,8 +3378,8 @@
     "m_ObjectId": "597d07eb7e39443fa040855dc0d5a690",
     "m_Title": "Colro Gradient",
     "m_Position": {
-        "x": 3951.000244140625,
-        "y": -1626.0001220703125
+        "x": 3951.0,
+        "y": -1626.0
     }
 }
 
@@ -3774,15 +3799,24 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 5848.99951171875,
-            "y": -878.9999389648438,
-            "width": 261.0,
-            "height": 303.0
+            "x": 5785.0,
+            "y": -889.0,
+            "width": 296.0,
+            "height": 327.0
         }
     },
     "m_Slots": [
         {
             "m_Id": "2c0f591600e941d39bd6876e47fb941a"
+        },
+        {
+            "m_Id": "f22edcbffc1e49b8a66f96cb42037dc4"
+        },
+        {
+            "m_Id": "6f957b0a2e674e7885636b9257bc3f9c"
+        },
+        {
+            "m_Id": "0da4214be29b4071a95c397df4f25a05"
         },
         {
             "m_Id": "8f546088a8ea474dbbbf1578b46d95d6"
@@ -3801,10 +3835,14 @@
     },
     "m_SerializedSubGraph": "{\n    \"subGraph\": {\n        \"fileID\": -5475051401550479605,\n        \"guid\": \"ae654723e17aed9438b0cc6ed9887cf3\",\n        \"type\": 3\n    }\n}",
     "m_PropertyGuids": [
-        "01267d41-3189-4a4e-9967-c97a7405f82d"
+        "01267d41-3189-4a4e-9967-c97a7405f82d",
+        "9fe524cc-451f-4a56-a60f-988ac78b8d99",
+        "881cc241-8afd-44b5-a065-7ceb95e4f26b"
     ],
     "m_PropertyIds": [
-        475606565
+        475606565,
+        -962140750,
+        1277675913
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -4047,6 +4085,20 @@
         "z": 0.0,
         "w": 0.0
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.BooleanMaterialSlot",
+    "m_ObjectId": "6f957b0a2e674e7885636b9257bc3f9c",
+    "m_Id": 1277675913,
+    "m_DisplayName": "RenderBothFaces",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_RenderBothFaces",
+    "m_StageCapability": 2,
+    "m_Value": true,
+    "m_DefaultValue": false
 }
 
 {
@@ -4887,7 +4939,7 @@
     "m_SlotType": 1,
     "m_Hidden": false,
     "m_ShaderOutputName": "Alpha",
-    "m_StageCapability": 3,
+    "m_StageCapability": 2,
     "m_Value": 0.0,
     "m_DefaultValue": 0.0,
     "m_Labels": []
@@ -5878,10 +5930,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 5712.314453125,
-            "y": -751.9483032226563,
-            "width": 0.0,
-            "height": 0.0
+            "x": 5598.0,
+            "y": -746.0,
+            "width": 125.0,
+            "height": 34.0
         }
     },
     "m_Slots": [
@@ -7785,6 +7837,31 @@
     "m_CustomColors": {
         "m_SerializableColors": []
     }
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector4MaterialSlot",
+    "m_ObjectId": "f22edcbffc1e49b8a66f96cb42037dc4",
+    "m_Id": -962140750,
+    "m_DisplayName": "Diffuse",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_Diffuse",
+    "m_StageCapability": 2,
+    "m_Value": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_DefaultValue": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0,
+        "w": 0.0
+    },
+    "m_Labels": []
 }
 
 {
