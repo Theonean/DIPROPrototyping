@@ -16,7 +16,8 @@ public class Map : ACInteractable
     private Vector3 dragOrigin;
 
     [Header("Target Setting")]
-    private Ray ray;
+    private Ray screenRay;
+    private Ray targetRay;
     private RaycastHit hit;
     public LayerMask hitMask;
     public RectTransform uiTarget;
@@ -32,6 +33,8 @@ public class Map : ACInteractable
     // Dictionary to track discovered energy signatures
     private Dictionary<EnergySignature, GameObject> discoveredSignatures = new Dictionary<EnergySignature, GameObject>();
 
+    bool isHovering = false;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -46,19 +49,19 @@ public class Map : ACInteractable
 
     protected override void Start()
     {
+        base.Start();
         mapCamera = mapCameraCam.GetComponent<MapCamera>();
         UpdateHover = true;
     }
-
     public override void OnStartHover()
     {
         base.OnStartHover();
+        isHovering = true;
     }
 
     public override void OnUpdateHover()
     {
-        Ray ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity))
+        if (Physics.Raycast(screenRay, out RaycastHit hit, Mathf.Infinity))
         {
             screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelHeight, 0);
             uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
@@ -66,26 +69,34 @@ public class Map : ACInteractable
         }
     }
 
-    public override void OnStartInteract()
+    public override void OnEndHover()
     {
-        // Left click - set target
-        if (Input.GetMouseButton(0))
+        base.OnEndHover();
+        isHovering = false;
+    }
+
+    private void Update()
+    {
+        if (isHovering)
         {
-            if (screenPoint != null)
-            {
-                SetTarget(screenPoint);
-            }
+            screenRay = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            targetRay = mapCameraCam.ScreenPointToRay(screenPoint);
         }
     }
 
-    public void SetTarget(Vector3 screenPoint)
-    {
-        ray = mapCameraCam.ScreenPointToRay(screenPoint);
-        Debug.DrawRay(ray.origin, ray.direction * 1000f, Color.green, 5f);
 
-        if (Physics.Raycast(ray, out hit, Mathf.Infinity, hitMask))
+    public override void OnStartInteract()
+    {
+        if (screenPoint != null)
         {
-            Debug.Log(hit.collider.name);
+            SetTarget();
+        }
+    }
+
+    public void SetTarget()
+    {
+        if (Physics.Raycast(targetRay, out hit, Mathf.Infinity, hitMask))
+        {
             if (hit.collider.CompareTag("ResourcePoint"))
             {
                 Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
