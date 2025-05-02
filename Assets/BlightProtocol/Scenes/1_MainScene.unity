@@ -20,7 +20,7 @@ RenderSettings:
   m_FogDensity: 0
   m_LinearFogStart: 281.7
   m_LinearFogEnd: 5063.4
-  m_AmbientSkyColor: {r: 0.24528301, g: 0.13999642, b: 0.23535034, a: 1}
+  m_AmbientSkyColor: {r: 0, g: 0, b: 0, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.8
@@ -901,6 +901,16 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
+    - target: {fileID: 6350410476471569652, guid: 670197abcce7864439c614232a93d845,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
+    - target: {fileID: 1888122069083799966, guid: 29e428ae6f486c8459fa2ff61a46b07f,
+        type: 3}
+      propertyPath: m_Name
+      value: P_Border (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 7658491349385821899, guid: 29e428ae6f486c8459fa2ff61a46b07f,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -966,16 +976,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1888122069083799966, guid: 29e428ae6f486c8459fa2ff61a46b07f,
-        type: 3}
-      propertyPath: m_Name
-      value: P_Border (2)
-      objectReference: {fileID: 0}
-    - target: {fileID: 6350410476471569652, guid: 670197abcce7864439c614232a93d845,
-        type: 3}
-      propertyPath: 'm_Materials.Array.data[0]'
-      value: 
-      objectReference: {fileID: 2100000, guid: 206baebc381cb1149b654dbeabaae733, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

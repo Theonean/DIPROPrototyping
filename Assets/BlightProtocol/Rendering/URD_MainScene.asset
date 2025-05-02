@@ -19,9 +19,9 @@ MonoBehaviour:
     AfterOpaque: 0
     Source: 1
     NormalSamples: 1
-    Intensity: 0.5
-    DirectLightingStrength: 0.25
-    Radius: 0.25
+    Intensity: 1
+    DirectLightingStrength: 0.561
+    Radius: 0.7
     Samples: 1
     BlurQuality: 0
     Falloff: 100
@@ -193,7 +193,8 @@ MonoBehaviour:
   - {fileID: -3044827197715456593}
   - {fileID: 1752997818480444186}
   - {fileID: 7137455469320322611}
-  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0bef506354e7e4bd5ea789fdb43a83738afafddb8bdcb99bed51ac38f663ae6531833be01f9ee550d63
+  - {fileID: 8232084954699276091}
+  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0bef506354e7e4bd5ea789fdb43a83738afafddb8bdcb99bed51ac38f663ae6531833be01f9ee550d633b1fb09da63d3e72
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -260,3 +261,23 @@ MonoBehaviour:
       surfaceData: 2
     screenSpaceSettings:
       normalBlend: 0
+--- !u!114 &8232084954699276091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: TopGradient
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  injectionPoint: 550
+  fetchColorBuffer: 1
+  requirements: 0
+  passMaterial: {fileID: 2100000, guid: c564e746a7a774e48bc8bdb13555c35d, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
