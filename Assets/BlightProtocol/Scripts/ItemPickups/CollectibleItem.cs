@@ -20,13 +20,13 @@ public class CollectibleItem : MonoBehaviour
 
     private IEnumerator FlyToPlayer()
     {
-        Vector3 targetPosition = PlayerCore.Instance.transform.position;
+        PlayerCore player = PlayerCore.Instance;
         float duration = 1f; // Duration of the fly effect
         float elapsedTime = 0f;
 
-        while (Vector3.Distance(targetPosition, transform.position) > 1f)
+        while (Vector3.Distance(player.transform.position, transform.position) > 2f)
         {
-            transform.position = Vector3.Lerp(transform.position, targetPosition, (elapsedTime / duration));
+            transform.position = Vector3.Lerp(transform.position, player.transform.position, (elapsedTime / duration));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
