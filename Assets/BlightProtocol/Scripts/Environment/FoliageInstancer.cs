@@ -64,7 +64,7 @@ public class FoliageInstancer : MonoBehaviour
     private bool SampleNoise(float x, float y)
     {
         float value = Mathf.PerlinNoise((x + positionRange.x) * noiseScale, (y + positionRange.y) * noiseScale);
-        float normalizedDistance = (1f - Vector2.Distance(new Vector2(x,y), Vector2.zero) / positionRange.x);
+        float normalizedDistance = 1f - Vector2.Distance(new Vector2(x,y), Vector2.zero) / positionRange.x;
         value = (value + normalizedDistance * distanceInfluence) * normalizedDistance;
         if (value > 0.5f) return true;
         else return false;
