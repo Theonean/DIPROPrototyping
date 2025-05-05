@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 257482960947820214, guid: 613b6cf75e741c44f92c1890cd29a2b3,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5efdf59c2c0b6e34ead71e88961745fe, type: 2}
     - target: {fileID: 2086141989775410838, guid: 613b6cf75e741c44f92c1890cd29a2b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -61,7 +66,7 @@ PrefabInstance:
     - target: {fileID: 7055385458625285284, guid: 613b6cf75e741c44f92c1890cd29a2b3,
         type: 3}
       propertyPath: m_Name
-      value: P_CollectibleTemplate
+      value: P_CollectibleCrystal
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
