@@ -26,6 +26,7 @@ public class Harvester : MonoBehaviour
     private float harvestingTimer = 0f;
 
     public float moveSpeed = 5f;
+    public Vector3 respawnPoint = Vector3.zero;
     ZoneState state = ZoneState.IDLE;
     public List<Slider> waveProgressSliders = new List<Slider>();
     public UnityEvent<ZoneState> changedState;
