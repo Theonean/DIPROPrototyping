@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0add0149ec0a954d842bd09754ba98a, type: 3}
+  m_Name: BattleFormation
+  m_EditorClassIdentifier: 
+  spawnPositions:
+  - position: {x: 0, y: 0, z: 0}
+    enemyType: 2
+  - position: {x: 1.5, y: 0, z: 0}
+    enemyType: 2
+  - position: {x: 3, y: 0, z: 0}
+    enemyType: 2
+  - position: {x: 0, y: 0, z: 1.5}
+    enemyType: 0
+  - position: {x: 1.5, y: 0, z: 1.5}
+    enemyType: 0
+  - position: {x: 3, y: 0, z: 1.5}
+    enemyType: 0
+  - position: {x: 0, y: 0, z: 3}
+    enemyType: 1
+  - position: {x: 1.5, y: 0, z: 3}
+    enemyType: 1
+  - position: {x: 3, y: 0, z: 3}
+    enemyType: 1
+  spacing: 5
+  maxEnemies: 10
+  spawnInterval: 1
+  spawnRadius: 5
+  spawnHeight: 1
+  isActive: 1

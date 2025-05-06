@@ -584,7 +584,8 @@ MonoBehaviour:
   spawnedEnemy:
     m_PersistentCalls:
       m_Calls: []
-  enemyTypesToSpawn: 4
+  enemySpawnPatterns:
+  - {fileID: 11400000, guid: 11aff4200e79e944f96da15d84671fc5, type: 2}
   AutoSpawnOverride: 0
   spawnRadius: 3
   enemyScale: 1
@@ -772,7 +773,6 @@ MonoBehaviour:
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   enemySpawners:
   - {fileID: 1290705715082199862}
-  enemyTypeToSpawn: 0
   maxEnemies: 50
 --- !u!54 &6626966472751059854
 Rigidbody:

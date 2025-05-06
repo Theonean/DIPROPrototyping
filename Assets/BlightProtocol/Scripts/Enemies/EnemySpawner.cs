@@ -2,17 +2,29 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum SpawnState
+{
+    SPAWNING, //Spawns enemies
+    WAITING, //Waits for enemies to die
+    FINISHED //No more enemies to spawn and idle
+}
+
+public enum SpawnType
+{
+    ALL_RANDOM, //Picks a new enemy type each time
+    ALL_SINGLE,
+    SINGLE,
+    LIST
+}
+
 public class EnemySpawner : MonoBehaviour
 {
-    enum SpawnState
-    {
-        SPAWNING, //Spawns enemies
-        WAITING, //Waits for enemies to die
-        FINISHED //No more enemies to spawn and idle
-    }
-    public UnityEvent AllEnemiesDead = new UnityEvent();
-    public UnityEvent spawnedEnemy = new UnityEvent();
-    public EnemyType enemyTypesToSpawn = EnemyType.ALL;
+    [HideInInspector] public UnityEvent AllEnemiesDead = new UnityEvent();
+    [HideInInspector] public UnityEvent spawnedEnemy = new UnityEvent();
+
+    [SerializeField] private const SpawnType enemyTypesToSpawn = SpawnType.ALL_RANDOM;
+    public SOEnemySpawnPattern[] enemySpawnPatterns = new SOEnemySpawnPattern[0];
+    public bool FiresOnce = false;
     public bool AutoSpawnOverride = false;
 
     //How many enemies per second this spawner generates
@@ -65,32 +77,53 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 
-    void SpawnEnemy()
+    public void SpawnEnemy()
     {
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-        spawnPosition.y = -0.12f;
+        spawnPosition.y = 0f;
 
         GameObject enemyPrefab;
-        switch (enemyTypesToSpawn)
+        SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, enemySpawnPatterns.Length)];
+
+        foreach (EnemySpawnPosition enemyPos in spawnPattern.spawnPositions)
         {
-            case EnemyType.REGULAR:
-                enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
-                break;
-            case EnemyType.CHARGER:
-                enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
-                break;
-            case EnemyType.CRABTANK:
-                enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
-                break;
-            default:
-                enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
-                break;
+            if (enemyPos.enemyType == EnemyType.NONE)
+                continue;
+
+            enemyPrefab = null;
+            switch (enemyPos.enemyType)
+            {
+                case EnemyType.REGULAR:
+                    enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
+                    break;
+                case EnemyType.CHARGER:
+                    enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
+                    break;
+                case EnemyType.CRABTANK:
+                    enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
+                    break;
+                case EnemyType.ALL:
+                    enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
+                    break;
+            }
+
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
+            m_EnemyCount++;
+            spawnedEnemy.Invoke();
+
+            if(FiresOnce)
+            {
+                continue; //Don't subscribe if only fires once -> don't want any memory leaks due to destroyed listener
+            }
+
+            enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
         }
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition, Quaternion.identity);
-        m_EnemyCount++;
-        enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
-        spawnedEnemy.Invoke();
+        if (FiresOnce)
+        {
+            Destroy(this);
+        }
+
     }
 
     IEnumerator SpawnEnemyDesynced()

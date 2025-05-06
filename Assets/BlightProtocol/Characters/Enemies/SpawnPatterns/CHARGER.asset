@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0add0149ec0a954d842bd09754ba98a, type: 3}
-  m_Name: EnemySpawnPattern
+  m_Name: CHARGER
   m_EditorClassIdentifier: 
+  spawnPositions:
+  - position: {x: 1.5, y: 0, z: 1.5}
+    enemyType: 1
+  spacing: 5
   maxEnemies: 10
   spawnInterval: 1
   spawnRadius: 5

@@ -9,7 +9,6 @@ public class EnemyHiveManager : MonoBehaviour
     public int currentHealth { get; private set; }
     [Header("Enemy settings")]
     [SerializeField] private EnemySpawner[] enemySpawners;
-    [SerializeField] private EnemyType enemyTypeToSpawn = EnemyType.REGULAR;
     [SerializeField] private int maxEnemies = 10;
     private int spawnedEnemies = 0;
     private bool harvesterInRange = false;
@@ -23,7 +22,6 @@ public class EnemyHiveManager : MonoBehaviour
     {
         foreach (EnemySpawner spawner in enemySpawners)
         {
-            spawner.enemyTypesToSpawn = enemyTypeToSpawn;
             spawner.spawnedEnemy.AddListener(IncrementEnemySpawned);
         }
         currentHealth = maxHealth;

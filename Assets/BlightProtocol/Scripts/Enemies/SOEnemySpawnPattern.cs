@@ -10,6 +10,7 @@ public enum EnemyType
     ALL
 }
 
+[System.Serializable]
 public class EnemySpawnPosition
 {
     public Vector3 position;
@@ -25,6 +26,7 @@ public class EnemySpawnPosition
 public class SOEnemySpawnPattern : ScriptableObject
 {
     public List<EnemySpawnPosition> spawnPositions = new List<EnemySpawnPosition>();
+    public float spacing = 5f;
     public int maxEnemies = 10;
     public float spawnInterval = 1f;
     public float spawnRadius = 5f;
