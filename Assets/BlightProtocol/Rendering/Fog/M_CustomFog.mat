@@ -42,9 +42,11 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FogOffset: 0.45
-    - _FogPower: 0.24
+    - _End: 0.001
+    - _FogOffset: 0.0001
+    - _FogPower: 0
+    - _Start: 0
     m_Colors:
-    - _FogColor: {r: 1, g: 0.5123153, b: 0, a: 1}
+    - _FogColor: {r: 0.92156863, g: 0.62664735, b: 0.3411765, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

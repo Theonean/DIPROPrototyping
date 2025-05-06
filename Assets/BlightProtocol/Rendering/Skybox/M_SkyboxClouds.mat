@@ -84,6 +84,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Tex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -106,7 +110,7 @@ Material:
     - _CastShadows: 0
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _CloudBlend: 1.29
+    - _CloudBlend: 1.44
     - _CloutCutoff: -0.8
     - _Cull: 2
     - _Cutoff: 0.5
@@ -115,21 +119,29 @@ Material:
     - _DstBlend: 0
     - _DstBlendAlpha: 0
     - _EnvironmentReflections: 1
+    - _Exposure: 1
+    - _FogBottom: 0
+    - _FogEnd: 0.178
+    - _FogIntens: 0.87
+    - _FogStart: 0.024
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossinessSource: 0
     - _GlossyReflections: 0
-    - _HorizonBlend: 6.8
+    - _HorizonBlend: 13.9
     - _Metallic: 0
+    - _MieIntens: 0
+    - _MieSize: 0.631
     - _MountainAmplitude: 0.25
     - _MountainHeight: 0.89
-    - _NadirBlend: 9.9
+    - _NadirBlend: 13.9
     - _NoiseScale: 2.66
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Rotation: 0
     - _Shininess: 0
     - _Smoothness: 0.5
     - _SmoothnessSource: 0
@@ -139,24 +151,28 @@ Material:
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Step_Threshold: 0.31
+    - _SunDir: 0
     - _Surface: 0
     - _WorkflowMode: 1
     - _ZTest: 4
     - _ZWrite: 1
     - _ZWriteControl: 0
-    - _ZenithBlend: 0.4
+    - _ZenithBlend: 3.83
     m_Colors:
-    - _BaseColor: {r: 0.5, g: 0.41566265, b: 0.375, a: 1}
+    - _BaseColor: {r: 0.92156863, g: 0.62664735, b: 0.3411765, a: 1}
     - _CloudColor: {r: 1, g: 0.102836356, b: 0, a: 0}
     - _Color: {r: 0, g: 0.1509434, b: 0.11317973, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _GroundColor: {r: 1, g: 0.19339621, b: 0.19339621, a: 0}
-    - _HorizonColor: {r: 1, g: 0.32941177, b: 0, a: 1}
+    - _FogCol: {r: 1, g: 0.5372549, b: 0.26666668, a: 0.5}
+    - _GroundColor: {r: 0, g: 0, b: 0, a: 0}
+    - _HorizonColor: {r: 0.03773582, g: 0.03773582, b: 0.03773582, a: 1}
+    - _MieTint: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
     - _MountainColor: {r: 0, g: 0, b: 0, a: 1}
     - _NoiseStretch: {r: 0.07, g: 0.7, b: 0, a: 0}
     - _Offset: {r: 0.041, g: 0, b: 0, a: 0}
     - _SkyColor: {r: 2.8473768, g: 0.3130624, b: 0, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _Tiling: {r: 0.05, g: 0.33, b: 0, a: 0}
+    - _Tint: {r: 1, g: 0.76686984, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

@@ -88,6 +88,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 26
       objectReference: {fileID: 0}
+    - target: {fileID: 4570812192365601702, guid: e8922aa94b66c7e43ad0e56017bbf600,
+        type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 5efdf59c2c0b6e34ead71e88961745fe, type: 2}
     - target: {fileID: 5904875033031544068, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
       propertyPath: m_Layer
@@ -95,7 +100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6383438874832070818, guid: e8922aa94b66c7e43ad0e56017bbf600,
         type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 8b614f8522871e3448c19182cdc47de1, type: 2}
     m_RemovedComponents: []
@@ -326,7 +331,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   chargeStartColor: {r: 0, g: 0.2264151, b: 0.20844565, a: 1}
-  chargeEndColor: {r: 0, g: 7.9999995, b: 7.358024, a: 1}
+  chargeEndColor: {r: 0, g: 1, b: 0.4413116, a: 1}
   batteryRenderer: {fileID: 4067197325939956737}
 --- !u!4 &4516710286187333628 stripped
 Transform:
