@@ -45,11 +45,6 @@ public class ItemCollector : MonoBehaviour
                 }
             }
         }
-
-        if(itemRecentlyCollectedCounter > 0f)
-        {
-            itemRecentlyCollectedCounter -= Time.deltaTime;
-        }
     }
 
     public void ItemArrived(CollectibleItem itemCollider)
@@ -88,10 +83,10 @@ private IEnumerator HandleCollectedItemsDisplay()
         // 🧠 Phase 1: show the item text immediately
         lastItemCollected = Instantiate(collectedItemTextPrefab, collectedItemCanvas.transform);
         RectTransform rect = lastItemCollected.GetComponent<RectTransform>();
-        rect.position = transform.position + Vector3.up * 2.5f;
+        rect.position = transform.position + Vector3.up * 10f;
 
         TextMeshProUGUI text = lastItemCollected.GetComponent<TextMeshProUGUI>();
-        text.text = currentItem.name;
+        text.text = currentItem.itemName;
 
         // 🕒 Start bundling window
         itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
@@ -106,7 +101,7 @@ private IEnumerator HandleCollectedItemsDisplay()
             {
                 itemQueue.Dequeue();
                 quantity++;
-                text.text = $"{currentItem.name} x{quantity}";
+                text.text = $"{currentItem.itemName}x {quantity}";
                 itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
             }
 
@@ -125,8 +120,9 @@ private IEnumerator HandleCollectedItemsDisplay()
     private IEnumerator FadeOutCollectedItemText(GameObject gameObject)
     {
         float t = 0;
-        Vector3 startPos = new Vector3(0, 0, 0);
-        Vector3 endPos = new Vector3(0, 20f, 0);
+        Vector3 startPos = gameObject.transform.localPosition;
+
+        Vector3 endPos = startPos + Vector3.up * 20;
 
         TextMeshProUGUI collectedItemText = gameObject.GetComponent<TextMeshProUGUI>();
 
