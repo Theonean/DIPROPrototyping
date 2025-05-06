@@ -35,7 +35,7 @@ public class ExplosiveBody : ACRocketBody
                 if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, out hit, directionToEnemy.magnitude))
                 {
                     if (hit.collider.CompareTag("Enemy"))
-                        hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
+                        hitCollider.gameObject.GetComponentInParent<EnemyDamageHandler>().DestroyEnemy();
                 }
             }
             else if (hitCollider.gameObject.CompareTag("Rocket"))
