@@ -36,6 +36,14 @@ public class HarvesterMover : MonoBehaviour
         }
     }
 
+    public void Reset()
+    {
+        navMeshAgent.ResetPath();
+        isMoving = false;
+        navMeshAgent.isStopped = false;
+        navMeshAgent.speed = moveSpeed;
+    }
+
     public void StartMoving()
     {
         isMoving = true;

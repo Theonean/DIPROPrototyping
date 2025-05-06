@@ -57,7 +57,8 @@ public class FrankenGameManager : MonoBehaviour
         // Reload the scene when 'R' is pressed if the game is over
         if (m_GameState == GameState.GAMEOVER && Input.GetKeyDown(KeyCode.R))
         {
-            UnityEngine.SceneManagement.SceneManager.LoadScene(0);
+            StopAllCoroutines();
+            StartCoroutine(RespawnPlayer());
         }
     }
 
@@ -86,7 +87,7 @@ public class FrankenGameManager : MonoBehaviour
         PlayerCore playerCore = PlayerCore.Instance;
         playerCore.enabled = false;
 
-        resourcesHarvestedText.text = "You harvested " + m_wavesSurvived + " waves worth of resources!";
+        resourcesHarvestedText.text = "";
         StartCoroutine(FadeUI(gameOverGroup, true, 20f));
 
         // Unpause if the game is over
@@ -106,5 +107,33 @@ public class FrankenGameManager : MonoBehaviour
             yield return null;
         }
         uiOverlay.alpha = fadeIn ? 1 : 0;
+    }
+
+    IEnumerator RespawnPlayer()
+    {
+        Vector3 spawnPosition = Harvester.Instance.respawnPoint;
+        AnimationCurve inOutSmooth = AnimationCurve.EaseInOut(0, 0, 1, 1);
+
+        float startHeight = 200f;
+        Vector3 startPosition = new Vector3(spawnPosition.x, startHeight, spawnPosition.z);
+
+        float animationTime = 2f;
+        float t = 0f;
+
+        while(t < animationTime)
+        {
+            gameOverGroup.alpha = Mathf.Lerp(1, 0, inOutSmooth.Evaluate(t));
+            Harvester.Instance.transform.position = Vector3.Lerp(startPosition, spawnPosition, inOutSmooth.Evaluate(t / animationTime));
+            t+= Time.deltaTime;
+            yield return null;
+        }
+
+        m_GameState = GameState.HARVESTER_MOVING;
+        Harvester.Instance.Reset();
+
+        PlayerCore playerCore = PlayerCore.Instance;
+        playerCore.enabled = true;
+        CameraTracker.Instance.objectToTrack = playerCore.gameObject;
+
     }
 }

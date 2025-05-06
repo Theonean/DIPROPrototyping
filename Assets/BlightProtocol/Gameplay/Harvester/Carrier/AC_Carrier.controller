@@ -1,27 +1,31 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1101 &-6255529029218505580
-AnimatorStateTransition:
+--- !u!1102 &-6358711412442699757
+AnimatorState:
+  serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_Conditions: []
-  m_DstStateMachine: {fileID: 0}
-  m_DstState: {fileID: 7798245056067475933}
-  m_Solo: 0
-  m_Mute: 0
-  m_IsExit: 0
-  serializedVersion: 3
-  m_TransitionDuration: 0.25
-  m_TransitionOffset: 0
-  m_ExitTime: 0.975
-  m_HasExitTime: 1
-  m_HasFixedDuration: 1
-  m_InterruptionSource: 0
-  m_OrderedInterruption: 1
-  m_CanTransitionToSelf: 1
+  m_Name: New State
+  m_Speed: 1
+  m_CycleOffset: 0
+  m_Transitions: []
+  m_StateMachineBehaviours: []
+  m_Position: {x: 50, y: 50, z: 0}
+  m_IKOnFeet: 0
+  m_WriteDefaultValues: 1
+  m_Mirror: 0
+  m_SpeedParameterActive: 0
+  m_MirrorParameterActive: 0
+  m_CycleOffsetParameterActive: 0
+  m_TimeParameterActive: 0
+  m_Motion: {fileID: 0}
+  m_Tag: 
+  m_SpeedParameter: 
+  m_MirrorParameter: 
+  m_CycleOffsetParameter: 
+  m_TimeParameter: 
 --- !u!91 &9100000
 AnimatorController:
   m_ObjectHideFlags: 0
@@ -54,8 +58,7 @@ AnimatorState:
   m_Name: Connect
   m_Speed: 1
   m_CycleOffset: 0
-  m_Transitions:
-  - {fileID: -6255529029218505580}
+  m_Transitions: []
   m_StateMachineBehaviours: []
   m_Position: {x: 50, y: 50, z: 0}
   m_IKOnFeet: 0
@@ -85,8 +88,11 @@ AnimatorStateMachine:
     m_State: {fileID: 537795781042774399}
     m_Position: {x: 320, y: 110, z: 0}
   - serializedVersion: 1
-    m_State: {fileID: 7798245056067475933}
-    m_Position: {x: 570, y: 110, z: 0}
+    m_State: {fileID: -6358711412442699757}
+    m_Position: {x: 204.15057, y: 343.16144, z: 0}
+  - serializedVersion: 1
+    m_State: {fileID: 8011611035485079549}
+    m_Position: {x: 437.6755, y: 187.75055, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -96,15 +102,15 @@ AnimatorStateMachine:
   m_EntryPosition: {x: 50, y: 120, z: 0}
   m_ExitPosition: {x: 800, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
-  m_DefaultState: {fileID: 537795781042774399}
---- !u!1102 &7798245056067475933
+  m_DefaultState: {fileID: -6358711412442699757}
+--- !u!1102 &8011611035485079549
 AnimatorState:
   serializedVersion: 6
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Idle_001
+  m_Name: Connect_Reversed
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions: []
@@ -117,8 +123,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 6517714258327031822, guid: 1608aaff94d3b044ca39531020d240ff,
-    type: 3}
+  m_Motion: {fileID: 7400000, guid: 6bc871983fb77dc49993a9eb7f4cde88, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
