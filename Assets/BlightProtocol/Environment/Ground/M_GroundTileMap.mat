@@ -66,6 +66,18 @@ Material:
         m_Texture: {fileID: 2800000, guid: 87d0320073b7c3a439818fb9223d26e9, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _Diffuse1:
+        m_Texture: {fileID: 2800000, guid: 654bf67404f135042aa85f64acffc7c4, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _Diffuse2:
+        m_Texture: {fileID: 2800000, guid: 50e896f7ad15a9f4c9688e875af21492, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _DiffuseOverlay:
+        m_Texture: {fileID: 2800000, guid: 93a28ed3397db0b46bd0c4ed184448b0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _EmissionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -125,8 +137,11 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
+    - _NoiseScale: 0.05
     - _OcclusionStrength: 1
+    - _OverlayScale: 0.1
     - _Parallax: 0.005
+    - _ParallaxAmplitude: 0
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
