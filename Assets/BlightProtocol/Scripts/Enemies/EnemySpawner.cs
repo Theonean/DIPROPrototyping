@@ -25,6 +25,7 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] private const SpawnType enemyTypesToSpawn = SpawnType.ALL_RANDOM;
     public SOEnemySpawnPattern[] enemySpawnPatterns = new SOEnemySpawnPattern[0];
     public bool FiresOnce = false;
+    private bool isSpawningEnemies = false;
     public bool AutoSpawnOverride = false;
 
     //How many enemies per second this spawner generates
@@ -79,6 +80,9 @@ public class EnemySpawner : MonoBehaviour
 
     public void SpawnEnemy()
     {
+        if (FiresOnce && isSpawningEnemies) return;
+        isSpawningEnemies = true;
+
         Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
         spawnPosition.y = 0f;
 
@@ -124,6 +128,7 @@ public class EnemySpawner : MonoBehaviour
             Destroy(this);
         }
 
+        isSpawningEnemies = false;
     }
 
     IEnumerator SpawnEnemyDesynced()
