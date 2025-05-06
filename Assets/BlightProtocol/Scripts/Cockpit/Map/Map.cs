@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
+using System.Linq;
 
 public class Map : ACInteractable
 {
@@ -97,6 +98,14 @@ public class Map : ACInteractable
     {
         if (Physics.Raycast(targetRay, out hit, Mathf.Infinity, hitMask))
         {
+            if (hit.collider.CompareTag("Checkpoint"))
+            {
+                Transform checkpointRoot = hit.collider.transform.parent; 
+                Transform dockingPosition = checkpointRoot.GetComponentsInChildren<Transform>()
+                    .FirstOrDefault(x => x.name == "DockingPosition");
+                Harvester.Instance.mover.SetDestination(dockingPosition.position);
+                Logger.Log("Harvester moving to checkpoint", LogLevel.INFO, LogType.HARVESTER);
+            }
             if (hit.collider.CompareTag("ResourcePoint"))
             {
                 Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);

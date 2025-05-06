@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ public class HarvesterHealth : MonoBehaviour
     public int maxHealth;
     public int health;
     private bool dead = false;
-
+    private Coroutine flyAwayRoutine;
     
 
     [SerializeField]
@@ -68,11 +69,20 @@ public class HarvesterHealth : MonoBehaviour
 
         if (health <= 0)
         {
+            StopAllCoroutines();
+
+            dead = true;
             died.Invoke();
             //Find Camera Tracker and tell it to track this
             CameraTracker.Instance.objectToTrack = this.gameObject;
-            StartCoroutine(FlyAway());
+            GetComponent<NavMeshAgent>().enabled = false;
+            flyAwayRoutine = StartCoroutine(FlyAway());
         }
+    }
+
+    public void Fullheal()
+    {
+        Heal(maxHealth);
     }
 
     public void Heal(int amount)
@@ -80,13 +90,35 @@ public class HarvesterHealth : MonoBehaviour
         Modifyhealth(amount);
     }
 
-    IEnumerator FlyAway()
+    public void Reset() => StartCoroutine(ResetInternal());
+
+    public IEnumerator ResetInternal()
     {
-        Animator anim = m_carrierBalloon.GetComponent<Animator>();
+        dead = false;
+        Heal(maxHealth);
+        if (flyAwayRoutine != null) StopCoroutine(flyAwayRoutine);
+
+        Animator balloonAnimator = m_carrierBalloon.GetComponent<Animator>();
         m_carrierBalloon.SetActive(true);
 
+        balloonAnimator.Play("Connect_Reversed", 0, 0); // Play from the end of the animation
+        
         //While the animator is still playing, wait, after that continue to the fly away code-animation
-        while (anim.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        while (balloonAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
+        {
+            yield return null;
+        }
+    }
+
+    IEnumerator FlyAway()
+    {
+        m_carrierBalloon.SetActive(true);
+
+        Animator balloonAnimator = m_carrierBalloon.GetComponent<Animator>();
+        balloonAnimator.Play("Connect", 0, 0); // Play from the end of the animation
+
+        //While the animator is still playing, wait, after that continue to the fly away code-animation
+        while (balloonAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1f)
         {
             yield return null;
         }
@@ -99,7 +131,5 @@ public class HarvesterHealth : MonoBehaviour
             timer += Time.deltaTime;
             yield return null;
         }
-        Destroy(gameObject);
     }
-
 }

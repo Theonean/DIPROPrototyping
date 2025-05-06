@@ -1,8 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.VFX;
@@ -87,6 +86,13 @@ public class Harvester : MonoBehaviour
         stateMachine.Update();
     }
 
+    public void Reset()
+    {
+        GetComponent<NavMeshAgent>().enabled = true;
+        health.Reset();
+        mover.Reset();
+        SetState(new IdleState(Instance));
+    }
 
     public void SetState(IHarvesterState newState)
     {
