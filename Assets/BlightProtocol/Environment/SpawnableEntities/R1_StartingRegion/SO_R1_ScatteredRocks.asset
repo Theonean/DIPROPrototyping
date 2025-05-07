@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R3_CrystalRock
+  m_Name: SO_R1_ScatteredRocks
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 500367520310679496, guid: f224a4c2be047d54f9c69edbab72dff9, type: 3}
-  numEntities: 30
+  - {fileID: 3189941400121695729, guid: 79fbc13009e9c9649bc02bf7b124e1cc, type: 3}
+  numEntities: 50
   spawnStrategy: 0
   customSpawnAreaBoundsX: {x: -500, y: 500}
   customSpawnAreaBoundsZ: {x: -100, y: 1100}
-  voronoiSiteCount: 10
-  siteSpreadRadius: 3
+  voronoiSiteCount: 15
+  siteSpreadRadius: 10
   siteJitter: 0.2
   minRotation: 0
   maxRotation: 360
   scaleVariance: 0.5
-  boundingRadius: 10.813334
+  boundingRadius: 12.574161
