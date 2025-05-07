@@ -74,6 +74,9 @@
         },
         {
             "m_Id": "0dc376ec43014d0183e1b9778aa511e7"
+        },
+        {
+            "m_Id": "9adbd82cd3c345d8b422b85ef1934e44"
         }
     ],
     "m_Keywords": [],
@@ -2916,6 +2919,9 @@
         },
         {
             "m_Id": "c876ab0002c84d78a4d832a140ccf548"
+        },
+        {
+            "m_Id": "9adbd82cd3c345d8b422b85ef1934e44"
         }
     ]
 }
@@ -3706,8 +3712,8 @@
     "m_ObjectId": "1c548630e2fb47128f397494315657b2",
     "m_Title": "Fresnel",
     "m_Position": {
-        "x": -1414.0001220703125,
-        "y": -1764.0001220703125
+        "x": -1414.0,
+        "y": -1764.0
     }
 }
 
@@ -7958,8 +7964,8 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2505.000244140625,
-            "y": -571.0,
+            "x": 2531.999755859375,
+            "y": -563.9999389648438,
             "width": 125.0,
             "height": 34.0
         }
@@ -8143,8 +8149,8 @@
     "m_ObjectId": "6988de3ba1464e53a17458bf3b3dd379",
     "m_Title": "Diffuse",
     "m_Position": {
-        "x": -2437.000244140625,
-        "y": 152.0
+        "x": -2437.0,
+        "y": 151.99993896484376
     }
 }
 
@@ -8538,10 +8544,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": 2801.0,
-            "y": -610.9999389648438,
-            "width": 295.999755859375,
-            "height": 326.9998474121094
+            "x": 2827.999755859375,
+            "y": -603.9999389648438,
+            "width": 296.0,
+            "height": 326.99993896484377
         }
     },
     "m_Slots": [
@@ -9672,8 +9678,8 @@
     "m_ObjectId": "8be639e6a4a7444fbca548cfde39ac32",
     "m_Title": "TopDownFading",
     "m_Position": {
-        "x": 2480.000244140625,
-        "y": -669.9998779296875
+        "x": 2506.999755859375,
+        "y": -662.9999389648438
     }
 }
 
@@ -10763,6 +10769,34 @@
 }
 
 {
+    "m_SGVersion": 1,
+    "m_Type": "UnityEditor.ShaderGraph.Internal.Vector1ShaderProperty",
+    "m_ObjectId": "9adbd82cd3c345d8b422b85ef1934e44",
+    "m_Guid": {
+        "m_GuidSerialized": "c615a599-2392-4665-a42c-16322b12cfc1"
+    },
+    "m_Name": "Alpha Blend",
+    "m_DefaultRefNameVersion": 1,
+    "m_RefNameGeneratedByDisplayName": "Alpha Blend",
+    "m_DefaultReferenceName": "_Alpha_Blend",
+    "m_OverrideReferenceName": "",
+    "m_GeneratePropertyBlock": true,
+    "m_UseCustomSlotLabel": false,
+    "m_CustomSlotLabel": "",
+    "m_DismissedVersion": 0,
+    "m_Precision": 0,
+    "overrideHLSLDeclaration": false,
+    "hlslDeclarationOverride": 0,
+    "m_Hidden": false,
+    "m_Value": 1.0,
+    "m_FloatType": 1,
+    "m_RangeValues": {
+        "x": 0.0,
+        "y": 1.0
+    }
+}
+
+{
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.DynamicVectorMaterialSlot",
     "m_ObjectId": "9b2a2e0e71634f91b00f87f250ffd3e3",
@@ -11743,8 +11777,8 @@
     "m_ObjectId": "b274ae38c6a84ed49d82c832262d953f",
     "m_Title": "Fog",
     "m_Position": {
-        "x": -1098.0001220703125,
-        "y": -3075.00048828125
+        "x": -1098.0,
+        "y": -3074.999755859375
     }
 }
 
@@ -14352,8 +14386,8 @@
     "m_ObjectId": "ebbe44b773eb4749960505d36777ba24",
     "m_Title": "Specular",
     "m_Position": {
-        "x": -2618.000244140625,
-        "y": -1130.9998779296875
+        "x": -2618.0,
+        "y": -1131.0
     }
 }
 
