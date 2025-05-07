@@ -358,30 +358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isLocked: 0
-  freeSens: 300
-  edgeSens: 5
-  lookZoneX: 0.2
-  lookZoneY: 0.2
-  xRotationLimit: {x: -20, y: 20}
-  yRotationLimit: {x: -35, y: 35}
   dragSens: 100
-  fixedPositions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 5173211586981784118}
-  - {fileID: 0}
-  - {fileID: 4971461331037889531}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
 --- !u!114 &3307074421802394134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -395,10 +372,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactKey: 323
-  hitMask:
+  interactionMask:
     serializedVersion: 2
     m_Bits: 8388608
-  raycastRange: 400
+  interactionRange: 3
   touchTarget: {fileID: 2165559426348712029}
 --- !u!20 &4507141996083591843
 Camera:
@@ -543,9 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d187c7582aafe3440a93fc5f24f0a554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookMode: 3
-  freeLookToggle: 101
-  crosshair: {fileID: 0}
+  lookState: 2
 --- !u!1 &8905023374743348437
 GameObject:
   m_ObjectHideFlags: 0

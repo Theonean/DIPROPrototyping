@@ -1,160 +1,108 @@
 using UnityEngine;
 
+[System.Serializable]
+public enum LookState
+{
+    IDLE,
+    INTERACTING,
+    LOOKING
+}
+
 public class FPVInputManager : MonoBehaviour
 {
     public static FPVInputManager Instance { get; private set; }
-
-    [Header("Settings")]
-    public FPVLookMode lookMode = FPVLookMode.FREELOOK;
-    public KeyCode freeLookToggle = KeyCode.E;
-
-    [Header("References")]
-    [SerializeField] private GameObject crosshair;
     private FPVPlayerCam fpvPlayerCam;
     private FPVCamRotator fpvCamRotator;
+    private FPVInteractionHandler interactionHandler;
 
-    public bool IsLooking { get; private set; }
-    public bool IsInteracting { get; private set; }
-    public bool BlockInteraction { get; set; }
-    private bool IsActive;
-
+    public LookState lookState = LookState.IDLE;
+    private bool isActive;
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
+        if (Instance != null)
         {
-            Destroy(this);
+            Destroy(gameObject);
+            return;
         }
-        else
-        {
-            Instance = this;
-        }
+        Instance = this;
     }
 
     private void Start()
     {
         fpvPlayerCam = FPVPlayerCam.Instance;
         fpvCamRotator = GetComponentInChildren<FPVCamRotator>();
-        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(InitialiseLookMode);
+        interactionHandler = GetComponentInChildren<FPVInteractionHandler>();
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(HandlePerspectiveSwitch);
     }
 
-    void OnEnable()
+    private void OnDestroy()
     {
         if (PerspectiveSwitcher.Instance != null)
         {
-            PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(InitialiseLookMode);
-            PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(InitialiseLookMode);
-        }
-
-    }
-
-    void OnDisable()
-    {
-        PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(InitialiseLookMode);
-    }
-
-    private void InitialiseLookMode()
-    {
-        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
-        {
-            IsLooking = true;
-            IsActive = true;
-            switch (lookMode)
-            {
-                case FPVLookMode.FREELOOK:
-                    SetCursorState(true, false);
-                    break;
-                case FPVLookMode.FREELOOK_TOGGLE:
-                    SetCursorState(true, false);
-                    break;
-                case FPVLookMode.DRAG:
-                    SetCursorState(false, true, true);
-                    break;
-                case FPVLookMode.PARALLAX:
-                    SetCursorState(false, true);
-                    break;
-            }
-        }
-        else
-        {
-            SetCursorState(false, true);
-            IsActive = false;
-        }
-
-    }
-
-    public void SetCursorState(bool locked, bool visible, bool hideCrosshair = false)
-    {
-        Cursor.lockState = locked ? CursorLockMode.Locked : CursorLockMode.Confined;
-        Cursor.visible = visible;
-
-        if (crosshair != null && !hideCrosshair)
-        {
-            crosshair.SetActive(locked);
+            PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(HandlePerspectiveSwitch);
         }
     }
 
-    public void SetInteractionState(bool interacting)
+    private void HandlePerspectiveSwitch()
     {
-        IsInteracting = interacting;
-        if (interacting)
-        {
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
-            IsLooking = false;
-            if (crosshair != null) crosshair.SetActive(false);
-        }
-        else
-        {
-            InitialiseLookMode();
-        }
+        bool isFPV = PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV;
+        isActive = isFPV;
+        SetLookState(LookState.IDLE);
     }
 
-    public void Update()
+    public void SetLookState(LookState state)
     {
-        if (!IsActive) return;
-        if (lookMode == FPVLookMode.FREELOOK_TOGGLE && Input.GetKeyDown(freeLookToggle))
-        {
-            SetCursorState(!IsLooking, IsLooking);
-        }
-        if (IsLooking)
-        {
-            switch (lookMode)
-            {
-                case FPVLookMode.FREELOOK:
-                case FPVLookMode.FREELOOK_TOGGLE:
-                    fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput());
-                    break;
+        lookState = state;
+    }
 
-                case FPVLookMode.PARALLAX:
-                case FPVLookMode.DRAG:
-                    fpvPlayerCam.UpdateCameraRotation(lookMode, GetLookInput(true));
-                    break;
+    private void Update()
+    {
+        if (!isActive) return;
 
-            }
+        switch (lookState)
+        {
+            case LookState.IDLE:
+                if (Input.GetMouseButtonDown(0))
+                {
+                    if (interactionHandler.HoveredInteractable != null)
+                    {
+                        SetLookState(LookState.INTERACTING);
+                        interactionHandler.StartInteraction();
+                    }
+                    else
+                    {
+                        SetLookState(LookState.LOOKING);
+                        fpvPlayerCam.StartLook(GetNormalisedMousePos());
+                    }
+                }
+                break;
+
+            case LookState.LOOKING:
+                if (Input.GetMouseButton(0))
+                {
+                    fpvPlayerCam.UpdateCameraRotation(GetNormalisedMousePos());
+                }
+                else if (Input.GetMouseButtonUp(0))
+                {
+                    SetLookState(LookState.IDLE);
+                }
+                break;
+
+            case LookState.INTERACTING:
+                if (Input.GetMouseButtonUp(0))
+                {
+                    SetLookState(LookState.IDLE);
+                    interactionHandler.EndInteraction();
+                }
+                return;
         }
 
         if (Input.GetKeyDown(KeyCode.A)) fpvCamRotator.ChangePosition(-1);
         if (Input.GetKeyDown(KeyCode.D)) fpvCamRotator.ChangePosition(1);
-
     }
 
-    public Vector2 GetLookInput(bool normalized = false)
-    {
-        if (normalized)
-        {
-            return new Vector2(
-            Input.mousePosition.x / Screen.width,
-            Input.mousePosition.y / Screen.height
-        );
-        }
-        return new Vector2(
-            Input.GetAxis("Mouse X"),
-            Input.GetAxis("Mouse Y")
-        );
-    }
-
-    public Vector2 GetNormalizedMousePosition()
+    public Vector2 GetNormalisedMousePos()
     {
         return new Vector2(
             Input.mousePosition.x / Screen.width,

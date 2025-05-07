@@ -83,6 +83,11 @@ PrefabInstance:
       propertyPath: m_text
       value: exit
       objectReference: {fileID: 0}
+    - target: {fileID: 5807695720021142610, guid: 23e111c145abf634ca797d244cf313ce,
+        type: 3}
+      propertyPath: m_Layer
+      value: 21
+      objectReference: {fileID: 0}
     - target: {fileID: 6058349911177508157, guid: 23e111c145abf634ca797d244cf313ce,
         type: 3}
       propertyPath: m_Name
@@ -106,7 +111,61 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 6164863778698957869}
+    - targetCorrespondingSourceObject: {fileID: 5807695720021142610, guid: 23e111c145abf634ca797d244cf313ce,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8399467101530578876}
   m_SourcePrefab: {fileID: 100100000, guid: 23e111c145abf634ca797d244cf313ce, type: 3}
+--- !u!1 &1345955437453127176 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5807695720021142610, guid: 23e111c145abf634ca797d244cf313ce,
+    type: 3}
+  m_PrefabInstance: {fileID: 4770683278779515482}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8399467101530578876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1345955437453127176}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 10
+  precomputeOutline: 1
+  bakeKeys:
+  - {fileID: -8839368762345780380, guid: 0ce071c7ee00ade45884e3cf087375ed, type: 3}
+  bakeValues:
+  - data:
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: -0.57735026}
+    - {x: -0.57735026, y: 0.57735026, z: 0.57735026}
+    - {x: -0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: -0.57735026, z: 0.57735026}
+    - {x: 0.57735026, y: 0.57735026, z: 0.57735026}
 --- !u!1 &1596326022206044007 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6058349911177508157, guid: 23e111c145abf634ca797d244cf313ce,
@@ -125,10 +184,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14465f744b046f646a0de9d11c8161ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lookAtText: exit
-  interactText: 
-  _touchPoint: {fileID: 4478892899889928957}
-  direction: {x: 0, y: 0, z: 0}
+  IsCurrentlyInteractable: 1
+  UpdateHover: 0
+  UpdateInteract: 0
+  TouchPoint: {fileID: 4478892899889928957}
 --- !u!4 &4478892899889928957 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8943276357945252007, guid: 23e111c145abf634ca797d244cf313ce,

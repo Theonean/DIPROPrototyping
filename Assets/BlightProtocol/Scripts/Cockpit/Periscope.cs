@@ -38,6 +38,11 @@ public class Periscope : ACInteractable
         meshAnimator = mesh.GetComponent<Animator>();
     }
 
+    public override void OnStartHover()
+    {
+        if (!isActive) base.OnStartHover();
+    }
+
     public override void OnUpdateHover()
     {
         if (isActive)

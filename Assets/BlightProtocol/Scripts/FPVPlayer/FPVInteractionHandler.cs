@@ -5,94 +5,62 @@ public class FPVInteractionHandler : MonoBehaviour
     public static FPVInteractionHandler Instance { get; private set; }
     public ACInteractable HoveredInteractable { get; private set; }
 
-    [Header("Input Settings")]
+    [Header("Settings")]
     [SerializeField] private KeyCode interactKey = KeyCode.Mouse0;
-
-    [Header("Raycast Settings")]
-    [SerializeField] private LayerMask hitMask;
-    [SerializeField] private float raycastRange = 3f;
+    [SerializeField] private LayerMask interactionMask;
+    [SerializeField] private float interactionRange = 3f;
     [SerializeField] private GameObject touchTarget;
 
     private Camera fpvCamera;
+    private FPVInputManager inputManager;
     private ACInteractable activeInteractable;
-    private Ray currentRay;
 
     private void Awake()
     {
         if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
-        
         Instance = this;
         fpvCamera = GetComponent<Camera>();
     }
 
-    private void Start()
+    void Start()
     {
-        FPVInputManager.Instance.SetInteractionState(false);
+        inputManager = FPVInputManager.Instance;       
     }
 
-    private void Update()
+    private void LateUpdate()
     {
-        HandleInput();
-        UpdateRay();
-    }
-
-    private void FixedUpdate()
-    {
-        if (FPVInputManager.Instance.BlockInteraction) return;
-        
-        if (IsInteracting())
+        if (inputManager.lookState == LookState.LOOKING) return;
+        if (activeInteractable != null && inputManager.lookState == LookState.INTERACTING)
         {
             UpdateInteraction();
             return;
         }
 
-        ProcessRaycast();
+        HandleRaycast();
     }
 
-    private void HandleInput()
+    private void HandleRaycast()
     {
-        if (Input.GetKeyUp(interactKey))
-        {
-            EndInteraction();
-            FPVInputManager.Instance.SetInteractionState(false);
-        }
-    }
-
-    private void UpdateRay()
-    {
-        currentRay = fpvCamera.ScreenPointToRay(Input.mousePosition);
-    }
-
-    private bool IsInteracting()
-    {
-        return FPVInputManager.Instance.IsInteracting && Input.GetKey(interactKey);
-    }
-
-    private void ProcessRaycast()
-    {
-        if (!Physics.Raycast(currentRay, out RaycastHit hit, raycastRange, hitMask))
+        Ray ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
+        
+        if (!Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionMask))
         {
             ClearHover();
             return;
         }
 
-        var interactable = hit.collider.GetComponentInParent<ACInteractable>();
-        if (interactable == null)
+        ACInteractable interactable = hit.collider.GetComponentInParent<ACInteractable>();
+        if (interactable == null || !interactable.IsCurrentlyInteractable)
         {
             ClearHover();
             return;
         }
 
         HandleHover(interactable);
-
-        if (Input.GetKeyDown(interactKey) && interactable.IsCurrentlyInteractable)
-        {
-            StartInteraction(interactable);
-        }
     }
 
     private void HandleHover(ACInteractable interactable)
@@ -113,28 +81,27 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         if (HoveredInteractable == null) return;
         
-        FPVUI.Instance?.ClearLookAtText();
         HoveredInteractable.OnEndHover();
         HoveredInteractable = null;
     }
 
-    private void StartInteraction(ACInteractable interactable)
+    public void StartInteraction()
     {
-        activeInteractable = interactable;
-        UpdateTouchTargetPosition(interactable.TouchPoint.position);
-        interactable.OnStartInteract();
-        FPVInputManager.Instance.SetInteractionState(true);
+        activeInteractable = HoveredInteractable;
+        UpdateTouchTarget(activeInteractable.TouchPoint.position);
+        activeInteractable.OnStartInteract();
     }
 
     private void UpdateInteraction()
     {
-        if (activeInteractable?.UpdateInteract != true) return;
-        
-        UpdateTouchTargetPosition(activeInteractable.TouchPoint.position);
-        activeInteractable.OnUpdateInteract();
+        if (activeInteractable.UpdateInteract)
+        {
+            UpdateTouchTarget(activeInteractable.TouchPoint.position);
+            activeInteractable.OnUpdateInteract();
+        }
     }
 
-    private void UpdateTouchTargetPosition(Vector3 position)
+    private void UpdateTouchTarget(Vector3 position)
     {
         if (touchTarget != null)
         {
@@ -142,21 +109,14 @@ public class FPVInteractionHandler : MonoBehaviour
         }
     }
 
-    private void EndInteraction()
+    public void EndInteraction()
     {
         if (activeInteractable == null) return;
-        
+
         ResetTouchTarget();
         activeInteractable.OnEndInteract();
         activeInteractable = null;
-    }
-
-    public void AbortInteraction()
-    {
-        if (activeInteractable == null) return;
-        
-        ResetTouchTarget();
-        activeInteractable = null;
+        inputManager.SetLookState(LookState.IDLE);
     }
 
     private void ResetTouchTarget()
@@ -165,5 +125,11 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             touchTarget.transform.position = transform.position;
         }
+    }
+
+    public void AbortInteraction()
+    {
+        ResetTouchTarget();
+        activeInteractable = null;
     }
 }
