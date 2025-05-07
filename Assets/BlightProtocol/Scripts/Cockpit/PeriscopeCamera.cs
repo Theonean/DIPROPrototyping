@@ -5,7 +5,6 @@ public class PersicopeCamera : MonoBehaviour
     public static PersicopeCamera Instance { get; private set; }
 
     [Header("Free Look")]
-    [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private Vector2 yRotationBounds; // Min and max rotation angles in degrees
 
     private float currentYRotation = 0f;
@@ -22,15 +21,9 @@ public class PersicopeCamera : MonoBehaviour
         }
     }
 
-    public void RotateCam(Vector3 direction)
+    public void RotateCam(float position)
     {
-        // Only use the y component for rotation (left/right movement)
-        float rotationAmount = direction.y * moveSpeed;
-        
-        // Update current rotation with clamping
-        currentYRotation += rotationAmount;
-        currentYRotation = Mathf.Clamp(currentYRotation, yRotationBounds.x, yRotationBounds.y);
-        
+        currentYRotation = Mathf.Lerp(yRotationBounds.x, yRotationBounds.y, position);   
         // Apply the rotation in local space
         transform.localRotation = Quaternion.Euler(0f, currentYRotation, 0f);
     }

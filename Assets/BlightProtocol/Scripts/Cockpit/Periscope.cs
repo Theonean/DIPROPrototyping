@@ -18,6 +18,8 @@ public class Periscope : ACInteractable
     private bool isActive = false;
     private bool isAnimating = false;
 
+    private TurnPeriscopeSlider turnSlider;
+
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -36,6 +38,7 @@ public class Periscope : ACInteractable
         base.Start();
         markerHitMask = Map.Instance.hitMask;
         meshAnimator = mesh.GetComponent<Animator>();
+        turnSlider = GetComponentInChildren<TurnPeriscopeSlider>();
     }
 
     public override void OnStartHover()
@@ -102,6 +105,9 @@ public class Periscope : ACInteractable
         // disable screen
         periscopeCamera.enabled = false;
         screen.material.SetColor("_BaseColor", Color.black);
+
+        //reset turn
+        turnSlider.SetPositionNormalized(0.5f);
     }
 
     void Update()

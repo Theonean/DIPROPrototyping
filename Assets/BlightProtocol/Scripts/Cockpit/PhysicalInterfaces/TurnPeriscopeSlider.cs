@@ -2,11 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnPeriscopeButton : ACInteractable
+public class TurnPeriscopeSlider : ACSlider
 {
-    [SerializeField] private Vector3 direction;
     private PersicopeCamera persicopeCamera;
-
     protected override void Start()
     {
         base.Start();
@@ -14,8 +12,9 @@ public class TurnPeriscopeButton : ACInteractable
         UpdateInteract = true;
     }
 
-    public override void OnUpdateInteract()
+    protected override void OnValueChanged(float normalizedValue)
     {
-        persicopeCamera.RotateCam(direction);
+        persicopeCamera.RotateCam(normalizedValue);
     }
+
 }
