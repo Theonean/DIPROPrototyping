@@ -625,10 +625,10 @@ MonoBehaviour:
   UpdateHover: 0
   UpdateInteract: 0
   TouchPoint: {fileID: 8653099844254242479}
-  targetIcon: {fileID: 3215432995733610699}
-  periscopeCamera: {fileID: 3436149213771014179}
-  mesh: {fileID: 3141331742080312497}
   screen: {fileID: 5587162731457379133}
+  periscopeCamera: {fileID: 3436149213771014179}
+  targetIcon: {fileID: 3215432995733610699}
+  mesh: {fileID: 3141331742080312497}
   mainCollider: {fileID: 6222325766431435234}
   hitMask:
     serializedVersion: 2
@@ -636,6 +636,7 @@ MonoBehaviour:
   markerHitMask:
     serializedVersion: 2
     m_Bits: 16777216
+  exitButton: {fileID: 5442952332952523774}
 --- !u!1001 &1262918889485551542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -715,6 +716,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1262918889485551542}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &5442952332952523774 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6489557625157325896, guid: b397fe311fd5c114b97cec1c571257e7,
+    type: 3}
+  m_PrefabInstance: {fileID: 1262918889485551542}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 909e587cbd76a3a4da7f323ccb0863f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8182481958591776652 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6920002881308131386, guid: b397fe311fd5c114b97cec1c571257e7,

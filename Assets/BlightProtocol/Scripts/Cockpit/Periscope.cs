@@ -4,21 +4,40 @@ using UnityEngine;
 public class Periscope : ACInteractable
 {
     public static Periscope Instance { get; private set; }
+    [Header("Screen")]
+    [SerializeField] private Renderer screen;
+    [SerializeField] private Camera periscopeCamera;
     [SerializeField] private RectTransform targetIcon;
     private Vector2 screenPoint;
-    [SerializeField] private Camera periscopeCamera;
+
+    [Header("Animation")]
     [SerializeField] private GameObject mesh;
-    [SerializeField] private Renderer screen;
-    [SerializeField] private Collider mainCollider;
     private Animator meshAnimator;
-    Ray ray;
-    RaycastHit hit;
+
+    [Header("Raycasting")]
+    [SerializeField] private Collider mainCollider;
     [SerializeField] private LayerMask hitMask;
     [SerializeField] private LayerMask markerHitMask;
+    Ray ray;
+    RaycastHit hit;
+
+    [Header("Interaction")]
+    [SerializeField] private Button exitButton;
+    
     private bool isActive = false;
     private bool isAnimating = false;
 
     private TurnPeriscopeSlider turnSlider;
+
+    void OnEnable()
+    {
+        exitButton.OnPressed.AddListener(EndActive);
+    }
+
+    void OnDisable()
+    {
+        exitButton.OnPressed.RemoveListener(EndActive);
+    }
 
     void Awake()
     {
@@ -93,7 +112,7 @@ public class Periscope : ACInteractable
     public override void OnEndInteract()
     { }
 
-    public void EndActive()
+    public void EndActive(Button b)
     {
         if (isAnimating) return;
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class UISelectedRocketManager : MonoBehaviour
 {
     public static UISelectedRocketManager Instance { get; private set; }
-    public Rocket selectedRocketMirrorDummy;
+    //public Rocket selectedRocketMirrorDummy;
     public Rocket selectedRocket;
     public bool setAllRocketsAtOnce = true;
     [SerializeField] private Rocket[] rockets = new Rocket[4];
@@ -26,14 +26,14 @@ public class UISelectedRocketManager : MonoBehaviour
 
     private void Start()
     {
-        if (setAllRocketsAtOnce) selectedRocketMirrorDummy.gameObject.SetActive(false);
+        //if (setAllRocketsAtOnce) selectedRocketMirrorDummy.gameObject.SetActive(false);
 
         SetSelectedRocket(GetComponentsInChildren<Rocket>().FirstOrDefault());
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.J))
+        /*if (Input.GetKeyDown(KeyCode.J))
         {
             LevelUpComponent(RocketComponentType.FRONT);
         }
@@ -44,7 +44,7 @@ public class UISelectedRocketManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.L))
         {
             LevelUpComponent(RocketComponentType.PROPULSION);
-        }
+        }*/
     }
 
     private void LevelUpComponent(RocketComponentType componentType)
@@ -54,21 +54,21 @@ public class UISelectedRocketManager : MonoBehaviour
         switch (componentType)
         {
             case RocketComponentType.FRONT:
-                selectedRocketMirrorDummy.frontComponent.LevelUpComponent();
+                //selectedRocketMirrorDummy.frontComponent.LevelUpComponent();
                 foreach (Rocket rocket in rockets)
                 {
                     rocket.frontComponent.LevelUpComponent();
                 }
                 break;
             case RocketComponentType.BODY:
-                selectedRocketMirrorDummy.bodyComponent.LevelUpComponent();
+                //selectedRocketMirrorDummy.bodyComponent.LevelUpComponent();
                 foreach (Rocket rocket in rockets)
                 {
                     rocket.bodyComponent.LevelUpComponent();
                 }
                 break;
             case RocketComponentType.PROPULSION:
-                selectedRocketMirrorDummy.propulsionComponent.LevelUpComponent();
+                //selectedRocketMirrorDummy.propulsionComponent.LevelUpComponent();
                 foreach (Rocket rocket in rockets)
                 {
                     rocket.propulsionComponent.LevelUpComponent();
@@ -87,9 +87,9 @@ public class UISelectedRocketManager : MonoBehaviour
         Debug.Log("Selected Rocket: " + selectedRocket.name);
 
         //Copy settins to dummy
-        selectedRocketMirrorDummy.SetFront(selectedRocket.frontComponent.gameObject);
+        /*selectedRocketMirrorDummy.SetFront(selectedRocket.frontComponent.gameObject);
         selectedRocketMirrorDummy.SetBody(selectedRocket.bodyComponent.gameObject);
-        selectedRocketMirrorDummy.SetPropulsion(selectedRocket.propulsionComponent.gameObject);
+        selectedRocketMirrorDummy.SetPropulsion(selectedRocket.propulsionComponent.gameObject);*/
     }
 
     public void ChangeComponent(RocketComponentType componentType, GameObject newComponent)
@@ -124,17 +124,17 @@ public class UISelectedRocketManager : MonoBehaviour
                 case RocketComponentType.FRONT:
                     selectedRocket.SetFront(newComponent);
                     equivalentPlayerRocket.SetFront(newComponent);
-                    selectedRocketMirrorDummy.SetFront(newComponent);
+                    //selectedRocketMirrorDummy.SetFront(newComponent);
                     break;
                 case RocketComponentType.BODY:
                     selectedRocket.SetBody(newComponent);
                     equivalentPlayerRocket.SetBody(newComponent);
-                    selectedRocketMirrorDummy.SetBody(newComponent);
+                    //selectedRocketMirrorDummy.SetBody(newComponent);
                     break;
                 case RocketComponentType.PROPULSION:
                     selectedRocket.SetPropulsion(newComponent);
                     equivalentPlayerRocket.SetPropulsion(newComponent);
-                    selectedRocketMirrorDummy.SetPropulsion(newComponent);
+                    //selectedRocketMirrorDummy.SetPropulsion(newComponent);
                     break;
             }
         }
