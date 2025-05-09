@@ -15,7 +15,7 @@ Material:
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
+  m_EnableInstancingVariants: 1
   m_DoubleSidedGI: 0
   m_CustomRenderQueue: -1
   stringTagMap: {}
@@ -47,6 +47,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _Alpha_Blend: 1
     - _AmbientStrength: 0.7
     - _Bottom_Blend_Size: 1
     - _Bottom_Height: 0
@@ -65,7 +66,7 @@ Material:
     - _MaxFadedHeight: 80
     - _MinDistance: 0
     - _Normal_Step: 0
-    - _QueueControl: 0
+    - _QueueControl: 1
     - _QueueOffset: 0
     - _RampOffset: 0
     - _RampSmoothness: 0.25
