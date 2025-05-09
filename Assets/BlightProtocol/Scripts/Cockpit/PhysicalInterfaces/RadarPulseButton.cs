@@ -34,16 +34,6 @@ public class RadarPulseButton : ACTimedButton
         }
     }
 
-    protected override bool CheckSweetSpot()
-    {
-        bool inSweetSpot = GetCurrentProgress() > sweetSpotMinMax.x && GetCurrentProgress() < sweetSpotMinMax.y;
-        float modifier = inSweetSpot ? chargeSuccededModifier : chargeFailedModifier;
-
-        // Pulse with approproate modifier
-        Radar.Instance.Pulse(modifier);
-        return inSweetSpot;
-    }
-
     protected override void UpdateChargeProgress(float progress)
     {
         pulseSlider.slider.value = progress;
@@ -58,18 +48,32 @@ public class RadarPulseButton : ACTimedButton
 
         switch (result)
         {
-            case 0: _fillImage.color = pulseSlider.normalColor; break;
-            case 1: _fillImage.color = pulseSlider.succeedColor; break;
-            case 2: _fillImage.color = pulseSlider.failColor; break;
+            case 0:
+                // time ran out: normal
+                _fillImage.color = pulseSlider.normalColor;
+                Radar.Instance.Pulse(1);
+                break;
+            case 1:
+                // succeeded
+                _fillImage.color = pulseSlider.succeedColor;
+                Radar.Instance.Pulse(chargeSuccededModifier);
+                break;
+            case 2:
+                // failed
+                _fillImage.color = pulseSlider.failColor;
+                Radar.Instance.Pulse(chargeFailedModifier);
+                break;
         }
 
         StartCoroutine(ResetSlider());
     }
 
-    private IEnumerator ResetSlider() {
+    private IEnumerator ResetSlider()
+    {
         float elapsedTime = 0f;
         float startValue = pulseSlider.slider.value;
-        while (elapsedTime < 1f) {
+        while (elapsedTime < 1f)
+        {
             pulseSlider.slider.value = Mathf.Lerp(startValue, 0f, elapsedTime / 1f);
             elapsedTime += Time.deltaTime;
             yield return null;

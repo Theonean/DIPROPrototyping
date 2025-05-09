@@ -36,7 +36,11 @@ public class FPVDroneGoggles : ACInteractable
             meshAnimator.SetTrigger("activate");
             isAnimating = true;
             isActive = true;
+            
             Invoke(nameof(EnterDroneMode), meshAnimator.GetCurrentAnimatorStateInfo(0).length);
+
+            //Block player inputs
+            FPVInputManager.Instance.isActive = false;
         }
     }
 

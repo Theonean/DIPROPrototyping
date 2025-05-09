@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class FPVPlayerCam : MonoBehaviour
@@ -7,11 +8,15 @@ public class FPVPlayerCam : MonoBehaviour
     public bool isLocked;
 
     [Header("Drag Look")]
-    public float dragSens = 5f;
+    [SerializeField] private float dragSens = 5f;
+    [SerializeField] private Vector2 xRotationLimits;
+    [SerializeField] private Vector2 yRotationLimits;
 
     private float currentXRotation = 0f;
     private float currentYRotation = 0f;
     private Vector2 lastMousePos;
+
+    private Quaternion initialRot;
 
     void Awake()
     {
@@ -23,6 +28,13 @@ public class FPVPlayerCam : MonoBehaviour
         {
             Instance = this;
         }
+
+        initialRot = transform.localRotation;
+    }
+
+    void Start()
+    {
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);       
     }
 
     public void UpdateCameraRotation(Vector2 input)
@@ -34,7 +46,8 @@ public class FPVPlayerCam : MonoBehaviour
         currentYRotation -= mouseDelta.x * dragSens;
         currentXRotation += mouseDelta.y * dragSens;
 
-        currentXRotation = Mathf.Clamp(currentXRotation, -45f, 45f);
+        currentXRotation = Mathf.Clamp(currentXRotation, xRotationLimits.x, xRotationLimits.y);
+        currentYRotation = Mathf.Clamp(currentYRotation, yRotationLimits.x, yRotationLimits.y);
 
         transform.localRotation = Quaternion.Euler(currentXRotation, currentYRotation, 0);
     }
@@ -58,5 +71,30 @@ public class FPVPlayerCam : MonoBehaviour
             angle -= 360;
         }
         return angle;
+    }
+
+    private void OnPerspectiveSwitched() {
+        switch(PerspectiveSwitcher.Instance.currentPerspective) {
+            case CameraPerspective.SWITCHING:
+                transform.localRotation = initialRot;
+            break;
+        }
+    }
+
+    public void ResetRotation(float duration) {
+        isLocked = true;
+        StartCoroutine(LerpRotation(initialRot, duration));
+    }
+
+    private IEnumerator LerpRotation(Quaternion targetRot, float duration) {
+        Quaternion startRot = transform.localRotation;
+        float elapsedTime = 0;
+        while (elapsedTime < duration)  {
+            transform.localRotation = Quaternion.Slerp(startRot, targetRot, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        transform.localRotation = targetRot;
+        isLocked = false;
     }
 }

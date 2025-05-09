@@ -16,7 +16,7 @@ public class FPVInputManager : MonoBehaviour
     private FPVInteractionHandler interactionHandler;
 
     public LookState lookState = LookState.IDLE;
-    private bool isActive;
+    public bool isActive;
 
     private void Awake()
     {
