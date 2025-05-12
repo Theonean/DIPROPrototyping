@@ -74,9 +74,6 @@ public class StraightLinePropulsion : ACRocketPropulsion
 
                 yield return null;
             }
-
-            // Snap to exact landing position
-            rocketTransform.position = groundPoint;
         }
         else
         {
