@@ -410,7 +410,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.5
   far clip plane: 800
   field of view: 60
   orthographic: 0
@@ -523,6 +523,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lookState: 2
+  isActive: 0
 --- !u!1 &8905023374743348437
 GameObject:
   m_ObjectHideFlags: 0

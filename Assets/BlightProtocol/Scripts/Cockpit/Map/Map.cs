@@ -60,8 +60,10 @@ public class Map : ACInteractable
         isHovering = true;
     }
 
-    public override void OnUpdateHover()
+    public override void OnUpdateHover(Vector2 mousePos)
     {
+        screenRay = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(mousePos);
+        targetRay = mapCameraCam.ScreenPointToRay(screenPoint);
         if (Physics.Raycast(screenRay, out RaycastHit hit, Mathf.Infinity))
         {
             screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelHeight, 0);
@@ -75,16 +77,6 @@ public class Map : ACInteractable
         base.OnEndHover();
         isHovering = false;
     }
-
-    private void Update()
-    {
-        if (isHovering)
-        {
-            screenRay = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
-            targetRay = mapCameraCam.ScreenPointToRay(screenPoint);
-        }
-    }
-
 
     public override void OnStartInteract()
     {
