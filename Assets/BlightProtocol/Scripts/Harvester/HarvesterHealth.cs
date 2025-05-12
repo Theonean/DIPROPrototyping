@@ -65,7 +65,7 @@ public class HarvesterHealth : MonoBehaviour
             slider.value = health;
         }
         healthDisplayer.SetValue(health);
-        healthDisplayer.OnFeedback();
+        healthDisplayer.Flash();
 
         if (health <= 0)
         {

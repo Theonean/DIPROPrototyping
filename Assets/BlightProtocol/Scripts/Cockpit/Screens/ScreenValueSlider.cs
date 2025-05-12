@@ -5,7 +5,7 @@ public class ScreenValueSlider : ACScreenValueDisplayer
 {
     public Slider slider;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         useMaxValue = true;
     }

@@ -11,19 +11,19 @@ public class HarvesterSpeedStep
     public Color displayColor;
     public bool isBaseSpeed = false;
     public int seismoEmission = 0;
-    public int fuelCost;
+    public int crystalCost;
 }
 
 public class HarvesterSpeedControl : MonoBehaviour
 {
     public static HarvesterSpeedControl Instance { get; private set; }
     [SerializeField] public List<HarvesterSpeedStep> speedSteps;
-    [SerializeField] private float fuelConsumptionInterval = 1f;
+    [SerializeField] private float crystalConsumptionInterval = 1f;
     private float timeSinceLastConsumption = 0f;
     private ItemManager itemManager;
     private int currentSpeedStepIndex = 0;
     [SerializeField] private SpeedSlider speedSlider;
-    public UnityEvent inputDenied;
+    public UnityEvent overrodePosition;
 
     void Awake()
     {
@@ -66,19 +66,19 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     void Update()
     {
-        // reset speed to base speed if fuel is empty
+        // reset speed to base speed if crystals are empty
         if (speedSteps.Count > 0)
         {
             HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
 
-            if (currentStep.fuelCost <= 0)
+            if (currentStep.crystalCost <= 0)
             {
                 return;
             }
 
-            if (timeSinceLastConsumption >= fuelConsumptionInterval)
+            if (timeSinceLastConsumption >= crystalConsumptionInterval)
             {
-                if (itemManager.RemoveCrystal(Mathf.FloorToInt(currentStep.fuelCost)))
+                if (itemManager.RemoveCrystal(Mathf.FloorToInt(currentStep.crystalCost)))
                 {
                     timeSinceLastConsumption = 0f;
                 }
@@ -87,7 +87,6 @@ public class HarvesterSpeedControl : MonoBehaviour
                     currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
                     SetSpeed();
                     OverrideSpeedStep(currentSpeedStepIndex);
-                    inputDenied.Invoke();
                 }
             }
             else
@@ -123,6 +122,7 @@ public class HarvesterSpeedControl : MonoBehaviour
                 "Overspeed",
                 speedSteps[currentSpeedStepIndex].seismoEmission
             );
+            overrodePosition.Invoke();
         }
     }
 
@@ -133,7 +133,6 @@ public class HarvesterSpeedControl : MonoBehaviour
             if (Harvester.Instance.HasArrivedAtTarget())
             {
                 OverrideSpeedStep(0);
-                inputDenied.Invoke();
             }
             currentSpeedStepIndex = index;
             SetSpeed();

@@ -53,28 +53,30 @@ public abstract class ACScreenValueDisplayer : MonoBehaviour
     protected virtual void UpdateValue(float targetValue)
     {
         Value = useMaxValue ? Mathf.Min(targetValue, maxValue) : targetValue;
-        if (displayText) {
-            displayText.text = Value.ToString();
+        if (displayText)
+        {
+            displayText.text = Mathf.RoundToInt(Value).ToString();
         }
     }
 
-    public virtual void OnFeedback() {
+    public virtual void Flash()
+    {
         StartCoroutine(FlashFeedback(flashDuration));
     }
 
     protected virtual IEnumerator FlashFeedback(float duration)
     {
         {
-            float startAlpha = feedbackImage.color.a;
-            float newAlpha = 0f;
             float elapsedTime = 0f;
             while (elapsedTime < duration)
             {
-                newAlpha = flashCurve.Evaluate(elapsedTime / duration);
+                float newAlpha = flashCurve.Evaluate(elapsedTime / duration);
+
                 feedbackImage.color = new Color(feedbackImage.color.r, feedbackImage.color.g, feedbackImage.color.b, newAlpha);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
+            feedbackImage.color = new Color(feedbackImage.color.r, feedbackImage.color.g, feedbackImage.color.b, 0f);
         }
     }
 }

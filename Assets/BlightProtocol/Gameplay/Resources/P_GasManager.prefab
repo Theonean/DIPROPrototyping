@@ -9,9 +9,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3105021458859584697}
-  - component: {fileID: 7863546209558921717}
+  - component: {fileID: 2443372507063218412}
   m_Layer: 0
-  m_Name: P_ResourceHandler
+  m_Name: P_GasManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32,7 +32,7 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7863546209558921717
+--- !u!114 &2443372507063218412
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,22 +44,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 042cc2ba391a10749a67da08b01e2953, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resources:
+  gasTypes:
   - data: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
-    displayer: {fileID: 0}
+    amountChanged:
+      m_PersistentCalls:
+        m_Calls: []
     amount: 0
-    maxCapacity: 1000
-    lastAmount: 0
-    delta: 0
-  fuel:
-    data: {fileID: 0}
-    displayer: {fileID: 0}
-    amount: 0
-    maxCapacity: 10000
-    lastAmount: 0
-    delta: 0
-  fuelResource: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
-  OnFuelConsumptionChanged:
-    m_PersistentCalls:
-      m_Calls: []
   consumptionEventInterval: 2

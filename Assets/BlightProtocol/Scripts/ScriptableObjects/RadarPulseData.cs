@@ -5,7 +5,7 @@ public class RadarPulseData : ScriptableObject
 {
     [Header("Pulse")]
     public int pulseCost = 100;
-    public ResourceData pulseCostResource;
+    public GasData pulseCostResource;
     public float pulseDuration = 1.0f;
     public float pulseRange = 500f;
     public float pulseStartRange = 10f;

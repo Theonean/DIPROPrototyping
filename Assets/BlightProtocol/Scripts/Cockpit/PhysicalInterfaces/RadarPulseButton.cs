@@ -36,7 +36,7 @@ public class RadarPulseButton : ACTimedButton
             }
             else
             {
-                pulseSlider.OnFeedback();
+                pulseSlider.Flash();
             }
         }
     }
