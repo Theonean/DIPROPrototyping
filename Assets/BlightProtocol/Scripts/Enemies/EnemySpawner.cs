@@ -93,7 +93,7 @@ public class EnemySpawner : MonoBehaviour
 
         int difficultyRegion = DifficultyManager.Instance.difficultyLevel;
 
-        SOEnemySpawnPattern[] elligiblePatterns = (SOEnemySpawnPattern[])enemySpawnPatterns.Where(pattern => pattern.minimumdifficultyRegion <= difficultyRegion);
+        SOEnemySpawnPattern[] elligiblePatterns = enemySpawnPatterns.Where(pattern => pattern.minimumdifficultyRegion <= difficultyRegion).ToArray();
         SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, elligiblePatterns.Length)];
         if (spawnPattern == null)
         {

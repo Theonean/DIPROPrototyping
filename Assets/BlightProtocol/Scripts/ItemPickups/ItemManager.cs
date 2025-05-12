@@ -8,7 +8,7 @@ public class ItemManager : MonoBehaviour
     public static ItemManager Instance { get; private set; }
 
     private int crystals = 20;
-    public ComponentEntry[] components = new ComponentEntry[0];
+    public List<ComponentEntry> components = new List<ComponentEntry>();
     public UnityEvent<int> crystalAmountChanged;
     public UnityEvent notEnoughCrystals;
 
@@ -49,11 +49,7 @@ public class ItemManager : MonoBehaviour
 
     public void AddComponent(string componentName, int amount)
     {
-        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
-        if(entry == null)
-        {
-            entry = new ComponentEntry(componentName);
-        }
+        ComponentEntry entry = GetComponentEntry(componentName);
 
         entry.amountHeld += amount;
     }
@@ -85,11 +81,7 @@ public class ItemManager : MonoBehaviour
 
     public void IncreaseItemLevel(string componentName)
     {
-        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
-        if (entry == null)
-        {
-            entry = new ComponentEntry(componentName);
-        }
+        ComponentEntry entry = GetComponentEntry(componentName);
 
         entry.highestLevelUpgraded++;
         Debug.Log("Upgraded component " + componentName);
@@ -102,12 +94,19 @@ public class ItemManager : MonoBehaviour
     /// <returns>Item level of associated component, -1 when no component found </returns>
     public int GetItemLevel(string componentName)
     {
+        ComponentEntry entry = GetComponentEntry(componentName);
+        return entry.highestLevelUpgraded;
+    }
+
+    private ComponentEntry GetComponentEntry(string componentName)
+    {
         ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
         if (entry == null)
         {
-            return -1;
+            entry = new ComponentEntry(componentName);
+            components.Add(entry);
         }
-        return entry.highestLevelUpgraded;
+        return entry;
     }
 }
 

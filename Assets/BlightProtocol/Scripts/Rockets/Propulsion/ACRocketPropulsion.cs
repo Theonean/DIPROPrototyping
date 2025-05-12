@@ -30,8 +30,10 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     private GameObject debugTargetPosition;
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
+
         debugTargetPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         debugTargetPosition.name = "DebugTargetSphere";
         debugTargetPosition.transform.position = Vector3.zero;

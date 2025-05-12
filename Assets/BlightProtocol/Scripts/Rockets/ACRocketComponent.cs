@@ -38,8 +38,9 @@ public abstract class ACRocketComponent : MonoBehaviour
         rocketOriginalScale = ParentRocket.transform.localScale;
     }
 
-    void Start()
+    protected virtual void Start()
     {
+        componentLevel = ItemManager.Instance.GetItemLevel(DescriptiveName);
         SetStatsToLevel();
     }
 

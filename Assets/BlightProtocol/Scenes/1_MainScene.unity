@@ -1938,6 +1938,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 181040619249809165, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 181040619249809165, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
@@ -1984,7 +1989,7 @@ PrefabInstance:
     - target: {fileID: 7393997915790091810, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 11108
+      value: 11111
       objectReference: {fileID: 0}
     - target: {fileID: 7626375681616798086, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -4124,6 +4129,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   crystalDebugView: []
   componentDebugView: []
+  crystalAmountChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  notEnoughCrystals:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &1018913812
 PrefabInstance:
   m_ObjectHideFlags: 0

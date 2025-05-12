@@ -121,6 +121,7 @@ public class SelectedRocketManager : MonoBehaviour
 
     public void LevelUpComponent(RocketComponentType componentType)
     {
+        string componentName = null;
         switch (componentType)
         {
             case RocketComponentType.FRONT:
@@ -128,6 +129,7 @@ public class SelectedRocketManager : MonoBehaviour
                 foreach (Rocket rocket in selectedRockets)
                 {
                     rocket.frontComponent.LevelUpComponent();
+                    componentName = rocket.frontComponent.GetComponent<ACRocketComponent>().DescriptiveName;
                 }
                 break;
             case RocketComponentType.BODY:
@@ -135,6 +137,7 @@ public class SelectedRocketManager : MonoBehaviour
                 foreach (Rocket rocket in selectedRockets)
                 {
                     rocket.bodyComponent.LevelUpComponent();
+                    componentName = rocket.bodyComponent.GetComponent<ACRocketComponent>().DescriptiveName;
                 }
                 break;
             case RocketComponentType.PROPULSION:
@@ -142,9 +145,11 @@ public class SelectedRocketManager : MonoBehaviour
                 foreach (Rocket rocket in selectedRockets)
                 {
                     rocket.propulsionComponent.LevelUpComponent();
+                    componentName = rocket.propulsionComponent.GetComponent<ACRocketComponent>().DescriptiveName;
                 }
                 break;
         }
+        ItemManager.Instance.IncreaseItemLevel(componentName);
     }
 }
 

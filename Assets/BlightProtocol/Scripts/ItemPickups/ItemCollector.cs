@@ -61,7 +61,7 @@ public class ItemCollector : MonoBehaviour
                 ItemManager.Instance.AddCrystal(1);
                 break;
             case EItemTypes.Component:
-                ItemManager.Instance.AddComponent(itemData.prefab.gameObject.name, 1, 1);
+                ItemManager.Instance.AddComponent(itemData.itemName, 1);
                 break;
         }
 

@@ -180,7 +180,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  DescriptiveName: 
+  DescriptiveName: ImplosionBody
+  OnKilledEnemy:
+    m_PersistentCalls:
+      m_Calls: []
   debugExplosionSphere: 0
   explosionMaterial: {fileID: -876546973899608171, guid: d7bb4ce55c91ff04ea33066515b56160,
     type: 3}
@@ -190,8 +193,8 @@ MonoBehaviour:
   explosionRadiusPerLevel:
   - 15
   - 20
+  - 22
   - 25
-  - 30
   - 35
   canExplode: 0
   explosionRadiusBase: 0

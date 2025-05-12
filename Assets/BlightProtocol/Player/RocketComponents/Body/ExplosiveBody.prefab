@@ -175,7 +175,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  DescriptiveName: 
+  DescriptiveName: ExplosiveBody
+  OnKilledEnemy:
+    m_PersistentCalls:
+      m_Calls: []
   debugExplosionSphere: 0
   explosionMaterial: {fileID: 2100000, guid: b309b85f750752842ad3188c3d761c72, type: 2}
   explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
@@ -184,8 +187,8 @@ MonoBehaviour:
   explosionRadiusPerLevel:
   - 10
   - 15
-  - 20
-  - 25
+  - 18
+  - 22
   - 30
   canExplode: 0
   explosionRadiusBase: 10

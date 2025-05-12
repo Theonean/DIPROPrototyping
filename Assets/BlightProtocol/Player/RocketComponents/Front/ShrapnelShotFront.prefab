@@ -137,10 +137,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  DescriptiveName: 
+  DescriptiveName: ShrapnelshotFront
+  OnKilledEnemy:
+    m_PersistentCalls:
+      m_Calls: []
   abilityUsesLeft: 2
   maxAbilityUses: 2
-  abilityUsesPerLevel: 0100000002000000030000000400000005000000
+  abilityUsesPerLevel: 0100000003000000040000000500000008000000
   hasAbilityCooldown: 0
   abilityCooldown: 0
   depletionAnimationCurve:

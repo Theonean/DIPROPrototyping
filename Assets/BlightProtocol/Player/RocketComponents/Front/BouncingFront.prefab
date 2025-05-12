@@ -137,10 +137,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  DescriptiveName: Bouncyyy
+  DescriptiveName: BouncingFront
+  OnKilledEnemy:
+    m_PersistentCalls:
+      m_Calls: []
   abilityUsesLeft: 1
   maxAbilityUses: 3
-  abilityUsesPerLevel: 0300000006000000090000000c0000000f000000
+  abilityUsesPerLevel: 0300000006000000080000000a0000000f000000
   hasAbilityCooldown: 1
   abilityCooldown: 0.2
   depletionAnimationCurve:

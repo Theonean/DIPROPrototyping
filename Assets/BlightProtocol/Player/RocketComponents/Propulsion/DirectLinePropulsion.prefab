@@ -179,8 +179,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  componentLevel: 0
-  DescriptiveName: Straight Line
+  DescriptiveName: DirectlinePropulsion
+  OnKilledEnemy:
+    m_PersistentCalls:
+      m_Calls: []
+  targetMoveStepPerSecondPerLevel: 000000000f000000140000001900000023000000
   vfxFlying: {fileID: 5493941438881058025}
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles
