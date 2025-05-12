@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,11 +8,7 @@ public class ItemManager : MonoBehaviour
     public static ItemManager Instance { get; private set; }
 
     private int crystals = 20;
-    private Dictionary<string, Dictionary<int, int>> components = new();
-
-    [Header("Debug View (Read-Only)")]
-    [SerializeField] private List<CrystalEntry> crystalDebugView = new();
-    [SerializeField] private List<ComponentEntry> componentDebugView = new();
+    public ComponentEntry[] components = new ComponentEntry[0];
     public UnityEvent<int> crystalAmountChanged;
     public UnityEvent notEnoughCrystals;
 
@@ -50,59 +47,54 @@ public class ItemManager : MonoBehaviour
         return false;
     }
 
-    public void AddComponent(string componentName, int level, int amount)
+    public void AddComponent(string componentName, int amount)
     {
-        if (level < 1 || level > 5)
+        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
+        if(entry == null)
         {
-            Debug.LogWarning($"Component level {level} is out of allowed range (1-5).");
-            return;
+            entry = new ComponentEntry(componentName);
         }
 
-        if (!components.ContainsKey(componentName))
-            components[componentName] = new Dictionary<int, int>();
-
-        if (!components[componentName].ContainsKey(level))
-            components[componentName][level] = 0;
-
-        components[componentName][level] += amount;
-        UpdateComponentDebugView();
+        entry.amountHeld += amount;
     }
 
-    private void UpdateComponentDebugView()
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="componentName"></param>
+    /// <param name="amount"></param>
+    /// <returns>Whether removing was succesfull, false when not enough components left</returns>
+    public bool RemoveComponent(string componentName, int amount)
     {
-        componentDebugView.Clear();
-        foreach (var comp in components)
+        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
+        if(entry == null)
         {
-            var entry = new ComponentEntry { name = comp.Key };
-            foreach (var level in comp.Value)
-            {
-                entry.levels.Add(new LevelAmount { level = level.Key, amount = level.Value });
-            }
-            componentDebugView.Add(entry);
+            Debug.LogError("Removing component that cannot be found error: " + componentName);
+        }
+        
+        if(amount > entry.amountHeld)
+        {
+            return false;
+        }
+        else
+        {
+            entry.amountHeld -= amount;
+            return true;
         }
     }
-}
-
-
-//DEBUG CLASSES
-
-[System.Serializable]
-public class CrystalEntry
-{
-    public string name;
-    public int amount;
 }
 
 [System.Serializable]
 public class ComponentEntry
 {
     public string name;
-    public List<LevelAmount> levels = new List<LevelAmount>();
-}
+    public int amountHeld;
+    public int highestLevelUpgraded;
 
-[System.Serializable]
-public class LevelAmount
-{
-    public int level;
-    public int amount;
+    public ComponentEntry(string name)
+    {
+        this.name = name;
+        amountHeld = 0;
+        highestLevelUpgraded = 1;
+    }
 }
