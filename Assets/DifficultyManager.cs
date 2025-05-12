@@ -1,9 +1,12 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class DifficultyManager : MonoBehaviour
 {
     public static DifficultyManager Instance;
     public int difficultyLevel { get; private set; } = 0;
+    public int maximumDifficultyRegions = 5;
+    public UnityEvent OnDifficultyLevelChanged = new UnityEvent();
 
     private void Awake()
     {
@@ -20,11 +23,10 @@ public class DifficultyManager : MonoBehaviour
 
     public void SetDifficultyLevel(int dL)
     {
-        difficultyLevel = dL;
-    }
-
-    public void PlayerLeftRegion()
-    {
-        difficultyLevel = Mathf.Max(difficultyLevel - 1, 0);
+        if (difficultyLevel != dL)
+        {
+            difficultyLevel = dL;
+            OnDifficultyLevelChanged.Invoke();
+        }
     }
 }

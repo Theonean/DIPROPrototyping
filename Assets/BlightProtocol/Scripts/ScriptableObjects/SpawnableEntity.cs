@@ -27,8 +27,7 @@ public class SpawnableEntity : ScriptableObject
 
     public float minRotation;
     public float maxRotation;
-    [Description("Scale will be increased / decreased by a random value between -scaleVariance and scaleVariance.")]
-    public float scaleVariance = 0f;
+    public Vector2 scaleVariance = new Vector2(1,1);
 
     [Description("Auto-Calculated Bounds radius for better position generation")]
     public float boundingRadius = 1f; // Auto-calculated

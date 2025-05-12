@@ -133,7 +133,6 @@ public class Harvester : MonoBehaviour
         {
             Destroy(activeResourcePoint.gameObject);
             activeResourcePoint = null;
-            WaveManager.Instance.IncreaseDifficultyLevel(1);
         }
         drillingVFX.Stop();
         StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
