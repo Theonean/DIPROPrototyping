@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
   - {fileID: 500367520310679496, guid: f224a4c2be047d54f9c69edbab72dff9, type: 3}
-  numEntities: 30
+  numEntities: 120
   spawnStrategy: 0
   customSpawnAreaBoundsX: {x: -500, y: 500}
   customSpawnAreaBoundsZ: {x: -100, y: 1100}
@@ -23,5 +23,5 @@ MonoBehaviour:
   siteJitter: 0.2
   minRotation: 0
   maxRotation: 360
-  scaleVariance: 0.5
+  scaleVariance: {x: 1, y: 1}
   boundingRadius: 10.813334

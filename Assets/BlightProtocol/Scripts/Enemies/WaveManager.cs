@@ -68,6 +68,16 @@ public class WaveManager : MonoBehaviour
         ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
     }
 
+    private void OnEnable()
+    {
+        DifficultyManager.Instance.OnDifficultyLevelChanged.AddListener(UpdateAmbushTimes);
+    }
+
+    private void OnDisable()
+    {
+        DifficultyManager.Instance.OnDifficultyLevelChanged.RemoveListener(UpdateAmbushTimes);
+    }
+
     void Update()
     {
         switch (waveMode)
@@ -106,25 +116,60 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    public void IncreaseDifficultyLevel(int amount) {
-        difficultyLevel += amount;
-    }
-
     public GameObject GetRandomEnemyPrefab()
     {
         int randomValue = UnityEngine.Random.Range(0, 100);
-        if (randomValue < 10)
-        {
-            return tankEnemyPrefab;
-        }
-        else if (randomValue < 30)
-        {
-            return chargerEnemyPrefab;
-        }
-        else
+        int difficultyRegion = DifficultyManager.Instance.difficultyLevel;
+
+        if(difficultyRegion == 0)
         {
             return regularEnemyPrefab;
         }
+        if(difficultyRegion == 1)
+        {
+         if (randomValue < 30)
+            {
+                return chargerEnemyPrefab;
+            }
+            else
+            {
+                return regularEnemyPrefab;
+            }
+        }
+        else
+        {
+            if (randomValue < 20)
+            {
+                return tankEnemyPrefab;
+            }
+            else if (randomValue < 30)
+            {
+                return chargerEnemyPrefab;
+            }
+            else
+            {
+                return regularEnemyPrefab;
+            }
+        }
+    }
+
+    private void UpdateAmbushTimes()
+    {
+        float previousAverageRange = (difficultySettings.ambushWaveDelayRange.y + difficultySettings.ambushWaveDelayRange.x) / 2f;
+
+        int difficultyRegion = DifficultyManager.Instance.difficultyLevel;
+        int maximumDifficultyRegions = DifficultyManager.Instance.maximumDifficultyRegions - 1; //difficulty regions start at 0
+
+        difficultyLevel = 3 + difficultyRegion * 3;
+
+        float ambushIntervalBottomValue = Mathf.Lerp(30, 15, difficultyRegion / maximumDifficultyRegions);
+        float ambushIntervalTopValue = Mathf.Lerp(60, 30, difficultyRegion / maximumDifficultyRegions);
+
+        difficultySettings.ambushWaveDelayRange = new Vector2(ambushIntervalBottomValue, ambushIntervalTopValue);
+
+        float newAverageRange = (difficultySettings.ambushWaveDelayRange.y + difficultySettings.ambushWaveDelayRange.x) / 2f;
+        float differenceBetweenRanges = previousAverageRange - newAverageRange;
+        ambushCounter -= differenceBetweenRanges;
     }
 
     void HarvesterChangedState(ZoneState zoneState)

@@ -60,11 +60,8 @@ public class WorldComposer : MonoBehaviour
                             Quaternion rotation = Quaternion.Euler(0, Random.Range(spawnable.minRotation, spawnable.maxRotation), 0);
                             GameObject instance = Instantiate(prefab, tryPos, rotation, transform);
 
-                            if (spawnable.scaleVariance != 0f)
-                            {
-                                float scaleFactor = 1f + Random.Range(-spawnable.scaleVariance, spawnable.scaleVariance);
-                                instance.transform.localScale *= scaleFactor;
-                            }
+                            float scaleFactor = Random.Range(spawnable.scaleVariance.x, spawnable.scaleVariance.y);
+                            instance.transform.localScale *= scaleFactor;
 
                             hashGrid.AddPosition(tryPos);
                             placedCount++;
