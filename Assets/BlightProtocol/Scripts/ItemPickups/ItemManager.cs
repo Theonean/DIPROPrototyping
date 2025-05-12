@@ -82,6 +82,33 @@ public class ItemManager : MonoBehaviour
             return true;
         }
     }
+
+    public void IncreaseItemLevel(string componentName)
+    {
+        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
+        if (entry == null)
+        {
+            entry = new ComponentEntry(componentName);
+        }
+
+        entry.highestLevelUpgraded++;
+        Debug.Log("Upgraded component " + componentName);
+    }
+
+    /// <summary>
+    /// Get highest reached upgrade level for a specific component
+    /// </summary>
+    /// <param name="componentName"></param>
+    /// <returns>Item level of associated component, -1 when no component found </returns>
+    public int GetItemLevel(string componentName)
+    {
+        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
+        if (entry == null)
+        {
+            return -1;
+        }
+        return entry.highestLevelUpgraded;
+    }
 }
 
 [System.Serializable]
