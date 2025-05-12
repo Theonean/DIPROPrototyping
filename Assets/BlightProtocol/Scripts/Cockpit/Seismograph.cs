@@ -38,6 +38,8 @@ public class Seismograph : MonoBehaviour
 
     public float totalVibration = 0f;
     public int currentDangerLevel = 0;
+    public UnityEvent<int> OnDangerLevelChanged = new UnityEvent<int>();
+
     [SerializeField] public List<VibrationDangerLevel> vibrationDangerLevels = new List<VibrationDangerLevel>();
 
     void Awake()
@@ -142,6 +144,8 @@ public class Seismograph : MonoBehaviour
 
     public int GetCurrentDangerLevel()
     {
+        int previousDangerLevel = currentDangerLevel;
+
         foreach (var level in vibrationDangerLevels)
         {
             if (totalVibration >= level.threshold)
@@ -149,6 +153,12 @@ public class Seismograph : MonoBehaviour
                 currentDangerLevel = vibrationDangerLevels.IndexOf(level);
             }
         }
+
+        if(previousDangerLevel != currentDangerLevel)
+        {
+            OnDangerLevelChanged.Invoke(currentDangerLevel);
+        }
+
         return currentDangerLevel;
     }
 }

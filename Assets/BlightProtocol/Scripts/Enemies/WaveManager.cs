@@ -45,6 +45,7 @@ public class WaveManager : MonoBehaviour
     private WaveMode waveMode = WaveMode.IDLE;
     public int difficultyLevel = 5;
     private float ambushCounter = 0f;
+    private int counterMultiplier = 0;
 
     private void Awake()
     {
@@ -71,11 +72,13 @@ public class WaveManager : MonoBehaviour
     private void OnEnable()
     {
         DifficultyManager.Instance.OnDifficultyLevelChanged.AddListener(UpdateAmbushTimes);
+        Seismograph.Instance.OnDangerLevelChanged.AddListener(ConnectSeismographToAmbushCountdown);
     }
 
     private void OnDisable()
     {
         DifficultyManager.Instance.OnDifficultyLevelChanged.RemoveListener(UpdateAmbushTimes);
+        Seismograph.Instance.OnDangerLevelChanged.RemoveListener(ConnectSeismographToAmbushCountdown);
     }
 
     void Update()
@@ -83,7 +86,7 @@ public class WaveManager : MonoBehaviour
         switch (waveMode)
         {
             case WaveMode.AMBUSH_POSSIBLE:
-                ambushCounter -= Time.deltaTime;
+                ambushCounter -= Time.deltaTime * counterMultiplier;
                 if (ambushCounter <= 0f)
                 {
                     ambushCounter = UnityEngine.Random.Range(difficultySettings.ambushWaveDelayRange.x, difficultySettings.ambushWaveDelayRange.y);
@@ -153,6 +156,11 @@ public class WaveManager : MonoBehaviour
         }
     }
 
+    private void ConnectSeismographToAmbushCountdown(int amount)
+    {
+        counterMultiplier = amount;
+    }
+
     private void UpdateAmbushTimes()
     {
         float previousAverageRange = (difficultySettings.ambushWaveDelayRange.y + difficultySettings.ambushWaveDelayRange.x) / 2f;
@@ -207,7 +215,6 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-
     void TriggerRandomAmbush()
     {
         SurpriseAttackTypes attackType = (SurpriseAttackTypes)UnityEngine.Random.Range(0, Enum.GetValues(typeof(SurpriseAttackTypes)).Length);
@@ -226,7 +233,6 @@ public class WaveManager : MonoBehaviour
                 StartCoroutine(SMALL_TRIPPLE_WAVE());
                 break;
         }
-
     }
 
     void DeactivateSpawners()
