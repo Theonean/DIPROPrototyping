@@ -52,7 +52,8 @@ public class Rocket : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
+                other.GetComponent<EnemyDamageHandler>().DestroyEnemy(); 
+                frontComponent.OnKilledEnemy.Invoke(RocketComponentType.FRONT, 1);
             }
             else if (other.gameObject.CompareTag("EnemyArmor"))
             {
@@ -97,7 +98,8 @@ public class Rocket : MonoBehaviour
             {
                 Rocket otherRocket = other.gameObject.GetComponent<Rocket>();
                 if (otherRocket.state == RocketState.ATTACHED ||
-                    otherRocket.state == RocketState.RETURNING)
+                    otherRocket.state == RocketState.RETURNING ||
+                    otherRocket.state == RocketState.IDLE)
                     return;
             }
 

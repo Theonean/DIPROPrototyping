@@ -18,6 +18,7 @@ public abstract class ACRocketComponent : MonoBehaviour
     public int componentLevel { get; private set; } = 0;
     private int maxComponentLevel = 5;
     public string DescriptiveName;
+    public UnityEvent<RocketComponentType, int> OnKilledEnemy = new UnityEvent<RocketComponentType, int>();
 
     protected Vector3 rocketOriginalScale;
 

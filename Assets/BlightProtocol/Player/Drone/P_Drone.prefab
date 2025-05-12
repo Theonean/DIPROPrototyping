@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 5925267659964171928}
   - component: {fileID: 4801275644696106661}
   - component: {fileID: 5502411632049774116}
+  - component: {fileID: 2014166176886896236}
   m_Layer: 25
   m_Name: P_Drone
   m_TagString: Untagged
@@ -425,6 +426,25 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 116
   m_CollisionDetection: 2
+--- !u!114 &2014166176886896236
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684833285897773044}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6ef3582ba1b73b45b97692afb3775e9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveInterval: 30
+  rocketsToTrack:
+  - {fileID: 5634830730611651850}
+  - {fileID: 4799569051121381377}
+  - {fileID: 6746371476147092962}
+  - {fileID: 7126853389093772786}
+  rocketData: []
 --- !u!1 &3069283202996589018
 GameObject:
   m_ObjectHideFlags: 0

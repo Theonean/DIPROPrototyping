@@ -9,8 +9,9 @@ public class JumpingElectricity : MonoBehaviour
     public float jumpDuration = 0.2f; // Duration of each jump
     private EnemyDamageHandler targetedEnemy; // The enemy collider that the electricity will jump to
     public bool active = false;
+    private ACRocketComponent owner;
 
-    public void Activate(int jumpsLeft)
+    public void Activate(int jumpsLeft, ACRocketComponent owner)
     {
         this.jumpsLeft = jumpsLeft;
         active = true;
@@ -79,6 +80,8 @@ public class JumpingElectricity : MonoBehaviour
 
         // Optionally, add logic to deal damage or apply effects to the enemy here
         targetedEnemy.DestroyEnemy();
+        owner.OnKilledEnemy.Invoke(RocketComponentType.BODY, 1);
+
         jumpsLeft--;
         if (jumpsLeft <= 0)
         {

@@ -20,7 +20,7 @@ public class ShrapnelShotFront : ACRocketFront
 
             ShrapnelShot shrapnel = Instantiate(shrapnelPrefab, rocketTransform.position, Quaternion.identity).GetComponent<ShrapnelShot>();
 
-            shrapnel.Activate(newDirection);
+            shrapnel.Activate(newDirection, this);
         }
     }
 }

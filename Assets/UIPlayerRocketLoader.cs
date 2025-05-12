@@ -27,7 +27,7 @@ public class UIPlayerRocketLoader : MonoBehaviour
 
     private void CopyRocketComponents(Rocket source, Rocket target)
     {
-        Debug.Log($"Copying components from {source.name} to {target.name}");
+        Logger.Log($"Copying components from {source.name} to {target.name}", LogLevel.INFO, LogType.ROCKETS);
         GameObject selectedFront = playerAimController.rocketFronts
             .Where(x => x.GetComponent<ACRocketComponent>().GetType() == source.frontComponent.GetType())
             .FirstOrDefault();

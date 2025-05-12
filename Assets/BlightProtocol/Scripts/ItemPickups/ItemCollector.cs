@@ -58,7 +58,7 @@ public class ItemCollector : MonoBehaviour
         switch (itemData.itemType)
         {
             case EItemTypes.Crystal:
-                ItemManager.Instance.AddCrystal(itemData.prefab.gameObject.name, 1);
+                ItemManager.Instance.AddCrystal(1);
                 break;
             case EItemTypes.Component:
                 ItemManager.Instance.AddComponent(itemData.prefab.gameObject.name, 1, 1);

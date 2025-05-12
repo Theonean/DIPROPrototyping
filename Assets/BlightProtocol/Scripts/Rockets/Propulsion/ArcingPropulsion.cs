@@ -66,6 +66,7 @@ public class ArcingPropulsion : ACRocketPropulsion
                 if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, directionToEnemy.magnitude))
                 {
                     hitCollider.gameObject.GetComponent<EnemyDamageHandler>().DestroyEnemy();
+                    OnKilledEnemy.Invoke(RocketComponentType.PROPULSION, 1);
                 }
             }
             else if (hitCollider.gameObject.layer == LayerMask.NameToLayer("PL_IsRocket"))

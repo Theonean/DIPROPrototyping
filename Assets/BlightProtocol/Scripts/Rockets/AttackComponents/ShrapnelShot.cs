@@ -8,9 +8,11 @@ public class ShrapnelShot : MonoBehaviour
     public AnimationCurve speedCurve; // Speed curve for shrapnel movement
     private float distanceTraveled = 0f;
     private bool active = false;
+    private ACRocketComponent owner;
 
-    public void Activate(Vector3 direction)
+    public void Activate(Vector3 direction, ACRocketComponent owner)
     {
+        this.owner = owner;
         moveDirection = direction.normalized;
         distanceTraveled = 0f;
         active = true;
@@ -47,6 +49,7 @@ public class ShrapnelShot : MonoBehaviour
                 if (enemyDamageHandler != null)
                 {
                     enemyDamageHandler.DestroyEnemy();
+                    owner.OnKilledEnemy.Invoke(RocketComponentType.FRONT, 1);
                 }
                 Destroy(gameObject); // Destroy the shrapnel after hitting an enemy
             }

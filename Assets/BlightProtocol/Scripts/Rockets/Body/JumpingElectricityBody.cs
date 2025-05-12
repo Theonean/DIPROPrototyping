@@ -17,6 +17,6 @@ public class JumpingElectricityBody : ACRocketBody
     {
         //Instance electricity prefab which does the rest
         JumpingElectricity electricityAttack = Instantiate(electricityPrefab, rocketTransform.position, Quaternion.identity).GetComponent<JumpingElectricity>();
-        electricityAttack.Activate(electricityJumpsBase);
+        electricityAttack.Activate(electricityJumpsBase, this);
     }
 }

@@ -5,7 +5,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
 
-    private Dictionary<string, int> crystals = new();
+    private int crystals = new();
     private Dictionary<string, Dictionary<int, int>> components = new();
 
     [Header("Debug View (Read-Only)")]
@@ -25,13 +25,24 @@ public class ItemManager : MonoBehaviour
         }
     }
 
-    public void AddCrystal(string crystalName, int amount)
-    {
-        if (!crystals.ContainsKey(crystalName))
-            crystals[crystalName] = 0;
+    public int GetCrystal()
+    { return crystals; }
 
-        crystals[crystalName] += amount;
+    public void AddCrystal(int amount)
+    {
+        crystals += amount;
         UpdateCrystalDebugView();
+    }
+
+    public bool RemoveCrystal(int amount)
+    {
+        if(crystals > amount)
+        {
+            crystals -= amount;
+            return true;
+        }
+        
+        return false;
     }
 
     public void AddComponent(string componentName, int level, int amount)

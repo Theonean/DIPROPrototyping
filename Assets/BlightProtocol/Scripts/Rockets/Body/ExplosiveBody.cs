@@ -23,6 +23,7 @@ public class ExplosiveBody : ACRocketBody
         }
 
         Collider[] hitColliders = Physics.OverlapSphere(rocketTransform.position, explosionRadius);
+        int enemiesKilled = 0;
         foreach (var hitCollider in hitColliders)
         {
             if (hitCollider.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy"))
@@ -35,7 +36,10 @@ public class ExplosiveBody : ACRocketBody
                 if (Physics.Raycast(rocketTransform.position, directionToEnemy.normalized, out hit, directionToEnemy.magnitude))
                 {
                     if (hit.collider.CompareTag("Enemy"))
+                    {
                         hitCollider.gameObject.GetComponentInParent<EnemyDamageHandler>().DestroyEnemy();
+                        enemiesKilled++;
+                    }
                 }
             }
             else if (hitCollider.gameObject.CompareTag("Rocket"))
@@ -47,6 +51,8 @@ public class ExplosiveBody : ACRocketBody
                 }
             }
         }
+
+        OnKilledEnemy.Invoke(RocketComponentType.BODY, enemiesKilled);
     }
 
     private IEnumerator DaisyChainExplosion(Rocket rocket)
