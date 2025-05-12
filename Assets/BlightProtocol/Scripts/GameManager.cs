@@ -14,6 +14,7 @@ public class FrankenGameManager : MonoBehaviour
     public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
     public TextMeshProUGUI resourcesHarvestedText;
+    public TextMeshProUGUI resetText;
     public CanvasGroup gameOverGroup;
     public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
@@ -87,7 +88,8 @@ public class FrankenGameManager : MonoBehaviour
         PlayerCore playerCore = PlayerCore.Instance;
         playerCore.enabled = false;
 
-        resourcesHarvestedText.text = "";
+        resourcesHarvestedText.text = "reached region " + (DifficultyManager.Instance.maxDifficultyReached + 1) + " / " + (DifficultyManager.Instance.maximumDifficultyRegions + 1);
+        resetText.text = "press 'r' to respawn in region " + (Harvester.Instance.respawnPointDifficultyRegion + 1);
         StartCoroutine(FadeUI(gameOverGroup, true, 20f));
 
         // Unpause if the game is over
