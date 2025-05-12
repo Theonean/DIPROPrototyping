@@ -32,6 +32,7 @@ public class SOEnemySpawnPattern : ScriptableObject
     public float spawnRadius = 5f;
     public float spawnHeight = 1f;
     public bool isActive = true;
+    public int minimumdifficultyRegion = 0;
 
     // Add any additional properties or methods you need for your enemy spawn pattern here
 }

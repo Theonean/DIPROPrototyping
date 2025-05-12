@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -79,62 +80,71 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public void SpawnEnemy()
-{
-    // Early exit if FiresOnce and already spawning
-    if (FiresOnce && isSpawningEnemies) return;
-    
-    isSpawningEnemies = true;
-
-    Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-    spawnPosition.y = 0f;
-
-    GameObject enemyPrefab;
-    SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, enemySpawnPatterns.Length)];
-
-    foreach (EnemySpawnPosition enemyPos in spawnPattern.spawnPositions)
     {
-        if (enemyPos.enemyType == EnemyType.NONE)
-            continue;
+        // Early exit if FiresOnce and already spawning
+        if (FiresOnce && isSpawningEnemies) return;
 
-        enemyPrefab = null;
-        switch (enemyPos.enemyType)
+        isSpawningEnemies = true;
+
+        Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
+        spawnPosition.y = 0f;
+
+        GameObject enemyPrefab;
+
+        int difficultyRegion = DifficultyManager.Instance.difficultyLevel;
+
+        SOEnemySpawnPattern[] elligiblePatterns = (SOEnemySpawnPattern[])enemySpawnPatterns.Where(pattern => pattern.minimumdifficultyRegion <= difficultyRegion);
+        SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, elligiblePatterns.Length)];
+        if (spawnPattern == null)
         {
-            case EnemyType.REGULAR:
-                enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
-                break;
-            case EnemyType.CHARGER:
-                enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
-                break;
-            case EnemyType.CRABTANK:
-                enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
-                break;
-            case EnemyType.ALL:
-                enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
-                break;
+            Debug.LogError("Could not find valid spawn pattern for spawner");
+            return;
         }
 
-        GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
-        m_EnemyCount++;
-        spawnedEnemy.Invoke();
-
-        if(FiresOnce)
+        foreach (EnemySpawnPosition enemyPos in spawnPattern.spawnPositions)
         {
-            continue; //Don't subscribe if only fires once -> don't want any memory leaks due to destroyed listener
+            if (enemyPos.enemyType == EnemyType.NONE)
+                continue;
+
+            enemyPrefab = null;
+            switch (enemyPos.enemyType)
+            {
+                case EnemyType.REGULAR:
+                    enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
+                    break;
+                case EnemyType.CHARGER:
+                    enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
+                    break;
+                case EnemyType.CRABTANK:
+                    enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
+                    break;
+                case EnemyType.ALL:
+                    enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
+                    break;
+            }
+
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
+            m_EnemyCount++;
+            spawnedEnemy.Invoke();
+
+            if (FiresOnce)
+            {
+                continue; //Don't subscribe if only fires once -> don't want any memory leaks due to destroyed listener
+            }
+
+            enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
         }
 
-        enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
+        if (FiresOnce)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            // Only reset if not FiresOnce
+            isSpawningEnemies = false;
+        }
     }
-
-    if (FiresOnce)
-    {
-        Destroy(this);
-    }
-    else
-    {
-        // Only reset if not FiresOnce
-        isSpawningEnemies = false;
-    }
-}
 
     IEnumerator SpawnEnemyDesynced()
     {
