@@ -4,29 +4,15 @@ using UnityEngine;
 public class ResourceScreen : ACScreenValueDisplayer
 {
     private ItemManager itemManager;
-    protected void Start()
+    protected void Awake()
     {
         itemManager = ItemManager.Instance;
-        if (itemManager != null)
-        {
-            itemManager.crystalAmountChanged.RemoveListener(OnCrystalAmountChanged);
-            itemManager.notEnoughCrystals.RemoveListener(OnNotEnoughCrystals);
-            itemManager.crystalAmountChanged.AddListener(OnCrystalAmountChanged);
-            itemManager.notEnoughCrystals.AddListener(OnNotEnoughCrystals);
-        }
-
-        SetValue(itemManager.GetCrystal());
     }
 
     protected void OnEnable()
     {
-        if (itemManager != null)
-        {
-            itemManager.crystalAmountChanged.RemoveListener(OnCrystalAmountChanged);
-            itemManager.notEnoughCrystals.RemoveListener(OnNotEnoughCrystals);
-            itemManager.crystalAmountChanged.AddListener(OnCrystalAmountChanged);
-            itemManager.notEnoughCrystals.AddListener(OnNotEnoughCrystals);
-        }
+        itemManager.crystalAmountChanged.AddListener(OnCrystalAmountChanged);
+        itemManager.notEnoughCrystals.AddListener(OnNotEnoughCrystals);
 
         SetValue(itemManager.GetCrystal());
     }
