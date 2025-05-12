@@ -57,6 +57,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b43d76e30915354996072b6a50147b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isRotating: 0
+  rotationDeltaThreshold: 1
   target: {fileID: 0}
 --- !u!1 &3634802803951462292
 GameObject:
@@ -1435,24 +1437,24 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88f20c472d5ab6d48adf0bb447a99093, type: 3}
---- !u!4 &1681842713383030358 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 251754735581694234, guid: 88f20c472d5ab6d48adf0bb447a99093,
-    type: 3}
-  m_PrefabInstance: {fileID: 1452818319141291852}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &3411418165274756338 stripped
+--- !u!114 &1664578741907243783 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4287066409086518206, guid: 88f20c472d5ab6d48adf0bb447a99093,
+  m_CorrespondingSourceObject: {fileID: 229884910802076747, guid: 88f20c472d5ab6d48adf0bb447a99093,
     type: 3}
   m_PrefabInstance: {fileID: 1452818319141291852}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 741ba8512546dba4495d294156b72460, type: 3}
+  m_Script: {fileID: 11500000, guid: aabeaaddd123d75428f7c7c97ff5b82b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1681842713383030358 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 251754735581694234, guid: 88f20c472d5ab6d48adf0bb447a99093,
+    type: 3}
+  m_PrefabInstance: {fileID: 1452818319141291852}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &6435615274177533521 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5577311690534867229, guid: 88f20c472d5ab6d48adf0bb447a99093,
@@ -2050,7 +2052,7 @@ PrefabInstance:
         type: 3}
       propertyPath: resources.Array.data[0].displayer
       value: 
-      objectReference: {fileID: 3411418165274756338}
+      objectReference: {fileID: 1664578741907243783}
     - target: {fileID: 7863546209558921717, guid: 8b60e0624b9be194d914e9afccf4de68,
         type: 3}
       propertyPath: OnFuelConsumptionChanged.m_PersistentCalls.m_Calls.Array.size

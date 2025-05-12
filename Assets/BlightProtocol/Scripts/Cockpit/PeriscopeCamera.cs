@@ -28,12 +28,6 @@ public class PersicopeCamera : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, currentYRotation, 0f);
     }
 
-    void Update()
-    {
-        // Optional: You can add debug visualization here if needed
-        Debug.DrawRay(transform.position, transform.forward * 10f, Color.green);
-    }
-
     public void Reset()
     {
         currentYRotation = 0f;

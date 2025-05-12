@@ -1,3 +1,4 @@
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,7 +9,6 @@ public class SpeedSlider : ACSlider
 
     [Header("Visualization")]
     [SerializeField] private ACScreenValueDisplayer speedDisplayer;
-
 
     protected override void Start()
     {
@@ -25,6 +25,7 @@ public class SpeedSlider : ACSlider
         index = Mathf.Clamp(index, 0, speedStepCount - 1);
         HarvesterSpeedControl.Instance.SetSpeedStepIndex(index);
     }
+
     public void SetPositionByIndex(int index)
     {
         SetPositionNormalized(speedstepPositions[index]);
@@ -33,6 +34,7 @@ public class SpeedSlider : ACSlider
     public override void OnEndInteract()
     {
         int index = Mathf.FloorToInt(progress * speedStepCount);
+        if (index > speedstepPositions.Count()) index = speedstepPositions.Count();
         SetPositionByIndex(index);
     }
 

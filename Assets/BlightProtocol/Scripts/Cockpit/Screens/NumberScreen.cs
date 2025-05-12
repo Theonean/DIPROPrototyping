@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class NumberScreen : ACScreenValueDisplayer
+public class GasScreen : ACScreenValueDisplayer
 {
     public int intValue;
     [SerializeField] private TextMeshProUGUI numberText;

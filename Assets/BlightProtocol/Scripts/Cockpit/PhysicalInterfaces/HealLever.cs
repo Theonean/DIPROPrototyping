@@ -5,7 +5,7 @@ public class HealLever : ACLever
 {
     private Harvester harvester;
     public TextMeshPro healFeedback;
-    private ResourceHandler resourceHandler;
+    private ItemManager ItemManager;
     public int healAmount = 10;
     public int cost = 100;
 
@@ -13,7 +13,7 @@ public class HealLever : ACLever
     {
         base.Start();
         harvester = Harvester.Instance;
-        resourceHandler = ResourceHandler.Instance;
+        ItemManager = ItemManager.Instance;
     }
 
     protected override void OnPulled(float normalizedValue)
@@ -24,15 +24,14 @@ public class HealLever : ACLever
                 healFeedback.text = "Already at full health!";
                 ResetLever();
             }
-            else if (resourceHandler.GetAmount(resourceHandler.fuelResource) > cost)
+            else if (ItemManager.RemoveCrystal(cost))
             {
                 harvester.health.Heal(healAmount);
-                resourceHandler.Consume(resourceHandler.fuelResource, cost, true, 1f);
                 isPulled = true;
                 ResetLever();
             }
             else {
-                healFeedback.text = "Not enough fuel!";
+                healFeedback.text = "Not enough crystals!";
                 ResetLever();
             }
         }

@@ -8,22 +8,20 @@ using UnityEngine.UI;
 public class HarvesterSpeedStep
 {
     public float speed;
-    public float fuelCost;
     public Color displayColor;
     public bool isBaseSpeed = false;
-    public float seismoEmission = 0f;
+    public int seismoEmission = 0;
+    public int fuelCost;
 }
 
 public class HarvesterSpeedControl : MonoBehaviour
 {
     public static HarvesterSpeedControl Instance { get; private set; }
-
     [SerializeField] public List<HarvesterSpeedStep> speedSteps;
-    public float maxSpeed = 50f;
-    private ResourceData fuelResource;
-
+    [SerializeField] private float fuelConsumptionInterval = 1f;
+    private float timeSinceLastConsumption = 0f;
+    private ItemManager itemManager;
     private int currentSpeedStepIndex = 0;
-    private float displaySpeed = 0f; // Smoothed speed for UI
     [SerializeField] private SpeedSlider speedSlider;
     public UnityEvent inputDenied;
 
@@ -41,19 +39,15 @@ public class HarvesterSpeedControl : MonoBehaviour
 
     void Start()
     {
-        fuelResource = ResourceHandler.Instance.fuelResource;
-
-        // Initialize display speed to match the first step
-        displaySpeed = speedSteps[currentSpeedStepIndex].speed;
         SetSpeed();
         Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
+
+        itemManager = ItemManager.Instance;
     }
 
-    void OnEnable() {
-        if (Harvester.Instance != null) {
-            Harvester.Instance.changedState.RemoveListener(OnHarvesterStateChanged);
-            Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
-        }
+    void OnEnable()
+    {
+        Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
     }
 
     void OnDisable()
@@ -64,7 +58,10 @@ public class HarvesterSpeedControl : MonoBehaviour
     private void SetSpeed()
     {
         Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
-        Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
+        Seismograph.Instance.SetOtherEmission(
+            "Overspeed",
+            speedSteps[currentSpeedStepIndex].seismoEmission
+        );
     }
 
     void Update()
@@ -79,17 +76,25 @@ public class HarvesterSpeedControl : MonoBehaviour
                 return;
             }
 
-            if (ResourceHandler.Instance.GetAmount(fuelResource) >= currentStep.fuelCost * Time.deltaTime)
+            if (timeSinceLastConsumption >= fuelConsumptionInterval)
             {
-                ResourceHandler.Instance.Consume(fuelResource, currentStep.fuelCost * Time.deltaTime);
+                if (itemManager.RemoveCrystal(Mathf.FloorToInt(currentStep.fuelCost)))
+                {
+                    timeSinceLastConsumption = 0f;
+                }
+                else if (currentSpeedStepIndex > 0)
+                {
+                    currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
+                    SetSpeed();
+                    OverrideSpeedStep(currentSpeedStepIndex);
+                    inputDenied.Invoke();
+                }
             }
-            else if (currentSpeedStepIndex > 0)
+            else
             {
-                currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
-                SetSpeed();
-                OverrideSpeedStep(currentSpeedStepIndex);
-                inputDenied.Invoke();
+                timeSinceLastConsumption += Time.deltaTime;
             }
+
         }
     }
 
@@ -114,7 +119,10 @@ public class HarvesterSpeedControl : MonoBehaviour
         {
             currentSpeedStepIndex = index;
             speedSlider.SetPositionByIndex(index);
-            Seismograph.Instance.SetOtherEmission("Overspeed", speedSteps[currentSpeedStepIndex].seismoEmission);
+            Seismograph.Instance.SetOtherEmission(
+                "Overspeed",
+                speedSteps[currentSpeedStepIndex].seismoEmission
+            );
         }
     }
 

@@ -1,25 +1,51 @@
 
-public class ResourceScreen : ScreenValueSlider
+using UnityEngine;
+
+public class ResourceScreen : ACScreenValueDisplayer
 {
+    private ItemManager itemManager;
     protected void Start()
     {
-        ResourceHandler.Instance.OnFuelConsumptionChanged.AddListener(OnFuelFeedback);
+        itemManager = ItemManager.Instance;
+        if (itemManager != null)
+        {
+            itemManager.crystalAmountChanged.RemoveListener(OnCrystalAmountChanged);
+            itemManager.notEnoughCrystals.RemoveListener(OnNotEnoughCrystals);
+            itemManager.crystalAmountChanged.AddListener(OnCrystalAmountChanged);
+            itemManager.notEnoughCrystals.AddListener(OnNotEnoughCrystals);
+        }
+
+        SetValue(itemManager.GetCrystal());
     }
 
-    protected void OnEnable() {
-        if (ResourceHandler.Instance != null) {
-            ResourceHandler.Instance.OnFuelConsumptionChanged.RemoveListener(OnFuelFeedback);
-            ResourceHandler.Instance.OnFuelConsumptionChanged.AddListener(OnFuelFeedback);
+    protected void OnEnable()
+    {
+        if (itemManager != null)
+        {
+            itemManager.crystalAmountChanged.RemoveListener(OnCrystalAmountChanged);
+            itemManager.notEnoughCrystals.RemoveListener(OnNotEnoughCrystals);
+            itemManager.crystalAmountChanged.AddListener(OnCrystalAmountChanged);
+            itemManager.notEnoughCrystals.AddListener(OnNotEnoughCrystals);
         }
+
+        SetValue(itemManager.GetCrystal());
     }
+
     protected void OnDisable()
     {
-        ResourceHandler.Instance.OnFuelConsumptionChanged.RemoveListener(OnFuelFeedback);
+        itemManager.crystalAmountChanged.RemoveListener(OnCrystalAmountChanged);
+        itemManager.notEnoughCrystals.RemoveListener(OnNotEnoughCrystals);
     }
 
-    private void OnFuelFeedback(ResourceData resource, float amount, float delta)
+    public void OnCrystalAmountChanged(int delta)
     {
-        // maybe do something with the parameters here
+        SetValue(itemManager.GetCrystal());
+        if (delta < 0) OnFeedback();
+    }
+
+    public void OnNotEnoughCrystals()
+    {
         OnFeedback();
     }
+
 }

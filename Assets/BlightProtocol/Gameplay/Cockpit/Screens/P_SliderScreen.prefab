@@ -234,8 +234,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.25}
   m_AnchorMax: {x: 1, y: 0.75}
-  m_AnchoredPosition: {x: -5, y: 0}
-  m_SizeDelta: {x: -20, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: -10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4262855151855142968
 GameObject:
@@ -438,7 +438,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 741ba8512546dba4495d294156b72460, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenType: 0
+  displayText: {fileID: 0}
   feedbackImage: {fileID: 3181918300039159506}
   flashCurve:
     serializedVersion: 2
@@ -474,7 +474,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   flashDuration: 0.5
-  slider: {fileID: 6590731412560322314}
 --- !u!1 &7887592973384728193
 GameObject:
   m_ObjectHideFlags: 0

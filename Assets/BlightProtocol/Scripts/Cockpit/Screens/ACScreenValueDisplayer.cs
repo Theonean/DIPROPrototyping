@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 public abstract class ACScreenValueDisplayer : MonoBehaviour
 {
@@ -9,7 +10,8 @@ public abstract class ACScreenValueDisplayer : MonoBehaviour
     protected bool useMaxValue = false;
     protected float maxValue = 1f;
 
-    [Header("Feedback")]
+    [Header("Visualization")]
+    [SerializeField] private TextMeshProUGUI displayText;
     [SerializeField] private Image feedbackImage;
     [SerializeField] private AnimationCurve flashCurve;
     [SerializeField] private float flashDuration = 0.5f;
@@ -51,6 +53,9 @@ public abstract class ACScreenValueDisplayer : MonoBehaviour
     protected virtual void UpdateValue(float targetValue)
     {
         Value = useMaxValue ? Mathf.Min(targetValue, maxValue) : targetValue;
+        if (displayText) {
+            displayText.text = Value.ToString();
+        }
     }
 
     public virtual void OnFeedback() {

@@ -24,13 +24,20 @@ public class RadarPulseButton : ACTimedButton
 
     public override void OnStartInteract()
     {
-        if (ResourceHandler.Instance.GetAmount(radarData.pulseCostResource) > radarData.pulseCost)
+        if (isCharging)
         {
             base.OnStartInteract();
         }
         else
         {
-            pulseSlider.OnFeedback();
+            if (ItemManager.Instance.RemoveCrystal(radarData.pulseCost))
+            {
+                base.OnStartInteract();
+            }
+            else
+            {
+                pulseSlider.OnFeedback();
+            }
         }
     }
 

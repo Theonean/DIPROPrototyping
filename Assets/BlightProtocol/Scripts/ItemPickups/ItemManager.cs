@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
 
-    private int crystals = 0;
+    private int crystals = 20;
     private Dictionary<string, Dictionary<int, int>> components = new();
 
     [Header("Debug View (Read-Only)")]
     [SerializeField] private List<CrystalEntry> crystalDebugView = new();
     [SerializeField] private List<ComponentEntry> componentDebugView = new();
+    public UnityEvent<int> crystalAmountChanged;
+    public UnityEvent notEnoughCrystals;
 
     private void Awake()
     {
@@ -31,16 +34,19 @@ public class ItemManager : MonoBehaviour
     public void AddCrystal(int amount)
     {
         crystals += amount;
+        crystalAmountChanged.Invoke(amount);
     }
 
     public bool RemoveCrystal(int amount)
     {
-        if(crystals > amount)
+        if(crystals >= amount)
         {
             crystals -= amount;
+            crystalAmountChanged.Invoke(-amount);
             return true;
         }
         
+        notEnoughCrystals.Invoke();
         return false;
     }
 

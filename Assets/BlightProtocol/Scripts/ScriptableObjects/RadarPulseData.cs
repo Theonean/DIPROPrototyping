@@ -4,7 +4,7 @@ using UnityEngine;
 public class RadarPulseData : ScriptableObject
 {
     [Header("Pulse")]
-    public float pulseCost = 100f;
+    public int pulseCost = 100;
     public ResourceData pulseCostResource;
     public float pulseDuration = 1.0f;
     public float pulseRange = 500f;

@@ -69,10 +69,25 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -4.5677
       objectReference: {fileID: 0}
+    - target: {fileID: 6590731412560322314, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6590731412560322314, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_DelayedUpdateVisuals
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7324475085073659597, guid: 045f677b167001048b4115cee046000d,
         type: 3}
       propertyPath: m_Name
       value: PV_HealthScreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 8244535987573983021, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8244535987573983021, guid: 045f677b167001048b4115cee046000d,
         type: 3}
@@ -241,6 +256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5eedb81ce2153444968dc5f168a4e57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayText: {fileID: 0}
   feedbackImage: {fileID: 2609408824429978321}
   flashCurve:
     serializedVersion: 2

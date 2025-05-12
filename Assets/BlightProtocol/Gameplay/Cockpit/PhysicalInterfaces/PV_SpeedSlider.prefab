@@ -314,21 +314,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speedSteps:
   - speed: 0
-    fuelCost: 0
     displayColor: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
     isBaseSpeed: 0
     seismoEmission: 0
-  - speed: 6
     fuelCost: 0
+  - speed: 6
     displayColor: {r: 0.6240406, g: 1, b: 0, a: 1}
     isBaseSpeed: 1
     seismoEmission: 0
-  - speed: 12
-    fuelCost: 20
+    fuelCost: 0
+  - speed: 20
     displayColor: {r: 1, g: 0, b: 0, a: 1}
     isBaseSpeed: 0
     seismoEmission: 5
-  maxSpeed: 10
+    fuelCost: 1
+  fuelConsumptionInterval: 2
   speedSlider: {fileID: 5544008809148348749}
   inputDenied:
     m_PersistentCalls:
