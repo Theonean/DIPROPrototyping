@@ -5,7 +5,7 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
 
-    private int crystals = new();
+    private int crystals = 0;
     private Dictionary<string, Dictionary<int, int>> components = new();
 
     [Header("Debug View (Read-Only)")]
@@ -31,7 +31,6 @@ public class ItemManager : MonoBehaviour
     public void AddCrystal(int amount)
     {
         crystals += amount;
-        UpdateCrystalDebugView();
     }
 
     public bool RemoveCrystal(int amount)
@@ -61,15 +60,6 @@ public class ItemManager : MonoBehaviour
 
         components[componentName][level] += amount;
         UpdateComponentDebugView();
-    }
-
-    private void UpdateCrystalDebugView()
-    {
-        crystalDebugView.Clear();
-        foreach (var pair in crystals)
-        {
-            crystalDebugView.Add(new CrystalEntry { name = pair.Key, amount = pair.Value });
-        }
     }
 
     private void UpdateComponentDebugView()
