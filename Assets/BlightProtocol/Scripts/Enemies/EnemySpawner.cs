@@ -79,57 +79,62 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public void SpawnEnemy()
+{
+    // Early exit if FiresOnce and already spawning
+    if (FiresOnce && isSpawningEnemies) return;
+    
+    isSpawningEnemies = true;
+
+    Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
+    spawnPosition.y = 0f;
+
+    GameObject enemyPrefab;
+    SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, enemySpawnPatterns.Length)];
+
+    foreach (EnemySpawnPosition enemyPos in spawnPattern.spawnPositions)
     {
-        if (FiresOnce && isSpawningEnemies) return;
-        isSpawningEnemies = true;
+        if (enemyPos.enemyType == EnemyType.NONE)
+            continue;
 
-        Vector3 spawnPosition = transform.position + Random.insideUnitSphere * spawnRadius;
-        spawnPosition.y = 0f;
-
-        GameObject enemyPrefab;
-        SOEnemySpawnPattern spawnPattern = enemySpawnPatterns[Random.Range(0, enemySpawnPatterns.Length)];
-
-        foreach (EnemySpawnPosition enemyPos in spawnPattern.spawnPositions)
+        enemyPrefab = null;
+        switch (enemyPos.enemyType)
         {
-            if (enemyPos.enemyType == EnemyType.NONE)
-                continue;
-
-            enemyPrefab = null;
-            switch (enemyPos.enemyType)
-            {
-                case EnemyType.REGULAR:
-                    enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
-                    break;
-                case EnemyType.CHARGER:
-                    enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
-                    break;
-                case EnemyType.CRABTANK:
-                    enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
-                    break;
-                case EnemyType.ALL:
-                    enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
-                    break;
-            }
-
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
-            m_EnemyCount++;
-            spawnedEnemy.Invoke();
-
-            if(FiresOnce)
-            {
-                continue; //Don't subscribe if only fires once -> don't want any memory leaks due to destroyed listener
-            }
-
-            enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
+            case EnemyType.REGULAR:
+                enemyPrefab = WaveManager.Instance.regularEnemyPrefab;
+                break;
+            case EnemyType.CHARGER:
+                enemyPrefab = WaveManager.Instance.chargerEnemyPrefab;
+                break;
+            case EnemyType.CRABTANK:
+                enemyPrefab = WaveManager.Instance.tankEnemyPrefab;
+                break;
+            case EnemyType.ALL:
+                enemyPrefab = WaveManager.Instance.GetRandomEnemyPrefab();
+                break;
         }
 
-        if (FiresOnce)
+        GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
+        m_EnemyCount++;
+        spawnedEnemy.Invoke();
+
+        if(FiresOnce)
         {
-            Destroy(this);
+            continue; //Don't subscribe if only fires once -> don't want any memory leaks due to destroyed listener
         }
 
+        enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => { m_EnemyCount--; });
+    }
+
+    if (FiresOnce)
+    {
+        Destroy(this);
+    }
+    else
+    {
+        // Only reset if not FiresOnce
         isSpawningEnemies = false;
     }
+}
 
     IEnumerator SpawnEnemyDesynced()
     {
