@@ -37,8 +37,16 @@ public class ExplosiveBody : ACRocketBody
                 {
                     if (hit.collider.CompareTag("Enemy"))
                     {
-                        hitCollider.gameObject.GetComponentInParent<EnemyDamageHandler>().DestroyEnemy();
-                        enemiesKilled++;
+                        EnemyDamageHandler eDH = hitCollider.GetComponent<EnemyDamageHandler>();
+                        if (eDH)
+                        {
+                            eDH.DestroyEnemy();
+                            enemiesKilled++;
+                        }
+                        else
+                        {
+                            Debug.LogError("Encountered unexpected bug, did not find enemydamagehandler on gameObject: " + hitCollider.transform.parent.name + "\\" + hitCollider.name );
+                        }
                     }
                 }
             }
