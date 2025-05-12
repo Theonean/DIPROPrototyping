@@ -5,7 +5,8 @@ public class DifficultyManager : MonoBehaviour
 {
     public static DifficultyManager Instance;
     public int difficultyLevel { get; private set; } = 0;
-    public int maximumDifficultyRegions = 5;
+    public int maximumDifficultyRegions = 4;
+    public int maxDifficultyReached { get; private set; } = 0;
     public UnityEvent OnDifficultyLevelChanged = new UnityEvent();
 
     private void Awake()
@@ -26,6 +27,8 @@ public class DifficultyManager : MonoBehaviour
         if (difficultyLevel != dL)
         {
             difficultyLevel = dL;
+            maxDifficultyReached = difficultyLevel > maxDifficultyReached ? difficultyLevel : maxDifficultyReached;
+
             OnDifficultyLevelChanged.Invoke();
         }
     }

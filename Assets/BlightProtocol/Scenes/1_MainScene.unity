@@ -1984,7 +1984,7 @@ PrefabInstance:
     - target: {fileID: 7393997915790091810, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 11105
+      value: 11108
       objectReference: {fileID: 0}
     - target: {fileID: 7626375681616798086, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -4311,6 +4311,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 01c0bf5446f7da34cabd931fa8f747bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1050173961 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2023619523800718582, guid: 94c580c3465cbd842a1304a6e5068e65,
+    type: 3}
+  m_PrefabInstance: {fileID: 5328846699306707342}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1055714102
@@ -8141,6 +8153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   resourcesHarvestedText: {fileID: 889989454}
+  resetText: {fileID: 1050173961}
   gameOverGroup: {fileID: 849772368}
   pauseGroup: {fileID: 8033146558979600133}
   isPaused: 0
@@ -9402,6 +9415,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2023619523800718582, guid: 94c580c3465cbd842a1304a6e5068e65,
+        type: 3}
+      propertyPath: m_text
+      value: Press 'r' to respawn in region XYZ
+      objectReference: {fileID: 0}
     - target: {fileID: 2029092434012090051, guid: 94c580c3465cbd842a1304a6e5068e65,
         type: 3}
       propertyPath: m_Pivot.x
@@ -9622,6 +9640,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3690063424829009154, guid: 94c580c3465cbd842a1304a6e5068e65,
+        type: 3}
+      propertyPath: m_text
+      value: 'Reached region: 3'
+      objectReference: {fileID: 0}
     - target: {fileID: 4083072642426045848, guid: 94c580c3465cbd842a1304a6e5068e65,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9767,6 +9790,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5255287809826597129, guid: 94c580c3465cbd842a1304a6e5068e65,
+        type: 3}
+      propertyPath: m_text
+      value: Critical damage
+      objectReference: {fileID: 0}
     - target: {fileID: 5366906106093301530, guid: 94c580c3465cbd842a1304a6e5068e65,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -9986,6 +10014,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7206234147792458318, guid: 94c580c3465cbd842a1304a6e5068e65,
+        type: 3}
+      propertyPath: m_Alpha
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7462178485589259091, guid: 94c580c3465cbd842a1304a6e5068e65,
         type: 3}
