@@ -55,7 +55,6 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         Ray ray = fpvCamera.ScreenPointToRay(cachedMousePosition);
 
-        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 1f);
 
         if (!Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionMask))
         {
