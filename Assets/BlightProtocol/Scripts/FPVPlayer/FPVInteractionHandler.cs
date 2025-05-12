@@ -28,12 +28,20 @@ public class FPVInteractionHandler : MonoBehaviour
 
     void Start()
     {
-        inputManager = FPVInputManager.Instance;       
+        inputManager = FPVInputManager.Instance;
+    }
+
+    private Vector3 cachedMousePosition;
+
+    private void Update()
+    {
+        cachedMousePosition = Input.mousePosition;
     }
 
     private void LateUpdate()
     {
         if (inputManager.lookState == LookState.LOOKING) return;
+        Physics.SyncTransforms();
         if (activeInteractable != null && inputManager.lookState == LookState.INTERACTING)
         {
             UpdateInteraction();
@@ -45,8 +53,10 @@ public class FPVInteractionHandler : MonoBehaviour
 
     private void HandleRaycast()
     {
-        Ray ray = fpvCamera.ScreenPointToRay(Input.mousePosition);
-        
+        Ray ray = fpvCamera.ScreenPointToRay(cachedMousePosition);
+
+        Debug.DrawRay(ray.origin, ray.direction * 100, Color.red, 1f);
+
         if (!Physics.Raycast(ray, out RaycastHit hit, interactionRange, interactionMask))
         {
             ClearHover();
@@ -73,14 +83,14 @@ public class FPVInteractionHandler : MonoBehaviour
         }
         else if (interactable.UpdateHover)
         {
-            interactable.OnUpdateHover();
+            interactable.OnUpdateHover(cachedMousePosition);
         }
     }
 
     private void ClearHover()
     {
         if (HoveredInteractable == null) return;
-        
+
         HoveredInteractable.OnEndHover();
         HoveredInteractable = null;
     }

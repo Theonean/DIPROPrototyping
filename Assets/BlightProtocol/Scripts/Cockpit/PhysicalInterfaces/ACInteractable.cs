@@ -34,7 +34,7 @@ public abstract class ACInteractable : MonoBehaviour
             outline.enabled = true;
         }
     }
-    public virtual void OnUpdateHover() { }
+    public virtual void OnUpdateHover(Vector2 mousePos) { }
     public virtual void OnEndHover()
     {
         if (outline != null)

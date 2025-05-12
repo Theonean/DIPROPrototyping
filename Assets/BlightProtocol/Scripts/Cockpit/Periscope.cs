@@ -65,11 +65,11 @@ public class Periscope : ACInteractable
         if (!isActive) base.OnStartHover();
     }
 
-    public override void OnUpdateHover()
+    public override void OnUpdateHover(Vector2 MousePos)
     {
         if (isActive)
         {
-            ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+            ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(MousePos);
 
             if (Physics.Raycast(ray, out hit, 100f, hitMask))
             {

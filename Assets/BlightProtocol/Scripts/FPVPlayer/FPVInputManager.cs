@@ -13,10 +13,10 @@ public class FPVInputManager : MonoBehaviour
     public static FPVInputManager Instance { get; private set; }
     private FPVPlayerCam fpvPlayerCam;
     private FPVCamRotator fpvCamRotator;
-    private FPVInteractionHandler interactionHandler;
+    [SerializeField] private FPVInteractionHandler interactionHandler;
 
     public LookState lookState = LookState.IDLE;
-    public bool isActive;
+    public bool isActive = true;
 
     private void Awake()
     {
@@ -32,7 +32,7 @@ public class FPVInputManager : MonoBehaviour
     {
         fpvPlayerCam = FPVPlayerCam.Instance;
         fpvCamRotator = GetComponentInChildren<FPVCamRotator>();
-        interactionHandler = GetComponentInChildren<FPVInteractionHandler>();
+        //interactionHandler = GetComponentInChildren<FPVInteractionHandler>();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(HandlePerspectiveSwitch);
     }
 
