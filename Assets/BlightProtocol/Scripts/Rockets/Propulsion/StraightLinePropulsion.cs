@@ -49,7 +49,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
 
             Quaternion noseDiveRotation = Quaternion.Euler(90f, rocketTransform.eulerAngles.y, 0f); // Nose straight down
 
-            while (rocketTransform.position.y > groundPoint.y + 0.1f)
+            while (Vector3.Distance(rocketTransform.position, groundPoint) > 0.1f)
             {
                 float totalDistance = Vector3.Distance(startingPosition, TargetPosition);
                 float distanceCovered = Vector3.Distance(startingPosition, rocketTransform.position);
