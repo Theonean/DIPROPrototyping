@@ -6,11 +6,11 @@ public class EnemyDamageHandler : MonoBehaviour
     [SerializeField] private EnemyData m_EnemyData;
     public GameObject m_Explosion_1;
     public UnityEvent enemyDestroyed;
-    private ItemDropper itemDropper;
+    private ItemDropper[] itemDroppers;
 
     void Start()
     {
-        itemDropper = GetComponentInParent<ItemDropper>();
+        ItemDropper[] itemDroppers = GetComponents<ItemDropper>();
     }
 
     public void DestroyEnemy()
@@ -20,6 +20,6 @@ public class EnemyDamageHandler : MonoBehaviour
 
         //Instantiate explosion particle system and destroy after 4 seconds
         Instantiate(m_Explosion_1, transform.position, Quaternion.identity);
-        itemDropper.DropItems();
+        foreach (ItemDropper dropper in itemDroppers) { dropper.DropItems(); }
     }
 }

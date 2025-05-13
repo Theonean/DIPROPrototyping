@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.Events;
+using TMPro;
 
 public class SelectedRocketManager : MonoBehaviour
 {
@@ -10,6 +11,12 @@ public class SelectedRocketManager : MonoBehaviour
     private Dictionary<Button, Rocket> buttonRocketPairs = new Dictionary<Button, Rocket>();
     private List<Rocket> selectedRockets = new List<Rocket>();
     public UnityEvent onRocketsLoaded;
+
+
+    [Header("Research")]
+    [SerializeField] private TextMeshPro researchCostCrystalText;
+    [SerializeField] private TextMeshPro researchCostComponentText;
+    [SerializeField] private TextMeshPro researchResultDescriptionText;
 
     private void Awake()
     {
@@ -102,6 +109,9 @@ public class SelectedRocketManager : MonoBehaviour
 
     public void ChangeComponent(RocketComponentType componentType, GameObject newComponent)
     {
+        ACRocketComponent rocketComponent = newComponent.GetComponent<ACRocketComponent>();
+        UpdateResearchFields(rocketComponent);
+
         foreach (Rocket rocket in selectedRockets)
         {
             switch (componentType)
@@ -122,34 +132,70 @@ public class SelectedRocketManager : MonoBehaviour
     public void LevelUpComponent(RocketComponentType componentType)
     {
         string componentName = null;
+        ACRocketComponent[] rocketComponents = new ACRocketComponent[4];
+        int i = 0;
         switch (componentType)
         {
             case RocketComponentType.FRONT:
                 //selectedRocketMirrorDummy.frontComponent.LevelUpComponent();
                 foreach (Rocket rocket in selectedRockets)
                 {
-                    rocket.frontComponent.LevelUpComponent();
-                    componentName = rocket.frontComponent.GetComponent<ACRocketComponent>().DescriptiveName;
+                    rocketComponents[i] = rocket.frontComponent; 
+                    i++;
                 }
                 break;
             case RocketComponentType.BODY:
                 //selectedRocketMirrorDummy.bodyComponent.LevelUpComponent();
                 foreach (Rocket rocket in selectedRockets)
                 {
-                    rocket.bodyComponent.LevelUpComponent();
-                    componentName = rocket.bodyComponent.GetComponent<ACRocketComponent>().DescriptiveName;
+                    rocketComponents[i] = rocket.frontComponent;
+                    i++;
                 }
                 break;
             case RocketComponentType.PROPULSION:
                 //selectedRocketMirrorDummy.propulsionComponent.LevelUpComponent();
                 foreach (Rocket rocket in selectedRockets)
                 {
-                    rocket.propulsionComponent.LevelUpComponent();
-                    componentName = rocket.propulsionComponent.GetComponent<ACRocketComponent>().DescriptiveName;
+                    rocketComponents[i] = rocket.frontComponent;
+                    i++;
                 }
                 break;
         }
-        ItemManager.Instance.IncreaseItemLevel(componentName);
-    }
-}
 
+        //First validate if we have enough resources for an upgrade
+        (int, int) researchCosts = rocketComponents[0].GetResearchCost();
+        componentName = rocketComponents[0].DescriptiveName;
+
+        if (ItemManager.Instance.GetCrystal() >= researchCosts.Item1 
+            && ItemManager.Instance.GetComponentAmount(componentName) >= researchCosts.Item2)
+        {
+            ItemManager.Instance.RemoveCrystal(researchCosts.Item1);
+            ItemManager.Instance.RemoveComponent(componentName, researchCosts.Item2);
+            ItemManager.Instance.IncreaseItemLevel(componentName);
+
+            foreach(ACRocketComponent rocketComponent in rocketComponents)
+            {
+                rocketComponent.LevelUpComponent();
+            }
+
+            UpdateResearchFields(rocketComponents[0]);
+        }
+    }
+
+    private void UpdateResearchFields(ACRocketComponent componentToUpgrade)
+    {
+        (int, int) researchCosts = componentToUpgrade.GetResearchCost();
+        int ownedCrystals = ItemManager.Instance.GetCrystal();
+        int ownedComponents = ItemManager.Instance.GetComponentAmount(componentToUpgrade.DescriptiveName);
+
+        string crystalCostsText = ownedCrystals + " / " + researchCosts.Item1;
+        string componentCostsText = ownedComponents + " / " + researchCosts.Item2;
+        string upgradeText = componentToUpgrade.GetResearchDescription();
+
+        researchCostCrystalText.text = crystalCostsText;
+        researchCostComponentText.text = componentCostsText;
+        researchResultDescriptionText.text = upgradeText;
+    }
+
+    
+}

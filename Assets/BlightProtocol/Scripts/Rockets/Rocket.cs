@@ -76,11 +76,13 @@ public class Rocket : MonoBehaviour
             }
             if (other.gameObject.CompareTag("CrystalRock"))
             {
-                other.GetComponent<ItemDropper>().DropItems();
+                ItemDropper[] droppers = other.GetComponents<ItemDropper>();
+                foreach (ItemDropper dropper in droppers) { dropper.DropItems(); }
             }
             if (other.gameObject.CompareTag("ResourcePoint"))
             {
-                other.GetComponentInChildren<ItemDropper>().DropItems();
+                ItemDropper[] droppers = other.GetComponents<ItemDropper>();
+                foreach (ItemDropper dropper in droppers) { dropper.DropItems(); }
             }
 
                 HandleBouncingFrontException(other);

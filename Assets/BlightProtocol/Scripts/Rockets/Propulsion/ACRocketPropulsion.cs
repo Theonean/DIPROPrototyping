@@ -192,4 +192,15 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         if (vfxFlying.HasAnySystemAwake())
             vfxFlying.Stop();
     }
+    public override string GetResearchDescription()
+    {
+        if (componentLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + targetMoveStep;
+        }
+        else
+        {
+            return upgradeDescription + " " + targetMoveStep + " -> " + targetMoveStepPerSecondPerLevel[componentLevel+1];
+        }
+    }
 }

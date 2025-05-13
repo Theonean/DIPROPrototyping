@@ -7,10 +7,11 @@ public class ItemManager : MonoBehaviour
 {
     public static ItemManager Instance { get; private set; }
 
-    private int crystals = 20;
+    public int crystals = 40;
     public List<ComponentEntry> components = new List<ComponentEntry>();
     public UnityEvent<int> crystalAmountChanged;
     public UnityEvent notEnoughCrystals;
+    private bool FREEMONEYMODEENGAGED = false;
 
     private void Awake()
     {
@@ -25,6 +26,14 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyUp(KeyCode.I))
+        {
+            FREEMONEYMODEENGAGED = !FREEMONEYMODEENGAGED;
+        }
+    }
+
     public int GetCrystal()
     { return crystals; }
 
@@ -36,7 +45,7 @@ public class ItemManager : MonoBehaviour
 
     public bool RemoveCrystal(int amount)
     {
-        if(crystals >= amount)
+        if(crystals >= amount || FREEMONEYMODEENGAGED)
         {
             crystals -= amount;
             crystalAmountChanged.Invoke(-amount);
@@ -68,14 +77,14 @@ public class ItemManager : MonoBehaviour
             Debug.LogError("Removing component that cannot be found error: " + componentName);
         }
         
-        if(amount > entry.amountHeld)
-        {
-            return false;
-        }
-        else
+        if(entry.amountHeld > crystals || FREEMONEYMODEENGAGED)
         {
             entry.amountHeld -= amount;
             return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
@@ -96,6 +105,12 @@ public class ItemManager : MonoBehaviour
     {
         ComponentEntry entry = GetComponentEntry(componentName);
         return entry.highestLevelUpgraded;
+    }
+
+    public int GetComponentAmount(string componentName)
+    {
+        ComponentEntry entry = GetComponentEntry(componentName);
+        return entry.amountHeld;
     }
 
     private ComponentEntry GetComponentEntry(string componentName)

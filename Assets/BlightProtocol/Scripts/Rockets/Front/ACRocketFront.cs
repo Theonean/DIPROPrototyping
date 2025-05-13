@@ -38,7 +38,7 @@ public abstract class ACRocketFront : ACRocketComponent
     {
         maxAbilityUses = abilityUsesPerLevel[componentLevel];
         abilityUsesLeft = maxAbilityUses;
-        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Max ability uses: {maxAbilityUses}", LogLevel.INFO, LogType.ROCKETS);
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel}. Max ability uses: {maxAbilityUses}", LogLevel.INFO, LogType.ROCKETS);
     }
     
     #endregion
@@ -86,6 +86,17 @@ public abstract class ACRocketFront : ACRocketComponent
         }
 
         isOnCooldown = false;
+    }
+    public override string GetResearchDescription()
+    {
+        if (componentLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + maxAbilityUses;
+        }
+        else
+        {
+            return upgradeDescription + " " + maxAbilityUses + " -> " + abilityUsesPerLevel[componentLevel + 1];
+        }
     }
 
     #endregion

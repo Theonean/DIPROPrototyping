@@ -16,8 +16,11 @@ public abstract class ACRocketComponent : MonoBehaviour
         }
     }
     public int componentLevel { get; private set; } = 0;
-    private int maxComponentLevel = 5;
+    public int[] researchCostCrystal = { 20, 60, 100, 150 };
+    public int[] researchCostComponent = { 10, 20, 30, 50 };
+    protected int maxComponentLevel = 5;
     public string DescriptiveName;
+    public string upgradeDescription;
     public UnityEvent<RocketComponentType, int> OnKilledEnemy = new UnityEvent<RocketComponentType, int>();
 
     protected Vector3 rocketOriginalScale;
@@ -55,6 +58,7 @@ public abstract class ACRocketComponent : MonoBehaviour
     }
 
     protected abstract void SetStatsToLevel();
+    public abstract string GetResearchDescription();
 
     public void LevelUpComponent()
     {
@@ -66,5 +70,14 @@ public abstract class ACRocketComponent : MonoBehaviour
 
         componentLevel++;
         onComponentLevelUp?.Invoke();
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <returns>returns the cost to upgrade at current level (CRYSTAL, COMPONENT)</returns>
+    public (int,int) GetResearchCost()
+    {
+        return (researchCostCrystal[componentLevel], researchCostComponent[componentLevel]);
     }
 }

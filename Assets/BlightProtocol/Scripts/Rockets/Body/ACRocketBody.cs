@@ -58,4 +58,15 @@ public abstract class ACRocketBody : ACRocketComponent
         Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);
     }
 
+    public override string GetResearchDescription()
+    {
+        if (componentLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + explosionRadius;
+        }
+        else
+        {
+            return upgradeDescription + " " + explosionRadius + " -> " + explosionRadiusPerLevel[componentLevel + 1];
+        }
+    }
 }
