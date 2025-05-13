@@ -136,6 +136,6 @@ public class ComponentEntry
     {
         this.name = name;
         amountHeld = 0;
-        highestLevelUpgraded = 1;
+        highestLevelUpgraded = 0;
     }
 }

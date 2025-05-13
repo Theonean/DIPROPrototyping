@@ -156,9 +156,37 @@ PrefabInstance:
         type: 2}
     - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
+      propertyPath: spawnSingle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
       propertyPath: numberOfCrystals
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: itemsToSpawn.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: 'itemsToSpawn.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 12bb87bd171653f4c8deb8a4d89753e2,
+        type: 2}
+    - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: 'itemsToSpawn.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 54c10b2a68dfd5e4788f9ca15fe18903,
+        type: 2}
+    - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: 'itemsToSpawn.Array.data[2]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 9a4021c8008b6464e9b1a0c9e577c457,
+        type: 2}
     - target: {fileID: 8490830819345528117, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       propertyPath: m_Acceleration
@@ -241,14 +269,6 @@ PrefabInstance:
         type: 3}
       insertIndex: 1
       addedObject: {fileID: 6190230789700640181}
-    - targetCorrespondingSourceObject: {fileID: 6235206037039435799, guid: ef27b165cb5d7b84e824bac4cb87bd83,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8389315484131788227}
-    - targetCorrespondingSourceObject: {fileID: 6235206037039435799, guid: ef27b165cb5d7b84e824bac4cb87bd83,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 9016679545075039057}
   m_SourcePrefab: {fileID: 100100000, guid: ef27b165cb5d7b84e824bac4cb87bd83, type: 3}
 --- !u!1 &2318980918978960584 stripped
 GameObject:
@@ -332,38 +352,6 @@ MonoBehaviour:
   chargeStartColor: {r: 0, g: 0.2264151, b: 0.20844565, a: 1}
   chargeEndColor: {r: 0, g: 1, b: 0.4413116, a: 1}
   batteryRenderer: {fileID: 4067197325939956737}
---- !u!114 &8389315484131788227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2318980918978960584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemToSpawn: {fileID: 11400000, guid: 54c10b2a68dfd5e4788f9ca15fe18903, type: 2}
-  numberOfCrystals: 1
-  spawnRadius: 5
-  throwForceRange: {x: 5, y: 10}
---- !u!114 &9016679545075039057
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2318980918978960584}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemToSpawn: {fileID: 11400000, guid: 9a4021c8008b6464e9b1a0c9e577c457, type: 2}
-  numberOfCrystals: 1
-  spawnRadius: 5
-  throwForceRange: {x: 5, y: 10}
 --- !u!4 &4516710286187333628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5190361265367780131, guid: ef27b165cb5d7b84e824bac4cb87bd83,
