@@ -104,12 +104,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8540969458602549291}
   m_PrefabAsset: {fileID: 0}
---- !u!23 &4107525795517221650 stripped
-MeshRenderer:
-  m_CorrespondingSourceObject: {fileID: 5730622214327888697, guid: 7a7a22707f8742f42bdac0c640103b07,
-    type: 3}
-  m_PrefabInstance: {fileID: 8540969458602549291}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4114850636146126721 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5736878537146666922, guid: 7a7a22707f8742f42bdac0c640103b07,
@@ -138,7 +132,6 @@ MonoBehaviour:
   UpdateHover: 0
   UpdateInteract: 0
   TouchPoint: {fileID: 3262449656624984602}
-  hullRenderer: {fileID: 4107525795517221650}
   head: {fileID: 3167126349445463695}
   maxPos: {fileID: 8439941635263927391}
   minPos: {fileID: 4114850636146126721}
@@ -169,7 +162,7 @@ MonoBehaviour:
   adjustSpeed: 1
   mapCamera: {fileID: 0}
   minHeight: 100
-  maxHeight: 600
+  maxHeight: 1000
 --- !u!4 &8439941635263927391 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 263227804657169524, guid: 7a7a22707f8742f42bdac0c640103b07,
