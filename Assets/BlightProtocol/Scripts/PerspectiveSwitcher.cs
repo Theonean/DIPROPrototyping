@@ -21,6 +21,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Camera fpCamera;
     [SerializeField] private Camera mapCamera;
     [SerializeField] private Transform dronePositionInLoadingBay;
+    [SerializeField] private float droneSpawnDistance = 10f;
     [SerializeField] private Transform dronePositionInHarvester;
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
     public UnityEvent onPerspectiveSwitched;
@@ -79,7 +80,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         playerCore.transform.parent = null;
 
-        Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.mover.GetMovementDirection() * 30f; //Position player behind harvester
+        Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance; //Position player behind harvester
         spawnPosition.y = DroneMovement.Instance.distanceFromGround;
         playerCore.transform.position = spawnPosition;
 

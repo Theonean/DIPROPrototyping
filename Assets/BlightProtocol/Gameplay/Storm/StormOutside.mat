@@ -16,7 +16,7 @@ MonoBehaviour:
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 32
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
@@ -34,7 +34,7 @@ Material:
   stringTagMap: {}
   disabledShaderPasses:
   - MOTIONVECTORS
-  m_LockedProperties: 
+  m_LockedProperties: _Curvature_Radius
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
@@ -52,25 +52,27 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _AlphaFactor: 1
-    - _Curvature_Radius: -19.4
+    - _AlphaFactor: 0
+    - _Curvature_Radius: 0
     - _DepthCutoff: 0
-    - _Displacement: 0.05
-    - _EmissionFalloff: 0.02
-    - _Emission_Strength: 6.12
+    - _DispFalloff: 50
+    - _DispFalloffHeight: 87.89
+    - _Displacement: 0.1
+    - _EmissionFalloff: 1
+    - _Emission_Strength: 0.8
     - _Float: 0
-    - _Fresnel_Opacity: 1.41
-    - _Fresnel_Power: 2.21
+    - _Fresnel_Opacity: 0.5
+    - _Fresnel_Power: 5
     - _Noise_Edge1: 0.39
     - _Noise_Edge2: 2.18
     - _Noise_Power: -0.74
-    - _Noise_Scale: 22.55
-    - _Noise_Speed: 0.03
+    - _Noise_Scale: 20
+    - _Noise_Speed: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _Color_A: {r: 1, g: 0.62212586, b: 0.3537736, a: 1}
-    - _Color_B: {r: 1.4461265, g: 0.8973025, b: 0.5388867, a: 1}
+    - _Color_A: {r: 1, g: 0.50181097, b: 0, a: 1}
+    - _Color_B: {r: 1.1015015, g: 0.500449, b: 0.05190318, a: 1}
     - _Fresnel_Color: {r: 55.715244, g: 6.720128, b: 0, a: 1}
     - _Noise_Direction: {r: 0, g: -1, b: 0, a: 0}
     - _Noise_Remap: {r: -0.23, g: 1.08, b: -0.7, a: 0.81}

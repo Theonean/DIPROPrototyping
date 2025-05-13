@@ -8,6 +8,7 @@ public class WorldComposer : MonoBehaviour
     public DifficultyRegion[] difficultyRegions = new DifficultyRegion[0];
 
     private Vector2 mapBoundsX;
+    [SerializeField] private float mapBoundsXMargins = 100;
     private Vector2 mapBoundsZ;
 
     private void Awake()
@@ -25,7 +26,7 @@ public class WorldComposer : MonoBehaviour
     private void Start()
     {
         // Get the world bounds from your ProceduralTileGenerator (or another source)
-        mapBoundsX = ProceduralTileGenerator.Instance.mapBoundsX;
+        mapBoundsX = ProceduralTileGenerator.Instance.mapBoundsX + new Vector2(mapBoundsXMargins, -mapBoundsXMargins);
         mapBoundsZ = ProceduralTileGenerator.Instance.mapBoundsZ;
 
         StartCoroutine(GenerateInitialObstacles());

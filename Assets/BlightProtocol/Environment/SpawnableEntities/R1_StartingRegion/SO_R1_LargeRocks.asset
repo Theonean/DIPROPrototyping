@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
   - {fileID: 5144471608748660402, guid: 7f6bb68cf599f0d4e8b25611b5bc5662, type: 3}
-  numEntities: 10
+  numEntities: 2
   spawnStrategy: 0
-  customSpawnAreaBoundsX: {x: -500, y: 500}
-  customSpawnAreaBoundsZ: {x: -200, y: 1200}
-  voronoiSiteCount: 2
-  siteSpreadRadius: 6
-  siteJitter: 0
+  customSpawnAreaBoundsX: {x: 0, y: 0}
+  customSpawnAreaBoundsZ: {x: 0, y: 0}
+  voronoiSiteCount: 10
+  siteSpreadRadius: 3
+  siteJitter: 0.2
   minRotation: 0
   maxRotation: 360
-  scaleVariance: {x: 1, y: 5}
+  scaleVariance: {x: 2, y: 3}
   boundingRadius: 35.135826
