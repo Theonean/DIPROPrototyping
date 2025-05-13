@@ -26,29 +26,12 @@ public class RocketComponentSelector : MonoBehaviour
         scrollButtons.onScrolled.AddListener(Scroll);
     }
 
-    private List<ACRocketComponent> GetRocketComponents()
-    {
-        switch (componentType)
-        {
-            case RocketComponentType.PROPULSION:
-                return PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketPropulsions
-                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
-            case RocketComponentType.BODY:
-                return PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketBodies
-                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
-            case RocketComponentType.FRONT:
-                return PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketFronts
-                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
-            default:
-                return new List<ACRocketComponent>();
-        }
-    }
-
     public void LoadActiveComponents()
     {
         Rocket[] rockets = PlayerCore.Instance.GetComponentsInChildren<Rocket>();
 
-        components = GetRocketComponents();
+        components = ItemManager.Instance.GetAvailableComponents(componentType);
+
         maxValue = components.Count - 1;
         if (rockets[0] != null)
         {

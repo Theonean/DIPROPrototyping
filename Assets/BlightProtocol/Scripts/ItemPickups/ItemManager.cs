@@ -24,6 +24,10 @@ public class ItemManager : MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
         }
+
+        components.Add(new ComponentEntry("PenetrativeFront"));
+        components.Add(new ComponentEntry("ExplosiveBody"));
+        components.Add(new ComponentEntry("DirectlinePropulsion"));
     }
 
     private void Update()
@@ -122,6 +126,31 @@ public class ItemManager : MonoBehaviour
             components.Add(entry);
         }
         return entry;
+    }
+
+    public List<ACRocketComponent> GetAvailableComponents(RocketComponentType componentType)
+    {
+        List<ACRocketComponent> allComponentsOfType= new List<ACRocketComponent>();
+        switch (componentType)
+        {
+            case RocketComponentType.PROPULSION:
+                allComponentsOfType = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketPropulsions
+                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
+                break;
+            case RocketComponentType.BODY:
+                allComponentsOfType = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketBodies
+                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
+                break;
+            case RocketComponentType.FRONT:
+                allComponentsOfType = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketFronts
+                    .Select(x => x.GetComponent<ACRocketComponent>()).ToList();
+                break;
+        }
+
+        string[] ownedComponentNames = components.Select( component => component.name).ToArray();
+        List<ACRocketComponent> ownedComponents = allComponentsOfType.Where(component => ownedComponentNames.Contains(component.DescriptiveName)).ToList();
+
+        return ownedComponents;
     }
 }
 
