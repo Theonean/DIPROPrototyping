@@ -16,8 +16,8 @@ public abstract class ACRocketComponent : MonoBehaviour
         }
     }
     public int componentLevel { get; private set; } = 0;
-    public int[] researchCostCrystal = { 20, 30, 40, 50 };
-    public int[] researchCostComponent = { 10, 15, 20, 25 };
+    private int[] researchCostCrystal = { 20, 30, 40, 50 };
+    private int[] researchCostComponent = { 5, 10, 15, 20 };
     protected int maxComponentLevel = 5;
     public string DescriptiveName;
     public string upgradeDescription;
