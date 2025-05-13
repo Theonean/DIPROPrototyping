@@ -22,55 +22,27 @@ public class ItemDropper : MonoBehaviour
 
     private IEnumerator DropItems(int count, float radius)
     {
-        if(spawnSingle)
+        itemToSpawn = spawnSingle ? itemToSpawn : itemsToSpawn[Random.Range(0, itemsToSpawn.Length)];
+        for (int i = 0; i < count; i++)
         {
-            for (int i = 0; i < count; i++)
+            Vector3 randomPosition = transform.position + Random.insideUnitSphere * radius;
+            randomPosition.y = transform.position.y; // Keep the y position the same as this object
+
+            GameObject item = Instantiate(itemToSpawn.prefab, randomPosition, Quaternion.identity, null);
+            Vector3 randomUp = Random.onUnitSphere;
+            randomUp.y = Mathf.Abs(randomUp.y); // Ensure the up vector is not inverted
+
+            Rigidbody rb = item.GetComponent<Rigidbody>();
+            if (rb != null)
             {
-                Vector3 randomPosition = transform.position + Random.insideUnitSphere * radius;
-                randomPosition.y = transform.position.y; // Keep the y position the same as this object
-
-                GameObject item = Instantiate(itemToSpawn.prefab, randomPosition, Quaternion.identity, null);
-                Vector3 randomUp = Random.onUnitSphere;
-                randomUp.y = Mathf.Abs(randomUp.y); // Ensure the up vector is not inverted
-
-                Rigidbody rb = item.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.AddForce(randomUp * Random.Range(throwForceRange.x, throwForceRange.y), ForceMode.Impulse); //Make items "pop out" off destroyed objects
-                }
-
-                CollectibleItem collectible = item.AddComponent<CollectibleItem>();
-                collectible.itemData = itemToSpawn;
-
-
-                yield return null;
+                rb.AddForce(randomUp * Random.Range(throwForceRange.x, throwForceRange.y), ForceMode.Impulse); //Make items "pop out" off destroyed objects
             }
-        }
-        else
-        {
-            for (int i = 0; i < itemsToSpawn.Length; i++)
-            {
-                itemToSpawn = itemsToSpawn[i];
 
-                Vector3 randomPosition = transform.position + Random.insideUnitSphere * radius;
-                randomPosition.y = transform.position.y; // Keep the y position the same as this object
-
-                GameObject item = Instantiate(itemToSpawn.prefab, randomPosition, Quaternion.identity, null);
-                Vector3 randomUp = Random.onUnitSphere;
-                randomUp.y = Mathf.Abs(randomUp.y); // Ensure the up vector is not inverted
-
-                Rigidbody rb = item.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    rb.AddForce(randomUp * Random.Range(throwForceRange.x, throwForceRange.y), ForceMode.Impulse); //Make items "pop out" off destroyed objects
-                }
-
-                CollectibleItem collectible = item.AddComponent<CollectibleItem>();
-                collectible.itemData = itemToSpawn;
+            CollectibleItem collectible = item.AddComponent<CollectibleItem>();
+            collectible.itemData = itemToSpawn;
 
 
-                yield return null;
-            }
+            yield return null;
         }
 
         Destroy(gameObject);
