@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections;
 using TMPro;
+using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class ItemCollector : MonoBehaviour
     private int sameItemsCollectedInRow = 0;
 
     [SerializeField] private GameObject collectedItemTextPrefab;
+    [SerializeField] private Sprite crystalSprite, componentSprite;
+    [SerializeField] private Color crystalSpriteColor, componentSpriteColor;
     [SerializeField] private Canvas collectedItemCanvas;
 
     private SOItem lastItemData;
@@ -26,7 +29,7 @@ public class ItemCollector : MonoBehaviour
 
     void Update()
     {
-        if(PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.DRONE)
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.DRONE)
         {
             collectedItemCanvas.transform.LookAt(Camera.main.transform);
 
@@ -71,49 +74,62 @@ public class ItemCollector : MonoBehaviour
             StartCoroutine(HandleCollectedItemsDisplay());
     }
 
-private IEnumerator HandleCollectedItemsDisplay()
-{
-    isDisplayingItem = true;
-
-    while (itemQueue.Count > 0)
+    private IEnumerator HandleCollectedItemsDisplay()
     {
-        SOItem currentItem = itemQueue.Dequeue();
-        int quantity = 1;
+        isDisplayingItem = true;
 
-        // 🧠 Phase 1: show the item text immediately
-        lastItemCollected = Instantiate(collectedItemTextPrefab, collectedItemCanvas.transform);
-        RectTransform rect = lastItemCollected.GetComponent<RectTransform>();
-        rect.position = transform.position + Vector3.up * 10f;
-
-        TextMeshProUGUI text = lastItemCollected.GetComponent<TextMeshProUGUI>();
-        text.text = currentItem.itemName;
-
-        // 🕒 Start bundling window
-        itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
-        yield return null;
-
-        while (itemRecentlyCollectedCounter > 0f)
+        while (itemQueue.Count > 0)
         {
-            itemRecentlyCollectedCounter -= Time.deltaTime;
+            SOItem currentItem = itemQueue.Dequeue();
+            int quantity = 1;
 
-            // 👥 Stack more of the same item
-            if (itemQueue.Count > 0 && itemQueue.Peek() == currentItem)
+            // 🧠 Phase 1: show the item text immediately
+            lastItemCollected = Instantiate(collectedItemTextPrefab, collectedItemCanvas.transform);
+            RectTransform rect = lastItemCollected.GetComponent<RectTransform>();
+            rect.position = transform.position + Vector3.up * 10f;
+
+            TextMeshProUGUI text = lastItemCollected.GetComponentInChildren<TextMeshProUGUI>();
+            Image image = lastItemCollected.GetComponentInChildren<Image>();
+            text.text = currentItem.itemName;
+            switch (currentItem.itemType)
             {
-                itemQueue.Dequeue();
-                quantity++;
-                text.text = $"{currentItem.itemName}x {quantity}";
-                itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
+                case EItemTypes.Crystal:
+                    image.sprite = crystalSprite;
+                    image.color = crystalSpriteColor;
+                break;
+                case EItemTypes.Component:
+                    image.sprite = componentSprite;
+                    image.color = componentSpriteColor;
+                    break;
             }
 
+
+            // 🕒 Start bundling window
+            itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
             yield return null;
+
+            while (itemRecentlyCollectedCounter > 0f)
+            {
+                itemRecentlyCollectedCounter -= Time.deltaTime;
+
+                // 👥 Stack more of the same item
+                if (itemQueue.Count > 0 && itemQueue.Peek() == currentItem)
+                {
+                    itemQueue.Dequeue();
+                    quantity++;
+                    text.text = $"{currentItem.itemName}x {quantity}";
+                    itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
+                }
+
+                yield return null;
+            }
+
+            // 🧠 Phase 2: now start flying up and fading out
+            yield return StartCoroutine(FadeOutCollectedItemText(lastItemCollected));
         }
 
-        // 🧠 Phase 2: now start flying up and fading out
-        yield return StartCoroutine(FadeOutCollectedItemText(lastItemCollected));
+        isDisplayingItem = false;
     }
-
-    isDisplayingItem = false;
-}
 
 
 
@@ -124,7 +140,7 @@ private IEnumerator HandleCollectedItemsDisplay()
 
         Vector3 endPos = startPos + Vector3.up * 20;
 
-        TextMeshProUGUI collectedItemText = gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI collectedItemText = gameObject.GetComponentInChildren<TextMeshProUGUI>();
 
         while (t < timeToFadeOutText)
         {
