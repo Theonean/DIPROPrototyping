@@ -55,7 +55,7 @@ public abstract class ACRocketBody : ACRocketComponent
         explosionRadius = explosionRadiusBase;
         canExplode = true;
 
-        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);
     }
 
     public override string GetResearchDescription()

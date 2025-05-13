@@ -60,7 +60,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     protected override void SetStatsToLevel()
     {
         targetMoveStep = targetMoveStepPerSecondPerLevel[componentLevel];
-        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Degree move to mouse: {targetMoveStep}", LogLevel.INFO, LogType.ROCKETS);
+        Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel}. Degree move to mouse: {targetMoveStep}", LogLevel.INFO, LogType.ROCKETS);
     }
 
 
