@@ -2,7 +2,7 @@
 public class RegularEnemyMovement : ACEnemyMovementBehaviour
 {
     // Update is called once per frame
-    protected override void Update()
+    protected override void CustomMovementUpdate()
     {
         if (CanMove())
         {

@@ -18,7 +18,7 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
         navMeshAgent.acceleration = chargeSpeed * 5f;
     }
 
-    protected override void Update()
+    protected override void CustomMovementUpdate()
     {
         if (charging)
             return;

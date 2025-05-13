@@ -2,16 +2,35 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum EnemyMovementType
+{
+    CUSTOM,
+    REMOTECONTROLLED
+}
+
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class ACEnemyMovementBehaviour : MonoBehaviour
 {
     protected Harvester harvester;
-    protected NavMeshAgent navMeshAgent;
+    public NavMeshAgent navMeshAgent { get; protected set; }
     protected bool isMoving = true;
     public AnimationCurve knockbackCurve;
     public float moveSpeed = 4f;
+    public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
 
-    protected abstract void Update();
+    protected void Update()
+    {
+        switch(movementType)
+        {
+            case EnemyMovementType.REMOTECONTROLLED:
+                break; //don't have any movement behaviour when remote controlled
+                case EnemyMovementType.CUSTOM:
+                CustomMovementUpdate();
+                break;
+        }
+    }
+
+    protected abstract void CustomMovementUpdate();
 
     //NOTE: navMeshAgent.SetDestination forces a path recalculation, maybe in future add only do it every x frames
 
@@ -50,6 +69,11 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
             navMeshAgent.isStopped = false;
             isMoving = true;
         }
+    }
+
+    public void SetMovementType(EnemyMovementType movementType)
+    {
+        this.movementType = movementType;
     }
 
     protected void SetSpeed(float speed)
