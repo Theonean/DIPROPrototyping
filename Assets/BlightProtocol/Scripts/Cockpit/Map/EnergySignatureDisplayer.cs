@@ -5,6 +5,7 @@ using UnityEngine;
 public class EnergySignatureDisplayer : MonoBehaviour
 {
     [SerializeField] private List<GameObject> baseSprites;
+    [SerializeField] private GameObject areaRing;
 
     public void DisplaySignature(EnergySignature signature)
     {
@@ -22,6 +23,8 @@ public class EnergySignatureDisplayer : MonoBehaviour
                 baseComponent.magnitudeSprites[i].SetActive(true);
             }
         }
+
+        areaRing.transform.localScale = Vector3.one * signature.areaSize;
     }
     private void DestroyThis()
     {

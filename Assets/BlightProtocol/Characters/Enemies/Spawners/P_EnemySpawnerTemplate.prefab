@@ -586,6 +586,7 @@ MonoBehaviour:
       m_Calls: []
   enemySpawnPatterns:
   - {fileID: 11400000, guid: 11aff4200e79e944f96da15d84671fc5, type: 2}
+  FiresOnce: 0
   AutoSpawnOverride: 0
   spawnRadius: 3
   enemyScale: 1
@@ -892,7 +893,7 @@ Transform:
   m_GameObject: {fileID: 8811997142924548735}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.6400265, y: 0.61436605, z: -0.8412018}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1061,9 +1062,14 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1990362206301913168, guid: 9f8ae703054436a48bbd8f89150c12b6,
         type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1990362206301913168, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: dddb6a8429b68b749b70869cc35ba944, type: 2}
+      objectReference: {fileID: 2100000, guid: bdda17bd4911feb4fa8cdb16d5f37783, type: 2}
     - target: {fileID: 4812313854573900744, guid: 9f8ae703054436a48bbd8f89150c12b6,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1123,6 +1129,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DiscoveredDot
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286311106980439428, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286311106980439428, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 700
+      objectReference: {fileID: 0}
+    - target: {fileID: 8286311106980439428, guid: 9f8ae703054436a48bbd8f89150c12b6,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 700
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -48,6 +48,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2522a988bcd04c94cacaf336c0dcec3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maximumDifficultyRegions: 4
+  OnDifficultyLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1001 &762215734197107627
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -566,11 +570,6 @@ PrefabInstance:
     - target: {fileID: 5792345616128477948, guid: 04195878203b7174dbb83fe0e3181a5f,
         type: 3}
       propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5792345616128477948, guid: 04195878203b7174dbb83fe0e3181a5f,
-        type: 3}
-      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5792345616128477948, guid: 04195878203b7174dbb83fe0e3181a5f,

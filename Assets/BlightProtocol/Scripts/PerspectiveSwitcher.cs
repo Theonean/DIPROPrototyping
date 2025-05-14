@@ -19,7 +19,6 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Camera perspectiveSwitchCamera;
     [SerializeField] private Camera droneCamera;
     [SerializeField] private Camera fpCamera;
-    [SerializeField] private Camera mapCamera;
     [SerializeField] private Transform dronePositionInLoadingBay;
     [SerializeField] private float droneSpawnDistance = 10f;
     [SerializeField] private Transform dronePositionInHarvester;
@@ -74,7 +73,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         droneCamera.enabled = true;
         perspectiveSwitchCamera.enabled = false;
         fpCamera.gameObject.SetActive(false);
-        mapCamera.gameObject.SetActive(false);
 
         PlayerCore playerCore = PlayerCore.Instance;
 
@@ -109,7 +107,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         droneCamera.enabled = false;
         perspectiveSwitchCamera.enabled = false;
         fpCamera.gameObject.SetActive(true);
-        mapCamera.gameObject.SetActive(true);
 
         PlayerCore playerCore = PlayerCore.Instance;
 

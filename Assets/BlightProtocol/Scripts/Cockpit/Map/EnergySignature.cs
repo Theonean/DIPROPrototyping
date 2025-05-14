@@ -6,6 +6,7 @@ public class EnergySignature : MonoBehaviour
 {
     public EnergySignatureBaseType baseType;
     public int eMagnitude;
+    public int areaSize;
 
     public UnityEvent onDestroy;
 
