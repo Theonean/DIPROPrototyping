@@ -48,7 +48,7 @@ MonoBehaviour:
   - zoneState: 4
     strength: 1
   - zoneState: 0
-    strength: 2
+    strength: 3
   - zoneState: 1
     strength: 12
   - zoneState: 2
@@ -60,10 +60,13 @@ MonoBehaviour:
       m_Calls: []
   totalVibration: 0
   currentDangerLevel: 0
+  OnDangerLevelChanged:
+    m_PersistentCalls:
+      m_Calls: []
   vibrationDangerLevels:
   - threshold: 0
     color: {r: 1, g: 1, b: 1, a: 1}
-  - threshold: 5
+  - threshold: 2
     color: {r: 1, g: 0.6194717, b: 0, a: 1}
-  - threshold: 10
+  - threshold: 8
     color: {r: 1, g: 0, b: 0, a: 1}
