@@ -25,10 +25,10 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
 
         if (CanMove())
         {
-            SetDestination(harvester.transform.position);
+            SetDestination(target.transform.position);
 
-            float distanceToHarvester = Vector3.Distance(transform.position, harvester.transform.position);
-            if (distanceToHarvester < chargeDistance)
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+            if (distanceToTarget < chargeDistance)
             {
                 charging = true;
                 StopMovement();
@@ -74,7 +74,7 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
 
     private IEnumerator SetChargeSpeed()
     {
-        Vector3 targetPosition = harvester.transform.position;
+        Vector3 targetPosition = target.transform.position;
         Vector3 startingPosition = transform.position;
         float distanceToTarget = Vector3.Distance(startingPosition, targetPosition);
         float timeToCharge = distanceToTarget / chargeSpeed;

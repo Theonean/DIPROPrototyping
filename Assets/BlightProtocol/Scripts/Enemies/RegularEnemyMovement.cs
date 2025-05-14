@@ -6,7 +6,7 @@ public class RegularEnemyMovement : ACEnemyMovementBehaviour
     {
         if (CanMove())
         {
-            navMeshAgent.SetDestination(harvester.transform.position);
+            navMeshAgent.SetDestination(target.transform.position);
         }
     }
 }

@@ -18,8 +18,14 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     public float moveSpeed = 4f;
     public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
 
+    protected GameObject target;
+
     protected void Update()
     {
+        Vector3 harvesterPosition = harvester.transform.position;
+        Vector3 playerPosition = PlayerCore.Instance.transform.position;
+        target = Vector3.Distance(transform.position, harvesterPosition) > Vector3.Distance(transform.position, playerPosition) ? PlayerCore.Instance.gameObject : harvester.gameObject;
+
         switch(movementType)
         {
             case EnemyMovementType.REMOTECONTROLLED:
