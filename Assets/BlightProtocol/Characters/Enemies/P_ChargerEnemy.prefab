@@ -163,6 +163,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_ChargerEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6304915811142553309, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7469555676842866642, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       propertyPath: itemToSpawn
@@ -328,6 +333,7 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   moveSpeed: 4
+  movementType: 0
   chargeDistance: 60
   chargeSpeed: 70
   chargeWindupTime: 3
