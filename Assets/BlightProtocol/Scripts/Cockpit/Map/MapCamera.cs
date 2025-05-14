@@ -7,56 +7,52 @@ public class MapCamera : MonoBehaviour
     public float yPos;
     float xOffset;
     float zOffset;
-    public float minYPos;
-    public float maxYPos;
+    [SerializeField] private float minYPos;
+    [SerializeField] private float maxYPos;
+    [SerializeField] private float maxZoomSpeed = 10f; // Max units per second the camera can zoom
+    private float targetYPos; // The desired y position we're smoothly moving toward
     public UnityEngine.Rendering.Universal.FullScreenPassRendererFeature depthPass;
-
-    public Vector2 minDepthRange = new(0.11f, 0.57f);
-    public Vector2 maxDepthRange = new(0.14f, 0.61f);
 
     [Header("Reveal Radius")]
     [SerializeField] private UnityEngine.Rendering.Universal.FullScreenPassRendererFeature maskCompositing;
-    [SerializeField] private float  revealRadius = 10f;
+    [SerializeField] private float revealRadius = 10f;
     private Harvester harvester;
 
     void Start()
     {
         harvester = Harvester.Instance; 
         yPos = transform.position.y;
-        ApplyDepthValues();
-        ApplyRevealRadius();      
+        targetYPos = yPos; // Initialize target position
     }
 
     void Update()
     {
+        // Smoothly move toward target y position
+        if (!Mathf.Approximately(yPos, targetYPos))
+        {
+            float maxDelta = maxZoomSpeed * Time.deltaTime;
+            yPos = Mathf.MoveTowards(yPos, targetYPos, maxDelta);
+            
+            // Update camera clipping planes
+            cam.farClipPlane = yPos + 100;
+            cam.nearClipPlane = yPos - minYPos + 10;
+            ApplyRevealRadius();
+        }
+
         transform.position = new Vector3(Harvester.Instance.transform.position.x + xOffset, yPos, Harvester.Instance.transform.position.z + zOffset);
     }
 
-    public void SetHeight(float height)
+    public void SetHeight(float normalizedValue)
     {
-        yPos = height;
-        ApplyDepthValues();
-        ApplyRevealRadius();
+        // Set the target height instead of directly setting yPos
+        float height = Mathf.Lerp(minYPos, maxYPos, normalizedValue);
+        targetYPos = height;
+        Debug.Log(height);
     }
 
     public void Move(Vector2 delta) {
         xOffset += delta.x;
         zOffset += delta.y;
-    }
-
-    private void ApplyDepthValues()
-    {
-        if (depthPass?.passMaterial != null)
-        {
-            float minDepth = Mathf.Lerp(minDepthRange.x, minDepthRange.y, (yPos - minYPos) / (maxYPos - minYPos));
-            float maxDepth = Mathf.Lerp(maxDepthRange.x, maxDepthRange.y, (yPos - minYPos) / (maxYPos - minYPos));;
-            depthPass.passMaterial.SetFloat("_DepthMin", minDepth);
-            depthPass.passMaterial.SetFloat("_DepthMax", maxDepth);
-        }
-        else
-        {
-            Debug.LogWarning("Depth pass or material is not assigned.");
-        }
     }
 
     private void ApplyRevealRadius() {

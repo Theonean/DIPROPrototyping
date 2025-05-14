@@ -282,12 +282,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 3085719942352007462}
   yPos: 0
-  minYPos: 0
-  maxYPos: 0
+  minYPos: 300
+  maxYPos: 1000
+  maxZoomSpeed: 900
   depthPass: {fileID: -1977611788415741721, guid: e599fbf2c54de654d82bf06e9428ef91,
     type: 2}
-  minDepthRange: {x: 0.05, y: 0.14}
-  maxDepthRange: {x: 0.07, y: 0.6}
   maskCompositing: {fileID: 3430161082773527465, guid: e599fbf2c54de654d82bf06e9428ef91,
     type: 2}
   revealRadius: 200
