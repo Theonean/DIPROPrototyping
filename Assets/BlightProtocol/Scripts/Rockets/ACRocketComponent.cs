@@ -1,6 +1,12 @@
 using UnityEngine;
 using UnityEngine.Events;
 
+public enum RocketComponentType {
+    PROPULSION,
+    BODY,
+    FRONT
+}
+
 public abstract class ACRocketComponent : MonoBehaviour
 {
     [HideInInspector] public Rocket parentRocket;
