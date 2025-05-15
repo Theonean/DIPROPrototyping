@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class CheckPoint : MonoBehaviour
 {
+    //Called by entitiy detector event on dockingPoint
     public void SetCheckpoint()
     {
         Vector3 spawnPosition = new Vector3(transform.position.x, 0f, transform.position.z);
