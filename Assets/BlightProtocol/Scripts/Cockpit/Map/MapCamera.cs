@@ -25,7 +25,7 @@ public class MapCamera : MonoBehaviour
 
     [Header("Reveal Radius")]
     [SerializeField] private UnityEngine.Rendering.Universal.FullScreenPassRendererFeature maskCompositing;
-    [SerializeField] private float revealRadius = 10f;
+    private float revealRadius = 10f;
 
     void Start()
     {
@@ -34,6 +34,7 @@ public class MapCamera : MonoBehaviour
         yPos = transform.position.y;
         targetYPos = yPos; // Initialize target position
         followTransform = drone;
+        revealRadius = HarvesterAlarmHandler.Instance.GetComponent<SphereCollider>().radius;
     }
 
     void OnEnable()

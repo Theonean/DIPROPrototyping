@@ -1,5 +1,25 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3982115454271332204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
+  m_Name: DiscoveredOutline
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  injectionPoint: 450
+  fetchColorBuffer: 1
+  requirements: -1
+  passMaterial: {fileID: 2100000, guid: c60bb48ee01112e40bac2f3d91354c44, type: 2}
+  passIndex: 0
+  bindDepthStencilAttachment: 0
+  m_Version: 1
 --- !u!114 &-3957253657540564071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10,12 +30,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: DiscoveredEnemies
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: RenderObjects
-    Event: 500
+    passTag: DiscoveredEnemies
+    Event: 600
     filterSettings:
       RenderQueueType: 1
       LayerMask:
@@ -42,26 +62,6 @@ MonoBehaviour:
       restoreCamera: 1
       offset: {x: 0, y: 0, z: 0, w: 0}
       cameraFieldOfView: 60
---- !u!114 &-1977611788415741721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b00045f12942b46c698459096c89274e, type: 3}
-  m_Name: BaseMapDisplay
-  m_EditorClassIdentifier: 
-  m_Active: 0
-  injectionPoint: 550
-  fetchColorBuffer: 1
-  requirements: 1
-  passMaterial: {fileID: 2100000, guid: 89b66e0c3ad43ab43bdcfb91492572bc, type: 2}
-  passIndex: 0
-  bindDepthStencilAttachment: 0
-  m_Version: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,12 +89,12 @@ MonoBehaviour:
     probeSamplingDebugTexture: {fileID: 0}
     probeVolumeBlendStatesCS: {fileID: 0}
   m_RendererFeatures:
-  - {fileID: -1977611788415741721}
   - {fileID: 2646441111546715219}
-  - {fileID: -3957253657540564071}
+  - {fileID: -3982115454271332204}
   - {fileID: 3430161082773527465}
   - {fileID: 2481064299355657631}
-  m_RendererFeatureMap: e7d0da678e1c8ee4535cbb642b0cba2499eb2dd0c30215c9a9db15bd54619a2f9f55ffc3d5826e22
+  - {fileID: -3957253657540564071}
+  m_RendererFeatureMap: 535cbb642b0cba24946090ad17afbcc8a9db15bd54619a2f9f55ffc3d5826e2299eb2dd0c30215c9
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -172,11 +172,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
-  m_Name: RenderObjects
+  m_Name: DiscoveredTerrain
   m_EditorClassIdentifier: 
   m_Active: 1
   settings:
-    passTag: RenderObjects
+    passTag: DiscoveredTerrain
     Event: 300
     filterSettings:
       RenderQueueType: 0

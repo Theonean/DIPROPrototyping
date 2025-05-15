@@ -8,9 +8,6 @@ using UnityEngine;
 public class Radar : MonoBehaviour
 {
     public static Radar Instance { get; private set; }
-    [Header("Rotating Radar")]
-    public float rotationSpeed = 170f;
-    public float radarDistance = 150f;
     [Header("Raycast")]
     public LayerMask layerMask;
 

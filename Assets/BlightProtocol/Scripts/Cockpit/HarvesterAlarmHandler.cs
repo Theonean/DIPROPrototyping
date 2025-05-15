@@ -22,6 +22,16 @@ public class HarvesterAlarmHandler : MonoBehaviour
             Instance = this;
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy")) {
+            DiscoveredDot discoveredDot = other.gameObject.transform.parent.GetComponentInChildren<DiscoveredDot>();
+            if (discoveredDot != null && !discoveredDot.wasDiscovered) {
+                discoveredDot.OnDiscovered();
+            }
+        }
+    }
     void OnTriggerStay(Collider other)
     {
         if (other.gameObject.layer == LayerMask.NameToLayer("PL_IsEnemy") && !enemyAlarm)
