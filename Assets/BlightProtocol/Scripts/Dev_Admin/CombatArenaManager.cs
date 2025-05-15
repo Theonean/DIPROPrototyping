@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using TMPro;
+using UnityEngine.Events;
 
 public enum ArenaState
 {
@@ -39,8 +40,10 @@ public class CombatArenaManager : MonoBehaviour
         waveStatusText.text = "press " + toggleArenaInput + " to start/pause";
         UpdateWaveUI();
 
-        foreach (EnemySpawner spawner in spawners) 
+        foreach (EnemySpawner spawner in spawners)
             spawner.AllEnemiesDead.AddListener(AllEnemiesKilledOnSpawner);
+
+        Harvester.Instance.health.died.AddListener(HarvesterDied);
     }
 
     void Update()
@@ -148,11 +151,25 @@ public class CombatArenaManager : MonoBehaviour
         UpdateWaveUI();
     }
 
-
     private void TransitionInbetweenWaves()
     {
         state = ArenaState.FINISHED_SPAWNING;
         StopSpawners();
         spawnersWithAllEnemiesKilled = 0;
+    }
+
+    private void HarvesterDied()
+    {
+        EnemyDamageHandler[] allEnemies = FindObjectsByType<EnemyDamageHandler>(FindObjectsSortMode.None);
+
+        foreach (EnemyDamageHandler enemy in allEnemies)
+        {
+            if (enemy != null) enemy.DestroyEnemy();
+        }
+
+        currentWave = 0;
+        arenaRepeatsSurvived = 0;
+        state = ArenaState.IDLE;
+        StopSpawners();
     }
 }

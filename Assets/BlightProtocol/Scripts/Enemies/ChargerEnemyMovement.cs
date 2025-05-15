@@ -56,9 +56,13 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
     private IEnumerator Blink(float timeLeft)
     {
         float elapsedTime = 0f;
+        bool targetInRange = true;
 
         while (elapsedTime < timeLeft)
         {
+            targetInRange = IsTargetInRange();
+            if (!targetInRange) break;
+
             batteryRenderer.material.color = chargeStartColor;
             yield return new WaitForSeconds(0.1f);
             elapsedTime += 0.1f;
@@ -69,7 +73,11 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
         }
 
         ResumeMovement();
-        StartCoroutine(SetChargeSpeed());
+
+        if (!targetInRange) 
+            charging = false;
+        else
+            StartCoroutine(SetChargeSpeed());
     }
 
     private IEnumerator SetChargeSpeed()
@@ -79,12 +87,23 @@ public class ChargerEnemyMovement : ACEnemyMovementBehaviour
         float distanceToTarget = Vector3.Distance(startingPosition, targetPosition);
         float timeToCharge = distanceToTarget / chargeSpeed;
 
-        for (float t = 0; t < timeToCharge; t += Time.deltaTime)
+        float t = 0;
+        while (IsTargetInRange())
         {
-            float normalizedTime = t / timeToCharge;
-            float speed = chargeSpeed * chargeSpeedCurve.Evaluate(normalizedTime);
+            t += Time.deltaTime;
+            float normalizedProgress = 1f - Vector3.Distance(transform.position, target.transform.position) / chargeDistance;
+            float speed = chargeSpeed * chargeSpeedCurve.Evaluate(normalizedProgress);
             SetSpeed(speed);
+            SetDestination(target.transform.position);
             yield return null;
         }
+
+        SetSpeed(moveSpeed);
+        charging = false;
+    }
+
+    private bool IsTargetInRange()
+    {
+        return Vector3.Distance(target.transform.position, transform.position) < chargeDistance;
     }
 }
