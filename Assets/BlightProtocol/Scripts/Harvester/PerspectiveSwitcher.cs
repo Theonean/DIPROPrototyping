@@ -153,6 +153,16 @@ public class PerspectiveSwitcher : MonoBehaviour
         startCam.enabled = false;
         endCam.enabled = false;
 
+        if(endCam == droneCamera)
+        {
+            Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance; 
+            spawnPosition.y = endCam.transform.position.y;
+            endCam.transform.position = spawnPosition; 
+            
+            spawnPosition.y = DroneMovement.Instance.distanceFromGround;
+            PlayerCore.Instance.transform.position = spawnPosition;
+        }
+
 
 
         float t = 0f;
