@@ -1,7 +1,5 @@
 using UnityEngine;
 using System.Collections;
-using Unity.VisualScripting;
-using System.Collections.Generic;  // Import this to use coroutines
 
 public class RocketAimController : MonoBehaviour
 {
@@ -77,7 +75,7 @@ public class RocketAimController : MonoBehaviour
                 return;
             }
 
-            if (!activeRocket.IsUnityNull())
+            if (activeRocket != null)
             {
                 activeRocket.Shoot(hit.point);
                 StartCoroutine(StartRotationDelay());
