@@ -7,6 +7,7 @@ public class EnemyDamageHandler : MonoBehaviour
     public GameObject m_Explosion_1;
     public UnityEvent enemyDestroyed;
     private ItemDropper itemDropper;
+    private bool dead = false;
 
     void Start()
     {
@@ -15,6 +16,9 @@ public class EnemyDamageHandler : MonoBehaviour
 
     public void DestroyEnemy()
     {
+        if (dead) return;
+        dead = true;
+
         //Invoke the enemyDestroyed event
         enemyDestroyed.Invoke();
 

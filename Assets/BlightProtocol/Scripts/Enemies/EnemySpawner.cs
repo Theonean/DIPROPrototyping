@@ -61,7 +61,7 @@ public class EnemySpawner : MonoBehaviour
                 }
                 break;
             case SpawnState.WAITING:
-                if (m_EnemyCount == 0)
+                if (m_EnemyCount <= 0)
                 {
                     m_SpawnState = SpawnState.FINISHED;
                     AllEnemiesDead.Invoke();
