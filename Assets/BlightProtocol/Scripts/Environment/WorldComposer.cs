@@ -40,7 +40,7 @@ public class WorldComposer : MonoBehaviour
         {
             foreach (SpawnableEntity spawnable in region.spawnableEntities)
             {
-                float spacing = spawnable.boundingRadius * 2f;
+                float spacing = (spawnable.boundingRadius + spawnable.boundRadiusMargin) * 2f;
                 int placedCount = 0;
                 int attemptsPerEntity = 3;
 
