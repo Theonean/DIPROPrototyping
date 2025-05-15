@@ -86,12 +86,17 @@ public class HarvesterMover : MonoBehaviour
 
     void DrawLineToTarget()
     {
-        if (targetPosition != Vector3.zero && lineRenderer != null)
+        if (lineRenderer == null || !navMeshAgent.hasPath) return;
+
+        NavMeshPath path = navMeshAgent.path;
+        lineRenderer.positionCount = path.corners.Length;
+
+        for (int i = 0; i < path.corners.Length; i++)
         {
-            lineRenderer.SetPosition(0, targetPosition);
-            lineRenderer.SetPosition(1, transform.position);
+            lineRenderer.SetPosition(i, path.corners[i]);
         }
     }
+
 
     public Vector3 GetMovementDirection()
     {
