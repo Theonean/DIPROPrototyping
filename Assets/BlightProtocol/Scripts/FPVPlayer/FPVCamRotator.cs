@@ -8,14 +8,13 @@ public class FPVCamRotator : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private float transitionTime = 1f;
     private bool isRotating = false;
-    private FPVPlayerCam playerCam;
+    [SerializeField] private FPVPlayerCam playerCam;
 
     private int currentPosition = 1;
 
     void Start()
     {
         SetPosition(1);
-        playerCam = GetComponentInChildren<FPVPlayerCam>();
     }
 
     private void SetPosition(int position) {

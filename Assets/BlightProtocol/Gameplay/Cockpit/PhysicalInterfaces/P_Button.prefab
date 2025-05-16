@@ -302,6 +302,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2466871840887374432}
   - component: {fileID: 1746083205353739794}
+  - component: {fileID: 1349621258562497893}
   m_Layer: 23
   m_Name: P_Button
   m_TagString: Untagged
@@ -347,9 +348,35 @@ MonoBehaviour:
   OnPressed:
     m_PersistentCalls:
       m_Calls: []
+  OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
   isToggle: 0
   isPressed: 0
+  animator: {fileID: 1349621258562497893}
   pressedColor: {r: 0, g: 0, b: 1, a: 1}
+--- !u!95 &1349621258562497893
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6058349911177508157}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a1e148f7975e08649a6de1a844ba441f, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 1
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &6654206632620691715
 PrefabInstance:
   m_ObjectHideFlags: 0

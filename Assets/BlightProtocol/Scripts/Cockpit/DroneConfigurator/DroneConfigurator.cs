@@ -25,13 +25,9 @@ public class DroneConfigurator : MonoBehaviour
     [Header("Research")]
     [SerializeField] private GameObject researchParent;
     private ACInteractable[] researchInteractables;
-    [SerializeField] private RadioButton researchComponentTypeSelector;
-    [SerializeField] private RocketComponentSelector researchComponentSelector;
 
     void Start()
     {
-        SetResearchComponentType(researchComponentTypeSelector.activeButton);
-
         selectorInteractables = selectorParent.GetComponentsInChildren<ACInteractable>();
         researchInteractables = researchParent.GetComponentsInChildren<ACInteractable>();
 
@@ -48,13 +44,11 @@ public class DroneConfigurator : MonoBehaviour
 
     void OnEnable()
     {
-        researchComponentTypeSelector.OnSelected.AddListener(SetResearchComponentType);
         switchModeButton.OnPressed.AddListener(SwitchMode);
     }
 
     void OnDisable()
     {
-        researchComponentTypeSelector.OnSelected.RemoveListener(SetResearchComponentType);
         switchModeButton.OnPressed.AddListener(SwitchMode);
     }
 
@@ -74,9 +68,6 @@ public class DroneConfigurator : MonoBehaviour
                 {
                     interactable.enabled = true;
                 }
-
-                SetResearchComponentType(0);
-                researchComponentTypeSelector.SetIndex(0);
                 break;
 
             case ConfigurationMode.RESEARCH:
@@ -100,22 +91,4 @@ public class DroneConfigurator : MonoBehaviour
     private void ResetSwitchModeButton() {
         switchModeButton.IsCurrentlyInteractable = true;
     }
-
-    private void SetResearchComponentType(int selected)
-    {
-        switch (selected)
-        {
-            case 0:
-                researchComponentSelector.componentType = RocketComponentType.PROPULSION;
-                break;
-            case 1:
-                researchComponentSelector.componentType = RocketComponentType.BODY;
-                break;
-            case 2:
-                researchComponentSelector.componentType = RocketComponentType.FRONT;
-                break;
-        }
-        researchComponentSelector.LoadActiveComponents();
-    }
-
 }

@@ -26,36 +26,32 @@ public class RocketComponentSelector : MonoBehaviour
         scrollButtons.onScrolled.AddListener(Scroll);
     }
 
-    public void LoadActiveComponents()
+    public void LoadActiveComponent(Rocket rocket)
     {
-        Rocket[] rockets = PlayerCore.Instance.GetComponentsInChildren<Rocket>();
-
         components = ItemManager.Instance.GetAvailableComponents(componentType);
 
         maxValue = components.Count - 1;
-        if (rockets[0] != null)
+        int componentIndex;
+        switch (componentType)
         {
-            int componentIndex;
-            switch (componentType)
-            {
-                case RocketComponentType.PROPULSION:
-                    componentIndex = GetComponentIndex(rockets[0].propulsionComponent.GetComponent<ACRocketComponent>());
-                    index = componentIndex;
-                    UpdateDisplay(componentIndex);
-                    break;
+            case RocketComponentType.PROPULSION:
+                componentIndex = GetComponentIndex(rocket.propulsionComponent.GetComponent<ACRocketComponent>());
+                index = componentIndex;
+                UpdateDisplay(componentIndex);
+                break;
 
-                case RocketComponentType.BODY:
-                    componentIndex = GetComponentIndex(rockets[0].bodyComponent.GetComponent<ACRocketComponent>());
-                    index = componentIndex;
-                    UpdateDisplay(componentIndex);
-                    break;
+            case RocketComponentType.BODY:
+                componentIndex = GetComponentIndex(rocket.bodyComponent.GetComponent<ACRocketComponent>());
+                index = componentIndex;
+                UpdateDisplay(componentIndex);
+                break;
 
-                case RocketComponentType.FRONT:
-                    componentIndex = GetComponentIndex(rockets[0].frontComponent.GetComponent<ACRocketComponent>());
-                    index = componentIndex;
-                    UpdateDisplay(componentIndex);
-                    break;
-            }
+            case RocketComponentType.FRONT:
+                componentIndex = GetComponentIndex(rocket.frontComponent.GetComponent<ACRocketComponent>());
+                index = componentIndex;
+                UpdateDisplay(componentIndex);
+                break;
+
         }
     }
 
@@ -104,7 +100,8 @@ public class RocketComponentSelector : MonoBehaviour
         Debug.Log($"Selected {componentType} component: {selectedComponentPrefab?.name}");
     }
 
-    public void ApplyCurrentSelection() {
+    public void ApplyCurrentSelection()
+    {
         OnValueChanged(index);
         SelectedComponentApplied.Invoke(componentType);
     }

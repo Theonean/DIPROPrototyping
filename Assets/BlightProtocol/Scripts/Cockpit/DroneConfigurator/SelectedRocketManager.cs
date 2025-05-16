@@ -96,7 +96,6 @@ public class SelectedRocketManager : MonoBehaviour
 
     public void RemoveSelectedRocket(Button button)
     {
-        Debug.Log(buttonRocketPairs[button]);
         if (buttonRocketPairs[button] != null)
         {
             selectedRockets.Remove(buttonRocketPairs[button]);

@@ -8,6 +8,7 @@ public class Button : ACInteractable
     public UnityEvent<Button> OnReleased;
     public bool isToggle = false;
     public bool isPressed = false;
+    [SerializeField] private Animator animator;
     private Renderer _renderer;
     private Color defaultColor;
     [SerializeField] private Color pressedColor = Color.blue;
@@ -46,6 +47,9 @@ public class Button : ACInteractable
             _propertyBlock.SetColor("_Color", pressedColor);
             _renderer.SetPropertyBlock(_propertyBlock);
             OnPressed.Invoke(this);
+
+            //animation
+            animator.Play("pressed");
         }
         else
         {
@@ -53,6 +57,9 @@ public class Button : ACInteractable
             _propertyBlock.SetColor("_Color", defaultColor);
             _renderer.SetPropertyBlock(_propertyBlock);
             OnReleased.Invoke(this);
+
+            //animation
+            animator.Play("released");
         }
     }
 }

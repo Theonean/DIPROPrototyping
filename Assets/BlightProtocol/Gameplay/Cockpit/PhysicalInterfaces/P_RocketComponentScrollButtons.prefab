@@ -237,7 +237,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5150172029965571091}
-  m_LocalRotation: {x: 0.70710576, y: -0, z: -0, w: 0.70710784}
+  m_LocalRotation: {x: 0.49999964, y: -0.49999896, z: 0.5000005, w: 0.50000095}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -245,7 +245,7 @@ RectTransform:
   - {fileID: 8480438887270023905}
   - {fileID: 6193498244084870683}
   m_Father: {fileID: 6012946049007625512}
-  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 90}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -372,10 +372,35 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4663260589267033134, guid: 1e01e83ced9850e47952eabf8af58ce1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357782144359719362, guid: 1e01e83ced9850e47952eabf8af58ce1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5357782144359719362, guid: 1e01e83ced9850e47952eabf8af58ce1,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6058349911177508157, guid: 1e01e83ced9850e47952eabf8af58ce1,
         type: 3}
       propertyPath: m_Name
       value: P_RocketComponentScrollButtons
+      objectReference: {fileID: 0}
+    - target: {fileID: 7139680564100541160, guid: 1e01e83ced9850e47952eabf8af58ce1,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 3.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7636043454666233604, guid: 1e01e83ced9850e47952eabf8af58ce1,
+        type: 3}
+      propertyPath: m_Size.x
+      value: 3.6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -414,6 +439,9 @@ MonoBehaviour:
   componentIcon: {fileID: 4117652099621941131}
   componentNameText: {fileID: 380205257705384943}
   SelectedComponentChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  SelectedComponentApplied:
     m_PersistentCalls:
       m_Calls: []
 --- !u!4 &6012946049007625512 stripped

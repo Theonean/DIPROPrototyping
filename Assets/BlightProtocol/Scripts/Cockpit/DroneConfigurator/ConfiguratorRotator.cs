@@ -12,12 +12,12 @@ public class ConfiguratorRotator : MonoBehaviour
     private IEnumerator RotateBase()
     {
         float elapsedTime = 0f;
-        Vector3 startRotation = transform.rotation.eulerAngles;
+        Vector3 startRotation = transform.localRotation.eulerAngles;
         while (elapsedTime < rotationTime)
         {
-            float newRotation = animationCurve.Evaluate(elapsedTime / rotationTime) * 180f + startRotation.x;
+            float newRotation = animationCurve.Evaluate(elapsedTime / rotationTime) * 220f + startRotation.x;
 
-            transform.rotation = Quaternion.Euler(newRotation, startRotation.y, startRotation.z);
+            transform.localRotation = Quaternion.Euler(newRotation, startRotation.y, startRotation.z);
             elapsedTime += Time.deltaTime;
             yield return null;
         }

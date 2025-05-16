@@ -9,7 +9,7 @@ public class MapZoomSlider : ACSlider
     protected override void Start()
     {
         base.Start();
-        SetPositionNormalized(0.5f);
+        //SetPositionNormalized(0.5f);
     }
     protected override void OnValueChanged(float normalizedValue) {
         mapCamera.SetHeight(normalizedValue);
