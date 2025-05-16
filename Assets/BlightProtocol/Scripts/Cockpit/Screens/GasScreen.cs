@@ -5,42 +5,27 @@ using UnityEngine;
 
 public class GasScreen : ACScreenValueDisplayer
 {
-    private GasManager gasManager;
-    [SerializeField] GasData gasData;
-    private Gas gas;
+    private ItemManager itemManager;
+
     protected void Awake()
     {
-        gasManager = GasManager.Instance;
+        itemManager = ItemManager.Instance;
     }
     protected void OnEnable()
     {
-        if (gas == null)
-        {
-            if (!gasManager.FindGas(gasData, out gas))
-            {
-                return;
-            }
-        }
+        itemManager.gasAmountChanged.AddListener(OnGasAmountChanged);
 
-        gas.amountChanged.AddListener(OnGasAmountChanged);
-
-        SetValue(gas.amount);
+        SetValue(itemManager.GetGas());
     }
 
     protected void OnDisable()
     {
-        if (gas != null)
-        {
-            gas.amountChanged.RemoveListener(OnGasAmountChanged);
-        }
+        itemManager.gasAmountChanged.RemoveListener(OnGasAmountChanged);
     }
 
     protected void OnGasAmountChanged(int delta)
     {
-        {
-            SetValue(gas.amount);
-            if (delta < 0) Flash();
-        }
-
+        SetValue(itemManager.GetGas());
+        if (delta < 0) Flash();
     }
 }

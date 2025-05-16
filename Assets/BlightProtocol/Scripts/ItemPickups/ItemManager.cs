@@ -8,9 +8,12 @@ public class ItemManager : MonoBehaviour
     public static ItemManager Instance { get; private set; }
 
     public int crystals = 40;
+    public int gas = 0;
     public List<ComponentEntry> components = new List<ComponentEntry>();
     public UnityEvent<int> crystalAmountChanged;
+    public UnityEvent<int> gasAmountChanged;
     public UnityEvent notEnoughCrystals;
+    public UnityEvent notEnoughGas;
     private bool FREEMONEYMODEENGAGED = false;
 
     private void Awake()
@@ -38,6 +41,7 @@ public class ItemManager : MonoBehaviour
         }
     }
 
+    #region Crystal Management
     public int GetCrystal()
     { return crystals; }
 
@@ -59,7 +63,35 @@ public class ItemManager : MonoBehaviour
         notEnoughCrystals.Invoke();
         return false;
     }
+    #endregion
 
+    #region Gas Management
+    public int GetGas()
+    {
+        return gas;
+    }
+
+    public void AddGas(int amount) 
+    { 
+        gas += amount; 
+        gasAmountChanged.Invoke(amount);
+    }
+
+    public bool RemoveGas(int amount)
+    {
+        if (gas >= amount || FREEMONEYMODEENGAGED)
+        {
+            gas -= amount;
+            gasAmountChanged.Invoke(-amount);
+            return true;
+        }
+
+        notEnoughGas.Invoke();
+        return false;
+    }
+    #endregion
+
+    #region Component Management
     public void AddComponent(string componentName, int amount)
     {
         ComponentEntry entry = GetComponentEntry(componentName);
@@ -152,6 +184,7 @@ public class ItemManager : MonoBehaviour
 
         return ownedComponents;
     }
+    #endregion
 }
 
 [System.Serializable]

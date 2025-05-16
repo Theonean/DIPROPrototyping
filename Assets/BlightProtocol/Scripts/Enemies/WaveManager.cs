@@ -194,7 +194,7 @@ public class WaveManager : MonoBehaviour
         }
 
         harvesterState = zoneState;
-        float? numGas = GasManager.Instance.GetGas(GasManager.Instance.gasTypes[0].data);
+        float? numGas = ItemManager.Instance.GetGas();
         difficultyLevel = numGas.HasValue ? Mathf.FloorToInt(numGas.Value / 100) : 0;
 
         switch (harvesterState)

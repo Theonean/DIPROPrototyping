@@ -2,16 +2,24 @@ using UnityEngine;
 
 public class ResourcePoint : MonoBehaviour
 {
-    public GasData resourceData;
-    public float resourceAmount = 100f;
+    public int resourceAmount = 100;
+    private float gasHarvested = 0f;
 
     public bool HarvestResource(float amount)
     {
         if (resourceAmount <= 0f)
             return false;
 
-        GasManager.Instance.AddGas(resourceData, amount);
-        resourceAmount -= amount;
+        gasHarvested += amount;
+
+        if(gasHarvested > 1f)
+        {
+            int gasInt = (int)gasHarvested;
+            gasHarvested -= gasInt;
+
+            ItemManager.Instance.AddGas(gasInt);
+            resourceAmount -= gasInt;
+        }
 
         return true;
     }
