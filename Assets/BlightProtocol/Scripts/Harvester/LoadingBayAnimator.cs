@@ -46,11 +46,11 @@ public class LoadingBayAnimator : MonoBehaviour
         playerCollidersInLoadingBay += change;
         isPlayerNear = playerCollidersInLoadingBay > 0;
 
-        if (isPlayerNear && openCoroutine.IsUnityNull())
+        if (isPlayerNear && openCoroutine == null)
         {
             openCoroutine = StartCoroutine(OpenRampCoroutine());
         }
-        else if (!isPlayerNear && closedCoroutine.IsUnityNull())
+        else if (!isPlayerNear && closedCoroutine == null)
         {
             closedCoroutine = StartCoroutine(CloseRampCoroutine());
         }

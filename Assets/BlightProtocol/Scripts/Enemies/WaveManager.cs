@@ -71,14 +71,14 @@ public class WaveManager : MonoBehaviour
 
     private void OnEnable()
     {
-        DifficultyManager.Instance.OnDifficultyLevelChanged.AddListener(UpdateAmbushTimes);
-        Seismograph.Instance.OnDangerLevelChanged.AddListener(ConnectSeismographToAmbushCountdown);
+        if(DifficultyManager.Instance) DifficultyManager.Instance.OnDifficultyLevelChanged.AddListener(UpdateAmbushTimes);
+        if(Seismograph.Instance) Seismograph.Instance.OnDangerLevelChanged.AddListener(ConnectSeismographToAmbushCountdown);
     }
 
     private void OnDisable()
     {
         DifficultyManager.Instance.OnDifficultyLevelChanged.RemoveListener(UpdateAmbushTimes);
-        Seismograph.Instance.OnDangerLevelChanged.RemoveListener(ConnectSeismographToAmbushCountdown);
+        if (Seismograph.Instance) Seismograph.Instance.OnDangerLevelChanged.RemoveListener(ConnectSeismographToAmbushCountdown);
     }
 
     void Update()

@@ -34,8 +34,11 @@ public class HarvesterHealth : MonoBehaviour
             slider.value = maxHealth;
         }
 
-        healthDisplayer.SetValue(health);
-        healthDisplayer.SetMaxValue(maxHealth);
+        if (healthDisplayer)
+        {
+            healthDisplayer.SetValue(health);
+            healthDisplayer.SetMaxValue(maxHealth);
+        }
     }
 
     void OnTriggerEnter(Collider other)
@@ -64,8 +67,12 @@ public class HarvesterHealth : MonoBehaviour
         {
             slider.value = health;
         }
-        healthDisplayer.SetValue(health);
-        healthDisplayer.Flash();
+
+        if (healthDisplayer)
+        {
+            healthDisplayer.SetValue(health);
+            healthDisplayer.Flash();
+        }
 
         if (health <= 0)
         {

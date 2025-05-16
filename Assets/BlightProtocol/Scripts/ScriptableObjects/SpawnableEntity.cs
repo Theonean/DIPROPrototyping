@@ -31,6 +31,8 @@ public class SpawnableEntity : ScriptableObject
 
     [Description("Auto-Calculated Bounds radius for better position generation")]
     public float boundingRadius = 1f; // Auto-calculated
+    [Description("Margin for objects with specific boundary radius needs")]
+    public float boundRadiusMargin = 0f;
 
     public GameObject GetPrefab()
     {

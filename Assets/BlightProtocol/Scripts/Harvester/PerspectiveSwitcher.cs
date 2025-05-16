@@ -1,8 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.AI;
 using UnityEngine.Events;
-using UnityEngine.Rendering.Universal;
 
 public enum CameraPerspective
 {
@@ -154,6 +152,16 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = true;
         startCam.enabled = false;
         endCam.enabled = false;
+
+        if(endCam == droneCamera)
+        {
+            Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance; 
+            spawnPosition.y = endCam.transform.position.y;
+            endCam.transform.position = spawnPosition; 
+            
+            spawnPosition.y = DroneMovement.Instance.distanceFromGround;
+            PlayerCore.Instance.transform.position = spawnPosition;
+        }
 
 
 
