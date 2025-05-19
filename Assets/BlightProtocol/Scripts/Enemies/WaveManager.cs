@@ -41,7 +41,7 @@ public class WaveManager : MonoBehaviour
     public DifficultySettings difficultySettings;
 
     private Queue<EnemySpawner> m_InactiveSpawners = new Queue<EnemySpawner>();
-    private ZoneState harvesterState = ZoneState.IDLE;
+    private HarvesterState harvesterState = HarvesterState.IDLE;
     private WaveMode waveMode = WaveMode.IDLE;
     public int difficultyLevel = 5;
     private float ambushCounter = 0f;
@@ -180,7 +180,7 @@ public class WaveManager : MonoBehaviour
         ambushCounter -= differenceBetweenRanges;
     }
 
-    void HarvesterChangedState(ZoneState zoneState)
+    void HarvesterChangedState(HarvesterState zoneState)
     {
         if (harvesterState == zoneState)
         {
@@ -188,7 +188,7 @@ public class WaveManager : MonoBehaviour
         }
 
         //When switching away from harvesting, stop continuous attack
-        if (harvesterState == ZoneState.HARVESTING)
+        if (harvesterState == HarvesterState.HARVESTING)
         {
             DeactivateSpawners();
         }
@@ -199,16 +199,16 @@ public class WaveManager : MonoBehaviour
 
         switch (harvesterState)
         {
-            case ZoneState.IDLE:
+            case HarvesterState.IDLE:
                 waveMode = WaveMode.IDLE;
                 Logger.Log("Harvester is idle, no enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
-            case ZoneState.HARVESTING:
+            case HarvesterState.HARVESTING:
                 waveMode = WaveMode.CONTINUOUS_ATTACK;
                 ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
                 Logger.Log("Harvester is harvesting, enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
-            case ZoneState.MOVING:
+            case HarvesterState.MOVING:
                 waveMode = WaveMode.AMBUSH_POSSIBLE;
                 Logger.Log("Harvester is moving, ambushes are possible", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;

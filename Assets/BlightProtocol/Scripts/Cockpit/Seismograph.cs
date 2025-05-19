@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class HarvesterEmission
 {
-    public ZoneState zoneState;
+    public HarvesterState zoneState;
     public float strength;
 }
 
@@ -57,7 +57,7 @@ public class Seismograph : MonoBehaviour
     {
         harvester = Harvester.Instance;
 
-        ZoneState initialState = harvester.GetZoneState();
+        HarvesterState initialState = harvester.GetZoneState();
         currentHarvesterEmission = harvesterEmissions.Find(e => e.zoneState == initialState);
         if (currentHarvesterEmission != null)
         {
@@ -82,7 +82,7 @@ public class Seismograph : MonoBehaviour
         harvester.changedState.RemoveListener(UpdateHarvesterEmission);
     }
 
-    private void UpdateHarvesterEmission(ZoneState newZoneState)
+    private void UpdateHarvesterEmission(HarvesterState newZoneState)
     {
         if (currentHarvesterEmission != null)
         {

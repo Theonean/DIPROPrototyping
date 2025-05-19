@@ -113,7 +113,7 @@ public class PlayerCore : MonoBehaviour
     public void ModifyHealth(int amount)
     {
         //When harvester has died, don't take damage
-        if (Harvester.Instance.GetZoneState().Equals(ZoneState.DIED))
+        if (Harvester.Instance.GetZoneState().Equals(HarvesterState.DIED))
         {
             return;
         }

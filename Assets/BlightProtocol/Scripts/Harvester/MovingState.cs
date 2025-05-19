@@ -4,9 +4,9 @@ using UnityEngine.UI;
 public class MovingState : IHarvesterState
 {
     private readonly Harvester harvester;
-    private readonly ZoneState state = ZoneState.MOVING;
+    private readonly HarvesterState state = HarvesterState.MOVING;
 
-    public ZoneState State => state;
+    public HarvesterState State => state;
 
     public MovingState(Harvester harvester)
     {

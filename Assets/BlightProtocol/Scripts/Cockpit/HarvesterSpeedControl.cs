@@ -97,15 +97,15 @@ public class HarvesterSpeedControl : MonoBehaviour
         }
     }
 
-    private void OnHarvesterStateChanged(ZoneState state)
+    private void OnHarvesterStateChanged(HarvesterState state)
     {
         switch (state)
         {
-            case ZoneState.IDLE:
-            case ZoneState.HARVESTING:
-            case ZoneState.START_HARVESTING:
-            case ZoneState.END_HARVESTING:
-            case ZoneState.DIED:
+            case HarvesterState.IDLE:
+            case HarvesterState.HARVESTING:
+            case HarvesterState.START_HARVESTING:
+            case HarvesterState.END_HARVESTING:
+            case HarvesterState.DIED:
                 OverrideSpeedStep(0);
                 break;
         }

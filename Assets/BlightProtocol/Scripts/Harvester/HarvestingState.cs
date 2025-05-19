@@ -3,9 +3,9 @@ using UnityEngine;
 public class HarvestingState : IHarvesterState
 {
     private readonly Harvester harvester;
-    private readonly ZoneState state = ZoneState.HARVESTING;
+    private readonly HarvesterState state = HarvesterState.HARVESTING;
 
-    public ZoneState State => state;
+    public HarvesterState State => state;
 
     public HarvestingState(Harvester harvester)
     {

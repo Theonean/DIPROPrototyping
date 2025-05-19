@@ -67,26 +67,26 @@ public class HarvesterAnimator : MonoBehaviour
     }
 
 
-    private void SetHarvesterAnimation(ZoneState state)
+    private void SetHarvesterAnimation(HarvesterState state)
     {
         switch (state)
         {
-            case ZoneState.MOVING:
+            case HarvesterState.MOVING:
                 animator.Play(m_Idle, 0, 0f);
                 break;
-            case ZoneState.START_HARVESTING:
+            case HarvesterState.START_HARVESTING:
                 animator.Play(m_StartHarvesting, 0, 0f);
                 break;
-            case ZoneState.HARVESTING:
+            case HarvesterState.HARVESTING:
                 animator.Play(m_Harvesting, 0, 0f);
                 break;
-            case ZoneState.END_HARVESTING:
+            case HarvesterState.END_HARVESTING:
                 animator.Play(m_StopHarvesting, 0, 0f);
                 break;
-            case ZoneState.IDLE:
+            case HarvesterState.IDLE:
                 animator.Play(m_Idle, 0, 0f);
                 break;
-            case ZoneState.DIED:
+            case HarvesterState.DIED:
                 animator.Play(m_Idle, 0, 0f);
                 break;
         }

@@ -62,13 +62,13 @@ public class HarvesterMover : MonoBehaviour
 
     public void SetMoveSpeed(float newSpeed)
     {
-        if (harvester.GetZoneState() == ZoneState.DIED || harvester.GetZoneState() == ZoneState.END_HARVESTING) return;
+        if (harvester.GetZoneState() == HarvesterState.DIED || harvester.GetZoneState() == HarvesterState.END_HARVESTING) return;
 
         moveSpeed = newSpeed;
         navMeshAgent.speed = moveSpeed;
         if (moveSpeed > 0.1f)
         {
-            if (harvester.GetZoneState() == ZoneState.HARVESTING)
+            if (harvester.GetZoneState() == HarvesterState.HARVESTING)
             {
                 harvester.SetState(new EndHarvestingState(harvester));
             }

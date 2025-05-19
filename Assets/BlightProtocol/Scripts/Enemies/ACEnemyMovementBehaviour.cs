@@ -48,7 +48,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     }
     public bool CanMove()
     {
-        return isMoving && harvester != null && harvester.GetZoneState() != ZoneState.DIED;
+        return isMoving && harvester != null && harvester.GetZoneState() != HarvesterState.DIED;
     }
 
     public void SetDestination(Vector3 targetPosition)

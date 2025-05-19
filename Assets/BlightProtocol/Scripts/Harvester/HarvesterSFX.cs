@@ -30,23 +30,23 @@ public class HarvesterSFX : MonoBehaviour
         harvester.changedState.RemoveListener(PlayAudioOnHarvesterStateChange);
     }
 
-    private void PlayAudioOnHarvesterStateChange(ZoneState state)
+    private void PlayAudioOnHarvesterStateChange(HarvesterState state)
     {
         switch (state)
         {
-            case ZoneState.MOVING:
+            case HarvesterState.MOVING:
                 movingSFX.EventInstance.setPaused(false);
                 break;
-            case ZoneState.START_HARVESTING:
+            case HarvesterState.START_HARVESTING:
                 FMODAudioManagement.instance.PlaySound(out m_HarvestingSFX, harvestingSFXPath, gameObject);
                 movingSFX.EventInstance.setPaused(true);
                 break;
-            case ZoneState.HARVESTING: break;
-            case ZoneState.END_HARVESTING:
+            case HarvesterState.HARVESTING: break;
+            case HarvesterState.END_HARVESTING:
                 m_HarvestingSFX.keyOff();
                 break;
-            case ZoneState.IDLE: break;
-            case ZoneState.DIED:
+            case HarvesterState.IDLE: break;
+            case HarvesterState.DIED:
                 FMODAudioManagement.instance.PlayOneShot(takeoffSFXPath, transform.position);
                 break;
 

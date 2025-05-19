@@ -16,16 +16,18 @@ public class PlayerOutOfRangeHandler : MonoBehaviour
     private const float fadeStartDistance = 20f;
     private DroneMovement droneMovement;
     private Harvester harvester;
+    private TutorialManager tutorialManager;
 
     void Start()
     {
         droneMovement = GetComponentInChildren<DroneMovement>();
         harvester = Harvester.Instance;
+        tutorialManager = TutorialManager.Instance;
     }
 
     private void Update()
     {
-        if (!m_PlayerInRange && !harvester.GetZoneState().Equals(ZoneState.DIED))
+        if (!m_PlayerInRange && !harvester.GetZoneState().Equals(HarvesterState.DIED))
         {
             m_RespawnTimer -= Time.deltaTime;
             countdownUntilRespawnText.text = m_RespawnTimer.ToString("F2");
@@ -40,21 +42,21 @@ public class PlayerOutOfRangeHandler : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!harvester.GetZoneState().Equals(ZoneState.DIED))
+        if (harvester.GetZoneState() == HarvesterState.DIED) return;
+        if (tutorialManager.IsTutorialOngoing()) return;
+
+        float distanceToControlZone = Vector3.Distance(droneMovement.transform.position, harvester.transform.position);
+
+        if (distanceToControlZone < maxDistanceFromHarvester - fadeStartDistance)
         {
-            float distanceToControlZone = Vector3.Distance(droneMovement.transform.position, harvester.transform.position);
-
-            if (distanceToControlZone < maxDistanceFromHarvester - fadeStartDistance)
-            {
-                SetIsPlayerInRange(true);
-            }
-            else
-            {
-                SetIsPlayerInRange(false);
-            }
-
-            HandleUIFade(distanceToControlZone);
+            SetIsPlayerInRange(true);
         }
+        else
+        {
+            SetIsPlayerInRange(false);
+        }
+
+        HandleUIFade(distanceToControlZone);
     }
 
     private void SetIsPlayerInRange(bool isInRange)

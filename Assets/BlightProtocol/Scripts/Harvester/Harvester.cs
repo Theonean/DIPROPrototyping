@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.VFX;
 
-public enum ZoneState
+public enum HarvesterState
 {
     MOVING, //Moving from resource point to resource point
     START_HARVESTING, //Starting to harvest resources, animation
@@ -28,9 +28,9 @@ public class Harvester : MonoBehaviour
     public Vector3 respawnPoint = Vector3.zero;
     public int respawnPointDifficultyRegion = 0;
 
-    ZoneState state = ZoneState.IDLE;
+    HarvesterState state = HarvesterState.IDLE;
     public List<Slider> waveProgressSliders = new List<Slider>();
-    public UnityEvent<ZoneState> changedState;
+    public UnityEvent<HarvesterState> changedState;
     public float travelTimeLeft;
 
     //Harvester Sub-Systems with specific tasks
@@ -71,7 +71,7 @@ public class Harvester : MonoBehaviour
     {
         stateMachine = new HarvesterStateMachine();
 
-        health.died.AddListener(() => { state = ZoneState.DIED; changedState.Invoke(state); });
+        health.died.AddListener(() => { state = HarvesterState.DIED; changedState.Invoke(state); });
 
         harvestingTimer = 0f;
 
@@ -158,7 +158,7 @@ public class Harvester : MonoBehaviour
         }
     }
 
-    public ZoneState GetZoneState()
+    public HarvesterState GetZoneState()
     {
         return state;
     }

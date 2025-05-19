@@ -38,7 +38,7 @@ public class StartHarvestLever : ACLever
         {
             switch (harvester.GetZoneState())
             {
-                case ZoneState.IDLE:
+                case HarvesterState.IDLE:
                     closestResourcePoint = GetClosestResourcePoint();
                     if (closestResourcePoint != null)
                     {
@@ -55,7 +55,7 @@ public class StartHarvestLever : ACLever
                     }
                     break;
 
-                case ZoneState.MOVING:
+                case HarvesterState.MOVING:
                     harvestButtonFeedback.text = "CANNOT HARVEST WHILE MOVING!";
                     ResetLever();
                     break;
@@ -68,17 +68,17 @@ public class StartHarvestLever : ACLever
         }
     }
 
-    private void HarvesterChangedState(ZoneState zoneState)
+    private void HarvesterChangedState(HarvesterState zoneState)
     {
         switch (zoneState)
         {
-            case ZoneState.HARVESTING:
+            case HarvesterState.HARVESTING:
                 harvestButtonFeedback.text = "Harvesting...";
                 break;
-            case ZoneState.START_HARVESTING:
+            case HarvesterState.START_HARVESTING:
                 harvestButtonFeedback.text = "Starting Harvest...";
                 break;
-            case ZoneState.END_HARVESTING:
+            case HarvesterState.END_HARVESTING:
                 harvestButtonFeedback.text = "Ending Harvest...";
                 ResetLever();
                 break;

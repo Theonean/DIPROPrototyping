@@ -3,9 +3,9 @@ using UnityEngine;
 public class IdleState : IHarvesterState
 {
     private readonly Harvester harvester;
-    private readonly ZoneState state = ZoneState.IDLE;
+    private readonly HarvesterState state = HarvesterState.IDLE;
 
-    public ZoneState State => state;
+    public HarvesterState State => state;
 
     public IdleState(Harvester harvester)
     {

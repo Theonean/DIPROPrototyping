@@ -23,11 +23,11 @@ public class HarvesterTrailTracker : MonoBehaviour
         Harvester.Instance.changedState.AddListener(ToggleRecording);
     }
 
-    private void ToggleRecording(ZoneState zoneState)
+    private void ToggleRecording(HarvesterState zoneState)
     {
         switch (zoneState)
         {
-            case ZoneState.MOVING:
+            case HarvesterState.MOVING:
                 if (!isRecording)
                 {
                     StopAllCoroutines();

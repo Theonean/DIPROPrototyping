@@ -1,6 +1,6 @@
 public interface IHarvesterState
 {
-    ZoneState State { get; }
+    HarvesterState State { get; }
     void Enter();
     void Update();
     void Exit();
