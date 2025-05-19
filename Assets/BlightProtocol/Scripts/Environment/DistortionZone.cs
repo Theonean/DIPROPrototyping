@@ -4,19 +4,30 @@ using System.Collections.Generic;
 
 public class DistortionZone : MonoBehaviour
 {
+    private enum DistortionZoneState
+    {
+        IDLE,
+        HARVESTER_OUTERLAYER,
+        HARVESTER_INNERLAYER
+    }
+
     private float enemyMinDistanceToTargetBeforeRecalculation = 10f;
     private int enemiesToSpawnPerDifficultyRegion = 30;
     private List<ACEnemyMovementBehaviour> enemyBehaviours = new List<ACEnemyMovementBehaviour>();
     private const float timeToRecalculateDestionations = 1f;
     private float recalculateDestionationsTimer = 0f;
-    private bool harvesterEntered = false;
+    private DistortionZoneState distortionZoneState = DistortionZoneState.IDLE;
 
-    private SphereCollider zoneCollider;
+    [Header("Enemies walk toward center settings")]
+    [SerializeField] private SphereCollider innerZoneCollider;
+    [SerializeField] private SphereCollider outerZoneCollider;
 
-    private void Awake()
-    {
-        zoneCollider = GetComponent<SphereCollider>();
-    }
+    [SerializeField] private float outerLayerEnemySpawnInterval = 5f;
+    [SerializeField] private int maxOuterEnemies = 10;
+    [SerializeField] private float centerDespawnRadius = 5f;
+
+    private float outerEnemySpawnTimer = 0f;
+    private List<GameObject> outerLayerEnemies = new List<GameObject>();
 
     private void Start()
     {
@@ -38,6 +49,8 @@ public class DistortionZone : MonoBehaviour
 
     private void Update()
     {
+        if (distortionZoneState == DistortionZoneState.IDLE) return;
+
         recalculateDestionationsTimer -= Time.deltaTime;
         if(recalculateDestionationsTimer < 0)
         {
@@ -64,31 +77,83 @@ public class DistortionZone : MonoBehaviour
                 enemyBehaviours.Remove(behaviourToRemove);
             }
         }
-    }
 
-    private void OnTriggerEnter(Collider collision)
-    {
-        if (harvesterEntered) return;
-
-        if (collision.gameObject.layer == LayerMask.NameToLayer("PL_IsHarvester"))
+        if (distortionZoneState == DistortionZoneState.HARVESTER_OUTERLAYER)
         {
-            harvesterEntered = true;
-            foreach (ACEnemyMovementBehaviour enemyBehaviour in enemyBehaviours)
-            {
-                enemyBehaviour.SetMovementType(EnemyMovementType.CUSTOM);
-            }
+            HandleOuterLayerSpawning();
         }
 
-        //initial implementation went different route, we thought maybe distortion zone influences buildings spawned inside it???
-        InfluencedByDistortionZone IBDZ = collision.GetComponentInParent<InfluencedByDistortionZone>();
-        if (!IBDZ) return;
+        HandleOuterEnemyDespawn();
+    }
+
+    public void HarvesterEnteredInnerLayer()
+    {
+        if (distortionZoneState == DistortionZoneState.HARVESTER_INNERLAYER) return;
+        distortionZoneState = DistortionZoneState.HARVESTER_INNERLAYER;
+
+        foreach (ACEnemyMovementBehaviour enemyBehaviour in enemyBehaviours)
+        {
+            enemyBehaviour.SetMovementType(EnemyMovementType.CUSTOM);
+        }
+    }
+
+    public void HarvesterEnteredOuterLayer()
+    {
+        distortionZoneState = DistortionZoneState.HARVESTER_OUTERLAYER;
+    }
+
+    public void HarvesterExited()
+    {
+        distortionZoneState = DistortionZoneState.IDLE;
     }
 
     private Vector3 GetRandomPositionInZone()
     {
-        Vector3 enemySpawnPosition = transform.position + UnityEngine.Random.insideUnitSphere * zoneCollider.radius;
+        Vector3 enemySpawnPosition = transform.position + UnityEngine.Random.insideUnitSphere * innerZoneCollider.radius;
         enemySpawnPosition.y = 0f;
 
         return enemySpawnPosition;
     }
+
+    private void HandleOuterLayerSpawning()
+    {
+        outerEnemySpawnTimer -= Time.deltaTime;
+
+        if (outerEnemySpawnTimer <= 0f && outerLayerEnemies.Count < maxOuterEnemies)
+        {
+            outerEnemySpawnTimer = outerLayerEnemySpawnInterval;
+
+            Vector3 spawnPos = transform.position + UnityEngine.Random.onUnitSphere * outerZoneCollider.radius;
+            spawnPos.y = 0f;
+
+            GameObject prefab = WaveManager.Instance.GetRandomEnemyPrefab();
+            GameObject enemy = Instantiate(prefab, spawnPos, Quaternion.identity);
+
+            ACEnemyMovementBehaviour movement = enemy.GetComponent<ACEnemyMovementBehaviour>();
+            movement.SetMovementType(EnemyMovementType.REMOTECONTROLLED);
+            movement.SetDestination(transform.position); // Go to center
+
+            outerLayerEnemies.Add(enemy);
+        }
+    }
+
+    private void HandleOuterEnemyDespawn()
+    {
+        for (int i = outerLayerEnemies.Count - 1; i >= 0; i--)
+        {
+            GameObject enemy = outerLayerEnemies[i];
+            if (!enemy)
+            {
+                outerLayerEnemies.RemoveAt(i);
+                continue;
+            }
+
+            if (Vector3.Distance(enemy.transform.position, transform.position) <= centerDespawnRadius)
+            {
+                Destroy(enemy);
+                outerLayerEnemies.RemoveAt(i);
+            }
+        }
+    }
+
 }
