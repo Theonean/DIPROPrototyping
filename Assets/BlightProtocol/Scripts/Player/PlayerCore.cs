@@ -68,7 +68,6 @@ public class PlayerCore : MonoBehaviour
         if (isDead)
         {
             m_RespawnTimer += Time.deltaTime;
-            transform.position = Harvester.Instance.transform.position;
             respawnTimerText.text = Mathf.Clamp(respawnTime - m_RespawnTimer, 0f, respawnTime).ToString("F2");
 
             if (m_RespawnTimer >= respawnTime)
@@ -150,7 +149,7 @@ public class PlayerCore : MonoBehaviour
             shieldSFXInstance.setPaused(true);
 
             //Make drone invisible when dead
-            transform.position = Harvester.Instance.transform.position;
+            transform.position = PerspectiveSwitcher.Instance.GetDroneRespawnPosition();
             isDead = true;
             m_RespawnTimer = 0f;
             shieldVFX.ToggleShield(true);

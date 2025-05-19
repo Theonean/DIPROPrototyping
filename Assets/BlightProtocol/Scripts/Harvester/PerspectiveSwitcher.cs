@@ -76,7 +76,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         playerCore.transform.parent = null;
 
-        Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance; //Position player behind harvester
+        Vector3 spawnPosition = GetDroneRespawnPosition();
         spawnPosition.y = DroneMovement.Instance.distanceFromGround;
         playerCore.transform.position = spawnPosition;
 
@@ -155,7 +155,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         if(endCam == droneCamera)
         {
-            Vector3 spawnPosition = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance; 
+            Vector3 spawnPosition = GetDroneRespawnPosition();
             spawnPosition.y = endCam.transform.position.y;
             endCam.transform.position = spawnPosition; 
             
@@ -193,4 +193,12 @@ public class PerspectiveSwitcher : MonoBehaviour
         perspectiveSwitchCamera.enabled = false;
         SetPerspective(fromPerspective == CameraPerspective.FPV ? CameraPerspective.DRONE : CameraPerspective.FPV);
     }
+
+    public Vector3 GetDroneRespawnPosition()
+    {
+        Vector3 pos = dronePositionInLoadingBay.position - Harvester.Instance.transform.forward * droneSpawnDistance;
+        pos.y = DroneMovement.Instance.distanceFromGround;
+        return pos;
+    }
+    
 }
