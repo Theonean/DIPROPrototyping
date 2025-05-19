@@ -24,11 +24,6 @@ public class CameraTracker : MonoBehaviour
         }
 
         topDownCamera = GetComponent<Camera>();
-    }
-
-    private void Start()
-    {
-        // Save the initial offset between camera and object
         cameraOffset = topDownCamera.transform.position - objectToTrack.transform.position;
     }
 
@@ -46,6 +41,11 @@ public class CameraTracker : MonoBehaviour
                 topDownCamera.transform.position,
                 targetPosition,
                 cameraMoveSpeed * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
+
+            if(Vector3.Distance(targetPosition, transform.position) > m_MaxCameraDistance * 2)
+            {
+                transform.position = targetPosition;
+            }
         }
     }
 }
