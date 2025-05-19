@@ -6,26 +6,31 @@ using UnityEngine.UI;
 
 public class ItemCollector : MonoBehaviour
 {
+    private class ActiveItemDisplay
+    {
+        public GameObject displayObject;
+        public SOItem itemData;
+        public int quantity = 1;
+        public float bundleTimer;
+        public TextMeshProUGUI text;
+    }
+
+    private List<ActiveItemDisplay> activeDisplays = new List<ActiveItemDisplay>();
+
     public float collectorRadius = 40f;
     private Collider[] colliderBuffer = new Collider[128];
     private List<CollectibleItem> itemsFlyingToPlayer = new List<CollectibleItem>();
 
     private float timeToFadeOutText = 1f;
     private float timeToBundleTogetherCollectedItems = 0.5f; //When another item 
-    private float itemRecentlyCollectedCounter = 0f;
-    private int sameItemsCollectedInRow = 0;
 
     [SerializeField] private GameObject collectedItemTextPrefab;
     [SerializeField] private Sprite crystalSprite, componentSprite;
     [SerializeField] private Color crystalSpriteColor, componentSpriteColor;
     [SerializeField] private Canvas collectedItemCanvas;
 
-    private SOItem lastItemData;
-    private GameObject lastItemCollected;
-
-    private Queue<SOItem> itemQueue = new Queue<SOItem>();
+    private Queue<(SOItem item, bool isFirstTime)> itemQueue = new();
     private bool isDisplayingItem = false;
-
 
     void Update()
     {
@@ -56,19 +61,26 @@ public class ItemCollector : MonoBehaviour
         itemsFlyingToPlayer.Remove(itemCollider);
 
         SOItem itemData = item.itemData;
+        bool isFirstTime = false;
 
-        // Add item to inventory
         switch (itemData.itemType)
         {
             case EItemTypes.Crystal:
                 ItemManager.Instance.AddCrystal(1);
                 break;
+
             case EItemTypes.Component:
+                if (!ItemManager.Instance.HasComponent(itemData.itemName))
+                {
+                    isFirstTime = true;
+                }
+
                 ItemManager.Instance.AddComponent(itemData.itemName, 1);
                 break;
         }
 
-        itemQueue.Enqueue(itemData);
+        itemQueue.Enqueue((itemData, isFirstTime));
+
 
         if (!isDisplayingItem)
             StartCoroutine(HandleCollectedItemsDisplay());
@@ -76,81 +88,97 @@ public class ItemCollector : MonoBehaviour
 
     private IEnumerator HandleCollectedItemsDisplay()
     {
-        isDisplayingItem = true;
-
         while (itemQueue.Count > 0)
         {
-            SOItem currentItem = itemQueue.Dequeue();
-            int quantity = 1;
+            var (newItem, isFirstTime) = itemQueue.Dequeue();
 
-            // 🧠 Phase 1: show the item text immediately
-            lastItemCollected = Instantiate(collectedItemTextPrefab, collectedItemCanvas.transform);
-            RectTransform rect = lastItemCollected.GetComponent<RectTransform>();
-            rect.position = transform.position + Vector3.up * 10f;
-
-            TextMeshProUGUI text = lastItemCollected.GetComponentInChildren<TextMeshProUGUI>();
-            Image image = lastItemCollected.GetComponentInChildren<Image>();
-            text.text = currentItem.itemName;
-            switch (currentItem.itemType)
+            ActiveItemDisplay existing = activeDisplays.Find(d => d.itemData == newItem);
+            if (existing != null)
             {
-                case EItemTypes.Crystal:
-                    image.sprite = crystalSprite;
-                    image.color = crystalSpriteColor;
-                break;
-                case EItemTypes.Component:
-                    image.sprite = componentSprite;
-                    image.color = componentSpriteColor;
-                    break;
+                existing.quantity++;
+                existing.text.text = $"{newItem.itemName} x{existing.quantity}";
+                existing.bundleTimer = timeToBundleTogetherCollectedItems;
             }
-
-
-            // 🕒 Start bundling window
-            itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
-            yield return null;
-
-            while (itemRecentlyCollectedCounter > 0f)
+            else
             {
-                itemRecentlyCollectedCounter -= Time.deltaTime;
+                GameObject prefabToUse = collectedItemTextPrefab;
+                GameObject go = Instantiate(prefabToUse, collectedItemCanvas.transform);
+                RectTransform rect = go.GetComponent<RectTransform>();
 
-                // 👥 Stack more of the same item
-                if (itemQueue.Count > 0 && itemQueue.Peek() == currentItem)
+                TextMeshProUGUI text = go.GetComponentInChildren<TextMeshProUGUI>(false);
+                Image image = go.GetComponentInChildren<Image>();
+                text.text = newItem.itemName;
+
+                switch (newItem.itemType)
                 {
-                    itemQueue.Dequeue();
-                    quantity++;
-                    text.text = $"{currentItem.itemName}x {quantity}";
-                    itemRecentlyCollectedCounter = timeToBundleTogetherCollectedItems;
+                    case EItemTypes.Crystal:
+                        image.sprite = crystalSprite;
+                        image.color = crystalSpriteColor;
+                        break;
+                    case EItemTypes.Component:
+                        image.sprite = componentSprite;
+                        image.color = componentSpriteColor;
+                        break;
                 }
 
-                yield return null;
-            }
+                if (isFirstTime)
+                {
+                    Image firstHighlightImage = image.transform.GetChild(0).GetComponent<Image>();
+                    firstHighlightImage.enabled = true;
+                }
 
-            // 🧠 Phase 2: now start flying up and fading out
-            yield return StartCoroutine(FadeOutCollectedItemText(lastItemCollected));
+                ActiveItemDisplay newDisplay = new ActiveItemDisplay
+                {
+                    displayObject = go,
+                    itemData = newItem,
+                    quantity = 1,
+                    bundleTimer = isFirstTime ? 2.5f : timeToBundleTogetherCollectedItems,
+                    text = text
+                };
+
+                activeDisplays.Insert(0, newDisplay);
+
+                float baseOffset = -13f;
+                float verticalSpacing = 2f;
+                for (int i = 0; i < activeDisplays.Count; i++)
+                {
+                    RectTransform r = activeDisplays[i].displayObject.GetComponent<RectTransform>();
+                    r.localPosition = Vector3.up * (baseOffset + i * verticalSpacing);
+                }
+
+                StartCoroutine(FadeOutAndRemove(newDisplay, isFirstTime));
+            }
         }
 
-        isDisplayingItem = false;
+        yield return null;
     }
 
-
-
-    private IEnumerator FadeOutCollectedItemText(GameObject gameObject)
+    private IEnumerator FadeOutAndRemove(ActiveItemDisplay display, bool isFirstTime)
     {
-        float t = 0;
-        Vector3 startPos = gameObject.transform.localPosition;
+        float displayDuration = isFirstTime ? 3f : timeToFadeOutText;
 
-        Vector3 endPos = startPos + Vector3.up * 20;
-
-        TextMeshProUGUI collectedItemText = gameObject.GetComponentInChildren<TextMeshProUGUI>();
-
-        while (t < timeToFadeOutText)
+        while (display.bundleTimer > 0f)
         {
-            gameObject.transform.localPosition = Vector3.Lerp(startPos, endPos, t / timeToFadeOutText);
-            collectedItemText.color = Color.Lerp(Color.white, Color.clear, t / timeToFadeOutText);
+            display.bundleTimer -= Time.deltaTime;
+            yield return null;
+        }
+
+        float t = 0f;
+        Vector3 startPos = display.displayObject.transform.localPosition;
+        Vector3 endPos = startPos + Vector3.up * 20f;
+
+        TextMeshProUGUI text = display.displayObject.GetComponentInChildren<TextMeshProUGUI>();
+
+        while (t < displayDuration)
+        {
+            display.displayObject.transform.localPosition = Vector3.Lerp(startPos, endPos, t / displayDuration);
+            text.color = Color.Lerp(Color.white, Color.clear, t / displayDuration);
             t += Time.deltaTime;
             yield return null;
         }
 
-        Destroy(gameObject); // Clean up
+        Destroy(display.displayObject);
+        activeDisplays.Remove(display);
     }
 
 }

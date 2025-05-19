@@ -149,6 +149,12 @@ public class ItemManager : MonoBehaviour
         return entry.amountHeld;
     }
 
+    public bool HasComponent(string componentName)
+    {
+        ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
+        return entry != null;
+    }
+
     private ComponentEntry GetComponentEntry(string componentName)
     {
         ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();

@@ -2563,7 +2563,7 @@ PrefabInstance:
     - target: {fileID: 7393997915790091810, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_VersionIndex
-      value: 13742
+      value: 13751
       objectReference: {fileID: 0}
     - target: {fileID: 7626375681616798086, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
@@ -2710,6 +2710,10 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 6136923682980455734, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
+    - targetCorrespondingSourceObject: {fileID: 5552336222921722858, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
@@ -4599,11 +4603,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crystals: 20
+  gas: 0
   components: []
   crystalAmountChanged:
     m_PersistentCalls:
       m_Calls: []
+  gasAmountChanged:
+    m_PersistentCalls:
+      m_Calls: []
   notEnoughCrystals:
+    m_PersistentCalls:
+      m_Calls: []
+  notEnoughGas:
     m_PersistentCalls:
       m_Calls: []
 --- !u!1001 &1036440036
