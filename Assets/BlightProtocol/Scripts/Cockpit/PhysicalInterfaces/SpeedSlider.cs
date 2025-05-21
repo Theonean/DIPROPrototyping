@@ -42,7 +42,7 @@ public class SpeedSlider : ACSlider
     public override void OnEndInteract()
     {
         int index = Mathf.FloorToInt(progress * speedStepCount);
-        if (index > speedstepPositions.Count()) index = speedstepPositions.Count();
+        if (index > speedstepPositions.Count()) index = speedstepPositions.Count() - 1;
         SetPositionByIndex(index);
     }
 
