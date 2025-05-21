@@ -1559,6 +1559,80 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1162169380}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &444958840
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 919762191}
+    m_Modifications:
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -125.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.70710784
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.70710576
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2938004222838875297, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+        type: 3}
+      propertyPath: m_Name
+      value: P_Checkpoint
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b0771cbf1d22b004c8e2b1c29b354f63, type: 3}
+--- !u!4 &444958841 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 401337453400223521, guid: b0771cbf1d22b004c8e2b1c29b354f63,
+    type: 3}
+  m_PrefabInstance: {fileID: 444958840}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &448666515 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 9105706601634564449, guid: 04195878203b7174dbb83fe0e3181a5f,
@@ -2336,6 +2410,7 @@ Transform:
   - {fileID: 388561239}
   - {fileID: 381612870}
   - {fileID: 1190182896}
+  - {fileID: 444958841}
   - {fileID: 2129377940}
   m_Father: {fileID: 957567544}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2546,7 +2621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48d2404426c91ea459fbd89ec73fcf7a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crystals: 20
+  crystals: 0
   gas: 0
   components: []
   crystalAmountChanged:
@@ -4495,6 +4570,16 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 957567544}
     m_Modifications:
+    - target: {fileID: 1696047659254544069, guid: 51462b056de77c74e94acbafd17416bf,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -49.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1696047659254544069, guid: 51462b056de77c74e94acbafd17416bf,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 48
+      objectReference: {fileID: 0}
     - target: {fileID: 3667103252080635661, guid: 51462b056de77c74e94acbafd17416bf,
         type: 3}
       propertyPath: m_Height
@@ -5359,7 +5444,7 @@ MonoBehaviour:
   resetText: {fileID: 1050173961}
   gameOverGroup: {fileID: 849772368}
   pauseGroup: {fileID: 8033146558979600133}
-  startWithTutorial: 0
+  startWithTutorial: 1
   isPaused: 0
 --- !u!1 &1967032504
 GameObject:
