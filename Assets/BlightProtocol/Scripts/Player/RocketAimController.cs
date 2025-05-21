@@ -36,6 +36,10 @@ public class RocketAimController : MonoBehaviour
     public UnityEvent OnRocketShot = new UnityEvent();
     public UnityEvent OnRocketExplode = new UnityEvent();
     public UnityEvent OnRocketRetract = new UnityEvent();
+    
+    private Rocket[] allRockets;
+    private int currentRocketIndex = 0;
+
 
     private void Awake()
     {
@@ -55,6 +59,8 @@ public class RocketAimController : MonoBehaviour
         frankenGameManager = FrankenGameManager.Instance;
         perspectiveSwitcher = PerspectiveSwitcher.Instance;
 
+        allRockets = new Rocket[] { Rocket1, Rocket2, Rocket3, Rocket4 };
+
         //Set each rocket to it's coressponding setting from UISelectedRocketManager ->private (RocketComponentType componentType, GameObject newComponent) GetRocketSettingsFromPlayerPrefs
         //Check if it is not null
     }
@@ -67,13 +73,17 @@ public class RocketAimController : MonoBehaviour
             return;
         }
 
-        // 1. Track the Rocket with the lowest index that is attached to the core
-        activeRocket = GetLowestIndexAttachedLeg();
-
         // Rotate the object towards the mouse, but only if allowed
         if (canRotate)
         {
             RotateTowardsMouse();
+        }
+
+        HandleRocketScrollInput();
+
+        if(activeRocket == null || activeRocket.state != RocketState.ATTACHED)
+        {
+            activeRocket = GetLowestIndexAttachedRocket();
         }
 
         if (Input.GetMouseButtonDown(0))
@@ -98,6 +108,7 @@ public class RocketAimController : MonoBehaviour
             if (activeRocket != null)
             {
                 activeRocket.Shoot(hit.point);
+                SelectNextRocket(1);
                 OnRocketShot?.Invoke();
                 StartCoroutine(StartRotationDelay());
             }
@@ -119,31 +130,6 @@ public class RocketAimController : MonoBehaviour
         canRotate = true;  // Allow rotation again
     }
 
-    // Function to track the Rocket with the lowest index that is attached to the core
-    private Rocket GetLowestIndexAttachedLeg()
-    {
-        // Check Rockets in order of index to find the first attached Rocket
-        if (Rocket1.state == RocketState.ATTACHED)
-        {
-            return Rocket1;
-        }
-        if (Rocket2.state == RocketState.ATTACHED)
-        {
-            return Rocket2;
-        }
-        if (Rocket3.state == RocketState.ATTACHED)
-        {
-            return Rocket3;
-        }
-        if (Rocket4.state == RocketState.ATTACHED)
-        {
-            return Rocket4;
-        }
-
-        // Return null if no Rockets are attached
-        return null;
-    }
-
     // Function to rotate the object so the tracked Rocket points towards the mouse
     private void RotateTowardsMouse()
     {
@@ -161,12 +147,6 @@ public class RocketAimController : MonoBehaviour
             // Get the current rotation of the core gameobject
             Quaternion currentRotation = transform.rotation;
 
-            // Calculate the desired rotation towards the mouse
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-
-            // Preserve the original X rotation by overriding it
-            targetRotation = Quaternion.Euler(currentRotation.eulerAngles.x, targetRotation.eulerAngles.y, targetRotation.eulerAngles.z);
-
             // Get the rotation offset for the active Rocket's quadrant
             float quadrantRotationOffset;
             if (activeRocket == null)
@@ -175,10 +155,12 @@ public class RocketAimController : MonoBehaviour
                 quadrantRotationOffset = GetLegRotationOffset(activeRocket);
 
             // Apply the offset to ensure the correct Rocket quadrant faces the mouse
-            targetRotation = Quaternion.Euler(targetRotation.eulerAngles.x, targetRotation.eulerAngles.y + quadrantRotationOffset, targetRotation.eulerAngles.z);
+            direction = Quaternion.Euler(0, quadrantRotationOffset, 0) * direction;
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
 
             // Smoothly interpolate between current and target rotations for the core
-            transform.rotation = Quaternion.Slerp(currentRotation, targetRotation, Time.deltaTime * 10f);
+            float maxDegreesPerSecond = 360f; // you can tweak this for desired speed
+            transform.rotation = Quaternion.RotateTowards(currentRotation, targetRotation, maxDegreesPerSecond * Time.deltaTime);
         }
     }
 
@@ -203,4 +185,46 @@ public class RocketAimController : MonoBehaviour
             yield return null;
         }
     }
+
+    private void HandleRocketScrollInput()
+    {
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll == 0) return;
+
+        int direction = scroll > 0 ? 1 : -1;
+        SelectNextRocket(direction);
+    }
+
+    private void SelectNextRocket(int indexDirection)
+    {
+        int startIndex = currentRocketIndex;
+
+        for (int i = 0; i < allRockets.Length; i++)
+        {
+            currentRocketIndex = (currentRocketIndex + indexDirection + allRockets.Length) % allRockets.Length;
+
+            if (allRockets[currentRocketIndex].state == RocketState.ATTACHED)
+            {
+                activeRocket = allRockets[currentRocketIndex];
+                return;
+            }
+        }
+
+        // No attached rocket found, reset to original index
+        currentRocketIndex = startIndex;
+    }
+    private Rocket GetLowestIndexAttachedRocket()
+    {
+        for (int i = 0; i < allRockets.Length; i++)
+        {
+            if (allRockets[i].state == RocketState.ATTACHED)
+            {
+                currentRocketIndex = i;
+                return allRockets[i];
+            }
+        }
+        return null;
+    }
+
+
 }
