@@ -8,6 +8,7 @@ public abstract class ACLever : ACSlider
     public float leverMinAngle = 0f;
     public float leverMaxAngle = 180f;
     public bool isPulled = false;
+    
 
     public override void OnStartInteract() {
         base.OnStartInteract();

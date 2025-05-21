@@ -11,8 +11,7 @@ public class Periscope : ACInteractable
     private Vector2 screenPoint;
 
     [Header("Animation")]
-    [SerializeField] private GameObject mesh;
-    private Animator meshAnimator;
+    [SerializeField] private Animator meshAnimator;
 
     [Header("Raycasting")]
     [SerializeField] private Collider mainCollider;
@@ -23,11 +22,10 @@ public class Periscope : ACInteractable
 
     [Header("Interaction")]
     [SerializeField] private Button exitButton;
-    
+    [SerializeField] private TurnPeriscopeSlider turnSlider;
+
     private bool isActive = false;
     private bool isAnimating = false;
-
-    private TurnPeriscopeSlider turnSlider;
 
     void OnEnable()
     {
@@ -56,8 +54,8 @@ public class Periscope : ACInteractable
     {
         base.Start();
         markerHitMask = Map.Instance.hitMask;
-        meshAnimator = mesh.GetComponent<Animator>();
-        turnSlider = GetComponentInChildren<TurnPeriscopeSlider>();
+        exitButton.IsCurrentlyInteractable = false;
+        turnSlider.IsCurrentlyInteractable = false;
     }
 
     public override void OnStartHover()
@@ -73,7 +71,7 @@ public class Periscope : ACInteractable
 
             if (Physics.Raycast(ray, out hit, 100f, hitMask))
             {
-                screenPoint = new Vector3(hit.textureCoord.x * periscopeCamera.pixelWidth, hit.textureCoord.y * periscopeCamera.pixelHeight, 0);
+                screenPoint = new Vector3(hit.textureCoord.x * periscopeCamera.pixelWidth, hit.textureCoord.y * periscopeCamera.pixelWidth, 0);
                 if (screenPoint != null)
                 {
                     targetIcon.anchoredPosition = screenPoint;
@@ -105,6 +103,8 @@ public class Periscope : ACInteractable
             // enable screen
             periscopeCamera.enabled = true;
             screen.material.SetColor("_BaseColor", Color.white);
+            exitButton.IsCurrentlyInteractable = true;
+            turnSlider.IsCurrentlyInteractable = true;
         }
 
     }
@@ -124,6 +124,9 @@ public class Periscope : ACInteractable
         // disable screen
         periscopeCamera.enabled = false;
         screen.material.SetColor("_BaseColor", Color.black);
+
+        exitButton.IsCurrentlyInteractable = false;
+        turnSlider.IsCurrentlyInteractable = false;
 
         //reset turn
         turnSlider.SetPositionNormalized(0.5f);

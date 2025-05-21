@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 1, b: 0.17717361, a: 0.46666667}
+  m_Color: {r: 0, g: 0.8666667, b: 0.6312397, a: 0.6509804}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -146,12 +146,17 @@ PrefabInstance:
     - target: {fileID: 1561914926788224675, guid: 045f677b167001048b4115cee046000d,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 80
+      value: 161.37
       objectReference: {fileID: 0}
     - target: {fileID: 1561914926788224675, guid: 045f677b167001048b4115cee046000d,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 280
+      value: 350
+      objectReference: {fileID: 0}
+    - target: {fileID: 1561914926788224675, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 3744303185809913887, guid: 045f677b167001048b4115cee046000d,
         type: 3}
@@ -162,6 +167,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: -20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452812528199506952, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.014328947
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452812528199506952, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.05881097
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452812528199506952, guid: 045f677b167001048b4115cee046000d,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.13207549
       objectReference: {fileID: 0}
     - target: {fileID: 6237700514859639393, guid: 045f677b167001048b4115cee046000d,
         type: 3}
@@ -186,7 +206,7 @@ PrefabInstance:
     - target: {fileID: 6590731412560322314, guid: 045f677b167001048b4115cee046000d,
         type: 3}
       propertyPath: m_Value
-      value: 0.6
+      value: 0.028
       objectReference: {fileID: 0}
     - target: {fileID: 6590731412560322314, guid: 045f677b167001048b4115cee046000d,
         type: 3}

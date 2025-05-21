@@ -66,7 +66,7 @@ public class Map : ACInteractable
         targetRay = mapCameraCam.ScreenPointToRay(screenPoint);
         if (Physics.Raycast(screenRay, out RaycastHit hit, Mathf.Infinity))
         {
-            screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelHeight, 0);
+            screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelWidth, 0);
             uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
             TouchPoint.transform.position = hit.point;
         }

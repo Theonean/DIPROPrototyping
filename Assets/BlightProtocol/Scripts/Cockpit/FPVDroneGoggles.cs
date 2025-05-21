@@ -1,11 +1,25 @@
 using UnityEngine;
+using UnityEngine.Events;
 
-public class FPVDroneGoggles : ACInteractable
+public class DroneGoggles : ACInteractable
 {
+    public static DroneGoggles Instance;
     [SerializeField] private GameObject mesh;
     private Animator meshAnimator;
     private bool isActive = false;
     private bool isAnimating = false;
+    public UnityEvent perspectiveSwitchStarted;
+    protected void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     protected override void Start()
     {
@@ -36,11 +50,12 @@ public class FPVDroneGoggles : ACInteractable
             meshAnimator.SetTrigger("activate");
             isAnimating = true;
             isActive = true;
-            
+
             Invoke(nameof(EnterDroneMode), meshAnimator.GetCurrentAnimatorStateInfo(0).length);
 
             //Block player inputs
             FPVInputManager.Instance.isActive = false;
+            perspectiveSwitchStarted.Invoke();
         }
     }
 

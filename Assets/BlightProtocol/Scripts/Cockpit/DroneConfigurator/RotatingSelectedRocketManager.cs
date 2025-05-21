@@ -17,6 +17,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     private int selectedRocketIndex = 0;
     private Rocket[] rockets = new Rocket[4];
     [SerializeField] private RocketHolder[] rocketHolders = new RocketHolder[4];
+    [SerializeField] private ConfiguratorDummyRocket screenRocket;
     private Rocket selectedRocket;
     public UnityEvent<Rocket> rocketSelected;
 
@@ -31,8 +32,6 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             Instance = this;
         }
     }
-
-
 
     void OnEnable()
     {
@@ -131,6 +130,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
                 break;
         }
         rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
+        screenRocket.SetComponent(componentType, dummyObject);
     }
 
     public void ApplySelectionToAll(Button button)
@@ -144,6 +144,11 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             ChangeComponent(i, RocketComponentType.BODY, selectedBody);
             ChangeComponent(i, RocketComponentType.PROPULSION, selectedPropulsion);
         }
+    }
+
+    public void LoadAllRockets()
+    {
+
     }
 
     public void LevelUpComponent(RocketComponentType componentType)
@@ -206,7 +211,15 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             holder.dummyRocket.SetComponent(RocketComponentType.FRONT, frontComponent);
             holder.dummyRocket.SetComponent(RocketComponentType.BODY, bodyComponent);
             holder.dummyRocket.SetComponent(RocketComponentType.PROPULSION, propulsionComponent);
+
+            if (index == selectedRocketIndex)
+            {
+                screenRocket.SetComponent(RocketComponentType.FRONT, frontComponent);
+                screenRocket.SetComponent(RocketComponentType.BODY, bodyComponent);
+                screenRocket.SetComponent(RocketComponentType.PROPULSION, propulsionComponent);
+            }
             index++;
         }
+
     }
 }

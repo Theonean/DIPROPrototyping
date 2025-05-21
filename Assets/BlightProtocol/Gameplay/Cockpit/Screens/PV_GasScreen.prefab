@@ -169,7 +169,8 @@ PrefabInstance:
       value: PV_GasScreen
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 374908711422124315, guid: 1f4477ae81e4d3c458f0f9e356cb734c, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 2082039031621310195, guid: 1f4477ae81e4d3c458f0f9e356cb734c,
         type: 3}
@@ -253,7 +254,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   flashDuration: 0.5
-  gasData: {fileID: 11400000, guid: fb619cb8ee6e7674982ad3a603483563, type: 2}
 --- !u!114 &5873025666926959505 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5502664520380871374, guid: 1f4477ae81e4d3c458f0f9e356cb734c,

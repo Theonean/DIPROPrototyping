@@ -105,15 +105,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5485954d14dfb9a4c8ead8edb0ded5b1, type: 3}
   m_Name: LiftGammaGain
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   lift:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: -0.009460738}
+    m_Value: {x: 0.95553625, y: 0.9600031, z: 1, w: -0.009460738}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 1, y: 1, z: 1, w: 0.085146636}
+    m_Value: {x: 1, y: 0.9761543, z: 0.96986085, w: 0.085146636}
   gain:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {x: 1, y: 1, z: 1, w: -0.14191104}
 --- !u!114 &11400000
 MonoBehaviour:
@@ -165,8 +165,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.105150215
-          value: 0.089686096
+          time: 0.111597374
+          value: 0.08715594
           inSlope: 1
           outSlope: 1
           tangentMode: 0
@@ -174,8 +174,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.38626608
-          value: 0.42152464
+          time: 0.3916849
+          value: 0.4082569
           inSlope: 1.1547953
           outSlope: 1.1547953
           tangentMode: 0
@@ -183,8 +183,8 @@ MonoBehaviour:
           inWeight: 0
           outWeight: 0
         - serializedVersion: 3
-          time: 0.76609445
-          value: 0.76681614
+          time: 0.7680525
+          value: 0.7706422
           inSlope: 1.0493234
           outSlope: 1.0493234
           tangentMode: 0
