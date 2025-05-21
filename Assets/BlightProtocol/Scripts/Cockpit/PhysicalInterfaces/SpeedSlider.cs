@@ -33,7 +33,7 @@ public class SpeedSlider : ACSlider
 
     public override void OnStartInteract()
     {
-        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT)
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT)
             return;
 
         base.OnStartInteract();

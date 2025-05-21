@@ -88,7 +88,7 @@ public class Map : ACInteractable
 
     public void SetTarget()
     {
-        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETFIRSTMAPPOINT and not TutorialProgress.SETDESTINATIONTORESOURCEPOINT) 
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETFIRSTMAPPOINT and not TutorialProgress.SETDESTINATIONTORESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT) 
             return;
 
         if (Physics.Raycast(targetRay, out hit, Mathf.Infinity, hitMask))
@@ -110,9 +110,6 @@ public class Map : ACInteractable
 
                     Harvester.Instance.mover.SetDestination(targetPos);
                     TutorialManager.Instance.CompleteSETDESTINATIONTORESOURCEPOINT();
-
-                    ResourcePoint rp = hit.collider.GetComponent<ResourcePoint>();
-                    rp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 }
                 else
                 {

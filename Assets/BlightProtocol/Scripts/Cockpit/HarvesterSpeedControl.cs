@@ -58,7 +58,7 @@ public class HarvesterSpeedControl : MonoBehaviour
     private void SetSpeed()
     {
         TutorialManager tM = TutorialManager.Instance;
-        if (tM.IsTutorialOngoing() && tM.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT) return;
+        if (tM.IsTutorialOngoing() && tM.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT) return;
 
         Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
         Seismograph.Instance.SetOtherEmission(

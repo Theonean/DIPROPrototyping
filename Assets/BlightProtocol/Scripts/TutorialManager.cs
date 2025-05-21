@@ -28,6 +28,7 @@ public enum TutorialProgress
     FINALSWITCHTOFPV,
     SELECTNEWCOMPONENT,
     UPGRADENEWCOMPONENT,
+    DRIVETOCHECKPOINT,
     DONE
 }
 
@@ -49,6 +50,8 @@ public class TutorialManager : MonoBehaviour
     public EnemySpawner resourcePointSpawner;
     private ACEnemyMovementBehaviour[] enemies = new ACEnemyMovementBehaviour[5];
     private int deadEnemyCounter = 0;
+
+    public ResourcePoint tutorialResourcePoint;
 
     [Header("Segment Doors")]
     [SerializeField] private TutorialDoor MOVEMENT_SEGMENT_EXIT;
@@ -73,19 +76,7 @@ public class TutorialManager : MonoBehaviour
     {
         if(FrankenGameManager.Instance.startWithTutorial)
         {
-            PlayerCore.Instance.transform.position = droneStartPosition.transform.position;
-
-            Harvester harvester = Harvester.Instance;
-            harvester.gameObject.SetActive(false);
-            harvester.transform.position = HarvesterStartPosition.transform.position;
-            harvester.gameObject.SetActive(true);
-
-
-
-            CreateNewMissionText(TutorialProgress.WASD);
-            CreateNewMissionText(TutorialProgress.DASH);
-
-            NextTutorialStep();
+            StartTutorial();
         }
         else
         {
@@ -110,12 +101,25 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+    public void StartTutorial()
+    {
+        PlayerCore.Instance.transform.position = new Vector3(droneStartPosition.transform.position.x, DroneMovement.Instance.distanceFromGround, droneStartPosition.transform.position.z);
+
+        Harvester harvester = Harvester.Instance;
+        harvester.gameObject.SetActive(false);
+        harvester.transform.position = HarvesterStartPosition.transform.position;
+        harvester.gameObject.SetActive(true);
+
+        progressState = TutorialProgress.INACTIVE;
+        NextTutorialStep();
+    }
+
 
     public bool IsTutorialOngoing()
     {
         return progressState is not TutorialProgress.INACTIVE and not TutorialProgress.DONE;
     }
-
+    
     private void CreateNewMissionText(TutorialProgress forTutorialPart)
     {
         TextMeshProUGUI missionText = Instantiate(TutorialMissionGroup.transform.GetChild(0), Vector3.zero, Quaternion.identity, TutorialMissionGroup.transform).GetComponent<TextMeshProUGUI>();
@@ -182,6 +186,9 @@ public class TutorialManager : MonoBehaviour
             case TutorialProgress.UPGRADENEWCOMPONENT:
                 missionText.text = "[ ] upgrade your newly unlocked component";
                 break;
+            case TutorialProgress.DRIVETOCHECKPOINT:
+                missionText.text = "[ ] Drive to checkpoint to finish tutorial";
+                break;
             default:
                 missionText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
                 break;
@@ -237,6 +244,10 @@ public class TutorialManager : MonoBehaviour
             PULSE_SEGMENT_EXIT.CloseSegmentDoor();
             TUTORIAL_EXIT.OpenSegmentDoor();
         }
+        else if(progressState == TutorialProgress.DRIVETOCHECKPOINT)
+        {
+            TUTORIAL_EXIT.CloseSegmentDoor();
+        }
 
         IncrementProgress();
     }
@@ -249,7 +260,14 @@ public class TutorialManager : MonoBehaviour
         TutorialProgress newProgress = (TutorialProgress)progressInt;
         progressState = newProgress;
 
-        CreateNewMissionText(progressState);
+        if (progressState == TutorialProgress.DONE) 
+        {
+            tutorialText.enabled = false;
+        }
+        else
+        {
+            CreateNewMissionText(progressState);
+        }
     }
     public void CompletedWASD()
     {
@@ -354,10 +372,12 @@ public class TutorialManager : MonoBehaviour
         Harvester.Instance.changedState.RemoveListener(CompleteDRIVETORESOURCEPOINT);
         NextTutorialStep();
         Harvester.Instance.changedState.AddListener(CompleteHARVEST);
+
+        tutorialResourcePoint.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
     public void CompleteHARVEST(HarvesterState harvesterState)
     {
-        if (progressState != TutorialProgress.HARVEST && harvesterState != HarvesterState.HARVESTING)
+        if (progressState != TutorialProgress.HARVEST || harvesterState != HarvesterState.HARVESTING)
             return;
 
         Harvester.Instance.changedState.RemoveListener(CompleteHARVEST);
@@ -434,6 +454,14 @@ public class TutorialManager : MonoBehaviour
             return;
 
         ResearchManager.OnResearched.RemoveListener(CompleteUPGRADENEWCOMPONENT);
+        NextTutorialStep();
+    }
+
+    public void CompleteDRIVETOCHECKPOINT()
+    {
+        if (progressState != TutorialProgress.DRIVETOCHECKPOINT)
+            return;
+
         NextTutorialStep();
     }
 
