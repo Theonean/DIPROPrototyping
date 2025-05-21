@@ -191,6 +191,9 @@ public class WaveManager : MonoBehaviour
             return;
         }
 
+        if (TutorialManager.Instance.IsTutorialOngoing())
+            return;
+
         //When switching away from harvesting, stop continuous attack
         if (harvesterState == HarvesterState.HARVESTING)
         {

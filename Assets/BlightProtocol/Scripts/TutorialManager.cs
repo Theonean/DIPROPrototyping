@@ -372,8 +372,6 @@ public class TutorialManager : MonoBehaviour
         Harvester.Instance.changedState.RemoveListener(CompleteDRIVETORESOURCEPOINT);
         NextTutorialStep();
         Harvester.Instance.changedState.AddListener(CompleteHARVEST);
-
-        tutorialResourcePoint.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
     public void CompleteHARVEST(HarvesterState harvesterState)
     {
@@ -399,6 +397,8 @@ public class TutorialManager : MonoBehaviour
                 if(deadEnemyCounter == enemies.Count()) CompleteFIGHT();
             });
         }
+        
+        tutorialResourcePoint.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
 
     public void CompleteSWITCHDIRECTION_A_D()
