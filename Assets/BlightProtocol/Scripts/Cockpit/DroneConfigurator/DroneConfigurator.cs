@@ -16,7 +16,7 @@ public class DroneConfigurator : MonoBehaviour
 
     [Header("Mode Switching")]
     [SerializeField] private Button switchModeButton;
-    [SerializeField] private ConfiguratorRotator rotator;
+    [SerializeField] private Animator panelAnimator;
 
     [Header("Selector")]
     [SerializeField] private GameObject selectorParent;
@@ -55,7 +55,20 @@ public class DroneConfigurator : MonoBehaviour
     private void SwitchMode(Button button = null)
     {
         switchModeButton.IsCurrentlyInteractable = false;
-        Invoke(nameof(ResetSwitchModeButton), rotator.rotationTime);
+        if (configurationMode == ConfigurationMode.SELECTION)
+        {
+            panelAnimator.SetTrigger("open");
+        }
+        else
+        {
+            panelAnimator.SetTrigger("close");
+        }
+
+        Invoke(nameof(SetNewMode), panelAnimator.GetCurrentAnimatorStateInfo(0).length);
+    }
+
+    private void SetNewMode()
+    {
         switch (configurationMode)
         {
             case ConfigurationMode.SELECTION:
@@ -82,13 +95,8 @@ public class DroneConfigurator : MonoBehaviour
                 }
                 break;
         }
-        configurationMode = configurationMode == ConfigurationMode.SELECTION ? ConfigurationMode.RESEARCH : ConfigurationMode.SELECTION;
 
         onModeSwitched.Invoke();
-        rotator.StartRotation();
-    }
-
-    private void ResetSwitchModeButton() {
         switchModeButton.IsCurrentlyInteractable = true;
     }
 }

@@ -122,7 +122,7 @@ public class RocketComponentSelector : MonoBehaviour
                 stringToReplace = "Front";
                 break;
         }
-        //componentNameText.text = components[value].name.Replace(stringToReplace, "");
+        componentNameText.text = components[value].name.Replace(stringToReplace, "");
     }
 
     public int GetComponentIndex(ACRocketComponent component)

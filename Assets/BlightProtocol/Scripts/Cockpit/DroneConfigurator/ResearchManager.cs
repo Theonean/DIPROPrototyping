@@ -6,16 +6,13 @@ public class ResearchManager : MonoBehaviour
 {
     [SerializeField] public RocketComponentType componentType;
     [SerializeField] Button researchButton;
-    [SerializeField] TextMeshPro componentReq, crystalReq;
-    [SerializeField] TextMeshPro description;
-    [SerializeField] RocketComponentSelector componentSelector;
 
     public static UnityEvent<RocketComponentType> OnResearched = new UnityEvent<RocketComponentType>();
 
     [Header("Text")]
-    [SerializeField] private TextMeshPro researchCostCrystalText;
-    [SerializeField] private TextMeshPro researchCostComponentText;
-    [SerializeField] private TextMeshPro researchResultDescriptionText;
+    [SerializeField] private TextMeshProUGUI researchCostCrystalText;
+    [SerializeField] private TextMeshProUGUI researchCostComponentText;
+    [SerializeField] private TextMeshProUGUI researchResultDescriptionText;
 
     void OnEnable()
     {
