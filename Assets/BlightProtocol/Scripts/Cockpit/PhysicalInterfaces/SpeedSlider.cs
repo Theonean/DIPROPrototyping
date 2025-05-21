@@ -31,6 +31,14 @@ public class SpeedSlider : ACSlider
         SetPositionNormalized(speedstepPositions[index]);
     }
 
+    public override void OnStartInteract()
+    {
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT)
+            return;
+
+        base.OnStartInteract();
+    }
+
     public override void OnEndInteract()
     {
         int index = Mathf.FloorToInt(progress * speedStepCount);
