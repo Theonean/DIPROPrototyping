@@ -73,12 +73,6 @@ public class RocketAimController : MonoBehaviour
             return;
         }
 
-        // Rotate the object towards the mouse, but only if allowed
-        if (canRotate)
-        {
-            RotateTowardsMouse();
-        }
-
         HandleRocketScrollInput();
 
         if(activeRocket == null || activeRocket.state != RocketState.ATTACHED)
@@ -119,6 +113,15 @@ public class RocketAimController : MonoBehaviour
 
                 canvasFlashRoutine = StartCoroutine(FlashOutOfRockets());
             }
+        }
+    }
+
+    private void FixedUpdate()
+    {
+        // Rotate the object towards the mouse, but only if allowed
+        if (canRotate)
+        {
+            RotateTowardsMouse();
         }
     }
 

@@ -24,7 +24,7 @@ public class FPVHarvesterFollower : MonoBehaviour
         transform.position = target.position;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         transform.position = target.position;
         lastYRotation = transform.rotation.eulerAngles.y;
