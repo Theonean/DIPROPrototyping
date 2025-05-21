@@ -216,51 +216,24 @@ public class TutorialManager : MonoBehaviour
         if (progressState == TutorialProgress.DASH)
         {
             MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
-
-            EmptyMissionChecklist();
-            CreateNewMissionText(TutorialProgress.SHOOTROCKET);
-            CreateNewMissionText(TutorialProgress.EXPLODROCKET);
-            CreateNewMissionText(TutorialProgress.RETRACTROCKET);
         }
         else if (progressState == TutorialProgress.RETRACTROCKET)
         {
             MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
             ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
-
-            EmptyMissionChecklist();
-            CreateNewMissionText(TutorialProgress.PERSPECTIVESWITCHTOFPV);
-            CreateNewMissionText(TutorialProgress.SETFIRSTMAPPOINT);
-            CreateNewMissionText(TutorialProgress.SETSPEED);
         }
         else if (progressState == TutorialProgress.SETSPEED)
         {
             ROCKET_SEGMENT_EXIT.CloseSegmentDoor();
             NAVIGATION_SEGMENT_EXIT.OpenSegmentDoor();
-
-            EmptyMissionChecklist();
-            CreateNewMissionText(TutorialProgress.WAITFORARRIVEATFIRSTPOINT);
-            CreateNewMissionText(TutorialProgress.USEFIRSTTIMEPULSE);
         }
         else if (progressState == TutorialProgress.USEFIRSTTIMEPULSE)
         {
             NAVIGATION_SEGMENT_EXIT.CloseSegmentDoor();
             PULSE_SEGMENT_EXIT.OpenSegmentDoor();
-
-            EmptyMissionChecklist();
-            CreateNewMissionText(TutorialProgress.SETDESTINATIONTORESOURCEPOINT);
-            CreateNewMissionText(TutorialProgress.SETSPEEDRESOURCEPOINT);
-            CreateNewMissionText(TutorialProgress.DRIVETORESOURCEPOINT);
-            CreateNewMissionText(TutorialProgress.HARVEST);
-            CreateNewMissionText(TutorialProgress.SWITCHDIRECTION_A_D);
-            CreateNewMissionText(TutorialProgress.PERSPECTIVESWITCHTODRONE);
-            CreateNewMissionText(TutorialProgress.FIGHT);
-            CreateNewMissionText(TutorialProgress.FINALSWITCHTOFPV);
-            CreateNewMissionText(TutorialProgress.SELECTNEWCOMPONENT);
-            CreateNewMissionText(TutorialProgress.UPGRADENEWCOMPONENT);
         }
         else if (progressState == TutorialProgress.UPGRADENEWCOMPONENT)
         {
-            EmptyMissionChecklist();
             PULSE_SEGMENT_EXIT.CloseSegmentDoor();
             TUTORIAL_EXIT.OpenSegmentDoor();
         }
@@ -270,9 +243,13 @@ public class TutorialManager : MonoBehaviour
 
     private void IncrementProgress()
     {
+        EmptyMissionChecklist();
+
         int progressInt = (int)progressState + 1;
         TutorialProgress newProgress = (TutorialProgress)progressInt;
         progressState = newProgress;
+
+        CreateNewMissionText(progressState);
     }
     public void CompletedWASD()
     {
@@ -341,6 +318,7 @@ public class TutorialManager : MonoBehaviour
 
         Harvester.Instance.changedState.RemoveListener(CompleteWAITFORARRIVEATFIRSTPOINT);
         NextTutorialStep();
+        ItemManager.Instance.AddCrystal(5);
     }
 
     public void CompleteUSEFIRSTTIMEPULSE()

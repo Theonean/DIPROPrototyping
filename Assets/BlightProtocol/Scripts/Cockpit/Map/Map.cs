@@ -110,6 +110,9 @@ public class Map : ACInteractable
 
                     Harvester.Instance.mover.SetDestination(targetPos);
                     TutorialManager.Instance.CompleteSETDESTINATIONTORESOURCEPOINT();
+
+                    ResourcePoint rp = hit.collider.GetComponent<ResourcePoint>();
+                    rp.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
                 }
                 else
                 {

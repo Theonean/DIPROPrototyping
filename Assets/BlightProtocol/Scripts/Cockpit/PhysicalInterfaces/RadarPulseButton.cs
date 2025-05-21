@@ -30,6 +30,9 @@ public class RadarPulseButton : ACTimedButton
         }
         else
         {
+            if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState != TutorialProgress.USEFIRSTTIMEPULSE)
+                return;
+
             if (ItemManager.Instance.RemoveCrystal(radarData.pulseCost))
             {
                 base.OnStartInteract();
@@ -49,9 +52,8 @@ public class RadarPulseButton : ACTimedButton
     protected override void HandleChargeResult(int result)
     {
         if (_fillImage == null) return;
-        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState != TutorialProgress.USEFIRSTTIMEPULSE)
 
-            StopAllCoroutines();
+        StopAllCoroutines();
         IsCurrentlyInteractable = false;
 
         switch (result)
