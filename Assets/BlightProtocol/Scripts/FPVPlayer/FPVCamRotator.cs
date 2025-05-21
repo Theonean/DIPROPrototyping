@@ -28,6 +28,8 @@ public class FPVCamRotator : MonoBehaviour
     public void ChangePosition(int direction)
     {
         if (isRotating) return;
+        if (TutorialManager.Instance.progressState is > TutorialProgress.PERSPECTIVESWITCHTOFPV and < TutorialProgress.SWITCHDIRECTION_A_D) return;
+
         isRotating = true;
         FPVInputManager.Instance.isActive = false;
         currentPosition += direction;
@@ -38,6 +40,11 @@ public class FPVCamRotator : MonoBehaviour
         if (currentPosition < 0) currentPosition = positions.Count - 1;
         StartCoroutine(SmoothRotate(positions[currentPosition].localPosition, direction));
         playerCam.ResetRotation(transitionTime);
+
+        if(TutorialManager.Instance.progressState == TutorialProgress.SWITCHDIRECTION_A_D)
+        {
+            TutorialManager.Instance.CompleteSWITCHDIRECTION_A_D();
+        }
     }
 
     IEnumerator SmoothRotate(Vector3 target, float direction = 1)

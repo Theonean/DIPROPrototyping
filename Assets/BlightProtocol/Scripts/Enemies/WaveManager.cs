@@ -83,6 +83,9 @@ public class WaveManager : MonoBehaviour
 
     void Update()
     {
+        if (TutorialManager.Instance.IsTutorialOngoing())
+            return;
+
         switch (waveMode)
         {
             case WaveMode.AMBUSH_POSSIBLE:
@@ -94,6 +97,7 @@ public class WaveManager : MonoBehaviour
                 }
                 break;
         }
+    
 
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {

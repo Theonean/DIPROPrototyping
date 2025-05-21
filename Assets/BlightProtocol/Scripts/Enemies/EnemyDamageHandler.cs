@@ -6,7 +6,7 @@ public class EnemyDamageHandler : MonoBehaviour
     [SerializeField] private EnemyData m_EnemyData;
     public GameObject m_Explosion_1;
     public UnityEvent enemyDestroyed;
-    private ItemDropper itemDropper;
+    public ItemDropper itemDropper;
     private bool dead = false;
 
     void Start()

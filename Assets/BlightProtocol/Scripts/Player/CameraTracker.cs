@@ -8,7 +8,7 @@ public class CameraTracker : MonoBehaviour
     public AnimationCurve cameraFollowCurve;
     public float cameraMoveSpeed = 20f;
     float m_MaxCameraDistance = 2f;
-    private Vector3 cameraOffset;
+    public Vector3 cameraOffset;
 
     private Camera topDownCamera;
 
@@ -24,7 +24,6 @@ public class CameraTracker : MonoBehaviour
         }
 
         topDownCamera = GetComponent<Camera>();
-        cameraOffset = topDownCamera.transform.position - objectToTrack.transform.position;
     }
 
     void FixedUpdate()

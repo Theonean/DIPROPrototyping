@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Events;
 
+[SerializeField]
 public enum CameraPerspective
 {
     DRONE,
@@ -135,6 +136,12 @@ public class PerspectiveSwitcher : MonoBehaviour
             pC.enabled = false;
         }
         Shader.SetGlobalFloat("_isTopDown", 0);
+    }
+
+    public void OverrideToFPV()
+    {
+        SetPerspective(CameraPerspective.FPV);
+        FPVInputManager.Instance.fpvCamRotator.ChangePosition(1);
     }
 
     private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)

@@ -12,7 +12,7 @@ public class FPVInputManager : MonoBehaviour
 {
     public static FPVInputManager Instance { get; private set; }
     private FPVPlayerCam fpvPlayerCam;
-    private FPVCamRotator fpvCamRotator;
+    public FPVCamRotator fpvCamRotator { get; private set; }
     [SerializeField] private FPVInteractionHandler interactionHandler;
 
     public LookState lookState = LookState.IDLE;

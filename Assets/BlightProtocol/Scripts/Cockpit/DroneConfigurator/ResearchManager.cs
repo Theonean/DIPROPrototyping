@@ -10,7 +10,7 @@ public class ResearchManager : MonoBehaviour
     [SerializeField] TextMeshPro description;
     [SerializeField] RocketComponentSelector componentSelector;
 
-    public UnityEvent<RocketComponentType> OnResearched;
+    public static UnityEvent<RocketComponentType> OnResearched = new UnityEvent<RocketComponentType>();
 
     [Header("Text")]
     [SerializeField] private TextMeshPro researchCostCrystalText;

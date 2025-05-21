@@ -7,7 +7,7 @@ public class ItemDropper : MonoBehaviour
     public SOItem[] itemsToSpawn;
     public bool spawnSingle = true;
 
-    public int numberOfCrystals = 5; // Number of items to spawn
+    public int numberOfItems = 1; // Number of items to spawn
     public float spawnRadius = 5f; // Radius around the object to spawn items
     public Vector2 throwForceRange = new Vector2(5f, 10f); // Range of force to apply to the item when spawning
     private bool isSpawning = false; // Flag to prevent multiple spawns
@@ -17,7 +17,7 @@ public class ItemDropper : MonoBehaviour
         if (isSpawning) return;
         isSpawning = true;
 
-        StartCoroutine(DropItems(numberOfCrystals, spawnRadius));
+        StartCoroutine(DropItems(numberOfItems, spawnRadius));
     }
 
     private IEnumerator DropItems(int count, float radius)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.Events;
 
 public class ComponentSelectorManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class ComponentSelectorManager : MonoBehaviour
     [SerializeField] private Button applyToAllButton;
     [SerializeField] private RocketComponentSelector[] componentSelectors = new RocketComponentSelector[3];
     [SerializeField] private ResearchManager[] researchManagers = new ResearchManager[3];
+
+    public UnityEvent OnComponentSelectionChanged = new UnityEvent();
 
     void Awake()
     {
@@ -29,10 +32,9 @@ public class ComponentSelectorManager : MonoBehaviour
         {
             ConnectSelector(componentSelector);
         }
-        foreach (var researchManager in researchManagers)
-        {
-            researchManager.OnResearched.AddListener(selectedRocketManager.LevelUpComponent);
-        }
+
+        ResearchManager.OnResearched.AddListener(selectedRocketManager.LevelUpComponent);
+
         applyToAllButton.OnPressed.AddListener(selectedRocketManager.ApplySelectionToAll);
     }
 
@@ -43,10 +45,8 @@ public class ComponentSelectorManager : MonoBehaviour
             DisconnectSelector(componentSelector);
         }
 
-        foreach (var researchManager in researchManagers)
-        {
-            researchManager.OnResearched.RemoveListener(selectedRocketManager.LevelUpComponent);
-        }
+        ResearchManager.OnResearched.RemoveListener(selectedRocketManager.LevelUpComponent);
+
         applyToAllButton.OnPressed.RemoveListener(selectedRocketManager.ApplySelectionToAll);
     }
 
@@ -64,6 +64,7 @@ public class ComponentSelectorManager : MonoBehaviour
 
     private void ComponentSelectionChanged(RocketComponentType componentType, GameObject componentPrefab)
     {
+        OnComponentSelectionChanged?.Invoke();
         selectedRocketManager.ChangeActiveRocketComponent(componentType, componentPrefab);
     }
 

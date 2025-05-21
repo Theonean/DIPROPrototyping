@@ -1,8 +1,11 @@
 using UnityEngine;
 using System.Collections;
+using UnityEngine.Events;
 
 public class RocketAimController : MonoBehaviour
 {
+    public static RocketAimController Instance;
+
     public GameObject[] rocketBodies;
     public GameObject[] rocketPropulsions;
     public GameObject[] rocketFronts;
@@ -29,6 +32,22 @@ public class RocketAimController : MonoBehaviour
     private PlayerCore playerCore;
     private FrankenGameManager frankenGameManager;
     private PerspectiveSwitcher perspectiveSwitcher;
+
+    public UnityEvent OnRocketShot = new UnityEvent();
+    public UnityEvent OnRocketExplode = new UnityEvent();
+    public UnityEvent OnRocketRetract = new UnityEvent();
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -71,6 +90,7 @@ public class RocketAimController : MonoBehaviour
                 if (rocket.CanExplode())
                 {
                     rocket.Explode();
+                    OnRocketExplode?.Invoke();
                 }
                 return;
             }
@@ -78,6 +98,7 @@ public class RocketAimController : MonoBehaviour
             if (activeRocket != null)
             {
                 activeRocket.Shoot(hit.point);
+                OnRocketShot?.Invoke();
                 StartCoroutine(StartRotationDelay());
             }
             else

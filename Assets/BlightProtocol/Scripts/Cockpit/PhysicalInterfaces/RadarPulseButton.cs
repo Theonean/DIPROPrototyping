@@ -49,8 +49,9 @@ public class RadarPulseButton : ACTimedButton
     protected override void HandleChargeResult(int result)
     {
         if (_fillImage == null) return;
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState != TutorialProgress.USEFIRSTTIMEPULSE)
 
-        StopAllCoroutines();
+            StopAllCoroutines();
         IsCurrentlyInteractable = false;
 
         switch (result)
@@ -71,6 +72,9 @@ public class RadarPulseButton : ACTimedButton
                 Radar.Instance.Pulse(chargeFailedModifier);
                 break;
         }
+
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState == TutorialProgress.USEFIRSTTIMEPULSE)
+            TutorialManager.Instance.CompleteUSEFIRSTTIMEPULSE();
 
         StartCoroutine(ResetSlider());
     }

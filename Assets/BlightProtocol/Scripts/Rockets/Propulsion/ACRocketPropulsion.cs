@@ -149,6 +149,8 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     {
         if (ParentRocket.propulsionComponent.GetType() == typeof(StraightLinePropulsion)) rocketTransform.position = new Vector3(rocketTransform.position.x, ParentRocket.initialTransform.position.y, rocketTransform.position.z);
 
+        RocketAimController.Instance.OnRocketRetract?.Invoke();
+
         while (true)
         {
             // Use the initial rocketTransform's position and rotation instead of separate variables

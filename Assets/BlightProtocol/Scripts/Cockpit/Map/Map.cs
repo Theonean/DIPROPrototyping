@@ -88,6 +88,9 @@ public class Map : ACInteractable
 
     public void SetTarget()
     {
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETFIRSTMAPPOINT and not TutorialProgress.SETDESTINATIONTORESOURCEPOINT) 
+            return;
+
         if (Physics.Raycast(targetRay, out hit, Mathf.Infinity, hitMask))
         {
             if (hit.collider.CompareTag("Checkpoint"))
@@ -100,8 +103,27 @@ public class Map : ACInteractable
             }
             if (hit.collider.CompareTag("ResourcePoint"))
             {
-                Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
+                if (TutorialManager.Instance.IsTutorialOngoing())
+                {
+                    Vector3 targetPos = hit.collider.transform.position;
+                    targetPos.y = 0;
+
+                    Harvester.Instance.mover.SetDestination(targetPos);
+                    TutorialManager.Instance.CompleteSETDESTINATIONTORESOURCEPOINT();
+                }
+                else
+                {
+                    Vector3 targetPos = new Vector3(hit.point.x, 0, hit.point.z);
+                    Harvester.Instance.mover.SetDestination(targetPos);
+                }
+            }
+            if (hit.collider.CompareTag("TutorialTarget"))
+            {
+                Vector3 targetPos = hit.collider.transform.position;
+                targetPos.y = 0;
+
                 Harvester.Instance.mover.SetDestination(targetPos);
+                TutorialManager.Instance.CompleteSETFIRSTMAPPOINT();
             }
             else if (NavMesh.SamplePosition(hit.point, out NavMeshHit navMeshHit, 50f, NavMesh.AllAreas))
             {
