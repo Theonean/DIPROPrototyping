@@ -26,6 +26,7 @@ public abstract class ACRocketComponent : MonoBehaviour
     private int[] researchCostComponent = { 5, 10, 15, 20 };
     protected int maxComponentLevel = 5;
     public string DescriptiveName;
+    public string componentDescription = "Description here please uwu";
     public string upgradeDescription;
     public UnityEvent<RocketComponentType, int> OnKilledEnemy = new UnityEvent<RocketComponentType, int>();
 
