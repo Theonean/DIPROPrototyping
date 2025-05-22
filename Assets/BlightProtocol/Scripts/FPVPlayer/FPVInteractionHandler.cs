@@ -41,7 +41,6 @@ public class FPVInteractionHandler : MonoBehaviour
     private void LateUpdate()
     {
         if (inputManager.lookState == LookState.LOOKING) return;
-        Physics.SyncTransforms();
         if (activeInteractable != null && inputManager.lookState == LookState.INTERACTING)
         {
             UpdateInteraction();
