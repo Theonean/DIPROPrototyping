@@ -7,7 +7,7 @@ public class CameraTracker : MonoBehaviour
     public GameObject objectToTrack;
     public AnimationCurve cameraFollowCurve;
     public float cameraMoveSpeed = 20f;
-    float m_MaxCameraDistance = 2f;
+    float m_MaxCameraDistance = 20f;
     public Vector3 cameraOffset;
 
     private Camera topDownCamera;

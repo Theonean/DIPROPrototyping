@@ -6,8 +6,7 @@ using UnityEngine.Events;
 public enum CameraPerspective
 {
     DRONE,
-    FPV,
-    SWITCHING
+    FPV
 }
 
 public class PerspectiveSwitcher : MonoBehaviour
@@ -15,8 +14,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     public static PerspectiveSwitcher Instance { get; private set; }
     [SerializeField] private float animationDuration = 1f;
     [SerializeField] private AnimationCurve animationCurve;
-    [SerializeField] private Camera perspectiveSwitchCamera;
-    [SerializeField] private Camera droneCamera;
+    [SerializeField] private Camera droneCamera, gogglesCamera;
     [SerializeField] private Camera fpCamera;
     [SerializeField] private Transform dronePositionInLoadingBay;
     [SerializeField] private float droneSpawnDistance = 10f;
@@ -61,16 +59,13 @@ public class PerspectiveSwitcher : MonoBehaviour
             case CameraPerspective.FPV:
                 SetFPVPerspective();
                 break;
-            case CameraPerspective.SWITCHING:
-                StartCoroutine(AnimateCameraSwitch(fromPerspective));
-                break;
         }
     }
 
     public void SetTopDownPerspective()
     {
         droneCamera.enabled = true;
-        perspectiveSwitchCamera.enabled = false;
+        gogglesCamera.enabled = false;
         fpCamera.gameObject.SetActive(false);
 
         PlayerCore playerCore = PlayerCore.Instance;
@@ -104,16 +99,10 @@ public class PerspectiveSwitcher : MonoBehaviour
     public void SetFPVPerspective()
     {
         droneCamera.enabled = false;
-        perspectiveSwitchCamera.enabled = false;
+        gogglesCamera.enabled = true;
         fpCamera.gameObject.SetActive(true);
 
         PlayerCore playerCore = PlayerCore.Instance;
-
-        playerCore.transform.parent = dronePositionInHarvester;
-        playerCore.transform.localPosition = Vector3.zero;
-        playerCore.transform.localRotation = Quaternion.identity;
-        playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
-        playerCore.shield.SetActive(false);
 
         Rigidbody playerRB = playerCore.GetComponent<Rigidbody>();
         playerRB.linearVelocity = Vector3.zero;
@@ -125,6 +114,11 @@ public class PerspectiveSwitcher : MonoBehaviour
         rocketAimController.Rocket3.ReattachRocketToDrone();
         rocketAimController.Rocket4.ReattachRocketToDrone();
 
+        playerCore.transform.parent = dronePositionInHarvester;
+        playerCore.transform.localPosition = Vector3.zero;
+        playerCore.transform.localRotation = Quaternion.identity;
+        playerCore.transform.localScale = new Vector3(0.6f, 0.6f, 0.6f);
+        playerCore.shield.SetActive(false);
 
         Harvester harvester = Harvester.Instance;
         //playerCore.transform.LookAt(harvester.mover.targetPosObject.transform.position);
@@ -138,67 +132,15 @@ public class PerspectiveSwitcher : MonoBehaviour
         Shader.SetGlobalFloat("_isTopDown", 0);
     }
 
+    public void EnableTopDownPreview(bool enable)
+    {
+        gogglesCamera.enabled = enable;
+    }
+
     public void OverrideToFPV()
     {
         SetPerspective(CameraPerspective.FPV);
         FPVInputManager.Instance.fpvCamRotator.ChangePosition(1);
-    }
-
-    private IEnumerator AnimateCameraSwitch(CameraPerspective fromPerspective)
-    {
-        Shader.SetGlobalFloat("_isTopDown", 0);
-        Camera startCam = fromPerspective == CameraPerspective.FPV ? fpCamera : droneCamera;
-        float startFOV = startCam.fieldOfView;
-        Camera endCam = fromPerspective == CameraPerspective.FPV ? droneCamera : fpCamera;
-        float endFOV = endCam.fieldOfView;
-
-        // Set starting position and lock rotation to the destination
-        perspectiveSwitchCamera.transform.position = startCam.transform.position;
-        perspectiveSwitchCamera.transform.rotation = endCam.transform.rotation;
-
-        perspectiveSwitchCamera.enabled = true;
-        startCam.enabled = false;
-        endCam.enabled = false;
-
-        if(endCam == droneCamera)
-        {
-            Vector3 spawnPosition = GetDroneRespawnPosition();
-            spawnPosition.y = endCam.transform.position.y;
-            endCam.transform.position = spawnPosition; 
-            
-            spawnPosition.y = DroneMovement.Instance.distanceFromGround;
-            PlayerCore.Instance.transform.position = spawnPosition;
-        }
-
-
-
-        float t = 0f;
-        while (t < animationDuration)
-        {
-            t += Time.deltaTime;
-            perspectiveSwitchCamera.transform.position = Vector3.Lerp(
-                startCam.transform.position,
-                endCam.transform.position,
-                animationCurve.Evaluate(t / animationDuration)
-            );
-
-            perspectiveSwitchCamera.fieldOfView = Mathf.Lerp(startFOV, endFOV, animationCurve.Evaluate(t / animationDuration));
-
-            if (fromPerspective == CameraPerspective.DRONE)
-            {
-                perspectiveSwitchCamera.transform.rotation = Quaternion.Lerp(
-                    startCam.transform.rotation,
-                    endCam.transform.rotation,
-                    animationCurve.Evaluate(t / animationDuration)
-                );
-            }
-
-            yield return null;
-        }
-
-        endCam.enabled = true;
-        perspectiveSwitchCamera.enabled = false;
-        SetPerspective(fromPerspective == CameraPerspective.FPV ? CameraPerspective.DRONE : CameraPerspective.FPV);
     }
 
     public Vector3 GetDroneRespawnPosition()
@@ -207,5 +149,5 @@ public class PerspectiveSwitcher : MonoBehaviour
         pos.y = DroneMovement.Instance.distanceFromGround;
         return pos;
     }
-    
+
 }

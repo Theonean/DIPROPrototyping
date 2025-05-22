@@ -4,9 +4,8 @@ using UnityEngine.Events;
 public class DroneGoggles : ACInteractable
 {
     public static DroneGoggles Instance;
-    [SerializeField] private GameObject mesh;
-    private Animator meshAnimator;
-    private bool isActive = false;
+    [SerializeField] private Animator meshAnimator;
+    private bool isActivated = false;
     private bool isAnimating = false;
     public UnityEvent perspectiveSwitchStarted;
     protected void Awake()
@@ -24,11 +23,10 @@ public class DroneGoggles : ACInteractable
     protected override void Start()
     {
         base.Start();
-        meshAnimator = mesh.GetComponent<Animator>();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
         meshAnimator.SetTrigger("activate");
         isAnimating = true;
-        isActive = true;
+        isActivated = true;
     }
 
     void Update()
@@ -49,9 +47,8 @@ public class DroneGoggles : ACInteractable
         {
             meshAnimator.SetTrigger("activate");
             isAnimating = true;
-            isActive = true;
-
-            Invoke(nameof(EnterDroneMode), meshAnimator.GetCurrentAnimatorStateInfo(0).length);
+            isActivated = true;
+            PerspectiveSwitcher.Instance.EnableTopDownPreview(true);
 
             //Block player inputs
             FPVInputManager.Instance.isActive = false;
@@ -59,18 +56,26 @@ public class DroneGoggles : ACInteractable
         }
     }
 
-    void EnterDroneMode()
+    public void OnAnimationFinish()
     {
-        PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
+        if (isActivated)
+        {
+            PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.DRONE);
+        }
+        else
+        {
+            PerspectiveSwitcher.Instance.EnableTopDownPreview(false);
+        }
+
     }
 
     void OnPerspectiveSwitched()
     {
-        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV && isActive)
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV && isActivated)
         {
             meshAnimator.SetTrigger("deactivate");
             isAnimating = true;
-            isActive = false;
+            isActivated = false;
         }
     }
 }

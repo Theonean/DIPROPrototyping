@@ -32,11 +32,6 @@ public class FPVPlayerCam : MonoBehaviour
         initialRot = transform.localRotation;
     }
 
-    void Start()
-    {
-        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);       
-    }
-
     public void UpdateCameraRotation(Vector2 input)
     {
         if (isLocked) return;
@@ -71,14 +66,6 @@ public class FPVPlayerCam : MonoBehaviour
             angle -= 360;
         }
         return angle;
-    }
-
-    private void OnPerspectiveSwitched() {
-        switch(PerspectiveSwitcher.Instance.currentPerspective) {
-            case CameraPerspective.SWITCHING:
-                transform.localRotation = initialRot;
-            break;
-        }
     }
 
     public void ResetRotation(float duration) {

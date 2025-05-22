@@ -63,12 +63,6 @@ public class UIHandler : MonoBehaviour
                 fpvUI.SetActive(true);
                 generalUI.SetActive(true);
                 break;
-
-            case CameraPerspective.SWITCHING:
-                topDownUI.SetActive(false);
-                fpvUI.SetActive(false);
-                generalUI.SetActive(false);
-                break;
         }
     }
 }
