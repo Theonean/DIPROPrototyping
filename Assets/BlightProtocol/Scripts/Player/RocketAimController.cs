@@ -137,7 +137,7 @@ public class RocketAimController : MonoBehaviour
     private void RotateTowardsMouse()
     {
         // Raycast to find the mouse position in world space
-        if (Camera.main == null)
+        if (Camera.main == null || !Camera.main.enabled)
         {
             return;
         }

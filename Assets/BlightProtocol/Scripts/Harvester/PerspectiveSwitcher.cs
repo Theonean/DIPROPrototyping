@@ -46,8 +46,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         {
             return;
         }
-
-        CameraPerspective fromPerspective = currentPerspective;
         currentPerspective = perspective;
         onPerspectiveSwitched.Invoke();
 
