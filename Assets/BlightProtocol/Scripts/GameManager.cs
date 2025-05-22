@@ -19,7 +19,7 @@ public class FrankenGameManager : MonoBehaviour
     public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     
-    public bool startWithTutorial = true;
+    public bool startWithTutorial { get; private set; } = true;
 
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -101,6 +101,8 @@ public class FrankenGameManager : MonoBehaviour
             TogglePause();
         }
     }
+
+    public void SetStartWithTutorial() { startWithTutorial = true; }
 
     IEnumerator FadeUI(CanvasGroup uiOverlay, bool fadeIn, float maxTime)
     {
