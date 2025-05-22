@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using System.Linq;
 
 public class CollectibleItem : MonoBehaviour
 {
@@ -9,6 +10,16 @@ public class CollectibleItem : MonoBehaviour
     public UnityEvent<CollectibleItem> arrivedAtPlayer = new UnityEvent<CollectibleItem>();
 
     private bool flyingToPlayer = false;
+
+
+    private void Start()
+    {
+        LayerMask IsCollectible = LayerMask.NameToLayer("PL_IsCollectible");
+        gameObject.layer = IsCollectible;
+
+        foreach (GameObject gO in GetComponentsInChildren<Transform>().Select(transform => transform.gameObject)) 
+            gO.layer = IsCollectible;
+    }
 
     public void StartflyingToPlayer()
     {

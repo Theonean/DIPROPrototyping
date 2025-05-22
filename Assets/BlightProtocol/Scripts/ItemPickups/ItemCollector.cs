@@ -24,6 +24,7 @@ public class ItemCollector : MonoBehaviour
     private float timeToFadeOutText = 1f;
     private float timeToBundleTogetherCollectedItems = 0.5f; //When another item 
 
+    [SerializeField] private LayerMask collectibleItemMask;
     [SerializeField] private GameObject collectedItemTextPrefab;
     [SerializeField] private Sprite crystalSprite, componentSprite;
     [SerializeField] private Color crystalSpriteColor, componentSpriteColor;
@@ -38,7 +39,7 @@ public class ItemCollector : MonoBehaviour
         {
             collectedItemCanvas.transform.LookAt(Camera.main.transform);
 
-            int foundColliders = Physics.OverlapSphereNonAlloc(transform.position, collectorRadius, colliderBuffer);
+            int foundColliders = Physics.OverlapSphereNonAlloc(transform.position, collectorRadius, colliderBuffer, collectibleItemMask);
             if (foundColliders <= 0) return;
 
             for (int i = 0; i < foundColliders; i++)
