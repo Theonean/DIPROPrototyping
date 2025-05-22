@@ -27,7 +27,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
                 0.1f * Time.deltaTime * ParentRocket.settings.flySpeed
             );
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         Logger.Log("Rocket reached TargetPosition", LogLevel.INFO, LogType.ROCKETS);
@@ -72,7 +72,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
                     Time.deltaTime * 2f
                 );
 
-                yield return null;
+                yield return new WaitForFixedUpdate();
             }
         }
         else

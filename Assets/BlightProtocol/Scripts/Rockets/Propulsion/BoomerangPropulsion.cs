@@ -66,7 +66,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
                 rocketTransform.rotation = Quaternion.LookRotation(derivative.normalized);
             }
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         // Phase 2: Return arc
@@ -96,7 +96,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
                 rocketTransform.rotation = Quaternion.LookRotation(derivative.normalized);
             }
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         parentRocket.ReattachRocketToDrone();

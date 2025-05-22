@@ -45,7 +45,7 @@ public class ArcingPropulsion : ACRocketPropulsion
                 0.1f * Time.deltaTime * ParentRocket.settings.flySpeed
             );
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         rocketTransform.position = TargetPosition;
