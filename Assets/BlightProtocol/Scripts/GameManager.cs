@@ -42,6 +42,8 @@ public class FrankenGameManager : MonoBehaviour
 
         Harvester harvester = controlZone.GetComponent<Harvester>();
         harvester.health.died.AddListener(() => PlayerDied());
+
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Update()
