@@ -30,6 +30,7 @@ public class StartHarvestLever : ACLever
                         SetPositionNormalized(1f);
                         Logger.Log("Starting Harvesting", LogLevel.INFO, LogType.HARVESTER);
                         harvester.activeResourcePoint = closestResourcePoint;
+                        harvester.mover.SetMoveSpeed(0);
                         harvester.SetState(new StartHarvestingState(harvester));
                     }
                     break;
