@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 using System.Collections;
 using UnityEngine.Events;
@@ -25,6 +25,7 @@ public enum TutorialProgress
     SWITCHDIRECTION_A_D,
     PERSPECTIVESWITCHTODRONE,
     FIGHT,
+    COLLECTCRYSTALS,
     FINALSWITCHTOFPV,
     SELECTNEWCOMPONENT,
     UPGRADENEWCOMPONENT,
@@ -41,7 +42,7 @@ public class TutorialManager : MonoBehaviour
 
     public GameObject TutorialMissionGroup;
     public TextMeshProUGUI tutorialText;
-    private List<(TextMeshProUGUI, TutorialProgress)> tutorialChecklist = new List<(TextMeshProUGUI, TutorialProgress)>();
+    private TextMeshProUGUI currentTutorialText;
 
     public GameObject droneStartPosition;
     public GameObject HarvesterStartPosition;
@@ -52,6 +53,8 @@ public class TutorialManager : MonoBehaviour
     private int deadEnemyCounter = 0;
 
     public ResourcePoint tutorialResourcePoint;
+    public int crystalsToCollectForUpgrade = 20;
+    private int crystalsCollected = 0;
 
     [Header("Segment Doors")]
     [SerializeField] private TutorialDoor MOVEMENT_SEGMENT_EXIT;
@@ -89,16 +92,14 @@ public class TutorialManager : MonoBehaviour
         if (!IsTutorialOngoing()) 
             return;
 
-        switch(progressState)
+        if (!_isTransitioning &&
+            progressState == TutorialProgress.DASH &&
+            DroneMovement.Instance.IsDashing)
         {
-            case TutorialProgress.DASH:
-                if (DroneMovement.Instance.IsDashing)
-                {
-                    NextTutorialStep();
-                    RocketAimController.Instance.OnRocketShot.AddListener(CompleteSHOOTROCKET);
-                }
-                break;
+            NextTutorialStep();
+            RocketAimController.Instance.OnRocketShot.AddListener(CompleteSHOOTROCKET);
         }
+
     }
 
     public void StartTutorial()
@@ -120,106 +121,134 @@ public class TutorialManager : MonoBehaviour
         return progressState is not TutorialProgress.INACTIVE and not TutorialProgress.DONE;
     }
     
-    private void CreateNewMissionText(TutorialProgress forTutorialPart)
+    private void CreateNewcurrentTutorialText(TutorialProgress forTutorialPart)
     {
-        TextMeshProUGUI missionText = Instantiate(TutorialMissionGroup.transform.GetChild(0), Vector3.zero, Quaternion.identity, TutorialMissionGroup.transform).GetComponent<TextMeshProUGUI>();
+        if (currentTutorialText == null)
+            currentTutorialText = Instantiate(TutorialMissionGroup.transform.GetChild(0), Vector3.zero, Quaternion.identity, TutorialMissionGroup.transform).GetComponent<TextMeshProUGUI>();
 
         switch(forTutorialPart)
         {
             case TutorialProgress.WASD:
-                missionText.text = "[ ] Move to target position using WASD";
+                currentTutorialText.text = "[ ] Move to target position using WASD";
                 break;
             case TutorialProgress.DASH:
-                missionText.text = "[ ] Dash using spacebar";
+                currentTutorialText.text = "[ ] Dash using spacebar";
                 break;
             case TutorialProgress.SHOOTROCKET:
-                missionText.text = "[ ] Shoot a rocket using left-click";
+                currentTutorialText.text = "[ ] Shoot a rocket using left-click";
                 break;
             case TutorialProgress.EXPLODROCKET:
-                missionText.text = "[ ] Explode a rocket by clicking it";
+                currentTutorialText.text = "[ ] Explode a rocket by clicking it";
                 break;
             case TutorialProgress.RETRACTROCKET:
-                missionText.text = "[ ] Pull back a rocket using right-clickt";
+                currentTutorialText.text = "[ ] Pull back a rocket using right-clickt";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTOFPV:
-                missionText.text = "[ ] Enter Harvester";
+                currentTutorialText.text = "[ ] Enter Harvester";
                 break;
             case TutorialProgress.SETFIRSTMAPPOINT:
-                missionText.text = "[ ] Set map waypoint";
+                currentTutorialText.text = "[ ] Set map waypoint";
                 break;
             case TutorialProgress.SETSPEED:
-                missionText.text = "[ ] Start driving";
+                currentTutorialText.text = "[ ] Start driving";
                 break;
             case TutorialProgress.WAITFORARRIVEATFIRSTPOINT:
-                missionText.text = "[ ] Enjoy the scenery";
+                currentTutorialText.text = "[ ] Enjoy the scenery";
                 break;
             case TutorialProgress.USEFIRSTTIMEPULSE:
-                missionText.text = "[ ] Use pulse button";
+                currentTutorialText.text = "[ ] Use pulse button";
                 break;
             case TutorialProgress.SETDESTINATIONTORESOURCEPOINT:
-                missionText.text = "[ ] Set map waypoint to found resource";
+                currentTutorialText.text = "[ ] Set map waypoint to found resource";
                 break;
             case TutorialProgress.SETSPEEDRESOURCEPOINT:
-                missionText.text = "[ ] Start driving";
+                currentTutorialText.text = "[ ] Start driving";
                 break;
             case TutorialProgress.DRIVETORESOURCEPOINT:
-                missionText.text = "[ ] Enjoy the scenery electric boogaloo V2";
+                currentTutorialText.text = "[ ] Enjoy the scenery electric boogaloo V2";
                 break;
             case TutorialProgress.HARVEST:
-                missionText.text = "[ ] Pull harvest lever";
+                currentTutorialText.text = "[ ] Pull harvest lever";
                 break;
             case TutorialProgress.SWITCHDIRECTION_A_D:
-                missionText.text = "[ ] switch to drone configurator using 'a' or 'd'";
+                currentTutorialText.text = "[ ] switch to drone configurator using 'a' or 'd'";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTODRONE:
-                missionText.text = "[ ] Switch back to drone by clicking visors";
+                currentTutorialText.text = "[ ] Switch back to drone by clicking visors";
                 break;
             case TutorialProgress.FIGHT:
-                missionText.text = "[ ] Protect harvester from enemies!";
+                currentTutorialText.text = "[ ] Protect harvester from enemies!";
+                break;
+            case TutorialProgress.COLLECTCRYSTALS:
+                currentTutorialText.text = "[ ] Shoot crystal structures to collect some: " + crystalsCollected + "/" + crystalsToCollectForUpgrade;
                 break;
             case TutorialProgress.FINALSWITCHTOFPV:
-                missionText.text = "[ ] Enter Harvester from the back (crazy style)";
+                currentTutorialText.text = "[ ] Enter Harvester from the back (crazy style)";
                 break;
             case TutorialProgress.SELECTNEWCOMPONENT:
-                missionText.text = "[ ] Select your newly unlocked component";
+                currentTutorialText.text = "[ ] Select your newly unlocked component";
                 break;
             case TutorialProgress.UPGRADENEWCOMPONENT:
-                missionText.text = "[ ] upgrade your newly unlocked component";
+                currentTutorialText.text = "[ ] upgrade your newly unlocked component";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
-                missionText.text = "[ ] Drive to checkpoint to finish tutorial";
+                currentTutorialText.text = "[ ] Drive to checkpoint to finish tutorial";
                 break;
             default:
-                missionText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
+                currentTutorialText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
                 break;
         }
-
-        tutorialChecklist.Add((missionText, forTutorialPart));
-    }
-
-    private void CompleteMissionText(TutorialProgress forTutorialPart)
-    {
-        var missionText = tutorialChecklist.Where(item => item.Item2 == forTutorialPart).FirstOrDefault();
-        missionText.Item1.text = missionText.Item1.text.Replace("[ ]", "[X]");
-        missionText.Item1.fontStyle = FontStyles.Strikethrough;
-    }
-
-    private void EmptyMissionChecklist()
-    {
-        foreach ((TextMeshProUGUI, TutorialProgress) missionItem in tutorialChecklist)
-        {
-            Destroy(missionItem.Item1.gameObject);
-        }
-        tutorialChecklist.Clear();
     }
 
     #region Tutorial Progress Functions
+    private bool _isTransitioning = false;
 
     public void NextTutorialStep()
     {
-        if (IsTutorialOngoing())
-            CompleteMissionText(progressState);
+        // nothing else will fire until the current animation is done
+        if (_isTransitioning)
+            return;
 
+        StartCoroutine(TransitionTutorialStep());
+    }
+
+    private IEnumerator TransitionTutorialStep()
+    {
+        _isTransitioning = true;
+
+        float duration = 0.3f;
+        float t = 0f;
+
+        // 1. mark & strike
+        if (currentTutorialText != null)
+        {
+            var oldRT = currentTutorialText.rectTransform;
+            currentTutorialText.text = currentTutorialText.text.Replace("[ ]", "[X]");
+            currentTutorialText.fontStyle |= FontStyles.Strikethrough;
+
+            // 2. slide out
+            Vector2 startPos = oldRT.anchoredPosition;
+            Vector2 endPos = startPos + Vector2.left * (TutorialMissionGroup.GetComponent<RectTransform>().rect.width + 50);
+            t = 0f;
+            while (t < duration)
+            {
+                t += Time.deltaTime;
+                oldRT.anchoredPosition = Vector2.Lerp(startPos, endPos, t / duration);
+                yield return null;
+            }
+        }
+        else
+        {
+            // very first step: just instantiate
+            currentTutorialText = Instantiate(
+                TutorialMissionGroup.transform.GetChild(0),
+                Vector3.zero,
+                Quaternion.identity,
+                TutorialMissionGroup.transform
+            ).GetComponent<TextMeshProUGUI>();
+        }
+
+        // Open close segment doors when last task of a segment is finished
         if (progressState == TutorialProgress.DASH)
         {
             MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
@@ -244,18 +273,32 @@ public class TutorialManager : MonoBehaviour
             PULSE_SEGMENT_EXIT.CloseSegmentDoor();
             TUTORIAL_EXIT.OpenSegmentDoor();
         }
-        else if(progressState == TutorialProgress.DRIVETOCHECKPOINT)
+        else if (progressState == TutorialProgress.DRIVETOCHECKPOINT)
         {
             TUTORIAL_EXIT.CloseSegmentDoor();
         }
 
+        currentTutorialText.fontStyle = FontStyles.Normal;
+
+        // slide the new text up from below
+        var newRT = currentTutorialText.rectTransform;
+        Vector2 newStart = new Vector2(newRT.anchoredPosition.x, -50f);
+        Vector2 newEnd = Vector2.zero;
+        t = 0f;
+        while (t < duration)
+        {
+            t += Time.deltaTime;
+            newRT.anchoredPosition = Vector2.Lerp(newStart, newEnd, t / duration);
+            yield return null;
+        }
+
         IncrementProgress();
+        _isTransitioning = false;
     }
+
 
     private void IncrementProgress()
     {
-        EmptyMissionChecklist();
-
         int progressInt = (int)progressState + 1;
         TutorialProgress newProgress = (TutorialProgress)progressInt;
         progressState = newProgress;
@@ -266,9 +309,10 @@ public class TutorialManager : MonoBehaviour
         }
         else
         {
-            CreateNewMissionText(progressState);
+            CreateNewcurrentTutorialText(progressState);
         }
     }
+
     public void CompletedWASD()
     {
         if (progressState != TutorialProgress.WASD)
@@ -424,8 +468,26 @@ public class TutorialManager : MonoBehaviour
         if (progressState != TutorialProgress.FIGHT)
             return;
 
+        crystalsCollected = ItemManager.Instance.GetCrystal();
         NextTutorialStep();
-        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(CompleteFINALSWITCHTOFPV);
+        ItemManager.Instance.crystalAmountChanged.AddListener(CompleteCOLLECTCRYSTALS);
+    }
+    public void CompleteCOLLECTCRYSTALS(int amount)
+    {
+        if (progressState != TutorialProgress.COLLECTCRYSTALS)
+            return;
+
+        crystalsCollected += amount;
+
+        currentTutorialText.text = "[ ] Shoot crystal structures to collect some: " + crystalsCollected + "/" + crystalsToCollectForUpgrade;
+
+
+        if (crystalsCollected >= crystalsToCollectForUpgrade)
+        {
+            ItemManager.Instance.crystalAmountChanged.RemoveListener(CompleteCOLLECTCRYSTALS);
+            NextTutorialStep();
+            PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(CompleteFINALSWITCHTOFPV);
+        }
     }
 
     public void CompleteFINALSWITCHTOFPV()

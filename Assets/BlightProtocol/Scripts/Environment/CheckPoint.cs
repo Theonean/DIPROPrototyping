@@ -17,13 +17,7 @@ public class CheckPoint : MonoBehaviour
 
         if (TutorialManager.Instance.IsTutorialOngoing())
         {
-            ItemManager.Instance.RemoveGas(ItemManager.Instance.gas);
             TutorialManager.Instance.CompleteDRIVETOCHECKPOINT();
-        }
-        else
-        {
-
-            ItemManager.Instance.RemoveGas(checkPointCost);
         }
     }
 }
