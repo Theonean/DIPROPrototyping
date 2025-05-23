@@ -318,7 +318,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8551050737481587637}
-  - component: {fileID: 7358731871983934161}
   - component: {fileID: 3307074421802394134}
   - component: {fileID: 4507141996083591843}
   - component: {fileID: 7859764705768809498}
@@ -345,22 +344,6 @@ Transform:
   - {fileID: 2154053123280512004}
   m_Father: {fileID: 1837139396844893916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7358731871983934161
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6134643553048498825}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c56af5174f6113e4183c9dc9ab58c1da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isLocked: 0
-  dragSens: 100
-  xRotationLimits: {x: -30, y: 30}
-  yRotationLimits: {x: -70, y: 70}
 --- !u!114 &3307074421802394134
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -522,6 +505,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d187c7582aafe3440a93fc5f24f0a554, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fpvPlayerCam: {fileID: 4507141996083591843}
   interactionHandler: {fileID: 3307074421802394134}
   lookState: 2
   isActive: 0
@@ -599,7 +583,6 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   transitionTime: 1
-  playerCam: {fileID: 7358731871983934161}
 --- !u!1001 &3055001021720175858
 PrefabInstance:
   m_ObjectHideFlags: 0

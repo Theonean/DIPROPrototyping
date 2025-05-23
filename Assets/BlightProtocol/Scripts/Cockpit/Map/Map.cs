@@ -62,7 +62,7 @@ public class Map : ACInteractable
 
     public override void OnUpdateHover(Vector2 mousePos)
     {
-        screenRay = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(mousePos);
+        screenRay = FPVInputManager.Instance.fpvPlayerCam.ScreenPointToRay(mousePos);
         targetRay = mapCameraCam.ScreenPointToRay(screenPoint);
         if (Physics.Raycast(screenRay, out RaycastHit hit, Mathf.Infinity))
         {

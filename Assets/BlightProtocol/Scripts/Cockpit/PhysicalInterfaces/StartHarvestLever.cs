@@ -4,7 +4,6 @@ using UnityEngine;
 public class StartHarvestLever : ACLever
 {
     private Harvester harvester;
-    public TextMeshPro harvestButtonFeedback;
     public float resourcePointDetectionRange = 20f;
     public LayerMask resourcePointLayer;
     ResourcePoint closestResourcePoint;
@@ -14,22 +13,6 @@ public class StartHarvestLever : ACLever
     {
         base.Start();
         harvester = Harvester.Instance;
-        harvester.changedState.AddListener(HarvesterChangedState);
-    }
-
-    void OnEnable()
-    {
-        if (harvester != null)
-        {
-            harvester.changedState.RemoveListener(HarvesterChangedState);
-            harvester.changedState.AddListener(HarvesterChangedState);
-        }
-
-    }
-
-    void OnDisable()
-    {
-        harvester.changedState.RemoveListener(HarvesterChangedState);
     }
 
     protected override void OnPulled(float normalizedValue)
@@ -38,6 +21,7 @@ public class StartHarvestLever : ACLever
         {
             switch (harvester.GetZoneState())
             {
+                case HarvesterState.MOVING:
                 case HarvesterState.IDLE:
                     closestResourcePoint = GetClosestResourcePoint();
                     if (closestResourcePoint != null)
@@ -48,43 +32,11 @@ public class StartHarvestLever : ACLever
                         harvester.activeResourcePoint = closestResourcePoint;
                         harvester.SetState(new StartHarvestingState(harvester));
                     }
-                    else
-                    {
-                        harvestButtonFeedback.text = "CANNOT HARVEST HERE!";
-                        ResetLever();
-                    }
                     break;
-
-                case HarvesterState.MOVING:
-                    harvestButtonFeedback.text = "CANNOT HARVEST WHILE MOVING!";
-                    ResetLever();
-                    break;
-
                 default:
-                    harvestButtonFeedback.text = "CANNOT HARVEST HERE!";
                     ResetLever();
                     break;
             }
-        }
-    }
-
-    private void HarvesterChangedState(HarvesterState zoneState)
-    {
-        switch (zoneState)
-        {
-            case HarvesterState.HARVESTING:
-                harvestButtonFeedback.text = "Harvesting...";
-                break;
-            case HarvesterState.START_HARVESTING:
-                harvestButtonFeedback.text = "Starting Harvest...";
-                break;
-            case HarvesterState.END_HARVESTING:
-                harvestButtonFeedback.text = "Ending Harvest...";
-                ResetLever();
-                break;
-            default:
-                harvestButtonFeedback.text = "";
-                break;
         }
     }
 

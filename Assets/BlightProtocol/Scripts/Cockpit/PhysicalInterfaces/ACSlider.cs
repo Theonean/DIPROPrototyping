@@ -23,7 +23,7 @@ public abstract class ACSlider : ACInteractable
 
     public override void OnStartInteract()
     {
-        screenSpaceBounds = GetScreenSpaceBounds(minPos.position, maxPos.position, FPVPlayerCam.Instance.GetComponent<Camera>());
+        screenSpaceBounds = GetScreenSpaceBounds(minPos.position, maxPos.position, FPVInputManager.Instance.fpvPlayerCam);
     }
 
     public override void OnUpdateInteract()

@@ -40,7 +40,6 @@ public class FPVInteractionHandler : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (inputManager.lookState == LookState.LOOKING) return;
         if (activeInteractable != null && inputManager.lookState == LookState.INTERACTING)
         {
             UpdateInteraction();

@@ -8,7 +8,6 @@ public class FPVCamRotator : MonoBehaviour
     [SerializeField] private AnimationCurve animationCurve;
     [SerializeField] private float transitionTime = 1f;
     private bool isRotating = false;
-    [SerializeField] private FPVPlayerCam playerCam;
 
     private int currentPosition = 1;
 
@@ -39,7 +38,6 @@ public class FPVCamRotator : MonoBehaviour
         }
         if (currentPosition < 0) currentPosition = positions.Count - 1;
         StartCoroutine(SmoothRotate(positions[currentPosition].localPosition, direction));
-        playerCam.ResetRotation(transitionTime);
 
         if(TutorialManager.Instance.progressState == TutorialProgress.SWITCHDIRECTION_A_D)
         {

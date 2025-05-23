@@ -4,7 +4,6 @@ using UnityEngine;
 public class HealLever : ACLever
 {
     private Harvester harvester;
-    public TextMeshPro healFeedback;
     private ItemManager ItemManager;
     public int healAmount = 10;
     public int cost = 100;
@@ -21,7 +20,6 @@ public class HealLever : ACLever
         if (normalizedValue >= 0.9f && !isPulled)
         {
             if (harvester.health.IsAtFullHealth()) {
-                healFeedback.text = "Already at full health!";
                 ResetLever();
             }
             else if (ItemManager.RemoveCrystal(cost))
@@ -31,7 +29,6 @@ public class HealLever : ACLever
                 ResetLever();
             }
             else {
-                healFeedback.text = "Not enough crystals!";
                 ResetLever();
             }
         }

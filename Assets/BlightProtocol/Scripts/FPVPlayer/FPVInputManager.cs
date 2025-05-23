@@ -4,15 +4,14 @@ using UnityEngine;
 public enum LookState
 {
     IDLE,
-    INTERACTING,
-    LOOKING
+    INTERACTING
 }
 
 public class FPVInputManager : MonoBehaviour
 {
     public static FPVInputManager Instance { get; private set; }
-    private FPVPlayerCam fpvPlayerCam;
     public FPVCamRotator fpvCamRotator { get; private set; }
+    public Camera fpvPlayerCam;
     [SerializeField] private FPVInteractionHandler interactionHandler;
 
     public LookState lookState = LookState.IDLE;
@@ -30,7 +29,6 @@ public class FPVInputManager : MonoBehaviour
 
     private void Start()
     {
-        fpvPlayerCam = FPVPlayerCam.Instance;
         fpvCamRotator = GetComponentInChildren<FPVCamRotator>();
         //interactionHandler = GetComponentInChildren<FPVInteractionHandler>();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(HandlePerspectiveSwitch);
@@ -70,22 +68,6 @@ public class FPVInputManager : MonoBehaviour
                         SetLookState(LookState.INTERACTING);
                         interactionHandler.StartInteraction();
                     }
-                    else
-                    {
-                        SetLookState(LookState.LOOKING);
-                        fpvPlayerCam.StartLook(GetNormalisedMousePos());
-                    }
-                }
-                break;
-
-            case LookState.LOOKING:
-                if (Input.GetMouseButton(0))
-                {
-                    fpvPlayerCam.UpdateCameraRotation(GetNormalisedMousePos());
-                }
-                else if (Input.GetMouseButtonUp(0))
-                {
-                    SetLookState(LookState.IDLE);
                 }
                 break;
 

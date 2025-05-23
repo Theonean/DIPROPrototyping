@@ -67,7 +67,7 @@ public class Periscope : ACInteractable
     {
         if (isActive)
         {
-            ray = FPVPlayerCam.Instance.GetComponent<Camera>().ScreenPointToRay(MousePos);
+            ray = FPVInputManager.Instance.fpvPlayerCam.ScreenPointToRay(MousePos);
 
             if (Physics.Raycast(ray, out hit, 100f, hitMask))
             {
