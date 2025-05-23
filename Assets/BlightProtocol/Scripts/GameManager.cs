@@ -19,11 +19,11 @@ public class FrankenGameManager : MonoBehaviour
     public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     
-    public bool startWithTutorial { get; private set; } = false;
+    public bool startWithTutorial = true;
 
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
-    public bool isPaused = false;
+    public bool isPaused = true;
     Coroutine pauseFadeRoutine;
 
     private void Awake()
