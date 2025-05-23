@@ -11,6 +11,8 @@ public enum TutorialProgress
     WASD,
     DASH,
     SHOOTROCKET,
+    SHOOTROCKET2,
+    SHOOTROCKET3,
     EXPLODROCKET,
     RETRACTROCKET,
     PERSPECTIVESWITCHTOFPV,
@@ -56,12 +58,21 @@ public class TutorialManager : MonoBehaviour
     public int crystalsToCollectForUpgrade = 20;
     private int crystalsCollected = 0;
 
+    public int rocketsToShoot = 3;
+    private int rocketsShot = 0;
+
     [Header("Segment Doors")]
     [SerializeField] private TutorialDoor MOVEMENT_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor ROCKET_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor NAVIGATION_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor PULSE_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor TUTORIAL_EXIT;
+
+    [Header("Target Positions")]
+    [SerializeField] private GameObject WASDTargetPosition;
+    [SerializeField] private GameObject SetMapTargetPosition;
+    [SerializeField] private GameObject ResourcePointTargetPosition;
+    [SerializeField] private GameObject CheckPointTargetPosition;
 
     private void Awake()
     {
@@ -97,13 +108,19 @@ public class TutorialManager : MonoBehaviour
             DroneMovement.Instance.IsDashing)
         {
             NextTutorialStep();
-            RocketAimController.Instance.OnRocketShot.AddListener(CompleteSHOOTROCKET);
         }
 
     }
 
     public void StartTutorial()
     {
+        WASDTargetPosition.SetActive(true);
+        SetMapTargetPosition.SetActive(false);
+        ResourcePointTargetPosition.SetActive(false);
+        CheckPointTargetPosition.SetActive(false);
+
+        tutorialText.text = "SECTION: MOVEMENT";
+
         PlayerCore.Instance.transform.position = new Vector3(droneStartPosition.transform.position.x, DroneMovement.Instance.distanceFromGround, droneStartPosition.transform.position.z);
 
         Harvester harvester = Harvester.Instance;
@@ -135,7 +152,13 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Dash using spacebar";
                 break;
             case TutorialProgress.SHOOTROCKET:
-                currentTutorialText.text = "[ ] Shoot a rocket using left-click";
+                currentTutorialText.text = "[ ] Shoot a rocket to target 1 using left-click";
+                break;
+            case TutorialProgress.SHOOTROCKET2:
+                currentTutorialText.text = "[ ] Shoot a rocket to target 2 using left-click";
+                break;
+            case TutorialProgress.SHOOTROCKET3:
+                currentTutorialText.text = "[ ] Shoot a rocket to target 3 using left-click";
                 break;
             case TutorialProgress.EXPLODROCKET:
                 currentTutorialText.text = "[ ] Explode a rocket by clicking it";
@@ -156,10 +179,10 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Enjoy the scenery";
                 break;
             case TutorialProgress.USEFIRSTTIMEPULSE:
-                currentTutorialText.text = "[ ] Use pulse button";
+                currentTutorialText.text = "[ ] Use radar button";
                 break;
             case TutorialProgress.SETDESTINATIONTORESOURCEPOINT:
-                currentTutorialText.text = "[ ] Set map waypoint to found resource";
+                currentTutorialText.text = "[ ] Set map waypoint to gas deposit";
                 break;
             case TutorialProgress.SETSPEEDRESOURCEPOINT:
                 currentTutorialText.text = "[ ] Start driving";
@@ -168,13 +191,13 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Enjoy the scenery electric boogaloo V2";
                 break;
             case TutorialProgress.HARVEST:
-                currentTutorialText.text = "[ ] Pull harvest lever";
+                currentTutorialText.text = "[ ] Pull down harvest lever";
                 break;
             case TutorialProgress.SWITCHDIRECTION_A_D:
                 currentTutorialText.text = "[ ] switch to drone configurator using 'a' or 'd'";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTODRONE:
-                currentTutorialText.text = "[ ] Switch back to drone by clicking visors";
+                currentTutorialText.text = "[ ] Switch back to drone by clicking visors at bottom of screen";
                 break;
             case TutorialProgress.FIGHT:
                 currentTutorialText.text = "[ ] Protect harvester from enemies!";
@@ -215,84 +238,92 @@ public class TutorialManager : MonoBehaviour
     private IEnumerator TransitionTutorialStep()
     {
         _isTransitioning = true;
-
         float duration = 0.3f;
         float t = 0f;
 
-        // 1. mark & strike
+        // prepare an ease‐in‐out Bezier curve (0,0 → 1,1)
+        var ease = AnimationCurve.EaseInOut(0f, 0f, 1f, 1f);
+
+        // 1. mark & strike the old text, then scale it down
         if (currentTutorialText != null)
         {
             var oldRT = currentTutorialText.rectTransform;
             currentTutorialText.text = currentTutorialText.text.Replace("[ ]", "[X]");
             currentTutorialText.fontStyle |= FontStyles.Strikethrough;
 
-            // 2. slide out
-            Vector2 startPos = oldRT.anchoredPosition;
-            Vector2 endPos = startPos + Vector2.left * (TutorialMissionGroup.GetComponent<RectTransform>().rect.width + 50);
             t = 0f;
             while (t < duration)
             {
                 t += Time.deltaTime;
-                oldRT.anchoredPosition = Vector2.Lerp(startPos, endPos, t / duration);
+                float pct = Mathf.Clamp01(t / duration);
+                float eval = ease.Evaluate(pct);
+                oldRT.localScale = Vector3.one * (1f - eval);
                 yield return null;
             }
-        }
-        else
-        {
-            // very first step: just instantiate
-            currentTutorialText = Instantiate(
-                TutorialMissionGroup.transform.GetChild(0),
-                Vector3.zero,
-                Quaternion.identity,
-                TutorialMissionGroup.transform
-            ).GetComponent<TextMeshProUGUI>();
+
+            // remove the old text object
+            Destroy(oldRT.gameObject);
+            currentTutorialText = null;
         }
 
-        // Open close segment doors when last task of a segment is finished
-        if (progressState == TutorialProgress.DASH)
+        // 2. segment‐door & target‐marker logic based on the *old* state
+        switch (progressState)
         {
-            MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
-        }
-        else if (progressState == TutorialProgress.RETRACTROCKET)
-        {
-            MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
-            ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
-        }
-        else if (progressState == TutorialProgress.SETSPEED)
-        {
-            ROCKET_SEGMENT_EXIT.CloseSegmentDoor();
-            NAVIGATION_SEGMENT_EXIT.OpenSegmentDoor();
-        }
-        else if (progressState == TutorialProgress.USEFIRSTTIMEPULSE)
-        {
-            NAVIGATION_SEGMENT_EXIT.CloseSegmentDoor();
-            PULSE_SEGMENT_EXIT.OpenSegmentDoor();
-        }
-        else if (progressState == TutorialProgress.UPGRADENEWCOMPONENT)
-        {
-            PULSE_SEGMENT_EXIT.CloseSegmentDoor();
-            TUTORIAL_EXIT.OpenSegmentDoor();
-        }
-        else if (progressState == TutorialProgress.DRIVETOCHECKPOINT)
-        {
-            TUTORIAL_EXIT.CloseSegmentDoor();
+            case TutorialProgress.DASH:
+                MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
+                WASDTargetPosition.SetActive(false);
+                tutorialText.text = "SECTION: COMBAT";
+                break;
+            case TutorialProgress.RETRACTROCKET:
+                MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
+                ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
+                SetMapTargetPosition.SetActive(true);
+                tutorialText.text = "SECTION: NAVIGATION";
+                break;
+            case TutorialProgress.SETSPEED:
+                ROCKET_SEGMENT_EXIT.CloseSegmentDoor();
+                NAVIGATION_SEGMENT_EXIT.OpenSegmentDoor();
+                tutorialText.text = "SECTION: RESOURCES";
+                break;
+            case TutorialProgress.USEFIRSTTIMEPULSE:
+                NAVIGATION_SEGMENT_EXIT.CloseSegmentDoor();
+                PULSE_SEGMENT_EXIT.OpenSegmentDoor();
+                SetMapTargetPosition.SetActive(false);
+                ResourcePointTargetPosition.SetActive(true);
+                break;
+            case TutorialProgress.FIGHT:
+                tutorialText.text = "SECTION: CONFIGURATION";
+                break;
+            case TutorialProgress.UPGRADENEWCOMPONENT:
+                PULSE_SEGMENT_EXIT.CloseSegmentDoor();
+                TUTORIAL_EXIT.OpenSegmentDoor();
+                ResourcePointTargetPosition.SetActive(false);
+                CheckPointTargetPosition.SetActive(true);
+                tutorialText.text = "SECTION: SPAWNPOINT";
+                break;
+            case TutorialProgress.DRIVETOCHECKPOINT:
+                TUTORIAL_EXIT.CloseSegmentDoor();
+                break;
         }
 
-        currentTutorialText.fontStyle = FontStyles.Normal;
+        // 3. advance state & instantiate the new line
+        currentTutorialText = null;
+        IncrementProgress(); // calls CreateNewcurrentTutorialText and sets fontStyle = Normal
 
-        // slide the new text up from below
+        // 4. scale the new text up from zero
         var newRT = currentTutorialText.rectTransform;
-        Vector2 newStart = new Vector2(newRT.anchoredPosition.x, -50f);
-        Vector2 newEnd = Vector2.zero;
+        newRT.localScale = Vector3.zero;
+
         t = 0f;
         while (t < duration)
         {
             t += Time.deltaTime;
-            newRT.anchoredPosition = Vector2.Lerp(newStart, newEnd, t / duration);
+            float pct = Mathf.Clamp01(t / duration);
+            float eval = ease.Evaluate(pct);
+            newRT.localScale = Vector3.one * eval;
             yield return null;
         }
 
-        IncrementProgress();
         _isTransitioning = false;
     }
 
@@ -302,6 +333,7 @@ public class TutorialManager : MonoBehaviour
         int progressInt = (int)progressState + 1;
         TutorialProgress newProgress = (TutorialProgress)progressInt;
         progressState = newProgress;
+        OnProgressChanged?.Invoke(progressState);
 
         if (progressState == TutorialProgress.DONE) 
         {
@@ -321,12 +353,25 @@ public class TutorialManager : MonoBehaviour
         NextTutorialStep();
     }
 
-    public void CompleteSHOOTROCKET()
+    public void CompleteSHOOTROCKET_ONE()
     {
-        if (progressState != TutorialProgress.SHOOTROCKET) 
+        if (progressState != TutorialProgress.SHOOTROCKET)
             return;
 
-        RocketAimController.Instance.OnRocketShot.RemoveListener(CompleteSHOOTROCKET);
+        NextTutorialStep();
+    }
+    public void CompleteSHOOTROCKET_TWO()
+    {
+        if (progressState != TutorialProgress.SHOOTROCKET2)
+            return;
+
+        NextTutorialStep();
+    }
+    public void CompleteSHOOTROCKET_THREE()
+    {
+        if (progressState != TutorialProgress.SHOOTROCKET3)
+            return;
+
         NextTutorialStep();
         RocketAimController.Instance.OnRocketExplode.AddListener(CompleteEXPLODEROCKET);
     }
