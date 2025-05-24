@@ -12,11 +12,11 @@ public class EntityDetector : MonoBehaviour
         Collider collider = GetComponent<Collider>(); 
         collider.includeLayers = 1 << LayerMask.NameToLayer(layerToLookFor);
         
-        if (gameObject.layer != LayerMask.NameToLayer("Ignore Raycast"))
+        /*if (gameObject.layer != LayerMask.NameToLayer("Ignore Raycast"))
         {
             Debug.LogWarning("Fixed wrong layer [" + gameObject.layer + "] for object using entity detector: " + transform.parent.name + "\\" + name);
             gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
-        }
+        }*/
     }
 
     void OnCollisionEnter(Collision collision)

@@ -28,16 +28,9 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     public string rocketCallbackSFXPath = "event:/SFX/Dron/Callingback_Missiles";
     public abstract IEnumerator FlyToTargetPosition();
 
-    private GameObject debugTargetPosition;
-
     protected override void Start()
     {
         base.Start();
-
-        debugTargetPosition = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-        debugTargetPosition.name = "DebugTargetSphere";
-        debugTargetPosition.transform.position = Vector3.zero;
-        debugTargetPosition.transform.localScale = Vector3.one * 0.5f; // Small sphere
     }
 
 
@@ -81,11 +74,6 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             {
                 MoveTargetPositionToMouse();
             }
-        }
-
-        if(parentRocket.state == RocketState.FLYING)
-        {
-            debugTargetPosition.transform.position = targetPosition;
         }
     }
     
