@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.AI;
 using System.Linq;
+using TMPro;
 
 public class Map : ACInteractable
 {
@@ -36,6 +37,7 @@ public class Map : ACInteractable
 
     bool isHovering = false;
 
+    private bool isDroneModeOn = false;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -69,6 +71,23 @@ public class Map : ACInteractable
             screenPoint = new Vector3(hit.textureCoord.x * mapCameraCam.pixelWidth, hit.textureCoord.y * mapCameraCam.pixelWidth, 0);
             uiTarget.GetComponent<RectTransform>().anchoredPosition = screenPoint;
             TouchPoint.transform.position = hit.point;
+
+            if (Input.GetKeyDown(KeyCode.P))
+            {
+                isDroneModeOn = !isDroneModeOn;
+                Debug.Log("Toggled IsDroneMode into: " + isDroneModeOn);
+            }
+
+            if (isDroneModeOn && Input.GetKeyDown(KeyCode.Space))
+            {
+                Vector3 spawnPosition = TargetPosition.Instance.transform.position;
+                spawnPosition.y = DroneMovement.Instance.distanceFromGround;
+                PlayerCore.Instance.spawnPosition = spawnPosition;
+
+                PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.DRONE);
+                FPVInputManager.Instance.fpvCamRotator.ChangePosition(1);
+                isDroneModeOn = false;
+            }
         }
     }
 

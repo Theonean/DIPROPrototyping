@@ -67,6 +67,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 63e16993e95981f4b88604a423c147b9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  checkPointCost: 1000
+  energySignature: {fileID: 6699177385561879015}
 --- !u!114 &4475940961305234552
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -415,6 +417,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1423186448568048182}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &6699177385561879015 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+    type: 3}
+  m_PrefabInstance: {fileID: 1423186448568048182}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85e3c6362f5d04f89400ab890e7035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2243620184179376706
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -236,6 +236,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 3785761657284009069}
+        m_TargetAssemblyTypeName: EnergySignature, BlightProtocol.Runtime
+        m_MethodName: FlashSignature
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 3
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnAgentExit:
     m_PersistentCalls:
       m_Calls:
@@ -860,11 +872,38 @@ PrefabInstance:
       propertyPath: eMagnitude
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3785761657284009069}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 05524a7b9e069ea44827e0333e802075, type: 3}
+--- !u!114 &3785761657284009069 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+    type: 3}
+  m_PrefabInstance: {fileID: 8913139286795597756}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd85e3c6362f5d04f89400ab890e7035, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7673906378646797784 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1283215575532636772, guid: 05524a7b9e069ea44827e0333e802075,

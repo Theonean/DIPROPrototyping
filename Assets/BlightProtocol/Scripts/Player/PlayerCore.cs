@@ -20,6 +20,7 @@ public class PlayerCore : MonoBehaviour
     float m_RespawnTimer;
     public UnityEvent returnLegs;
     public bool isDead = false; //When dead, track the ControlZoneManager to respawn the drone
+    public Vector3 spawnPosition = Vector3.zero;
 
     [Header("VFX")]
     public GameObject explosion;

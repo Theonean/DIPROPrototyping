@@ -18,6 +18,8 @@ public class EnemyHiveManager : MonoBehaviour
     private float maxDistanceLowestDifficulty = 100f;
     private float minDistanceHighestDifficulty = 50f;
 
+    private EnergySignature mapUIComponent;
+
     void Start()
     {
         foreach (EnemySpawner spawner in enemySpawners)
@@ -25,6 +27,8 @@ public class EnemyHiveManager : MonoBehaviour
             spawner.spawnedEnemy.AddListener(IncrementEnemySpawned);
         }
         currentHealth = maxHealth;
+
+        mapUIComponent = GetComponentInChildren<EnergySignature>();
     }
 
     void Update()
@@ -101,6 +105,7 @@ public class EnemyHiveManager : MonoBehaviour
     private void IncrementEnemySpawned()
     {
         spawnedEnemies++;
+        mapUIComponent.displayer.FlashSignature();
         if (spawnedEnemies >= maxEnemies)
         {
             hasEnemiesLeft = false;
@@ -109,5 +114,6 @@ public class EnemyHiveManager : MonoBehaviour
                 spawner.StopWave();
             }
         }
+
     }
 }

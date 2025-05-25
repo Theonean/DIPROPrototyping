@@ -70,7 +70,15 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         playerCore.transform.parent = null;
 
-        Vector3 spawnPosition = GetDroneRespawnPosition();
+
+
+        Vector3 spawnPosition = playerCore.spawnPosition; 
+        if (spawnPosition == Vector3.zero)
+        {
+            Debug.Log("Player leavingg from back of harvester");
+            spawnPosition = GetDroneRespawnPosition();
+        }
+
         spawnPosition.y = DroneMovement.Instance.distanceFromGround;
         playerCore.transform.position = spawnPosition;
 
@@ -92,6 +100,8 @@ public class PerspectiveSwitcher : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
 
         Shader.SetGlobalFloat("_isTopDown", 1);
+
+        playerCore.spawnPosition = Vector3.zero;
     }
 
     public void SetFPVPerspective()
