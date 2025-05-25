@@ -123,7 +123,7 @@ public class EnemySpawner : MonoBehaviour
                     break;
             }
 
-            GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity, transform);
+            GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
             m_EnemyCount++;
             spawnedEnemy.Invoke();
 
