@@ -19,7 +19,7 @@ public class FrankenGameManager : MonoBehaviour
     public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     
-    public bool startWithTutorial = true;
+    public bool startWithTutorial = false;
 
     private float m_TotalGameTime = 0f;
     private int m_wavesSurvived = 0;
@@ -38,10 +38,11 @@ public class FrankenGameManager : MonoBehaviour
             Instance = this;
         }
 
+        /*
         gameOverGroup.alpha = 0;
 
         Harvester harvester = controlZone.GetComponent<Harvester>();
-        harvester.health.died.AddListener(() => PlayerDied());
+        harvester.health.died.AddListener(() => PlayerDied());*/
 
         DontDestroyOnLoad(gameObject);
     }
