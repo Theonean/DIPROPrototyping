@@ -159,6 +159,7 @@ public class HarvesterSpeedControl : MonoBehaviour
             {
                 SetSpeed(0);
                 OverrideSpeedSliderPos(0);
+                currentSpeedStepIndex = 0;
                 return;
             }
 
