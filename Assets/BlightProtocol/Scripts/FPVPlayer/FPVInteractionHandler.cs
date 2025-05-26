@@ -102,8 +102,15 @@ public class FPVInteractionHandler : MonoBehaviour
     {
         if (activeInteractable.UpdateInteract)
         {
-            UpdateTouchTarget(activeInteractable.TouchPoint.position);
-            activeInteractable.OnUpdateInteract();
+            if (activeInteractable.IsCurrentlyInteractable)
+            {
+                UpdateTouchTarget(activeInteractable.TouchPoint.position);
+                activeInteractable.OnUpdateInteract();
+            }
+            else
+            {
+                EndInteraction();
+            }
         }
     }
 
@@ -131,11 +138,5 @@ public class FPVInteractionHandler : MonoBehaviour
         {
             touchTarget.transform.position = transform.position;
         }
-    }
-
-    public void AbortInteraction()
-    {
-        ResetTouchTarget();
-        activeInteractable = null;
     }
 }

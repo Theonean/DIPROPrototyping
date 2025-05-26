@@ -19,7 +19,7 @@ public abstract class ACSlider : ACInteractable
         UpdateInteract = true;
     }
 
-    protected abstract void OnValueChanged(float normalizedValue);
+    protected virtual void OnValueChanged(float normalizedValue) {}
 
     public override void OnStartInteract()
     {

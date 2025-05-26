@@ -1,64 +1,44 @@
-using System.Linq;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class SpeedSlider : ACSlider
 {
-    private int speedStepCount;
-    private float[] speedstepPositions = new float[1];
-
     [Header("Visualization")]
-    [SerializeField] private ACScreenValueDisplayer speedDisplayer;
+    public UnityEvent startDrag;
+    public UnityEvent<float> valueChanged, endDrag;
+    public float boundary;
 
     protected override void Start()
     {
         base.Start();
-        speedStepCount = HarvesterSpeedControl.Instance.GetSpeedStepCount();
-        speedstepPositions = new float[speedStepCount];
-        InitializeStepPositions();
-        SetPositionByIndex(0);
-    }
-
-    protected override void OnValueChanged(float normalizedValue)
-    {
-        int index = Mathf.FloorToInt(normalizedValue * speedStepCount);
-        index = Mathf.Clamp(index, 0, speedStepCount - 1);
-        HarvesterSpeedControl.Instance.SetSpeedStepIndex(index);
-    }
-
-    public void SetPositionByIndex(int index)
-    {
-        SetPositionNormalized(speedstepPositions[index]);
     }
 
     public override void OnStartInteract()
     {
-        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT)
+        if (TutorialManager.Instance.IsTutorialOngoing() && 
+            TutorialManager.Instance.progressState is not TutorialProgress.SETSPEED 
+            and not TutorialProgress.SETSPEEDRESOURCEPOINT 
+            and not TutorialProgress.DRIVETOCHECKPOINT)
+        {
             return;
+        }
 
         base.OnStartInteract();
+        startDrag.Invoke();
+    }
+
+    public override void Drag()
+    {
+        progress = GetMouseProgressOnSlider(screenSpaceBounds[0], screenSpaceBounds[1], Input.mousePosition);
+        progress = Mathf.Clamp(progress, 0, boundary);
+
+        Vector3 newPos = GetPosition(progress);
+        head.position = newPos;
+        valueChanged.Invoke(progress);
     }
 
     public override void OnEndInteract()
     {
-        int index = Mathf.FloorToInt(progress * speedStepCount);
-        if (index >= speedstepPositions.Count()) index = speedstepPositions.Count() - 1;
-        SetPositionByIndex(index);
-    }
-
-    private void InitializeStepPositions()
-    {
-        float stepHeightNormalized = 1f / (speedStepCount - 1f);
-
-        for (int i = 0; i < speedStepCount; i++)
-        {
-            speedstepPositions[i] = stepHeightNormalized * i;
-        }
-    }
-
-    protected override Vector3 GetPosition(float progress)
-    {
-        speedDisplayer.SetValue(progress);
-        return Vector3.Lerp(minPos.position, maxPos.position, progress);
+        endDrag.Invoke(progress);
     }
 }

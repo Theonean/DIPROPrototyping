@@ -3,13 +3,15 @@ using UnityEngine.UI;
 
 public class ScreenSteppedValueSlider : ScreenValueSlider
 {
-    [SerializeField] RectTransform stepContainer;
+    [SerializeField] protected RectTransform stepContainer;
+    [SerializeField] protected GameObject StepPrefab;
     public int stepCount = 0;
 
-    protected virtual void Start() {
+    protected override void Awake() {
+        base.Awake();
         CreateStepVisuals();
     }
-    private void CreateStepVisuals()
+    protected virtual void CreateStepVisuals()
     {
         if (stepContainer == null) return;
         foreach (Transform child in stepContainer)
@@ -23,22 +25,15 @@ public class ScreenSteppedValueSlider : ScreenValueSlider
 
         for (int i = 0; i < stepCount; i++)
         {
-            GameObject stepObj = new GameObject("StepImage", typeof(RectTransform), typeof(Image));
-            stepObj.transform.SetParent(stepContainer, false);
+            GameObject stepObj = Instantiate(StepPrefab, stepContainer, false);
 
             RectTransform rt = stepObj.GetComponent<RectTransform>();
-            Image img = stepObj.GetComponent<Image>();
 
             rt.anchorMin = new Vector2(0, 0);
             rt.anchorMax = new Vector2(1, 0);
             rt.pivot = new Vector2(0.5f, 0);
             rt.sizeDelta = new Vector2(0, stepHeight);
             rt.anchoredPosition = new Vector2(0, i * stepHeight);
-
-            if (img != null)
-            {
-                img.color = HarvesterSpeedControl.Instance.speedSteps[i].displayColor;
-            }
         }
     }
 }

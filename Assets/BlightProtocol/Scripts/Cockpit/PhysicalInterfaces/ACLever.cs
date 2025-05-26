@@ -80,7 +80,6 @@ public abstract class ACLever : ACSlider
     {
         SetPositionNormalized(0f);
         isPulled = false;
-        FPVInteractionHandler.Instance.AbortInteraction();
     }
 
     protected virtual void OnPulled(float normalizedValue) {

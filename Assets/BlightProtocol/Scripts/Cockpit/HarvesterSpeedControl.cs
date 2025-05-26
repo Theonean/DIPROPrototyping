@@ -8,7 +8,8 @@ using UnityEngine.UI;
 public class HarvesterSpeedStep
 {
     public float speed;
-    public Color displayColor;
+    public Color textColor;
+    public Color activeBackgroundColor;
     public bool isBaseSpeed = false;
     public int seismoEmission = 0;
     public int crystalCost;
@@ -18,12 +19,23 @@ public class HarvesterSpeedControl : MonoBehaviour
 {
     public static HarvesterSpeedControl Instance { get; private set; }
     [SerializeField] public List<HarvesterSpeedStep> speedSteps;
+    private int currentSpeedStepIndex = 0;
+    private int baseSpeedIndex;
     [SerializeField] private float crystalConsumptionInterval = 1f;
     private float timeSinceLastConsumption = 0f;
-    private ItemManager itemManager;
-    private int currentSpeedStepIndex = 0;
+
+
     [SerializeField] private SpeedSlider speedSlider;
+    [SerializeField] private SpeedScreen speedDisplayer;
+    private float[] stepPositions, boundaries;
+
+
     public UnityEvent overrodePosition;
+
+
+    // Singleton References
+    private ItemManager itemManager;
+    private Harvester harvester;
 
     void Awake()
     {
@@ -35,44 +47,120 @@ public class HarvesterSpeedControl : MonoBehaviour
         {
             Instance = this;
         }
+
+        InitializeStepPositions();
+    }
+
+    private void InitializeStepPositions()
+    {
+        stepPositions = new float[speedSteps.Count];
+        boundaries = new float[speedSteps.Count];
+
+        float stepHeightNormalized = 1f / speedSteps.Count;
+
+        for (int i = 0; i < speedSteps.Count; i++)
+        {
+            stepPositions[i] = stepHeightNormalized * (i + 1) - stepHeightNormalized / 2;
+            boundaries[i] = stepHeightNormalized * (i + 1) - 0.05f;
+        }
+        speedSlider.boundary = boundaries[^1];
     }
 
     void Start()
     {
-        SetSpeed();
-        Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
-
         itemManager = ItemManager.Instance;
+
+        harvester = Harvester.Instance;
+
+        baseSpeedIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
+        SetSpeed(0);
+        OverrideSpeedSliderPos(0);
     }
 
     void OnEnable()
     {
         Harvester.Instance.changedState.AddListener(OnHarvesterStateChanged);
+        speedSlider.valueChanged.AddListener(OnSliderValueChanged);
+        speedSlider.startDrag.AddListener(OnSliderStartDrag);
+        speedSlider.endDrag.AddListener(OnSliderEndDrag);
     }
 
     void OnDisable()
     {
         Harvester.Instance.changedState.RemoveListener(OnHarvesterStateChanged);
+        speedSlider.valueChanged.RemoveListener(OnSliderValueChanged);
+        speedSlider.startDrag.RemoveListener(OnSliderStartDrag);
+        speedSlider.endDrag.RemoveListener(OnSliderEndDrag);
     }
 
-    private void SetSpeed()
+    private void OnSliderStartDrag()
+    {
+        UpdateSliderBoundary();
+    }
+
+    private void OnSliderEndDrag(float value)
+    {
+        int index = GetSliderIndex(value);
+        OverrideSpeedSliderPos(index, false);
+    }
+
+    private void OnSliderValueChanged(float value)
+    {
+        int index = GetSliderIndex(value);
+
+
+        if (index != currentSpeedStepIndex)
+        {
+            SetSpeed(index);
+        }
+
+        currentSpeedStepIndex = index;
+        UpdateSliderBoundary();
+    }
+
+    private int GetSliderIndex(float value)
+    {
+        int index = Mathf.FloorToInt(value * speedSteps.Count);
+        return Mathf.Clamp(index, 0, speedSteps.Count - 1);
+    }
+
+    public void SetSpeed(int index)
     {
         TutorialManager tM = TutorialManager.Instance;
         if (tM.IsTutorialOngoing() && tM.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT) return;
 
-        Harvester.Instance.mover.SetMoveSpeed(speedSteps[currentSpeedStepIndex].speed);
-        Seismograph.Instance.SetOtherEmission(
-            "Overspeed",
-            speedSteps[currentSpeedStepIndex].seismoEmission
-        );
+        if (index >= 0 && index < speedSteps.Count)
+        {
+
+            Harvester.Instance.mover.SetMoveSpeed(speedSteps[index].speed);
+
+            Seismograph.Instance.SetOtherEmission(
+                "Overspeed",
+                speedSteps[index].seismoEmission
+            );
+
+            speedDisplayer.SetActiveStep(index);
+        }
+        else
+        {
+            Logger.Log("speed step index out of bounds", LogLevel.ERROR, LogType.COCKPIT);
+        }
+
     }
 
     void Update()
     {
         // reset speed to base speed if crystals are empty
-        if (speedSteps.Count > 0)
+        HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
+
+        if (currentSpeedStepIndex > 0)
         {
-            HarvesterSpeedStep currentStep = speedSteps[currentSpeedStepIndex];
+            if (harvester.HasArrivedAtTarget())
+            {
+                SetSpeed(0);
+                OverrideSpeedSliderPos(0);
+                return;
+            }
 
             if (currentStep.crystalCost <= 0)
             {
@@ -85,65 +173,71 @@ public class HarvesterSpeedControl : MonoBehaviour
                 {
                     timeSinceLastConsumption = 0f;
                 }
-                else if (currentSpeedStepIndex > 0)
+                else
                 {
-                    currentSpeedStepIndex = speedSteps.FindIndex(step => step.isBaseSpeed);
-                    SetSpeed();
-                    OverrideSpeedStep(currentSpeedStepIndex);
+                    currentSpeedStepIndex = baseSpeedIndex;
+                    SetSpeed(baseSpeedIndex);
+                    OverrideSpeedSliderPos(currentSpeedStepIndex);
                 }
             }
             else
             {
                 timeSinceLastConsumption += Time.deltaTime;
             }
-
         }
+
     }
 
     private void OnHarvesterStateChanged(HarvesterState state)
     {
         switch (state)
         {
-            case HarvesterState.IDLE:
             case HarvesterState.HARVESTING:
             case HarvesterState.START_HARVESTING:
             case HarvesterState.END_HARVESTING:
             case HarvesterState.DIED:
-                OverrideSpeedStep(0);
+                SetSpeed(0);
+                OverrideSpeedSliderPos(0);
                 break;
         }
     }
 
-    public void OverrideSpeedStep(int index)
+    // Only use if speed is not set by slider
+    public void OverrideSpeedSliderPos(int index, bool showFeedback = true)
     {
-        // Set slider in case of harvester state change
-        if (index >= 0 && index < speedSteps.Count)
-        {
-            currentSpeedStepIndex = index;
-            speedSlider.SetPositionByIndex(index);
-            Seismograph.Instance.SetOtherEmission(
-                "Overspeed",
-                speedSteps[currentSpeedStepIndex].seismoEmission
-            );
-            overrodePosition.Invoke();
-        }
-    }
-
-    public void SetSpeedStepIndex(int index)
-    {
-        if (index >= 0 && index < speedSteps.Count && index != currentSpeedStepIndex)
-        {
-            if (Harvester.Instance.HasArrivedAtTarget())
-            {
-                OverrideSpeedStep(0);
-            }
-            currentSpeedStepIndex = index;
-            SetSpeed();
-        }
+        float normalizedPos = stepPositions[index];
+        speedSlider.SetPositionNormalized(normalizedPos);
+        if (showFeedback) overrodePosition.Invoke();
     }
 
     public int GetSpeedStepCount()
     {
         return speedSteps.Count;
+    }
+
+    private void UpdateSliderBoundary()
+    {
+        int index;
+        if (harvester.HasArrivedAtTarget())
+        {
+            index = 0;
+        }
+        else if (currentSpeedStepIndex + 1 < speedSteps.Count)
+        {
+            if (itemManager.GetCrystal() < speedSteps[currentSpeedStepIndex + 1].crystalCost)
+            {
+                index = currentSpeedStepIndex;
+            }
+            else
+            {
+                index = speedSteps.Count - 1;
+            }
+        }
+        else
+        {
+            index = speedSteps.Count - 1;
+        }
+
+        speedSlider.boundary = boundaries[index];
     }
 }

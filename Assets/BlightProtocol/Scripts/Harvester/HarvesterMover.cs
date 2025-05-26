@@ -19,6 +19,7 @@ public class HarvesterMover : MonoBehaviour
     {
         harvester = Harvester.Instance;
         navMeshAgent.speed = moveSpeed;
+        SetDestination(Vector3.zero);
     }
 
     void Update()
