@@ -20,6 +20,13 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     [SerializeField] protected int[] targetMoveStepPerSecondPerLevel = new int[5] { 0, 10, 20, 30, 40 };
     private int targetMoveStep;
     private float distanceToTarget;
+
+    [Header("Speed settings")]
+    public AnimationCurve flySpeedCurve;
+    public float flySpeed;
+    public float flySpeedBase;
+    public float flyScaleMultiplier;
+
     [Header("VFX")]
     public VisualEffect vfxFlying;
 
@@ -154,11 +161,11 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             // Move the rocket back to the initial position using animation curve
             if (tReturn < 0.90f)
             {
-                rocketTransform.position = Vector3.MoveTowards(rocketTransform.position, updatedTargetPosition, ParentRocket.settings.flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * ParentRocket.settings.flySpeed * 2f);
+                rocketTransform.position = Vector3.MoveTowards(rocketTransform.position, updatedTargetPosition, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * flySpeed * 2f);
             }
             else
             {
-                rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * ParentRocket.settings.flySpeed * 2f);
+                rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * flySpeed * 2f);
             }
 
             if (distanceToUpdatedTarget < 1f)

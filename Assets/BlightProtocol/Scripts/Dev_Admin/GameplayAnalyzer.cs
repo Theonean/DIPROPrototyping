@@ -37,7 +37,7 @@ public class GameplaySnapshotData
                 {
                     rocketHitEnemyInFlight = true;
                     successfullRocketShots++;
-                    accuracy = successfullRocketShots / rocketsFired;
+                    accuracy = (float) successfullRocketShots / (float) rocketsFired;
                 }
                 break;
         }
