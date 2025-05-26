@@ -51,7 +51,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
             Vector3 controlPoint = midPos + offsetDir;
 
             float arcLength = EstimateBezierArcLength(startPos, controlPoint, currentTarget);
-            t += (parentRocket.settings.flySpeed * Time.deltaTime) / arcLength;
+            t += (flySpeed * Time.deltaTime) / arcLength;
             t = Mathf.Clamp01(t);
 
             Vector3 pos = QuadraticBezier(t, startPos, controlPoint, currentTarget);
@@ -82,7 +82,7 @@ public class BoomerangPropulsion : ACRocketPropulsion
             Vector3 returnControl = returnMid - offsetDir;
 
             float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl, currentTarget);
-            t += (parentRocket.settings.flySpeed * Time.deltaTime) / inboundArcLength;
+            t += (flySpeed * Time.deltaTime) / inboundArcLength;
             t = Mathf.Clamp01(t);
 
             Vector3 pos = QuadraticBezier(t, returnStart, returnControl, currentTarget);

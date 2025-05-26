@@ -26,7 +26,7 @@ public class ArcingPropulsion : ACRocketPropulsion
 
         while (progress < 1f)
         {
-            progress += (ParentRocket.settings.flySpeed / Vector3.Distance(start, TargetPosition)) * Time.deltaTime;
+            progress += (flySpeed / Vector3.Distance(start, TargetPosition)) * Time.deltaTime;
             float t = Mathf.Clamp01(progress);
 
             // Quadratic Bézier interpolation: (1 - t)^2 * A + 2(1 - t)t * B + t^2 * C
@@ -41,8 +41,8 @@ public class ArcingPropulsion : ACRocketPropulsion
             // Optional scale effect during flight
             rocketTransform.localScale = Vector3.Lerp(
                 rocketTransform.localScale,
-                rocketOriginalScale * ParentRocket.settings.flyScaleMultiplier,
-                0.1f * Time.deltaTime * ParentRocket.settings.flySpeed
+                rocketOriginalScale * flyScaleMultiplier,
+                0.1f * Time.deltaTime * flySpeed
             );
 
             yield return new WaitForFixedUpdate();

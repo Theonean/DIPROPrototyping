@@ -17,6 +17,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     public AnimationCurve knockbackCurve;
     public float moveSpeed = 4f;
     public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
+    public EnemyType type;
 
     protected GameObject target;
 

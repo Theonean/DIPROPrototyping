@@ -18,13 +18,13 @@ public class StraightLinePropulsion : ACRocketPropulsion
             rocketTransform.position = Vector3.MoveTowards(
                 rocketTransform.position,
                 TargetPosition,
-                ParentRocket.settings.flySpeedCurve.Evaluate(t) * Time.deltaTime * ParentRocket.settings.flySpeed
+                flySpeedCurve.Evaluate(t) * Time.deltaTime * flySpeed
             );
 
             rocketTransform.localScale = Vector3.Lerp(
                 rocketTransform.localScale,
-                rocketOriginalScale * ParentRocket.settings.flyScaleMultiplier,
-                0.1f * Time.deltaTime * ParentRocket.settings.flySpeed
+                rocketOriginalScale * flyScaleMultiplier,
+                0.1f * Time.deltaTime * flySpeed
             );
 
             yield return new WaitForFixedUpdate();
@@ -62,7 +62,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
                 rocketTransform.position = Vector3.MoveTowards(
                 rocketTransform.position,
                 groundPoint,
-                ParentRocket.settings.flySpeedCurve.Evaluate(t) * Time.deltaTime * ParentRocket.settings.flySpeed
+                flySpeedCurve.Evaluate(t) * Time.deltaTime * flySpeed
                 );
 
                 // Smoothly rotate to nose-dive position

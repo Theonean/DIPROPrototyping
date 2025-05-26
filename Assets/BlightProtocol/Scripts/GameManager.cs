@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -13,16 +13,12 @@ public class FrankenGameManager : MonoBehaviour
 
     public static FrankenGameManager Instance { get; private set; }
     public GameObject controlZone;
-    public TextMeshProUGUI resourcesHarvestedText;
-    public TextMeshProUGUI resetText;
-    public CanvasGroup gameOverGroup;
     public CanvasGroup pauseGroup;
     private GameState m_GameState = GameState.HARVESTER_MOVING;
     
     public bool startWithTutorial = false;
 
-    private float m_TotalGameTime = 0f;
-    private int m_wavesSurvived = 0;
+    public float m_TotalGameTime = 0f;
     public bool isPaused = true;
     Coroutine pauseFadeRoutine;
 
@@ -37,12 +33,6 @@ public class FrankenGameManager : MonoBehaviour
         {
             Instance = this;
         }
-
-        /*
-        gameOverGroup.alpha = 0;
-
-        Harvester harvester = controlZone.GetComponent<Harvester>();
-        harvester.health.died.AddListener(() => PlayerDied());*/
 
         DontDestroyOnLoad(gameObject);
     }
@@ -60,16 +50,9 @@ public class FrankenGameManager : MonoBehaviour
                 TogglePause();
             }
         }
-
-        // Reload the scene when 'R' is pressed if the game is over
-        if (m_GameState == GameState.GAMEOVER && Input.GetKeyDown(KeyCode.R))
-        {
-            StopAllCoroutines();
-            StartCoroutine(RespawnPlayer());
-        }
     }
 
-    private void TogglePause()
+    public void TogglePause()
     {
         isPaused = !isPaused;
         Time.timeScale = isPaused ? 0 : 1;
@@ -80,32 +63,15 @@ public class FrankenGameManager : MonoBehaviour
         pauseFadeRoutine = StartCoroutine(FadeUI(pauseGroup, isPaused, 0.5f));
     }
 
-    public void IncrementWavesSurvived()
-    {
-        m_wavesSurvived++;
-    }
-
-    void PlayerDied()
-    {
-        gameOverGroup.alpha = 0;
-
-        m_GameState = GameState.GAMEOVER;
-
-        PlayerCore playerCore = PlayerCore.Instance;
-        playerCore.enabled = false;
-
-        resourcesHarvestedText.text = "reached region " + (DifficultyManager.Instance.maxDifficultyReached + 1) + " / " + (DifficultyManager.Instance.maximumDifficultyRegions + 1);
-        resetText.text = "press 'r' to respawn in region " + (Harvester.Instance.respawnPointDifficultyRegion + 1);
-        StartCoroutine(FadeUI(gameOverGroup, true, 20f));
-
-        // Unpause if the game is over
-        if (isPaused)
-        {
-            TogglePause();
-        }
-    }
-
     public void SetStartWithTutorial() { startWithTutorial = true; }
+    public void ResetAfterRespawn()
+    {
+        // bring your game‐state back to “playing”
+        m_GameState = GameState.HARVESTER_MOVING;
+        Harvester.Instance.Reset();
+        Time.timeScale = isPaused ? 0f : 1f;
+    }
+
 
     IEnumerator FadeUI(CanvasGroup uiOverlay, bool fadeIn, float maxTime)
     {
@@ -117,33 +83,5 @@ public class FrankenGameManager : MonoBehaviour
             yield return null;
         }
         uiOverlay.alpha = fadeIn ? 1 : 0;
-    }
-
-    IEnumerator RespawnPlayer()
-    {
-        Vector3 spawnPosition = Harvester.Instance.respawnPoint;
-        AnimationCurve inOutSmooth = AnimationCurve.EaseInOut(0, 0, 1, 1);
-
-        float startHeight = 200f;
-        Vector3 startPosition = new Vector3(spawnPosition.x, startHeight, spawnPosition.z);
-
-        float animationTime = 2f;
-        float t = 0f;
-
-        while(t < animationTime)
-        {
-            gameOverGroup.alpha = Mathf.Lerp(1, 0, inOutSmooth.Evaluate(t));
-            Harvester.Instance.transform.position = Vector3.Lerp(startPosition, spawnPosition, inOutSmooth.Evaluate(t / animationTime));
-            t+= Time.deltaTime;
-            yield return null;
-        }
-
-        m_GameState = GameState.HARVESTER_MOVING;
-        Harvester.Instance.Reset();
-
-        PlayerCore playerCore = PlayerCore.Instance;
-        playerCore.enabled = true;
-        CameraTracker.Instance.objectToTrack = playerCore.gameObject;
-
     }
 }

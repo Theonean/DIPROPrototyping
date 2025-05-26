@@ -8,6 +8,7 @@ public class ItemManager : MonoBehaviour
     public static ItemManager Instance { get; private set; }
 
     public int crystals = 40;
+    public int totalCrystalsCollected = 0;
     public int gas = 0;
     public List<ComponentEntry> components = new List<ComponentEntry>();
     public UnityEvent<int> crystalAmountChanged;
@@ -48,6 +49,7 @@ public class ItemManager : MonoBehaviour
     public void AddCrystal(int amount)
     {
         crystals += amount;
+        totalCrystalsCollected += amount;
         crystalAmountChanged.Invoke(amount);
     }
 
