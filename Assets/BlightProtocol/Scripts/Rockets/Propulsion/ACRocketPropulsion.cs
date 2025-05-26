@@ -24,7 +24,6 @@ public abstract class ACRocketPropulsion : ACRocketComponent
     [Header("Speed settings")]
     public AnimationCurve flySpeedCurve;
     public float flySpeed;
-    public float flySpeedBase;
     public float flyScaleMultiplier;
 
     [Header("VFX")]
