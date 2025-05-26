@@ -28,7 +28,7 @@ public class ItemManager : MonoBehaviour
             DontDestroyOnLoad(this.gameObject);
         }
 
-        components.Add(new ComponentEntry("PenetrativeFront"));
+        components.Add(new ComponentEntry("BouncingFront"));
         components.Add(new ComponentEntry("ExplosiveBody"));
         components.Add(new ComponentEntry("DirectlinePropulsion"));
     }
