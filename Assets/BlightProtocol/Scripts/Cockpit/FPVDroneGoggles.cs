@@ -60,7 +60,7 @@ public class DroneGoggles : ACInteractable
     {
         if (isActivated)
         {
-            PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.DRONE);
+            PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
         }
         else
         {

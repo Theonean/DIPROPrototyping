@@ -84,7 +84,7 @@ public class Map : ACInteractable
                 spawnPosition.y = DroneMovement.Instance.distanceFromGround;
                 PlayerCore.Instance.spawnPosition = spawnPosition;
 
-                PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.DRONE);
+                PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
                 FPVInputManager.Instance.fpvCamRotator.ChangePosition(1);
                 isDroneModeOn = false;
             }
