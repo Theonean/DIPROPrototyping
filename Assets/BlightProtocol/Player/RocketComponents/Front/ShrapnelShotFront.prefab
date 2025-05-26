@@ -137,9 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  researchCostCrystal: 2800000050000000a0000000fa000000
-  researchCostComponent: 14000000280000003200000050000000
   DescriptiveName: ShrapnelshotFront
+  componentDescription: ShrapnelshotFront
   upgradeDescription: Increase shrapnel salvos
   OnKilledEnemy:
     m_PersistentCalls:
@@ -186,11 +185,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 2504124882496257878}
     m_Modifications:
-    - target: {fileID: -5754084199372789682, guid: 9009ce8c5ad9a21409e5b55f9589f827,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: -8679921383154817045, guid: 90d715c2c7be62841b1ed9c26c22cc28,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -256,6 +250,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 9009ce8c5ad9a21409e5b55f9589f827,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

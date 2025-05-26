@@ -13,6 +13,11 @@ public class ComponentSelectorManager : MonoBehaviour
     [SerializeField] private Button applyToAllButton;
     [SerializeField] private RocketComponentSelector[] componentSelectors = new RocketComponentSelector[3];
     [SerializeField] private ResearchManager[] researchManagers = new ResearchManager[3];
+    [Header("Screens")]
+    [SerializeField] private Button showDescriptionButton;
+    [SerializeField] private ConfiguratorDummyRocket screenDummyRocket;
+    [SerializeField] private ComponentDescriptionDisplayer descriptionDisplayer;
+    private bool descriptionVisible = true;
 
     public UnityEvent OnComponentSelectionChanged = new UnityEvent();
 
@@ -26,6 +31,8 @@ public class ComponentSelectorManager : MonoBehaviour
         {
             Instance = this;
         }
+
+        ToggleDescription();
     }
 
     void OnEnable()
@@ -40,6 +47,8 @@ public class ComponentSelectorManager : MonoBehaviour
         droneConfigurator.onModeSwitched.AddListener(OnModeSwitched);
 
         applyToAllButton.OnPressed.AddListener(selectedRocketManager.ApplySelectionToAll);
+
+        showDescriptionButton.OnPressed.AddListener(ToggleDescription);
     }
 
     void OnDisable()
@@ -54,6 +63,8 @@ public class ComponentSelectorManager : MonoBehaviour
         droneConfigurator.onModeSwitched.RemoveListener(OnModeSwitched);
 
         applyToAllButton.OnPressed.RemoveListener(selectedRocketManager.ApplySelectionToAll);
+
+        showDescriptionButton.OnPressed.RemoveListener(ToggleDescription);
     }
 
     private void ConnectSelector(RocketComponentSelector selector)
@@ -85,5 +96,12 @@ public class ComponentSelectorManager : MonoBehaviour
         {
             selectedRocketManager.LoadResearchFieldsOfActiveRocket();
         }
+    }
+
+    private void ToggleDescription(Button button = null)
+    {
+        descriptionDisplayer.gameObject.SetActive(!descriptionVisible);
+        screenDummyRocket.gameObject.SetActive(descriptionVisible);
+        descriptionVisible = !descriptionVisible;
     }
 }
