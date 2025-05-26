@@ -8,12 +8,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 3398146033239191419}
     m_Modifications:
-    - target: {fileID: -5754084199372789682, guid: 2fb92746797566d4e9f0827ad5350058,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 6163357941915963767, guid: 594ffa3994c412b41aea6221506eb695,
-        type: 3}
     - target: {fileID: -8679921383154817045, guid: 88d8799a461100c4baa1bd57a4155c64,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -74,6 +68,12 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
+    - target: {fileID: -5754084199372789682, guid: 2fb92746797566d4e9f0827ad5350058,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 6163357941915963767, guid: 594ffa3994c412b41aea6221506eb695,
+        type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -181,9 +181,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  researchCostCrystal: 2800000050000000a0000000fa000000
-  researchCostComponent: 14000000280000003200000050000000
   DescriptiveName: ElectricityBody
+  componentDescription: Spawns a bolt of electricity  which jumps from enemy to enemy
   upgradeDescription: increase amount of electricity jumps
   OnKilledEnemy:
     m_PersistentCalls:

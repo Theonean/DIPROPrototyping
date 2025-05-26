@@ -18,6 +18,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     private Rocket[] rockets = new Rocket[4];
     [SerializeField] private RocketHolder[] rocketHolders = new RocketHolder[4];
     [SerializeField] private ConfiguratorDummyRocket screenRocket;
+    [SerializeField] private ComponentDescriptionDisplayer descriptionDisplayer;
     private Rocket selectedRocket;
     public UnityEvent<Rocket> rocketSelected;
 
@@ -59,6 +60,10 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
         selectedRocket = rockets[selectedRocketIndex];
         rocketSelected.Invoke(selectedRocket);
+
+        UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
+        UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
+        UpdateDescription(RocketComponentType.PROPULSION, selectedRocket.propulsionComponent);
     }
 
     public void RotateBarrel(Button button)
@@ -103,6 +108,11 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         UpdateResearchFields(selectedRocket.frontComponent, RocketComponentType.FRONT);
         UpdateResearchFields(selectedRocket.bodyComponent, RocketComponentType.BODY);
         UpdateResearchFields(selectedRocket.propulsionComponent, RocketComponentType.PROPULSION);
+
+        UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
+        UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
+        UpdateDescription(RocketComponentType.PROPULSION, selectedRocket.propulsionComponent);
+
         rocketSelected.Invoke(selectedRocket);
     }
 
@@ -116,6 +126,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         ACRocketComponent rocketComponent = newComponent.GetComponent<ACRocketComponent>();
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
         UpdateResearchFields(rocketComponent, componentType);
+        UpdateDescription(componentType, rocketComponent);
 
         switch (componentType)
         {
@@ -131,6 +142,14 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         }
         rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
         screenRocket.SetComponent(componentType, dummyObject);
+
+
+    }
+
+    private void UpdateDescription(RocketComponentType type, ACRocketComponent newComponent)
+    {
+        string description = newComponent.componentDescription;
+        descriptionDisplayer.SetText(type, description);
     }
 
     public void ApplySelectionToAll(Button button)
@@ -196,7 +215,6 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         string crystalCostsText = ownedCrystals + " / " + researchCosts.Item1;
         string componentCostsText = ownedComponents + " / " + researchCosts.Item2;
         string upgradeText = componentToUpgrade.GetResearchDescription();
-
 
         researchManager.SetText(crystalCostsText, componentCostsText, upgradeText);
     }
