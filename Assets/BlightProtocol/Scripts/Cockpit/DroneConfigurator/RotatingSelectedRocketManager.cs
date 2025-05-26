@@ -146,11 +146,6 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         }
     }
 
-    public void LoadAllRockets()
-    {
-
-    }
-
     public void LevelUpComponent(RocketComponentType componentType)
     {
         ACRocketComponent rocketComponent = null;
@@ -184,7 +179,14 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         }
     }
 
-    private void UpdateResearchFields(ACRocketComponent componentToUpgrade, RocketComponentType componentType)
+    public void LoadResearchFieldsOfActiveRocket()
+    {
+        UpdateResearchFields(selectedRocket.frontComponent, RocketComponentType.FRONT);
+        UpdateResearchFields(selectedRocket.bodyComponent, RocketComponentType.BODY);
+        UpdateResearchFields(selectedRocket.propulsionComponent, RocketComponentType.PROPULSION);
+    }
+
+    public void UpdateResearchFields(ACRocketComponent componentToUpgrade, RocketComponentType componentType)
     {
         ResearchManager researchManager = ComponentSelectorManager.Instance.GetResearchManager(componentType);
         (int, int) researchCosts = componentToUpgrade.GetResearchCost();

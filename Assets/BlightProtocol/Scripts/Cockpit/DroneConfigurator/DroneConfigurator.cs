@@ -14,8 +14,8 @@ public class DroneConfigurator : MonoBehaviour
     public ConfigurationMode configurationMode = ConfigurationMode.SELECTION;
     public UnityEvent onModeSwitched;
 
-    [Header("Mode Switching")]
-    [SerializeField] private Button switchModeButton;
+    [Header("Research")]
+    [SerializeField] private Button researchButton;
     [SerializeField] private Animator panelAnimator;
 
     [Header("Selector")]
@@ -44,17 +44,17 @@ public class DroneConfigurator : MonoBehaviour
 
     void OnEnable()
     {
-        switchModeButton.OnPressed.AddListener(SwitchMode);
+        researchButton.OnPressed.AddListener(SwitchMode);
     }
 
     void OnDisable()
     {
-        switchModeButton.OnPressed.AddListener(SwitchMode);
+        researchButton.OnPressed.AddListener(SwitchMode);
     }
 
     private void SwitchMode(Button button = null)
     {
-        switchModeButton.IsCurrentlyInteractable = false;
+        researchButton.IsCurrentlyInteractable = false;
         if (configurationMode == ConfigurationMode.SELECTION)
         {
             panelAnimator.SetTrigger("open");
@@ -97,6 +97,6 @@ public class DroneConfigurator : MonoBehaviour
         }
 
         onModeSwitched.Invoke();
-        switchModeButton.IsCurrentlyInteractable = true;
+        researchButton.IsCurrentlyInteractable = true;
     }
 }

@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class ComponentSelectorManager : MonoBehaviour
 {
-    public static ComponentSelectorManager Instance { get; private set;}
+    public static ComponentSelectorManager Instance { get; private set; }
     [SerializeField] private DroneConfigurator droneConfigurator;
     [SerializeField] private RotatingSelectedRocketManager selectedRocketManager;
     [SerializeField] private Button applyToAllButton;
@@ -18,10 +18,12 @@ public class ComponentSelectorManager : MonoBehaviour
 
     void Awake()
     {
-        if (Instance != null && Instance != this) {
+        if (Instance != null && Instance != this)
+        {
             Destroy(this);
-        }       
-        else {
+        }
+        else
+        {
             Instance = this;
         }
     }
@@ -35,6 +37,8 @@ public class ComponentSelectorManager : MonoBehaviour
 
         ResearchManager.OnResearched.AddListener(selectedRocketManager.LevelUpComponent);
 
+        droneConfigurator.onModeSwitched.AddListener(OnModeSwitched);
+
         applyToAllButton.OnPressed.AddListener(selectedRocketManager.ApplySelectionToAll);
     }
 
@@ -46,6 +50,8 @@ public class ComponentSelectorManager : MonoBehaviour
         }
 
         ResearchManager.OnResearched.RemoveListener(selectedRocketManager.LevelUpComponent);
+
+        droneConfigurator.onModeSwitched.RemoveListener(OnModeSwitched);
 
         applyToAllButton.OnPressed.RemoveListener(selectedRocketManager.ApplySelectionToAll);
     }
@@ -68,7 +74,16 @@ public class ComponentSelectorManager : MonoBehaviour
         selectedRocketManager.ChangeActiveRocketComponent(componentType, componentPrefab);
     }
 
-    public ResearchManager GetResearchManager(RocketComponentType type) {
+    public ResearchManager GetResearchManager(RocketComponentType type)
+    {
         return researchManagers.First(researchManager => researchManager.componentType == type);
+    }
+
+    private void OnModeSwitched()
+    {
+        if (droneConfigurator.configurationMode == ConfigurationMode.RESEARCH)
+        {
+            selectedRocketManager.LoadResearchFieldsOfActiveRocket();
+        }
     }
 }

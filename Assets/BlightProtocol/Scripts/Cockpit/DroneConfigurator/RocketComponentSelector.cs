@@ -106,7 +106,7 @@ public class RocketComponentSelector : MonoBehaviour
         SelectedComponentApplied.Invoke(componentType);
     }
 
-    private void UpdateDisplay(int value)
+    private void UpdateDisplay(int index)
     {
         // Get the selected component's name and icon to display
         string stringToReplace = "";
@@ -122,7 +122,7 @@ public class RocketComponentSelector : MonoBehaviour
                 stringToReplace = "Front";
                 break;
         }
-        componentNameText.text = components[value].name.Replace(stringToReplace, "");
+        componentNameText.text = components[index].name.Replace(stringToReplace, "");
     }
 
     public int GetComponentIndex(ACRocketComponent component)
