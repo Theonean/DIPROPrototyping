@@ -52,7 +52,7 @@ public class Rocket : MonoBehaviour
         {
             if (other.gameObject.CompareTag("Enemy"))
             {
-                other.GetComponent<EnemyDamageHandler>().DestroyEnemy(); 
+                other.GetComponent<EnemyDamageHandler>().DestroyEnemy();
                 frontComponent.OnKilledEnemy.Invoke(RocketComponentType.FRONT, 1);
             }
             else if (other.gameObject.CompareTag("EnemyArmor"))
@@ -67,6 +67,8 @@ public class Rocket : MonoBehaviour
                 }
                 return;
             }
+            else if (other.gameObject.CompareTag("TutorialTarget"))
+                return;
         }
         else if (other.gameObject.layer == environmentLayer)
         {
@@ -83,7 +85,7 @@ public class Rocket : MonoBehaviour
                 other.GetComponentInChildren<ItemDropper>().DropItems();
             }
 
-                HandleBouncingFrontException(other);
+            HandleBouncingFrontException(other);
             return;
         }
         else if (other.gameObject.layer == harvesterLayer)
