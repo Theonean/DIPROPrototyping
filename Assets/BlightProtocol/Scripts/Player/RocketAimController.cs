@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
+using Assets.BlightProtocol.Scripts;
 
 public class RocketAimController : MonoBehaviour
 {
@@ -68,7 +69,7 @@ public class RocketAimController : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same Rocket
     void Update()
     {
-        if (playerCore.isDead || frankenGameManager.isPaused || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
+        if (playerCore.isDead || EndOfGameManager.Instance.isPaused || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
         {
             return;
         }

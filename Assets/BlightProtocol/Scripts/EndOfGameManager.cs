@@ -8,6 +8,7 @@ namespace Assets.BlightProtocol.Scripts
 
 	public class EndOfGameManager : MonoBehaviour
 	{
+		public static EndOfGameManager Instance;
 		[Header("UI References")]
 		[SerializeField] private CanvasGroup gameOverGroup;
 		[SerializeField] private TextMeshProUGUI resourcesHarvestedText;
@@ -23,7 +24,24 @@ namespace Assets.BlightProtocol.Scripts
 
 		private int score = 0;
 
-		private void Start()
+        public bool isPaused = false;
+        Coroutine pauseFadeRoutine;
+        public CanvasGroup pauseGroup;
+
+        private void Awake()
+        {
+            // Ensure there's only one instance of the FrankenGameManager
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
+
+        private void Start()
 		{
 			// hide game-over UI at start
 			gameOverGroup.alpha = 0f;
@@ -31,6 +49,9 @@ namespace Assets.BlightProtocol.Scripts
 			// subscribe to the harvester's death event
 			Harvester.Instance.health.died.AddListener(OnPlayerDied);
 			EnemyDamageHandler.enemyTypeDestroyed.AddListener(PlayerKilledEnemy);
+
+			isPaused = true;
+			TogglePause();
 		}
 
 		private void Update()
@@ -52,22 +73,42 @@ namespace Assets.BlightProtocol.Scripts
 			{
 				SceneManager.LoadScene("0_MainMenu");
 			}
+
+			if(FrankenGameManager.Instance.m_GameState != FrankenGameManager.GameState.GAMEOVER)
+			{
+                // Toggle pause with spacebar
+                if (Input.GetKeyDown(KeyCode.Escape))
+                {
+                    TogglePause();
+                }
+            }
 		}
 
-		public void PlayerFinishedGame()
+        public void TogglePause()
+        {
+            isPaused = !isPaused;
+            Time.timeScale = isPaused ? 0 : 1;
+            if (pauseFadeRoutine != null)
+            {
+                StopCoroutine(pauseFadeRoutine);
+            }
+            pauseFadeRoutine = StartCoroutine(FadeUI(pauseGroup, isPaused, 0.5f));
+        }
+
+        public void PlayerFinishedGame()
         {
             finishedGame = true;
 
             // fade in the game-over overlay
             StartCoroutine(FadeUI(gameOverGroup, true, gameOverFadeDuration));
 
-            if (FrankenGameManager.Instance.isPaused)
-                FrankenGameManager.Instance.TogglePause();
+            if (isPaused)
+                TogglePause();
 
 			Time.timeScale = 0;
 
             resourcesHarvestedText.text =
-                $"time needed: " + FrankenGameManager.Instance.m_TotalGameTime + "\n Score: " + score + " \n total crystals collected " + ItemManager.Instance.totalCrystalsCollected + "\n gas collected " + ItemManager.Instance.gas;
+                $"time needed: " + FrankenGameManager.Instance.m_TotalGameTime + "\n Score: " + score + "\n total crystals collected " + ItemManager.Instance.totalCrystalsCollected + "\n gas collected " + ItemManager.Instance.gas;
 
             resetText.text =
                 $"press 'R' to replay or 'e' to exit";
@@ -92,8 +133,8 @@ namespace Assets.BlightProtocol.Scripts
 			StartCoroutine(FadeUI(gameOverGroup, true, gameOverFadeDuration));
 
 			// ensure the game is unpaused so the fade runs on unscaled time
-			if (FrankenGameManager.Instance.isPaused)
-				FrankenGameManager.Instance.TogglePause();
+			if (isPaused)
+				TogglePause();
 		}
 
 		private IEnumerator FadeUI(CanvasGroup cg, bool fadeIn, float duration)

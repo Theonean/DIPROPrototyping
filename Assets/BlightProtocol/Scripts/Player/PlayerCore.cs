@@ -44,6 +44,8 @@ public class PlayerCore : MonoBehaviour
         m_RespawnTimer = 0f;
 
         shieldVFX = shield.GetComponent<ShieldVFX>();
+
+        Harvester.Instance.health.died.AddListener(CommitSeppuku);
     }
 
     private void Start()
@@ -111,6 +113,23 @@ public class PlayerCore : MonoBehaviour
         }
     }
 
+    private void CommitSeppuku()
+    {
+        // Instantiate Explosion VFX
+        Instantiate(explosion, transform.position, Quaternion.identity);
+
+        //Pause Shield SFX When Dead
+        shieldSFXInstance.setPaused(true);
+
+        //Make drone invisible when dead
+        transform.position = PerspectiveSwitcher.Instance.GetDroneRespawnPosition();
+        isDead = true;
+        m_RespawnTimer = 0f;
+        shieldVFX.ToggleShield(true);
+
+        playerDiedGroup.gameObject.SetActive(false);
+    }
+
     public void ModifyHealth(int amount)
     {
         //When harvester has died, don't take damage
@@ -156,7 +175,6 @@ public class PlayerCore : MonoBehaviour
             shieldVFX.ToggleShield(true);
             StartCoroutine(FadeDroneDied(true));
         }
-
     }
 
     private IEnumerator FadeDroneDied(bool fadeIn)
@@ -172,5 +190,7 @@ public class PlayerCore : MonoBehaviour
                 playerDiedGroup.alpha = Mathf.Lerp(1, 0, time / maxTime);
             yield return null;
         }
+
+        playerDiedGroup.gameObject.SetActive(false);
     }
 }
