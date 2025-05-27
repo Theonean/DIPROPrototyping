@@ -8,6 +8,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 6869242799872079643}
     m_Modifications:
+    - target: {fileID: -5754084199372789682, guid: 5848af5820905cd49b96f35fbe32c2e0,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     - target: {fileID: -8679921383154817045, guid: 871b6571ce8badc4db83e5431dd4b8e1,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -63,11 +68,6 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 31
       objectReference: {fileID: 0}
-    - target: {fileID: -5754084199372789682, guid: 5848af5820905cd49b96f35fbe32c2e0,
-        type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -187,6 +187,66 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetMoveStepPerSecondPerLevel: 000000000f000000140000001900000023000000
+  flySpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.013763428
+      value: 1.0087891
+      inSlope: -0.6627798
+      outSlope: -0.6627798
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.117049985
+    - serializedVersion: 3
+      time: 0.4312009
+      value: 0.7498312
+      inSlope: -0.0027477837
+      outSlope: -0.0027477837
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.2306759
+    - serializedVersion: 3
+      time: 0.99542236
+      value: 1.0115356
+      inSlope: 0.6412303
+      outSlope: 0.6412303
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.113425806
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  returnFlySpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.010654449
+      value: 0.50335693
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  flySpeed: 100
+  returnFlySpeed: 100
+  flyScaleMultiplier: 1.25
   vfxFlying: {fileID: 5493941438881058025}
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles

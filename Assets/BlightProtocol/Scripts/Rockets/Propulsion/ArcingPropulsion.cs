@@ -26,7 +26,7 @@ public class ArcingPropulsion : ACRocketPropulsion
 
         while (progress < 1f)
         {
-            progress += (flySpeed / Vector3.Distance(start, TargetPosition)) * Time.deltaTime;
+            progress += (flySpeedCurve.Evaluate(progress) * flySpeed / Vector3.Distance(start, TargetPosition)) * Time.deltaTime;
             float t = Mathf.Clamp01(progress);
 
             // Quadratic Bézier interpolation: (1 - t)^2 * A + 2(1 - t)t * B + t^2 * C

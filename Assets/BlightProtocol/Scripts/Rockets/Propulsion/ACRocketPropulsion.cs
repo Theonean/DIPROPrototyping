@@ -23,7 +23,9 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     [Header("Speed settings")]
     public AnimationCurve flySpeedCurve;
+    public AnimationCurve returnFlySpeedCurve;
     public float flySpeed;
+    public float returnFlySpeed;
     public float flyScaleMultiplier;
 
     [Header("VFX")]
@@ -145,26 +147,28 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
         RocketAimController.Instance.OnRocketRetract?.Invoke();
 
+        Vector3 updatedTargetPosition = ParentRocket.initialTransform.position;
+        float totalDistanceToReturn = Vector3.Distance(rocketTransform.position, updatedTargetPosition);
+
         while (true)
         {
             // Use the initial rocketTransform's position and rotation instead of separate variables
-            Vector3 updatedTargetPosition = ParentRocket.initialTransform.position;
+            updatedTargetPosition = ParentRocket.initialTransform.position;
 
             // Calculate progress based on the updated target position
             float distanceToUpdatedTarget = Vector3.Distance(rocketTransform.position, updatedTargetPosition);
-            float totalDistanceToReturn = Vector3.Distance(rocketTransform.position, updatedTargetPosition);
-            float tReturn = 1f - (distanceToUpdatedTarget / totalDistanceToReturn);
+            float tReturn = 1 - (distanceToUpdatedTarget / totalDistanceToReturn);
 
             rocketTransform.LookAt(updatedTargetPosition);
 
             // Move the rocket back to the initial position using animation curve
             if (tReturn < 0.90f)
             {
-                rocketTransform.position = Vector3.MoveTowards(rocketTransform.position, updatedTargetPosition, flySpeedCurve.Evaluate(tReturn) * Time.deltaTime * flySpeed * 2f);
+                rocketTransform.position = Vector3.MoveTowards(rocketTransform.position, updatedTargetPosition, returnFlySpeedCurve.Evaluate(tReturn) * Time.deltaTime * returnFlySpeed);
             }
             else
             {
-                rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * flySpeed * 2f);
+                rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * returnFlySpeed);
             }
 
             if (distanceToUpdatedTarget < 1f)

@@ -4,22 +4,35 @@ using UnityEngine;
 public class BoomerangPropulsion : ACRocketPropulsion
 {
     public float boomerangSideOffset; // How far the rocket will offset sideways for its arc
+    public float controlPoint1Offset;
+    public float controlPoint2Offset;
 
-    // Returns a point on a quadratic Bézier curve for parameter t (0 <= t <= 1)
-    private Vector3 QuadraticBezier(float t, Vector3 p0, Vector3 p1, Vector3 p2)
+    // Returns a point on a cubic Bézier curve for parameter t (0 <= t <= 1)
+    private Vector3 CubicBezier(float t, Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3)
     {
-        return Mathf.Pow(1 - t, 2) * p0 + 2 * (1 - t) * t * p1 + Mathf.Pow(t, 2) * p2;
+        float u = 1 - t;
+        float uu = u * u;
+        float uuu = uu * u;
+        float tt = t * t;
+        float ttt = tt * t;
+
+        Vector3 point = uuu * p0; // (1-t)³ * P0
+        point += 3 * uu * t * p1; // 3(1-t)²t * P1
+        point += 3 * u * tt * p2;  // 3(1-t)t² * P2
+        point += ttt * p3;         // t³ * P3
+
+        return point;
     }
 
-    // Approximates the arc length of a quadratic Bézier curve by subdividing it
-    private float EstimateBezierArcLength(Vector3 p0, Vector3 p1, Vector3 p2, int subdivisions = 20)
+    // Approximates the arc length of a cubic Bézier curve by subdividing it
+    private float EstimateBezierArcLength(Vector3 p0, Vector3 p1, Vector3 p2, Vector3 p3, int subdivisions = 20)
     {
         float length = 0f;
         Vector3 previousPoint = p0;
         for (int i = 1; i <= subdivisions; i++)
         {
             float t = i / (float)subdivisions;
-            Vector3 currentPoint = QuadraticBezier(t, p0, p1, p2);
+            Vector3 currentPoint = CubicBezier(t, p0, p1, p2, p3);
             length += Vector3.Distance(previousPoint, currentPoint);
             previousPoint = currentPoint;
         }
@@ -47,19 +60,19 @@ public class BoomerangPropulsion : ACRocketPropulsion
         {
             Vector3 currentTarget = TargetPosition;
 
-            Vector3 midPos = (startPos + currentTarget) * 0.5f;
-            Vector3 controlPoint = midPos + offsetDir;
+            Vector3 controlPoint1 = startPos + (currentTarget - startPos) * controlPoint1Offset + offsetDir;
+            Vector3 controlPoint2 = startPos + (currentTarget - startPos) * controlPoint2Offset + offsetDir;
 
-            float arcLength = EstimateBezierArcLength(startPos, controlPoint, currentTarget);
-            t += (flySpeed * Time.deltaTime) / arcLength;
+            float arcLength = EstimateBezierArcLength(startPos, controlPoint1, controlPoint2, currentTarget);
+            t += (flySpeedCurve.Evaluate(t) * flySpeed * Time.deltaTime) / arcLength;
             t = Mathf.Clamp01(t);
 
-            Vector3 pos = QuadraticBezier(t, startPos, controlPoint, currentTarget);
+            Vector3 pos = CubicBezier(t, startPos, controlPoint1, controlPoint2, currentTarget);
             rocketTransform.position = pos;
 
             // Smooth rotation
             float deltaT = 0.001f;
-            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), startPos, controlPoint, currentTarget);
+            Vector3 posAhead = CubicBezier(Mathf.Clamp01(t + deltaT), startPos, controlPoint1, controlPoint2, currentTarget);
             Vector3 derivative = posAhead - pos;
             if (derivative != Vector3.zero)
             {
@@ -76,20 +89,20 @@ public class BoomerangPropulsion : ACRocketPropulsion
         while (Vector3.Distance(rocketTransform.position, parentRocket.initialTransform.position) > 1f)
         {
             Vector3 currentTarget = parentRocket.initialTransform.position;
-            Vector3 returnMid = (returnStart + currentTarget) * 0.5f;
 
             // Mirror the outbound offset direction
-            Vector3 returnControl = returnMid - offsetDir;
+            Vector3 returnControl1 = returnStart + (currentTarget - returnStart) * (1- controlPoint2Offset) - offsetDir;
+            Vector3 returnControl2 = returnStart + (currentTarget - returnStart) * (1- controlPoint1Offset) - offsetDir;
 
-            float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl, currentTarget);
+            float inboundArcLength = EstimateBezierArcLength(returnStart, returnControl1, returnControl2, currentTarget);
             t += (flySpeed * Time.deltaTime) / inboundArcLength;
             t = Mathf.Clamp01(t);
 
-            Vector3 pos = QuadraticBezier(t, returnStart, returnControl, currentTarget);
+            Vector3 pos = CubicBezier(t, returnStart, returnControl1, returnControl2, currentTarget);
             rocketTransform.position = pos;
 
             float deltaT = 0.001f;
-            Vector3 posAhead = QuadraticBezier(Mathf.Clamp01(t + deltaT), returnStart, returnControl, currentTarget);
+            Vector3 posAhead = CubicBezier(Mathf.Clamp01(t + deltaT), returnStart, returnControl1, returnControl2, currentTarget);
             Vector3 derivative = posAhead - pos;
             if (derivative != Vector3.zero)
             {

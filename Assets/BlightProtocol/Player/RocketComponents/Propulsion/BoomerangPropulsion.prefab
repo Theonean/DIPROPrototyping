@@ -203,10 +203,72 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   targetMoveStepPerSecondPerLevel: 000000000f000000140000001900000023000000
+  flySpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.016292572
+      value: 0.918293
+      inSlope: -0.32868665
+      outSlope: -0.32868665
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.100026846
+    - serializedVersion: 3
+      time: 0.66643035
+      value: 0.7487936
+      inSlope: -0.004240926
+      outSlope: -0.004240926
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17755546
+      outWeight: 0.2306759
+    - serializedVersion: 3
+      time: 0.99542236
+      value: 1.0115356
+      inSlope: 2.0653431
+      outSlope: 2.0653431
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.03843995
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  returnFlySpeedCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: -0.010654449
+      value: 0.50335693
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  flySpeed: 120
+  returnFlySpeed: 100
+  flyScaleMultiplier: 1.25
   vfxFlying: {fileID: 5493941438881058025}
   rocketFlyAwaySFXPath: event:/SFX/Dron/Shoot
   rocketCallbackSFXPath: event:/SFX/Dron/Callingback_Missiles
-  boomerangSideOffset: 40
+  boomerangSideOffset: 30
+  controlPoint1Offset: 0.4
+  controlPoint2Offset: 1
 --- !u!2083052967 &5493941438881058025 stripped
 VisualEffect:
   m_CorrespondingSourceObject: {fileID: 1463224749962279571, guid: 463c5504d0ff92f45a3e2bcb0a9b77e7,
