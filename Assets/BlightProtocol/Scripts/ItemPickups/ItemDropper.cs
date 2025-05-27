@@ -11,6 +11,7 @@ public class ItemDropper : MonoBehaviour
     public float spawnRadius = 5f; // Radius around the object to spawn items
     public Vector2 throwForceRange = new Vector2(5f, 10f); // Range of force to apply to the item when spawning
     private bool isSpawning = false; // Flag to prevent multiple spawns
+    [SerializeField] GameObject particleEffect;
 
     public void DropItems()
     {
@@ -18,6 +19,9 @@ public class ItemDropper : MonoBehaviour
         isSpawning = true;
 
         StartCoroutine(DropItems(numberOfItems, spawnRadius));
+        if (particleEffect != null) {
+            Instantiate(particleEffect, transform.position, Quaternion.identity);
+        }
     }
 
     private IEnumerator DropItems(int count, float radius)
