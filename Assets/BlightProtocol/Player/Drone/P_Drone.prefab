@@ -364,7 +364,7 @@ MonoBehaviour:
   dashKnockback: 150
   maxDegRotationInDash: 90
   distanceFromGround: 3
-  moveSpeed: 20
+  moveSpeed: 45
   currentSpeed: 0
   moveDirection: {x: 0, y: 0, z: 0}
   accelerationCurve:
@@ -467,6 +467,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   isDead: 0
+  spawnPosition: {x: 0, y: 0, z: 0}
   explosion: {fileID: 4695719848415906335, guid: c17c4653f935fb14b854e88e1881d12a,
     type: 3}
   shieldSFXEventPath: event:/SFX/Dron/Shield

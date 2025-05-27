@@ -58,9 +58,6 @@ public class TutorialManager : MonoBehaviour
     public int crystalsToCollectForUpgrade = 20;
     private int crystalsCollected = 0;
 
-    public int rocketsToShoot = 3;
-    private int rocketsShot = 0;
-
     [Header("Segment Doors")]
     [SerializeField] private TutorialDoor MOVEMENT_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor ROCKET_SEGMENT_EXIT;
@@ -95,6 +92,7 @@ public class TutorialManager : MonoBehaviour
         else
         {
             TUTORIAL_EXIT.CloseSegmentDoor();
+            tutorialText.enabled = false;
         }
     }
 

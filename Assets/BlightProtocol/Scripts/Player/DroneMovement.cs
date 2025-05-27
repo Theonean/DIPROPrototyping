@@ -16,7 +16,6 @@ public class DroneMovement : MonoBehaviour
         ContinuousDash,
     }
     public static DroneMovement Instance { get; private set; }
-    public float dashKnockback = 150f;
     [Tooltip("Maximum degrees the drone can rotate per second while dashing.")]
     public float maxDegRotationInDash = 90f;
     public float distanceFromGround = 3f;
@@ -172,7 +171,7 @@ public class DroneMovement : MonoBehaviour
             if (hitCollider.CompareTag("Enemy"))
             {
                 Debug.Log("Knocked back enemy");
-                StartCoroutine(hitCollider.GetComponentInParent<ACEnemyMovementBehaviour>().ApplyKnockback(moveDirection, dashKnockback));
+                StartCoroutine(hitCollider.GetComponentInParent<ACEnemyMovementBehaviour>().ApplyKnockback(moveDirection));
             }
         }
 
