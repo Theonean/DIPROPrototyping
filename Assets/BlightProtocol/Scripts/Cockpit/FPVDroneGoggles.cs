@@ -68,7 +68,7 @@ public class DroneGoggles : ACInteractable
 
     void OnPerspectiveSwitched()
     {
-        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV && isActivated)
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
         {
             meshAnimator.SetTrigger("deactivate");
             isAnimating = true;
