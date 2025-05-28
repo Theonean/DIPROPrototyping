@@ -20,7 +20,6 @@ public class PlayerCore : MonoBehaviour
     float m_RespawnTimer;
     public UnityEvent returnLegs;
     public bool isDead = false; //When dead, track the ControlZoneManager to respawn the drone
-    public Vector3 spawnPosition = Vector3.zero;
 
     [Header("VFX")]
     public GameObject explosion;
@@ -28,6 +27,8 @@ public class PlayerCore : MonoBehaviour
     [Header("SFX")]
     public string shieldSFXEventPath; // FMOD event path
     private EventInstance shieldSFXInstance;
+
+    private Renderer[] meshRenderers;
 
     private void Awake()
     {
@@ -51,6 +52,8 @@ public class PlayerCore : MonoBehaviour
     private void Start()
     {
         FMODAudioManagement.instance.PlaySound(out shieldSFXInstance, shieldSFXEventPath, gameObject);
+
+        meshRenderers = GetComponentsInChildren<Renderer>();
     }
 
     void Update()
@@ -121,13 +124,21 @@ public class PlayerCore : MonoBehaviour
         //Pause Shield SFX When Dead
         shieldSFXInstance.setPaused(true);
 
-        //Make drone invisible when dead
-        transform.position = PerspectiveSwitcher.Instance.GetDroneRespawnPosition();
         isDead = true;
         m_RespawnTimer = 0f;
         shieldVFX.ToggleShield(true);
 
-        playerDiedGroup.gameObject.SetActive(false);
+        ToggleDisplayDrone(false);
+
+        PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
+    }
+
+    public void ToggleDisplayDrone(bool isDroneVisible)
+    {
+        foreach (Renderer renderer in meshRenderers)
+        {
+            renderer.enabled = isDroneVisible;
+        }
     }
 
     public void ModifyHealth(int amount)
@@ -169,11 +180,14 @@ public class PlayerCore : MonoBehaviour
             shieldSFXInstance.setPaused(true);
 
             //Make drone invisible when dead
-            transform.position = PerspectiveSwitcher.Instance.GetDroneRespawnPosition();
             isDead = true;
             m_RespawnTimer = 0f;
             shieldVFX.ToggleShield(true);
             StartCoroutine(FadeDroneDied(true));
+
+            PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
+
+            ToggleDisplayDrone(false);
         }
     }
 
@@ -190,7 +204,5 @@ public class PlayerCore : MonoBehaviour
                 playerDiedGroup.alpha = Mathf.Lerp(1, 0, time / maxTime);
             yield return null;
         }
-
-        playerDiedGroup.gameObject.SetActive(false);
     }
 }

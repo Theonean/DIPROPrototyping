@@ -24,9 +24,6 @@ public class DroneGoggles : ACInteractable
     {
         base.Start();
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
-        meshAnimator.SetTrigger("activate");
-        isAnimating = true;
-        isActivated = true;
     }
 
     void Update()

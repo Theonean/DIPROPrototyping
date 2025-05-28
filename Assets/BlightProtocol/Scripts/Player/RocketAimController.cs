@@ -69,7 +69,10 @@ public class RocketAimController : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same Rocket
     void Update()
     {
-        if (playerCore.isDead || EndOfGameManager.Instance.isPaused || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
+        if (playerCore.isDead 
+            || EndOfGameManager.Instance.isPaused 
+            || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE
+            || perspectiveSwitcher.cooldownTimer > 1.5f)
         {
             return;
         }
