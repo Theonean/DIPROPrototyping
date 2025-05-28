@@ -275,6 +275,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxDegRotationInDash: 90
   distanceFromGround: 3
+  dashTime: 0.4
+  dashSpeed: 120
+  continuousDashSpeed: 75
   moveSpeed: 45
   currentSpeed: 0
   moveDirection: {x: 0, y: 0, z: 0}
@@ -350,7 +353,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8e50bebe5ed094a8af41a9eb78b705, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  arrowSprite: {fileID: 0}
   OutOfRangeUIGroup: {fileID: 0}
   outOfRangeUIGroupCanvas: {fileID: 0}
   countdownUntilRespawnText: {fileID: 0}

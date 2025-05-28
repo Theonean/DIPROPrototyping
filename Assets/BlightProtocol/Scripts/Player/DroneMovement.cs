@@ -19,8 +19,9 @@ public class DroneMovement : MonoBehaviour
     [Tooltip("Maximum degrees the drone can rotate per second while dashing.")]
     public float maxDegRotationInDash = 90f;
     public float distanceFromGround = 3f;
-    float dashTime = 0.3f;
-    float dashSpeed = 60f;
+    public float dashTime = 0.3f;
+    public float dashSpeed = 60f;
+    public float continuousDashSpeed = 100f;
     float dashCooldown = 1f;
     float dashCooldownTimer;
     public float moveSpeed;
@@ -204,7 +205,7 @@ public class DroneMovement : MonoBehaviour
 
             while (Input.GetKey(KeyCode.Space))
             {
-                currentSpeed = dashSpeed;
+                currentSpeed = continuousDashSpeed;
                 yield return null;
             }
         }
