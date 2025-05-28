@@ -51,7 +51,6 @@ public class TutorialManager : MonoBehaviour
 
     public SOItem componentDroppedByEnemies;
     public EnemySpawner resourcePointSpawner;
-    private ACEnemyMovementBehaviour[] enemies = new ACEnemyMovementBehaviour[5];
     private int deadEnemyCounter = 0;
 
     public ResourcePoint tutorialResourcePoint;
@@ -469,8 +468,7 @@ public class TutorialManager : MonoBehaviour
         NextTutorialStep();
 
         resourcePointSpawner.SpawnEnemy();
-        enemies = resourcePointSpawner.GetComponentsInChildren<ACEnemyMovementBehaviour>();
-        foreach (ACEnemyMovementBehaviour enemy in enemies)
+        foreach (ACEnemyMovementBehaviour enemy in resourcePointSpawner.spawnedEnemies)
         {
             enemy.StopMovement();
             ItemDropper itemDropper = enemy.GetComponent<ItemDropper>();
@@ -478,10 +476,10 @@ public class TutorialManager : MonoBehaviour
             itemDropper.numberOfItems = 1;
             itemDropper.spawnSingle = true;
 
-            GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => 
+            enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => 
             { 
                 deadEnemyCounter++; 
-                if(deadEnemyCounter == enemies.Count()) CompleteFIGHT();
+                if(deadEnemyCounter == resourcePointSpawner.spawnedEnemies.Count()) CompleteFIGHT();
             });
         }
         
@@ -504,7 +502,7 @@ public class TutorialManager : MonoBehaviour
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(CompletePERSPECTIVESWITCHTODRONE);
         NextTutorialStep();
 
-        foreach (ACEnemyMovementBehaviour enemy in enemies) enemy.ResumeMovement();
+        foreach (ACEnemyMovementBehaviour enemy in resourcePointSpawner.spawnedEnemies) enemy.ResumeMovement();
     }
     public void CompleteFIGHT()
     {

@@ -44,7 +44,7 @@ public class FrankenGameManager : MonoBehaviour
         }
     }
 
-    public void SetStartWithTutorial() { startWithTutorial = true; }
+    public void SetStartWithTutorial(bool enabled) { startWithTutorial = enabled; }
     public void ResetAfterRespawn()
     {
         // bring your game‐state back to “playing”

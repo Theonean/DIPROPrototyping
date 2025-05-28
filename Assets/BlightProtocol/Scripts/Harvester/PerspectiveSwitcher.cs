@@ -143,9 +143,9 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
     }
 
-    public void OnDroneEnterSetFPV()
+    public void OnDroneEnterSetSwitching()
     {
-        SetPerspective(CameraPerspective.FPV);
+        SetPerspective(CameraPerspective.SWITCHING);
     }
 
     public void OverrideToFPV()
@@ -198,6 +198,8 @@ public class PerspectiveSwitcher : MonoBehaviour
         targetPositionLine.enabled = false;
         droneIcon.enabled = false;
 
+        PlayerCore.Instance.ToggleDisplayDrone(true);
+
         var playerCore = PlayerCore.Instance;
         var rb = playerCore.GetComponent<Rigidbody>();
         rb.linearVelocity = Vector3.zero;
@@ -230,6 +232,8 @@ public class PerspectiveSwitcher : MonoBehaviour
         droneCamera.enabled = true;
         gogglesCamera.enabled = false;
         fpCamera.gameObject.SetActive(false);
+
+        PlayerCore.Instance.ToggleDisplayDrone(false);
 
         targetPositionLine.enabled = true;
         droneIcon.enabled = true;

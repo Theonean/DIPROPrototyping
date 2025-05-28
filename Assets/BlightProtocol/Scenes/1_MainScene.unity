@@ -3229,7 +3229,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   m_GameState: 0
-  startWithTutorial: 1
+  startWithTutorial: 0
   m_TotalGameTime: 0
 --- !u!1 &1967032504
 GameObject:
@@ -5335,7 +5335,7 @@ PrefabInstance:
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDroneEnterSetFPV
+      value: OnDroneEnterSetSwitching
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}

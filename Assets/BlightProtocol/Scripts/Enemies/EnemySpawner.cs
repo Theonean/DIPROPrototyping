@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.Events;
@@ -37,6 +38,7 @@ public class EnemySpawner : MonoBehaviour
     private float m_SpawnTimer = 0f;
     private int m_EnemyCount = 0;
     private SpawnState m_SpawnState = SpawnState.FINISHED;
+    public List<ACEnemyMovementBehaviour> spawnedEnemies = new List<ACEnemyMovementBehaviour>();
 
     void Start()
     {
@@ -124,6 +126,7 @@ public class EnemySpawner : MonoBehaviour
             }
 
             GameObject enemy = Instantiate(enemyPrefab, spawnPosition + enemyPos.position * spawnPattern.spacing, Quaternion.identity);
+            spawnedEnemies.Add(enemy.GetComponent<ACEnemyMovementBehaviour>());
             m_EnemyCount++;
             spawnedEnemy.Invoke();
 
