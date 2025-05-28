@@ -105,7 +105,10 @@ public class EnemyHiveManager : MonoBehaviour
     private void IncrementEnemySpawned()
     {
         spawnedEnemies++;
-        mapUIComponent.displayer.FlashSignature();
+        if (mapUIComponent) {
+            mapUIComponent.displayer.FlashSignature();
+        }
+        
         if (spawnedEnemies >= maxEnemies)
         {
             hasEnemiesLeft = false;

@@ -407,9 +407,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   knockBackTime: 0.1
   knockBackStrength: 150
-  moveSpeed: 5
+  baseSpeed: 6
+  outOfScreenSpeed: 40
+  moveSpeed: 6
   movementType: 0
   type: 2
+  outOfScreenThreshold: 125
 --- !u!4 &4516710286187333628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5190361265367780131, guid: ef27b165cb5d7b84e824bac4cb87bd83,

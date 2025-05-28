@@ -21,9 +21,14 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     public float knockBackStrength = 10f;
 
     [Header("Speed and Type settings")]
+    public float baseSpeed = 4f;
+    public float outOfScreenSpeed = 12f;
     public float moveSpeed = 4f;
+    private bool isSpeeding = false;
     public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
     public EnemyType type;
+    public float outOfScreenThreshold = 125f;
+    
 
     protected GameObject target;
 
@@ -33,11 +38,29 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         Vector3 playerPosition = PlayerCore.Instance.transform.position;
         target = Vector3.Distance(transform.position, harvesterPosition) > Vector3.Distance(transform.position, playerPosition) ? PlayerCore.Instance.gameObject : harvester.gameObject;
 
-        switch(movementType)
+        if (!isSpeeding) {
+            if (Vector3.Distance(transform.position, harvesterPosition) > outOfScreenThreshold)
+            {
+                moveSpeed = outOfScreenSpeed;
+                isSpeeding = true;
+                SetSpeed(moveSpeed);
+            }
+        }
+        else {
+            if (Vector3.Distance(transform.position, harvesterPosition) < outOfScreenThreshold*0.75)
+            {
+                moveSpeed = baseSpeed;
+                isSpeeding = false;
+                SetSpeed(moveSpeed);
+            }
+        }
+        
+        SetSpeed(moveSpeed);
+        switch (movementType)
         {
             case EnemyMovementType.REMOTECONTROLLED:
                 break; //don't have any movement behaviour when remote controlled
-                case EnemyMovementType.CUSTOM:
+            case EnemyMovementType.CUSTOM:
                 CustomMovementUpdate();
                 break;
         }

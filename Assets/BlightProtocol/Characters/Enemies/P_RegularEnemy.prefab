@@ -170,6 +170,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 11400000, guid: a209a750b66e60e43aa9372af50137b1,
         type: 2}
+    - target: {fileID: 8490830819345528117, guid: ef27b165cb5d7b84e824bac4cb87bd83,
+        type: 3}
+      propertyPath: m_Speed
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 9185269845558177096, guid: ef27b165cb5d7b84e824bac4cb87bd83,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -292,9 +297,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   knockBackTime: 0.1
   knockBackStrength: 150
-  moveSpeed: 10
+  baseSpeed: 7
+  outOfScreenSpeed: 40
+  moveSpeed: 7
   movementType: 0
   type: 0
+  outOfScreenThreshold: 125
 --- !u!4 &4516710286187333628 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5190361265367780131, guid: ef27b165cb5d7b84e824bac4cb87bd83,

@@ -2266,6 +2266,9 @@ MonoBehaviour:
   fpCamera: {fileID: 582618420}
   droneSpawnDistance: 10
   dronePositionInHarvester: {fileID: 1350934433}
+  rayCastLayerMask:
+    serializedVersion: 2
+    m_Bits: 16777216
   targetPositionLine: {fileID: 119130621}
   droneIcon: {fileID: 1665756403}
   cooldownTimer: 0
@@ -5309,6 +5312,41 @@ PrefabInstance:
       propertyPath: m_TagString
       value: Harvester
       objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1125150883}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDroneEnterSetFPV
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PerspectiveSwitcher, BlightProtocol.Runtime
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2558696939409516967, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: healthDisplayer
@@ -5852,8 +5890,41 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3955703360612190351, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8669595517363385090}
   m_SourcePrefab: {fileID: 100100000, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2, type: 3}
+--- !u!1 &8669595517363385089 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3955703360612190351, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8669595517363385088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &8669595517363385090
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8669595517363385089}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

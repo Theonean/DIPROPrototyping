@@ -364,9 +364,12 @@ MonoBehaviour:
     m_RotationOrder: 4
   knockBackTime: 0.1
   knockBackStrength: 150
-  moveSpeed: 6
+  baseSpeed: 7
+  outOfScreenSpeed: 40
+  moveSpeed: 7
   movementType: 0
   type: 1
+  outOfScreenThreshold: 125
   chargeDistance: 60
   chargeSpeed: 70
   chargeWindupTime: 3

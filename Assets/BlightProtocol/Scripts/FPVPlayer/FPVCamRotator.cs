@@ -16,7 +16,7 @@ public class FPVCamRotator : MonoBehaviour
         SetPosition(1);
     }
 
-    private void SetPosition(int position) {
+    public void SetPosition(int position) {
         if (position > 0 && position < positions.Count) {
             Vector3 lookDir = positions[currentPosition].localPosition - transform.localPosition;
             float targetY = Quaternion.LookRotation(lookDir).eulerAngles.y;

@@ -29,6 +29,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private float droneSpawnDistance = 10f;
     [SerializeField] private Transform dronePositionInHarvester;
     private bool spawnPositionInrange;
+    [SerializeField] private LayerMask rayCastLayerMask;
 
     [Header("Spawn position visualization")]
     [SerializeField] private LineRenderer targetPositionLine;
@@ -68,7 +69,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
             Ray ray = droneCamera.ScreenPointToRay(Input.mousePosition);
             Vector3 spawnPosition = Vector3.zero;
-            if (Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, rayCastLayerMask))
             {
                 if (hit.collider.CompareTag("Ground"))
                 {
@@ -140,6 +141,11 @@ public class PerspectiveSwitcher : MonoBehaviour
                 SetSwitchingPerspective();
                 break;
         }
+    }
+
+    public void OnDroneEnterSetFPV()
+    {
+        SetPerspective(CameraPerspective.FPV);
     }
 
     public void OverrideToFPV()
