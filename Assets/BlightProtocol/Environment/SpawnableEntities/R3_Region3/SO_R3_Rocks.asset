@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: SO_R3_Rocks
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 4048432588430397812, guid: ded31151e97b51c4182456976bafa287, type: 3}
-  - {fileID: 4048432588430397812, guid: 99fc139e2dacb7e45a8fb14fff4f9071, type: 3}
-  - {fileID: 4048432588430397812, guid: 9e68f8cafb8244848849b265a01dbbb7, type: 3}
-  - {fileID: 4048432588430397812, guid: a30f33a766dc87d4fa02533c9bc7b1d7, type: 3}
-  - {fileID: 4048432588430397812, guid: b366095eb2815444ba849fdca2253fe5, type: 3}
-  - {fileID: 4048432588430397812, guid: 8b954f6ed2a08eb42a3d12dd14863fbf, type: 3}
   - {fileID: 4048432588430397812, guid: 4d10b4112cd2cc443a7387e4745ab866, type: 3}
   - {fileID: 4048432588430397812, guid: e3355c6493762a44abf054576848c390, type: 3}
   - {fileID: 4048432588430397812, guid: 69e66a5a6c5ca704bb51561b620e480a, type: 3}
-  numEntities: 15
+  numEntities: 3
   spawnStrategy: 0
   customSpawnAreaBoundsX: {x: -500, y: 500}
   customSpawnAreaBoundsZ: {x: -200, y: 1200}
@@ -32,4 +26,5 @@ MonoBehaviour:
   minRotation: 0
   maxRotation: 360
   scaleVariance: {x: 1, y: 1}
-  boundingRadius: 105.4047
+  boundingRadius: 102.88411
+  boundRadiusMargin: 0

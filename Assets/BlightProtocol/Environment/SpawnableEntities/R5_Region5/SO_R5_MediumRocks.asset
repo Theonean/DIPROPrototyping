@@ -10,20 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R4_EnemySpawners
+  m_Name: SO_R5_MediumRocks
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 7069886625113409385, guid: ccec1a5eb599fbe4c9ce126c8289c905, type: 3}
-  - {fileID: 7069886625113409385, guid: 54b6578496f88bc438ca47b0713117ba, type: 3}
-  - {fileID: 7069886625113409385, guid: 6763986f3cc6885418bcc240400653f2, type: 3}
-  numEntities: 20
+  - {fileID: 5144471608748660402, guid: 360f5e68a47abd24daa017b33d352c5b, type: 3}
+  numEntities: 12
   spawnStrategy: 2
   customSpawnAreaBoundsX: {x: -500, y: 500}
   customSpawnAreaBoundsZ: {x: -200, y: 1200}
-  voronoiSiteCount: 20
-  siteSpreadRadius: 10
+  voronoiSiteCount: 15
+  siteSpreadRadius: 6
   siteJitter: 0
   minRotation: 0
   maxRotation: 360
-  scaleVariance: {x: 1, y: 1}
-  boundingRadius: 105.69785
+  scaleVariance: {x: 0.7, y: 3}
+  boundingRadius: 19.787004
+  boundRadiusMargin: 0

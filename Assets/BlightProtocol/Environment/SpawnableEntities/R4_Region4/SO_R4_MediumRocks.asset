@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
+  m_Name: SO_R4_MediumRocks
+  m_EditorClassIdentifier: 
+  worldEntityPrefabs:
+  - {fileID: 5144471608748660402, guid: 360f5e68a47abd24daa017b33d352c5b, type: 3}
+  numEntities: 15
+  spawnStrategy: 2
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -200, y: 1200}
+  voronoiSiteCount: 15
+  siteSpreadRadius: 6
+  siteJitter: 0
+  minRotation: 0
+  maxRotation: 360
+  scaleVariance: {x: 0.7, y: 3}
+  boundingRadius: 19.787004
+  boundRadiusMargin: 0

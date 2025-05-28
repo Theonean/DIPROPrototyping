@@ -10,18 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R5_LargePillar
+  m_Name: SO_R5_OldTech
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 993817510882128534, guid: 61c4c361077f0aa4e95e6263d6fc9a1e, type: 3}
+  - {fileID: 5144471608748660402, guid: a937fc77d4bd85744ad82039bbe1c962, type: 3}
   numEntities: 5
-  spawnStrategy: 0
-  customSpawnAreaBoundsX: {x: 0, y: 0}
-  customSpawnAreaBoundsZ: {x: 0, y: 0}
-  voronoiSiteCount: 10
-  siteSpreadRadius: 3
+  spawnStrategy: 2
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -100, y: 1100}
+  voronoiSiteCount: 2
+  siteSpreadRadius: 10
   siteJitter: 0.2
-  minRotation: 0
-  maxRotation: 360
+  minRotation: -30
+  maxRotation: 30
   scaleVariance: {x: 1, y: 1}
-  boundingRadius: 139.61621
+  boundingRadius: 69.49004
+  boundRadiusMargin: 0

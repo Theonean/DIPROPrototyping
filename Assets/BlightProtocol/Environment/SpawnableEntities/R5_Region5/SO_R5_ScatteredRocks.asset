@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
+  m_Name: SO_R5_ScatteredRocks
+  m_EditorClassIdentifier: 
+  worldEntityPrefabs:
+  - {fileID: 3189941400121695729, guid: 79fbc13009e9c9649bc02bf7b124e1cc, type: 3}
+  numEntities: 50
+  spawnStrategy: 0
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -100, y: 1100}
+  voronoiSiteCount: 15
+  siteSpreadRadius: 10
+  siteJitter: 0.2
+  minRotation: 0
+  maxRotation: 360
+  scaleVariance: {x: 1, y: 1.25}
+  boundingRadius: 0
+  boundRadiusMargin: 0

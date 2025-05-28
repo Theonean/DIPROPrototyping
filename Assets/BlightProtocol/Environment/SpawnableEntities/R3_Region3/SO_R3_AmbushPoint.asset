@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R3_EnemySpawners
+  m_Name: SO_R3_AmbushPoint
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 7069886625113409385, guid: ccec1a5eb599fbe4c9ce126c8289c905, type: 3}
-  - {fileID: 7069886625113409385, guid: 54b6578496f88bc438ca47b0713117ba, type: 3}
-  - {fileID: 7069886625113409385, guid: 6763986f3cc6885418bcc240400653f2, type: 3}
-  numEntities: 15
+  - {fileID: 7640250503402135300, guid: c3dd710e4bdd4f34a9a861d045fe5f52, type: 3}
+  - {fileID: 7640250503402135300, guid: c71c469739c11f04e9ab86d16e140115, type: 3}
+  numEntities: 3
   spawnStrategy: 2
   customSpawnAreaBoundsX: {x: -500, y: 500}
   customSpawnAreaBoundsZ: {x: -200, y: 1200}
-  voronoiSiteCount: 20
+  voronoiSiteCount: 3
   siteSpreadRadius: 10
   siteJitter: 0
   minRotation: 0
   maxRotation: 360
-  scaleVariance: {x: 1, y: 1}
-  boundingRadius: 105.69785
+  scaleVariance: {x: 0.8, y: 1.3}
+  boundingRadius: 94.0683
+  boundRadiusMargin: 0

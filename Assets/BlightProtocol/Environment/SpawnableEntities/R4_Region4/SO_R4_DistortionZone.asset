@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
+  m_Name: SO_R4_DistortionZone
+  m_EditorClassIdentifier: 
+  worldEntityPrefabs:
+  - {fileID: 5150240722949060477, guid: b569dc94005e11f4392396f2716581ed, type: 3}
+  numEntities: 1
+  spawnStrategy: 0
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -200, y: 1200}
+  voronoiSiteCount: 2
+  siteSpreadRadius: 6
+  siteJitter: 0
+  minRotation: 0
+  maxRotation: 0
+  scaleVariance: {x: 1, y: 1}
+  boundingRadius: 501.54492
+  boundRadiusMargin: 0

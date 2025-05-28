@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
+  m_Name: SO_R5_RegularEnemySpawners
+  m_EditorClassIdentifier: 
+  worldEntityPrefabs:
+  - {fileID: 7069886625113409385, guid: 54b6578496f88bc438ca47b0713117ba, type: 3}
+  numEntities: 2
+  spawnStrategy: 2
+  customSpawnAreaBoundsX: {x: -500, y: 500}
+  customSpawnAreaBoundsZ: {x: -200, y: 1200}
+  voronoiSiteCount: 2
+  siteSpreadRadius: 10
+  siteJitter: 0
+  minRotation: 0
+  maxRotation: 360
+  scaleVariance: {x: 1, y: 1}
+  boundingRadius: 13.983735
+  boundRadiusMargin: 0
