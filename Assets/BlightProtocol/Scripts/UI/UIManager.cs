@@ -7,6 +7,7 @@ public class UIHandler : MonoBehaviour
     PerspectiveSwitcher perspectiveSwitcher;
     public GameObject topDownUI;
     public GameObject fpvUI;
+    public GameObject switchingUI;
     public GameObject generalUI;
 
     public static UIHandler Instance { get; private set; }
@@ -55,12 +56,21 @@ public class UIHandler : MonoBehaviour
             case CameraPerspective.DRONE:
                 topDownUI.SetActive(true);
                 fpvUI.SetActive(false);
+                switchingUI.SetActive(false);
                 generalUI.SetActive(true);
                 break;
 
             case CameraPerspective.FPV:
                 topDownUI.SetActive(false);
                 fpvUI.SetActive(true);
+                switchingUI.SetActive(false);
+                generalUI.SetActive(true);
+                break;
+
+            case CameraPerspective.SWITCHING:
+                topDownUI.SetActive(false);
+                fpvUI.SetActive(false);
+                switchingUI.SetActive(true);
                 generalUI.SetActive(true);
                 break;
         }

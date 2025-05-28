@@ -70,6 +70,7 @@ public class FPVCamRotator : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        transform.localRotation = Quaternion.Euler(0, targetY, 0);
         isRotating = false;
         FPVInputManager.Instance.isActive = true;
     }
