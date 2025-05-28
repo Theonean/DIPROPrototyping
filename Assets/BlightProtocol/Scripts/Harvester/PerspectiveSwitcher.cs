@@ -24,9 +24,18 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private Camera fpCamera;
 
     [Header("Spawn Positions")]
-    [SerializeField] private Transform dronePositionInLoadingBay;
+    private const float maxSpawnDistance = 75;
+    private const float minSpawnDistance = 5;
     [SerializeField] private float droneSpawnDistance = 10f;
     [SerializeField] private Transform dronePositionInHarvester;
+    private bool spawnPositionInrange;
+
+    [Header("Spawn position visualization")]
+    [SerializeField] private LineRenderer targetPositionLine;
+    [SerializeField] private SpriteRenderer droneIcon;
+
+    private float switchingCooldownTime = 2f;
+    public float cooldownTimer = 0f;
 
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
     public UnityEvent onPerspectiveSwitched;
@@ -44,30 +53,62 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     private void Update()
     {
+        if(cooldownTimer > 0f)
+        {
+            cooldownTimer -= Time.deltaTime;
+            return;
+        }
+
         // Handle input only in SWITCHING mode
         if (currentPerspective == CameraPerspective.SWITCHING)
         {
             // always look at the Harvester
             var harvPos = Harvester.Instance.transform.position;
-            droneCamera.transform.LookAt(harvPos);
+            CameraTracker.Instance.objectToTrack = Harvester.Instance.gameObject;
 
-            // Left‐click: pick spawn point & go into DRONE
-            if (Input.GetMouseButtonDown(0))
+            Ray ray = droneCamera.ScreenPointToRay(Input.mousePosition);
+            Vector3 spawnPosition = Vector3.zero;
+            if (Physics.Raycast(ray, out RaycastHit hit))
             {
-                Ray ray = droneCamera.ScreenPointToRay(Input.mousePosition);
-                if (Physics.Raycast(ray, out RaycastHit hit))
+                if (hit.collider.CompareTag("Ground"))
                 {
-                    if (hit.collider.CompareTag("Ground"))
-                    {
-                        Vector3 spawnPosition = hit.point;
-                        spawnPosition.y = DroneMovement.Instance.distanceFromGround;
-
-                        PlayerCore.Instance.spawnPosition = spawnPosition;
-
-                        SetPerspective(CameraPerspective.DRONE);
-                    }
+                    spawnPosition = hit.point;
+                    spawnPosition.y = DroneMovement.Instance.distanceFromGround;
                 }
             }
+
+            //Set position 0 of line to harvPos and Position 1 to spawnPosition
+            targetPositionLine.SetPosition(0, harvPos);
+            targetPositionLine.SetPosition(1, spawnPosition);
+            droneIcon.transform.position = spawnPosition;
+
+            if(Vector3.Distance(harvPos, spawnPosition) is < maxSpawnDistance and > minSpawnDistance && !PlayerCore.Instance.isDead)
+            {
+                if(!spawnPositionInrange)
+                {
+                    spawnPositionInrange = true;
+                    droneIcon.color = Color.green;
+                    targetPositionLine.endColor = Color.green;
+                }
+            }
+            else
+            {
+                if (spawnPositionInrange)
+                {
+                    spawnPositionInrange = false;
+                    droneIcon.color = Color.red;
+                    targetPositionLine.endColor = Color.red;
+                }
+            }
+            
+
+            // Left‐click: pick spawn point & go into DRONE
+            if (Input.GetMouseButtonDown(0) && spawnPosition != Vector3.zero && spawnPositionInrange)
+            {
+                PlayerCore.Instance.transform.position = spawnPosition;
+                SetPerspective(CameraPerspective.DRONE);
+            }
+
             // Right‐click: go straight into FPV
             else if (Input.GetMouseButtonDown(1))
             {
@@ -89,6 +130,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         switch (perspective)
         {
             case CameraPerspective.DRONE:
+                cooldownTimer = switchingCooldownTime;
                 SetTopDownPerspective();
                 break;
             case CameraPerspective.FPV:
@@ -107,15 +149,15 @@ public class PerspectiveSwitcher : MonoBehaviour
         gogglesCamera.enabled = false;
         fpCamera.gameObject.SetActive(false);
 
+        targetPositionLine.enabled = false;
+        droneIcon.enabled = false;
+
         // detach & place the player at the chosen spawn
         var playerCore = PlayerCore.Instance;
         playerCore.transform.parent = null;
 
-        Vector3 spawnPos = playerCore.spawnPosition;
-        if (spawnPos == Vector3.zero)
-            spawnPos = GetDroneRespawnPosition();
-        spawnPos.y = DroneMovement.Instance.distanceFromGround;
-        playerCore.transform.position = spawnPos;
+        CameraTracker.Instance.objectToTrack = playerCore.gameObject;
+        playerCore.ToggleDisplayDrone(true);
 
         // reset physics & visuals
         var rb = playerCore.GetComponent<Rigidbody>();
@@ -132,9 +174,6 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         Cursor.lockState = CursorLockMode.None;
         Shader.SetGlobalFloat("_isTopDown", 1);
-
-        // clear the spawn marker
-        playerCore.spawnPosition = Vector3.zero;
     }
 
     private void SetFPVPerspective()
@@ -143,6 +182,9 @@ public class PerspectiveSwitcher : MonoBehaviour
         droneCamera.enabled = false;
         gogglesCamera.enabled = true;
         fpCamera.gameObject.SetActive(true);
+
+        targetPositionLine.enabled = false;
+        droneIcon.enabled = false;
 
         var playerCore = PlayerCore.Instance;
         var rb = playerCore.GetComponent<Rigidbody>();
@@ -177,6 +219,9 @@ public class PerspectiveSwitcher : MonoBehaviour
         gogglesCamera.enabled = false;
         fpCamera.gameObject.SetActive(false);
 
+        targetPositionLine.enabled = true;
+        droneIcon.enabled = true;
+
         // unlock cursor so user can click
         Cursor.lockState = CursorLockMode.None;
     }
@@ -184,13 +229,5 @@ public class PerspectiveSwitcher : MonoBehaviour
     public void EnableTopDownPreview(bool enable)
     {
         gogglesCamera.enabled = enable;
-    }
-
-    public Vector3 GetDroneRespawnPosition()
-    {
-        Vector3 basePos = dronePositionInLoadingBay.position
-                        - Harvester.Instance.transform.forward * droneSpawnDistance;
-        basePos.y = DroneMovement.Instance.distanceFromGround;
-        return basePos;
     }
 }

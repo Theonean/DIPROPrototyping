@@ -41,7 +41,7 @@ public class CameraTracker : MonoBehaviour
                 targetPosition,
                 cameraMoveSpeed * Time.fixedDeltaTime * cameraFollowCurve.Evaluate(t));
 
-            if(Vector3.Distance(targetPosition, transform.position) > m_MaxCameraDistance * 2)
+            if(Vector3.Distance(targetPosition, transform.position) > m_MaxCameraDistance * 4)
             {
                 transform.position = targetPosition;
             }
