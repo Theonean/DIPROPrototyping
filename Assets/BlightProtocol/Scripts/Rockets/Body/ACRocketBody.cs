@@ -69,4 +69,15 @@ public abstract class ACRocketBody : ACRocketComponent
             return upgradeDescription + " " + explosionRadius + " -> " + explosionRadiusPerLevel[componentLevel + 1];
         }
     }
+    public override string GetResearchDescription(int customLevel)
+    {
+        if (customLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel];
+        }
+        else
+        {
+            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel] + " -> " + explosionRadiusPerLevel[customLevel + 1];
+        }
+    }
 }

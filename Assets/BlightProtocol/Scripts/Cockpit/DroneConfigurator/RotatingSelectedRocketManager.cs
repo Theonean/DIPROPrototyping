@@ -208,13 +208,15 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     public void UpdateResearchFields(ACRocketComponent componentToUpgrade, RocketComponentType componentType)
     {
         ResearchManager researchManager = ComponentSelectorManager.Instance.GetResearchManager(componentType);
-        (int, int) researchCosts = componentToUpgrade.GetResearchCost();
+
+        (int, int) researchCosts = componentToUpgrade.GetResearchCost(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
+
         int ownedCrystals = ItemManager.Instance.GetCrystal();
         int ownedComponents = ItemManager.Instance.GetComponentAmount(componentToUpgrade.DescriptiveName);
 
         string crystalCostsText = ownedCrystals + " / " + researchCosts.Item1;
         string componentCostsText = ownedComponents + " / " + researchCosts.Item2;
-        string upgradeText = componentToUpgrade.GetResearchDescription();
+        string upgradeText = componentToUpgrade.GetResearchDescription(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
 
         researchManager.SetText(crystalCostsText, componentCostsText, upgradeText);
     }

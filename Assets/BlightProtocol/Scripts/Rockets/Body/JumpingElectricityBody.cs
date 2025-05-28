@@ -19,4 +19,27 @@ public class JumpingElectricityBody : ACRocketBody
         JumpingElectricity electricityAttack = Instantiate(electricityPrefab, rocketTransform.position, Quaternion.identity).GetComponent<JumpingElectricity>();
         electricityAttack.Activate(electricityJumpsBase, this);
     }
+
+    public override string GetResearchDescription()
+    {
+        if (componentLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + electricityJumpsBase;
+        }
+        else
+        {
+            return upgradeDescription + " " + electricityJumpsBase + " -> " + electricityJumpsPerLevel[componentLevel + 1];
+        }
+    }
+    public override string GetResearchDescription(int customLevel)
+    {
+        if (customLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel];
+        }
+        else
+        {
+            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel] + " -> " + electricityJumpsPerLevel[customLevel + 1];
+        }
+    }
 }

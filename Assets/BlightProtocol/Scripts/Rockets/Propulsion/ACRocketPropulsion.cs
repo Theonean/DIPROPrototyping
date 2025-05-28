@@ -203,4 +203,15 @@ public abstract class ACRocketPropulsion : ACRocketComponent
             return upgradeDescription + " " + targetMoveStep + " -> " + targetMoveStepPerSecondPerLevel[componentLevel+1];
         }
     }
+    public override string GetResearchDescription(int customLevel)
+    {
+        if (customLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel];
+        }
+        else
+        {
+            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel] + " -> " + targetMoveStepPerSecondPerLevel[customLevel + 1];
+        }
+    }
 }

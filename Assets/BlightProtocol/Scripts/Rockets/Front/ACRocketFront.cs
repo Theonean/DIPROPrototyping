@@ -98,6 +98,17 @@ public abstract class ACRocketFront : ACRocketComponent
             return upgradeDescription + " " + maxAbilityUses + " -> " + abilityUsesPerLevel[componentLevel + 1];
         }
     }
+    public override string GetResearchDescription(int customLevel)
+    {
+        if (customLevel == maxComponentLevel)
+        {
+            return upgradeDescription + " " + abilityUsesPerLevel[customLevel];
+        }
+        else
+        {
+            return upgradeDescription + " " + abilityUsesPerLevel[customLevel] + " -> " + abilityUsesPerLevel[customLevel + 1];
+        }
+    }
 
     #endregion
     #region Pop Front off

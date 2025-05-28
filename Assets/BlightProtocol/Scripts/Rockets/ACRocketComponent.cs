@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -29,6 +30,7 @@ public abstract class ACRocketComponent : MonoBehaviour
     public string componentDescription = "Description here please uwu";
     public string upgradeDescription;
     public UnityEvent<RocketComponentType, int> OnKilledEnemy = new UnityEvent<RocketComponentType, int>();
+    public static UnityEvent<Type, int> OnAnyComponentLevelUp = new UnityEvent<Type, int>();
 
     protected Vector3 rocketOriginalScale;
 
@@ -57,15 +59,18 @@ public abstract class ACRocketComponent : MonoBehaviour
     protected virtual void OnEnable()
     {
         onComponentLevelUp.AddListener(SetStatsToLevel);
+        OnAnyComponentLevelUp.AddListener(HandleGlobalLevelUp);
     }
 
     protected virtual void OnDisable()
     {
         onComponentLevelUp.RemoveListener(SetStatsToLevel);
+        OnAnyComponentLevelUp.RemoveListener(HandleGlobalLevelUp);
     }
 
     protected abstract void SetStatsToLevel();
     public abstract string GetResearchDescription();
+    public abstract string GetResearchDescription(int customLevel);
 
     public void LevelUpComponent()
     {
@@ -76,6 +81,10 @@ public abstract class ACRocketComponent : MonoBehaviour
         }
 
         componentLevel++;
+        
+        // Fire the global event so *all* ACRocketComponent subclasses hear it
+        OnAnyComponentLevelUp.Invoke(GetType(), componentLevel);
+
         onComponentLevelUp?.Invoke();
     }
 
@@ -83,8 +92,28 @@ public abstract class ACRocketComponent : MonoBehaviour
     /// 
     /// </summary>
     /// <returns>returns the cost to upgrade at current level (CRYSTAL, COMPONENT)</returns>
-    public (int,int) GetResearchCost()
+    public (int, int) GetResearchCost()
     {
         return (researchCostCrystal[componentLevel], researchCostComponent[componentLevel]);
     }
+    public (int, int) GetResearchCost(int customLevel)
+    {
+        return (researchCostCrystal[customLevel], researchCostComponent[customLevel]);
+    }
+
+    /// <summary>
+    /// Every component hears all level-up broadcasts,
+    /// but only reacts if the Type matches its own concrete subclass.
+    /// </summary>
+    private void HandleGlobalLevelUp(Type type, int newLevel)
+    {
+        // ignore upgrades for other component classes
+        if (type != GetType())
+            return;
+
+        // sync up to the new level
+        componentLevel = newLevel;
+        SetStatsToLevel();
+    }
+
 }
