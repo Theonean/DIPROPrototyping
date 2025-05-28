@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5485310127184496180}
   - component: {fileID: 555789683696811098}
   - component: {fileID: 8889715557049825930}
-  m_Layer: 30
+  m_Layer: 22
   m_Name: Beacon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,9 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -93,7 +96,7 @@ GameObject:
   m_Component:
   - component: {fileID: 875285026230314575}
   - component: {fileID: 374824115934271825}
-  m_Layer: 30
+  m_Layer: 22
   m_Name: P_CustomMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -144,7 +147,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1951553899787467579}
   - component: {fileID: 6702873515714455217}
-  m_Layer: 30
+  m_Layer: 22
   m_Name: T_ESCoreV_D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -183,6 +186,9 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
