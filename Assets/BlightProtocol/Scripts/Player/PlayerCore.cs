@@ -52,8 +52,6 @@ public class PlayerCore : MonoBehaviour
     private void Start()
     {
         FMODAudioManagement.instance.PlaySound(out shieldSFXInstance, shieldSFXEventPath, gameObject);
-
-        meshRenderers = GetComponentsInChildren<Renderer>();
     }
 
     void Update()
@@ -135,9 +133,10 @@ public class PlayerCore : MonoBehaviour
 
     public void ToggleDisplayDrone(bool isDroneVisible)
     {
+        meshRenderers = GetComponentsInChildren<Renderer>();
         foreach (Renderer renderer in meshRenderers)
         {
-            renderer.enabled = isDroneVisible;
+            if(renderer) renderer.enabled = isDroneVisible;
         }
     }
 
