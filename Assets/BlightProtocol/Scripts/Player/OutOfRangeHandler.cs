@@ -3,7 +3,6 @@ using UnityEngine;
 
 public class PlayerOutOfRangeHandler : MonoBehaviour
 {
-    public SpriteRenderer arrowSprite;
     public GameObject OutOfRangeUIGroup;
     public CanvasGroup outOfRangeUIGroupCanvas;
     public TextMeshProUGUI countdownUntilRespawnText;
@@ -66,13 +65,11 @@ public class PlayerOutOfRangeHandler : MonoBehaviour
             if (isInRange)
             {
                 OutOfRangeUIGroup.SetActive(false);
-                arrowSprite.enabled = false;
                 m_PlayerInRange = true;
             }
             else
             {
                 OutOfRangeUIGroup.SetActive(true);
-                arrowSprite.enabled = true;
                 m_PlayerInRange = false;
                 m_RespawnTimer = countdownUntilRespawnTime;
             }

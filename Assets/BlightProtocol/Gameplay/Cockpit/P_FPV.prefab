@@ -1383,6 +1383,16 @@ PrefabInstance:
       propertyPath: m_Name
       value: P_DroneConfigurator
       objectReference: {fileID: 0}
+    - target: {fileID: 6987580447266869954, guid: c2465100ea451884fb50327c1bd64af2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 180
+      objectReference: {fileID: 0}
+    - target: {fileID: 6987580447266869954, guid: c2465100ea451884fb50327c1bd64af2,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -30
+      objectReference: {fileID: 0}
     - target: {fileID: 7409338274573477568, guid: c2465100ea451884fb50327c1bd64af2,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -2288,6 +2298,16 @@ PrefabInstance:
       propertyPath: speedDisplayer
       value: 
       objectReference: {fileID: 9027776827945388965}
+    - target: {fileID: 3626476725963130399, guid: 3bdd1785eb6b0074b988eb0290704bda,
+        type: 3}
+      propertyPath: speedSteps.Array.data[1].speed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3626476725963130399, guid: 3bdd1785eb6b0074b988eb0290704bda,
+        type: 3}
+      propertyPath: speedSteps.Array.data[2].speed
+      value: 35
+      objectReference: {fileID: 0}
     - target: {fileID: 3626476725963130399, guid: 3bdd1785eb6b0074b988eb0290704bda,
         type: 3}
       propertyPath: speedSteps.Array.data[0].displayColor.b
