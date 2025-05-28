@@ -14,7 +14,13 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     protected Harvester harvester;
     public NavMeshAgent navMeshAgent { get; protected set; }
     protected bool isMoving = true;
+
+    [Header("Knockback settings")]
     public AnimationCurve knockbackCurve;
+    public float knockBackTime = 0.5f;
+    public float knockBackStrength = 10f;
+
+    [Header("Speed and Type settings")]
     public float moveSpeed = 4f;
     public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
     public EnemyType type;
@@ -92,14 +98,13 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     }
 
 
-    public IEnumerator ApplyKnockback(Vector3 direction, float knockback)
+    public IEnumerator ApplyKnockback(Vector3 direction)
     {
         StopMovement();
         float timer = 0f;
-        float knockbackTime = 0.5f;
-        while (timer < knockbackTime)
+        while (timer < knockBackTime)
         {
-            transform.position += direction * knockback * Time.deltaTime * knockbackCurve.Evaluate(timer / knockbackTime);
+            transform.position += direction * knockBackStrength * Time.deltaTime * knockbackCurve.Evaluate(timer / knockBackTime);
             timer += Time.deltaTime;
             yield return null;
         }
