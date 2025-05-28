@@ -1754,7 +1754,7 @@ GameObject:
   - component: {fileID: 620821311}
   - component: {fileID: 620821310}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: TutorialText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2033,8 +2033,9 @@ GameObject:
   - component: {fileID: 719525626}
   - component: {fileID: 719525625}
   - component: {fileID: 719525624}
+  - component: {fileID: 719525630}
   m_Layer: 5
-  m_Name: FrankenDefenseZoom
+  m_Name: TutorialButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2198,29 +2199,17 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 855435118}
-        m_TargetAssemblyTypeName: FrankenGameManager, BlightProtocol.Runtime
-        m_MethodName: SetStartWithTutorial
+      - m_Target: {fileID: 719525630}
+        m_TargetAssemblyTypeName: MainMenuPlayButton, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 1
-        m_CallState: 2
-      - m_Target: {fileID: 573664746}
-        m_TargetAssemblyTypeName: MainMenuHandler, Assembly-CSharp
-        m_MethodName: SwitchScene
-        m_Mode: 5
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
           m_StringArgument: 1_MainScene
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
 --- !u!114 &719525628
 MonoBehaviour:
@@ -2260,6 +2249,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 719525622}
   m_CullTransparentMesh: 1
+--- !u!114 &719525630
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 719525622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a75e097d19aac49a10789e7fd3c8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuHandler: {fileID: 573664746}
 --- !u!1 &736344218
 GameObject:
   m_ObjectHideFlags: 0
@@ -3763,7 +3765,7 @@ GameObject:
   - component: {fileID: 1262579658}
   - component: {fileID: 1262579657}
   m_Layer: 5
-  m_Name: Text (TMP)
+  m_Name: PlayText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3902,8 +3904,9 @@ GameObject:
   - component: {fileID: 1301364972}
   - component: {fileID: 1301364971}
   - component: {fileID: 1301364973}
+  - component: {fileID: 1301364974}
   m_Layer: 5
-  m_Name: FrankenDefenseZoom
+  m_Name: PlayButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3974,22 +3977,10 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 855435118}
-        m_TargetAssemblyTypeName: FrankenGameManager, BlightProtocol.Runtime
-        m_MethodName: SetStartWithTutorial
+      - m_Target: {fileID: 1301364974}
+        m_TargetAssemblyTypeName: MainMenuPlayButton, Assembly-CSharp
+        m_MethodName: StartGame
         m_Mode: 6
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 573664746}
-        m_TargetAssemblyTypeName: MainMenuHandler, Assembly-CSharp
-        m_MethodName: SwitchScene
-        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -4129,6 +4120,19 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
+--- !u!114 &1301364974
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1301364966}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a75e097d19aac49a10789e7fd3c8e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainMenuHandler: {fileID: 573664746}
 --- !u!1 &1414966224
 GameObject:
   m_ObjectHideFlags: 0
