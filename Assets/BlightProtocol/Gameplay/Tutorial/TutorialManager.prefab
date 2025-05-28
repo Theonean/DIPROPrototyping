@@ -2336,7 +2336,6 @@ MonoBehaviour:
   resourcePointSpawner: {fileID: 1197344695369321444}
   tutorialResourcePoint: {fileID: 4865695392221408539}
   crystalsToCollectForUpgrade: 20
-  rocketsToShoot: 3
   MOVEMENT_SEGMENT_EXIT: {fileID: 3093272498608895407}
   ROCKET_SEGMENT_EXIT: {fileID: 5854121306448740288}
   NAVIGATION_SEGMENT_EXIT: {fileID: 4976199904268646975}
@@ -3089,7 +3088,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.5}
 --- !u!114 &9157859886046165215
 MonoBehaviour:
   m_ObjectHideFlags: 0

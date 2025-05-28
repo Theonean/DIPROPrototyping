@@ -142,6 +142,12 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
     }
 
+    public void OverrideToFPV()
+    {
+        SetPerspective(CameraPerspective.FPV);
+        FPVInputManager.Instance.fpvCamRotator.ChangePosition(1);
+    }
+
     private void SetTopDownPerspective()
     {
         // turn on the drone (top-down) camera

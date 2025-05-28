@@ -3226,7 +3226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   m_GameState: 0
-  startWithTutorial: 0
+  startWithTutorial: 1
   m_TotalGameTime: 0
 --- !u!1 &1967032504
 GameObject:
@@ -3514,8 +3514,8 @@ MonoBehaviour:
     type: 3}
   difficultySettings:
     spawnRadius: 70
-    baseEnemyCount: 1
-    ambushEnemyMultiplier: 1
+    baseEnemyCount: 3
+    ambushEnemyMultiplier: 2
     ambushRangeScale: 70
     ambushWaveDelayRange: {x: 30, y: 60}
   difficultyLevel: 3

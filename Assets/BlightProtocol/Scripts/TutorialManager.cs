@@ -165,7 +165,7 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Pull back a rocket using right-clickt";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTOFPV:
-                currentTutorialText.text = "[ ] Enter Harvester";
+                currentTutorialText.text = "[ ] Move into Exit zone";
                 break;
             case TutorialProgress.SETFIRSTMAPPOINT:
                 currentTutorialText.text = "[ ] Set map waypoint";
@@ -508,9 +508,6 @@ public class TutorialManager : MonoBehaviour
     }
     public void CompleteFIGHT()
     {
-        if (progressState != TutorialProgress.FIGHT)
-            return;
-
         crystalsCollected = ItemManager.Instance.GetCrystal();
         NextTutorialStep();
         ItemManager.Instance.crystalAmountChanged.AddListener(CompleteCOLLECTCRYSTALS);

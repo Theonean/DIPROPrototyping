@@ -44,7 +44,7 @@ public class CheckPoint : MonoBehaviour
     {
         if(checkPoint == this && isSpawnPoint)
         {
-            energySignature.displayer.FlashAndSetSignature(Color.green, 0.5f);
+            if(energySignature.displayer) energySignature.displayer.FlashAndSetSignature(Color.green, 0.5f);
         }
         else if(isSpawnPoint)
         {
