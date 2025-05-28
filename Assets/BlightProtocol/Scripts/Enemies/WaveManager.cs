@@ -210,7 +210,7 @@ public class WaveManager : MonoBehaviour
                 waveMode = WaveMode.IDLE;
                 Logger.Log("Harvester is idle, no enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
                 break;
-            case HarvesterState.HARVESTING:
+            case HarvesterState.START_HARVESTING:
                 waveMode = WaveMode.CONTINUOUS_ATTACK;
                 ActivateSpawners(Mathf.Clamp(2 + difficultyLevel / 4, 1, spawners.Length));
                 Logger.Log("Harvester is harvesting, enemies will spawn", LogLevel.INFO, LogType.WAVEMANAGEMENT);
