@@ -107,25 +107,25 @@ public class ItemCollector : MonoBehaviour
                 RectTransform rect = go.GetComponent<RectTransform>();
 
                 TextMeshProUGUI text = go.GetComponentInChildren<TextMeshProUGUI>(false);
-                Image image = go.GetComponentInChildren<Image>();
+                Image newItemImage = go.GetComponentInChildren<Image>();
+                Image icon = newItemImage.transform.GetChild(0).GetComponent<Image>();
                 text.text = newItem.itemName;
 
                 switch (newItem.itemType)
                 {
                     case EItemTypes.Crystal:
-                        image.sprite = crystalSprite;
-                        image.color = crystalSpriteColor;
+                        icon.sprite = crystalSprite;
+                        icon.color = crystalSpriteColor;
                         break;
                     case EItemTypes.Component:
-                        image.sprite = componentSprite;
-                        image.color = componentSpriteColor;
+                        icon.sprite = componentSprite;
+                        icon.color = componentSpriteColor;
                         break;
                 }
 
                 if (isFirstTime)
                 {
-                    Image firstHighlightImage = image.transform.GetChild(0).GetComponent<Image>();
-                    firstHighlightImage.enabled = true;
+                    newItemImage.enabled = true;
                 }
 
                 ActiveItemDisplay newDisplay = new ActiveItemDisplay
