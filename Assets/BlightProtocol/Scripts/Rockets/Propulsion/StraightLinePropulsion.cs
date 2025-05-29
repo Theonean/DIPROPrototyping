@@ -9,7 +9,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
         Vector3 startingPosition = rocketTransform.position;
 
         // Fly towards the TargetPosition
-        while (Vector3.Distance(rocketTransform.position, TargetPosition) > 10f)
+        while (Vector3.Distance(rocketTransform.position, TargetPosition) > 0.1f)
         {
             float totalDistance = Vector3.Distance(startingPosition, TargetPosition);
             float distanceCovered = Vector3.Distance(startingPosition, rocketTransform.position);

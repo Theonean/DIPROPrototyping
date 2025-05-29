@@ -1398,10 +1398,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 0}
-    - targetCorrespondingSourceObject: {fileID: 5552336222921722858, guid: 0b57e7b70314eaf479534b60bc1982ce,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
     - targetCorrespondingSourceObject: {fileID: 7049214439404870745, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       insertIndex: -1
@@ -3234,7 +3230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   m_GameState: 0
-  startWithTutorial: 0
+  startWithTutorial: 1
   m_TotalGameTime: 0
 --- !u!1 &1967032504
 GameObject:
@@ -3542,6 +3538,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2134520574 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2402130139162731919, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8669595517363385088}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca543c0bb21c2294cb02b1d66a81d637, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1467073742422388475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5812,6 +5820,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: layerToLookFor
+      value: PL_IsHarvester
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2134520574}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CompleteDRIVETOCHECKPOINT
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: TutorialManager, BlightProtocol.Runtime
+      objectReference: {fileID: 0}
+    - target: {fileID: 2367027109971647288, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 5596249107790298927, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
         type: 3}
       propertyPath: m_LocalPosition.x

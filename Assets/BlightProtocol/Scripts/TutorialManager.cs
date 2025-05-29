@@ -203,16 +203,16 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Shoot crystal structures to collect some: " + crystalsCollected + "/" + crystalsToCollectForUpgrade;
                 break;
             case TutorialProgress.FINALSWITCHTOFPV:
-                currentTutorialText.text = "[ ] Enter Harvester from the back (crazy style)";
+                currentTutorialText.text = "[ ] Enter Harvester from the back";
                 break;
             case TutorialProgress.SELECTNEWCOMPONENT:
-                currentTutorialText.text = "[ ] Select your newly unlocked component";
+                currentTutorialText.text = "[ ] Interact with the drone configurator";
                 break;
             case TutorialProgress.UPGRADENEWCOMPONENT:
-                currentTutorialText.text = "[ ] upgrade your newly unlocked component";
+                currentTutorialText.text = "[ ] upgrade your Straight line propulsion";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
-                currentTutorialText.text = "[ ] Drive to checkpoint to finish tutorial";
+                currentTutorialText.text = "[ ] Tutorial Completed, go back to the main menu to play the main game!";
                 break;
             default:
                 currentTutorialText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
@@ -503,6 +503,8 @@ public class TutorialManager : MonoBehaviour
         NextTutorialStep();
 
         foreach (ACEnemyMovementBehaviour enemy in resourcePointSpawner.spawnedEnemies) enemy.ResumeMovement();
+
+        if (deadEnemyCounter == resourcePointSpawner.spawnedEnemies.Count()) CompleteFIGHT();
     }
     public void CompleteFIGHT()
     {
