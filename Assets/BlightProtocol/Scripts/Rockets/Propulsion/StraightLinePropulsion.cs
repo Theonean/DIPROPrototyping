@@ -30,6 +30,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
             yield return new WaitForFixedUpdate();
         }
 
+        /*
         Logger.Log("Rocket reached TargetPosition", LogLevel.INFO, LogType.ROCKETS);
         // Raycast to find ground at the TargetPosition's XZ position
         RaycastHit hit;
@@ -79,6 +80,7 @@ public class StraightLinePropulsion : ACRocketPropulsion
         {
             Logger.Log("No ground detected below TargetPosition position", LogLevel.WARNING, LogType.ROCKETS);
         }
+        */
 
 
         ParentRocket.SetState(RocketState.IDLE);

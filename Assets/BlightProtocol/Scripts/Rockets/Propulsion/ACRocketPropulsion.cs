@@ -171,7 +171,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
                 rocketTransform.position = Vector3.Lerp(rocketTransform.position, updatedTargetPosition, Time.deltaTime * returnFlySpeed);
             }
 
-            if (distanceToUpdatedTarget < 1f)
+            if (distanceToUpdatedTarget < 3f)
             {
                 parentRocket.ReattachRocketToDrone();
                 yield break;
