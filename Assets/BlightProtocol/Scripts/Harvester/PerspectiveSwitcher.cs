@@ -35,7 +35,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     [SerializeField] private LineRenderer targetPositionLine;
     [SerializeField] private SpriteRenderer droneIcon;
 
-    private float switchingCooldownTime = 2f;
+    private float switchingCooldownTime = .5f;
     public float cooldownTimer = 0f;
 
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
@@ -54,7 +54,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     private void Update()
     {
-        if(cooldownTimer > 0f)
+        if (cooldownTimer > 0f)
         {
             cooldownTimer -= Time.deltaTime;
             return;
@@ -83,9 +83,9 @@ public class PerspectiveSwitcher : MonoBehaviour
             targetPositionLine.SetPosition(1, spawnPosition);
             droneIcon.transform.position = spawnPosition;
 
-            if(Vector3.Distance(harvPos, spawnPosition) is < maxSpawnDistance and > minSpawnDistance && !PlayerCore.Instance.isDead)
+            if (Vector3.Distance(harvPos, spawnPosition) is < maxSpawnDistance and > minSpawnDistance && !PlayerCore.Instance.isDead)
             {
-                if(!spawnPositionInrange)
+                if (!spawnPositionInrange)
                 {
                     spawnPositionInrange = true;
                     droneIcon.color = Color.green;
@@ -101,7 +101,7 @@ public class PerspectiveSwitcher : MonoBehaviour
                     targetPositionLine.endColor = Color.red;
                 }
             }
-            
+
 
             // Left‐click: pick spawn point & go into DRONE
             if (Input.GetMouseButtonDown(0) && spawnPosition != Vector3.zero && spawnPositionInrange)
@@ -145,7 +145,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     public void OnDroneEnterSetSwitching()
     {
-        SetPerspective(CameraPerspective.SWITCHING);
+            SetPerspective(CameraPerspective.SWITCHING);
     }
 
     public void OverrideToFPV()
