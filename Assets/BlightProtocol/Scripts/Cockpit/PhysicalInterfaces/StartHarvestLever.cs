@@ -7,6 +7,7 @@ public class StartHarvestLever : ACLever
     public float resourcePointDetectionRange = 20f;
     public LayerMask resourcePointLayer;
     ResourcePoint closestResourcePoint;
+    private bool isHarvesting = false;
 
 
     protected void Awake()
@@ -25,9 +26,24 @@ public class StartHarvestLever : ACLever
 
     protected void OnHarvesterChangedState(HarvesterState state)
     {
-        if (state == HarvesterState.END_HARVESTING)
+        switch (state)
         {
-            ResetLever();
+            case HarvesterState.START_HARVESTING:
+            case HarvesterState.HARVESTING:
+                return;
+
+            case HarvesterState.END_HARVESTING:
+                ResetLever();
+                isHarvesting = false;
+                break;
+
+            default:
+                if (isHarvesting)
+                {
+                    ResetLever();
+                    isHarvesting = false;
+                }
+                break;
         }
     }
 
@@ -46,8 +62,9 @@ public class StartHarvestLever : ACLever
                         SetPositionNormalized(1f);
                         Logger.Log("Starting Harvesting", LogLevel.INFO, LogType.HARVESTER);
                         harvester.activeResourcePoint = closestResourcePoint;
-                        harvester.mover.SetMoveSpeed(0);
+                        harvester.mover.SetMoveSpeedWithoutStateChange(0);
                         harvester.SetState(new StartHarvestingState(harvester));
+                        isHarvesting = true;
                     }
                     break;
                 default:

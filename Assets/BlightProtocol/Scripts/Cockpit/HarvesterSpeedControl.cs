@@ -193,9 +193,9 @@ public class HarvesterSpeedControl : MonoBehaviour
     {
         switch (state)
         {
-            case HarvesterState.HARVESTING:
             case HarvesterState.START_HARVESTING:
-            case HarvesterState.END_HARVESTING:
+                OverrideSpeedSliderPos(0);
+                break;
             case HarvesterState.DIED:
                 SetSpeed(0);
                 OverrideSpeedSliderPos(0);
