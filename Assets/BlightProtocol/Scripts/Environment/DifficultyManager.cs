@@ -18,7 +18,6 @@ public class DifficultyManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
     }
 

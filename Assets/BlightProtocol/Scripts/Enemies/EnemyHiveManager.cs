@@ -105,7 +105,7 @@ public class EnemyHiveManager : MonoBehaviour
     private void IncrementEnemySpawned()
     {
         spawnedEnemies++;
-        if (mapUIComponent) {
+        if (mapUIComponent.displayer) {
             mapUIComponent.displayer.FlashSignature();
         }
         

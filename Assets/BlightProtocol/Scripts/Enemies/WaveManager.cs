@@ -113,14 +113,6 @@ public class WaveManager : MonoBehaviour
             }
             Logger.Log("Decreased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
         }
-        else if (Input.GetKeyDown("e"))
-        {
-            TriggerRandomAmbush();
-        }
-        else if (Input.GetKeyDown("r"))
-        {
-            DeactivateSpawners();
-        }
     }
 
     public GameObject GetRandomEnemyPrefab()

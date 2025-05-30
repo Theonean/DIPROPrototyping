@@ -26,7 +26,6 @@ public class ItemManager : MonoBehaviour
         else
         {
             Instance = this;
-            DontDestroyOnLoad(this.gameObject);
         }
 
         components.Add(new ComponentEntry("BouncingFront"));
