@@ -78,10 +78,11 @@ public abstract class ACRocketPropulsion : ACRocketComponent
                 FMODAudioManagement.instance.PlayOneShot(rocketCallbackSFXPath, gameObject);
                 StartCoroutine(ReturnToDrone());
             }
-            else if (componentLevel >= 1)
-            {
-                MoveTargetPositionToMouse();
-            }
+        }
+
+        if (parentRocket.state == RocketState.FLYING && componentLevel >= 1)
+        {
+            MoveTargetPositionToMouse();
         }
     }
     
