@@ -126,6 +126,8 @@ public class TutorialManager : MonoBehaviour
         harvester.gameObject.SetActive(true);
 
         progressState = TutorialProgress.INACTIVE;
+
+
         NextTutorialStep();
     }
 
@@ -161,13 +163,13 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Explode a rocket by clicking it";
                 break;
             case TutorialProgress.RETRACTROCKET:
-                currentTutorialText.text = "[ ] Pull back a rocket using right-clickt";
+                currentTutorialText.text = "[ ] Pull back a rocket using right-click";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTOFPV:
                 currentTutorialText.text = "[ ] Move into Exit zone";
                 break;
             case TutorialProgress.SETFIRSTMAPPOINT:
-                currentTutorialText.text = "[ ] Set map waypoint";
+                currentTutorialText.text = "[ ] Set a waypoint on the map";
                 break;
             case TutorialProgress.SETSPEED:
                 currentTutorialText.text = "[ ] Start driving";
@@ -556,6 +558,7 @@ public class TutorialManager : MonoBehaviour
             return;
 
         ResearchManager.OnResearched.RemoveListener(CompleteUPGRADENEWCOMPONENT);
+        ItemManager.Instance.AddCrystal(5);
         NextTutorialStep();
     }
 

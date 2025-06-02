@@ -20,8 +20,15 @@ public class EntityDetector : MonoBehaviour
     {
         // Restrict this collider so it only fires triggers/collisions against the chosen layer
         var col = GetComponent<Collider>();
-        int targetLayer = LayerMask.NameToLayer(layerToLookFor);
-        col.includeLayers = 1 << targetLayer;
+
+        if(detectSingularAgent) {
+            int targetLayer = LayerMask.NameToLayer(layerToLookFor);
+            col.includeLayers = 1 << targetLayer;
+        }
+        else {
+            col.includeLayers = layersToLookFor;
+        }
+        
     }
 
     private void OnCollisionEnter(Collision collision)

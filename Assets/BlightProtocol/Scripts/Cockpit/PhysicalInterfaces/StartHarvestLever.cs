@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StartHarvestLever : ACLever
 {
@@ -8,11 +9,29 @@ public class StartHarvestLever : ACLever
     public LayerMask resourcePointLayer;
     ResourcePoint closestResourcePoint;
     private bool isHarvesting = false;
+    [SerializeField] private float checkForResourcePointInterval = 1f;
+    private float elapsedTime = 0f;
+    public bool isOnResourcePoint = false;
+    [SerializeField] private Image isOnResourcePointImage = null;
+    [SerializeField] private Color onRPColor, offRPColor;
 
 
     protected void Awake()
     {
         harvester = Harvester.Instance;
+    }
+
+    protected void Update() {
+        if (elapsedTime >= checkForResourcePointInterval) {
+            if (GetClosestResourcePoint() != null) {
+                isOnResourcePoint = true;
+                isOnResourcePointImage.color = onRPColor;
+            }
+            else {
+                isOnResourcePoint = false;
+                isOnResourcePointImage.color = offRPColor;
+            }
+        }
     }
 
     protected void OnEnable()

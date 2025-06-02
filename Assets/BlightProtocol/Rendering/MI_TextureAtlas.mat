@@ -21,8 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: MI_TextureAtlas
-  m_Shader: {fileID: -6465566751694194690, guid: 98c955782fd8b6d40a49588d87bca5bc,
-    type: 3}
+  m_Shader: {fileID: 4800000, guid: 7b8c1bea08a5b4947b5a7052cbc5ad41, type: 3}
   m_Parent: {fileID: 2100000, guid: 32e705e2917b1ba4384470a101dcdd1a, type: 2}
   m_ModifiedSerializedProperties: 4
   m_ValidKeywords: []
@@ -38,8 +37,16 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
+    - _EmissionTex:
+        m_Texture: {fileID: 2800000, guid: 7ee17654f14d2b14ba320d1c968cd126, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - _Emission_Texture:
         m_Texture: {fileID: 2800000, guid: a9674ca42371fdd4982b74a01a9c8201, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 7ee17654f14d2b14ba320d1c968cd126, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _Main_Texture:

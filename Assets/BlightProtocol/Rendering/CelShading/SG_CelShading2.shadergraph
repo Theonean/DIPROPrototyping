@@ -3495,10 +3495,10 @@
         "m_Expanded": true,
         "m_Position": {
             "serializedVersion": "2",
-            "x": -1960.9998779296875,
-            "y": 2318.0,
-            "width": 208.0,
-            "height": 327.0
+            "x": -1960.8890380859375,
+            "y": 2266.666748046875,
+            "width": 208.0001220703125,
+            "height": 374.666748046875
         }
     },
     "m_Slots": [
@@ -3712,8 +3712,8 @@
     "m_ObjectId": "1c548630e2fb47128f397494315657b2",
     "m_Title": "Fresnel",
     "m_Position": {
-        "x": -1413.9998779296875,
-        "y": -1763.9998779296875
+        "x": -1414.222412109375,
+        "y": -1764.000244140625
     }
 }
 
@@ -6079,6 +6079,21 @@
 {
     "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "49a615e493884e8e9d171207654aa77b",
+    "m_Id": 773573347,
+    "m_DisplayName": "MaxHeight",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_MaxHeight",
+    "m_StageCapability": 2,
+    "m_Value": 80.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
     "m_ObjectId": "49d38a6c75b74b1580f70f4fa6bebd7c",
     "m_Id": 2,
     "m_DisplayName": "Out",
@@ -8149,8 +8164,8 @@
     "m_ObjectId": "6988de3ba1464e53a17458bf3b3dd379",
     "m_Title": "Diffuse",
     "m_Position": {
-        "x": -2437.0,
-        "y": 152.00009155273438
+        "x": -2437.33349609375,
+        "y": 152.0001678466797
     }
 }
 
@@ -8561,6 +8576,12 @@
             "m_Id": "34706429fa8947f08b114ee331be4385"
         },
         {
+            "m_Id": "a4156c56ae8f4cd485c53129088c6ad3"
+        },
+        {
+            "m_Id": "49a615e493884e8e9d171207654aa77b"
+        },
+        {
             "m_Id": "8dffc733c14d49e9b01d1b48ada0ee09"
         },
         {
@@ -8586,7 +8607,9 @@
         "279c4063-6de4-463b-851f-e01d6270280a",
         "01267d41-3189-4a4e-9967-c97a7405f82d",
         "9fe524cc-451f-4a56-a60f-988ac78b8d99",
-        "881cc241-8afd-44b5-a065-7ceb95e4f26b"
+        "881cc241-8afd-44b5-a065-7ceb95e4f26b",
+        "50db7d3e-b301-4a05-b2d5-21aace1b636f",
+        "0fceb9e2-1f6a-4c02-876e-5ca2ec028bcf"
     ],
     "m_PropertyIds": [
         2016748487,
@@ -8595,7 +8618,9 @@
         1987002976,
         475606565,
         -962140750,
-        1277675913
+        1277675913,
+        -543424445,
+        773573347
     ],
     "m_Dropdowns": [],
     "m_DropdownSelectedEntries": []
@@ -9678,8 +9703,8 @@
     "m_ObjectId": "8be639e6a4a7444fbca548cfde39ac32",
     "m_Title": "TopDownFading",
     "m_Position": {
-        "x": 2507.000244140625,
-        "y": -662.9999389648438
+        "x": 2506.6669921875,
+        "y": -663.111328125
     }
 }
 
@@ -11208,6 +11233,21 @@
 
 {
     "m_SGVersion": 0,
+    "m_Type": "UnityEditor.ShaderGraph.Vector1MaterialSlot",
+    "m_ObjectId": "a4156c56ae8f4cd485c53129088c6ad3",
+    "m_Id": -543424445,
+    "m_DisplayName": "MaxDistanceFromCamera",
+    "m_SlotType": 0,
+    "m_Hidden": false,
+    "m_ShaderOutputName": "_MaxDistanceFromCamera",
+    "m_StageCapability": 2,
+    "m_Value": 125.0,
+    "m_DefaultValue": 0.0,
+    "m_Labels": []
+}
+
+{
+    "m_SGVersion": 0,
     "m_Type": "UnityEditor.ShaderGraph.Vector3MaterialSlot",
     "m_ObjectId": "a4e6b0e6d92d4ed58ad7e19a3933c756",
     "m_Id": 1,
@@ -11777,8 +11817,8 @@
     "m_ObjectId": "b274ae38c6a84ed49d82c832262d953f",
     "m_Title": "Fog",
     "m_Position": {
-        "x": -1097.9998779296875,
-        "y": -3075.000244140625
+        "x": -1098.2225341796875,
+        "y": -3075.111328125
     }
 }
 
@@ -14386,8 +14426,8 @@
     "m_ObjectId": "ebbe44b773eb4749960505d36777ba24",
     "m_Title": "Specular",
     "m_Position": {
-        "x": -2617.999755859375,
-        "y": -1130.9998779296875
+        "x": -2618.222412109375,
+        "y": -1131.111083984375
     }
 }
 
@@ -14792,8 +14832,8 @@
     "m_ObjectId": "f5215d5b1750403d8d236b1adcb1c57b",
     "m_Title": "Base Color",
     "m_Position": {
-        "x": -2396.0,
-        "y": 1719.999755859375
+        "x": -2396.000244140625,
+        "y": 1720.0001220703125
     }
 }
 

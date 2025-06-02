@@ -88,6 +88,7 @@ public class EnemyHiveManager : MonoBehaviour
         if (currentHealth <= 0)
         {
             Destroy(gameObject);
+            GetComponent<ItemDropper>().DropItems();
             return;
         }
 

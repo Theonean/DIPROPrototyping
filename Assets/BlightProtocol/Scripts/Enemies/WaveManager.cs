@@ -99,7 +99,7 @@ public class WaveManager : MonoBehaviour
         }
     
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        /*if (Input.GetKeyDown(KeyCode.UpArrow))
         {
             difficultyLevel++;
             Logger.Log("Increased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
@@ -112,7 +112,7 @@ public class WaveManager : MonoBehaviour
                 difficultyLevel = 0;
             }
             Logger.Log("Decreased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
-        }
+        }*/
     }
 
     public GameObject GetRandomEnemyPrefab()
@@ -193,8 +193,8 @@ public class WaveManager : MonoBehaviour
         }
 
         harvesterState = zoneState;
-        float? numGas = ItemManager.Instance.GetGas();
-        difficultyLevel = numGas.HasValue ? Mathf.FloorToInt(numGas.Value / 100) : 0;
+        /*float? numGas = ItemManager.Instance.GetGas();
+        difficultyLevel = numGas.HasValue ? Mathf.FloorToInt(numGas.Value / 150) : 0;*/
 
         switch (harvesterState)
         {

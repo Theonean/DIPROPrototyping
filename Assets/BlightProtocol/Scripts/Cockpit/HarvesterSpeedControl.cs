@@ -209,6 +209,7 @@ public class HarvesterSpeedControl : MonoBehaviour
         float normalizedPos = stepPositions[index];
         speedSlider.SetPositionNormalized(normalizedPos);
         if (showFeedback) overrodePosition.Invoke();
+        speedDisplayer.SetActiveStep(index);
     }
 
     public int GetSpeedStepCount()

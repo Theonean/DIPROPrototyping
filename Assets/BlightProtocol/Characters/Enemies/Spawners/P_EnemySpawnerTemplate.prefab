@@ -279,59 +279,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &2363970899088711659
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1701990865428473786}
-  - component: {fileID: 7228475527688854295}
-  m_Layer: 24
-  m_Name: RocketBlockingCollider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1701990865428473786
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2363970899088711659}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8965843651787158588}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &7228475527688854295
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2363970899088711659}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 5
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4718370344210154843
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +585,7 @@ MonoBehaviour:
   AutoSpawnOverride: 0
   spawnRadius: 3
   enemyScale: 1
+  spawnedEnemies: []
 --- !u!1 &7858184686053593410
 GameObject:
   m_ObjectHideFlags: 0
@@ -803,7 +751,6 @@ Transform:
   - {fileID: 4079911013797653861}
   - {fileID: 2966657701177017163}
   - {fileID: 583726686871550331}
-  - {fileID: 1701990865428473786}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7274966822664590839
@@ -893,7 +840,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemToSpawn: {fileID: 11400000, guid: b2841d94f909ceb4eb44ae9c5b968359, type: 2}
   itemsToSpawn: []
-  spawnSingle: 1
+  spawnSingle: 0
   numberOfItems: 40
   spawnRadius: 5
   throwForceRange: {x: 5, y: 10}

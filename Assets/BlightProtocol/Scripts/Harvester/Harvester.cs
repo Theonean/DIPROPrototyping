@@ -131,7 +131,7 @@ public class Harvester : MonoBehaviour
 
     public void StopHarvesting()
     {
-        if (activeResourcePoint != null)
+        if (activeResourcePoint != null && activeResourcePoint.resourceAmount <= 0f)
         {
             Destroy(activeResourcePoint.gameObject);
             activeResourcePoint = null;

@@ -28,6 +28,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     public EnemyMovementType movementType = EnemyMovementType.CUSTOM;
     public EnemyType type;
     public float outOfScreenThreshold = 125f;
+    public float tooFarAwayFromTargetSelfDestruct = 300f;
     
 
     protected GameObject target;
@@ -36,7 +37,17 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     {
         Vector3 harvesterPosition = harvester.transform.position;
         Vector3 playerPosition = PlayerCore.Instance.transform.position;
-        target = Vector3.Distance(transform.position, harvesterPosition) > Vector3.Distance(transform.position, playerPosition) ? PlayerCore.Instance.gameObject : harvester.gameObject;
+
+        float distanceToHarvester = Vector3.Distance(transform.position, harvesterPosition); 
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+
+        target = distanceToHarvester > distanceToPlayer ? PlayerCore.Instance.gameObject : harvester.gameObject;
+        
+        if(distanceToHarvester > tooFarAwayFromTargetSelfDestruct || distanceToPlayer > tooFarAwayFromTargetSelfDestruct)
+        {
+            Destroy(gameObject);
+            return;
+        }
 
         if (!isSpeeding) {
             if (Vector3.Distance(transform.position, harvesterPosition) > outOfScreenThreshold)
@@ -47,7 +58,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
             }
         }
         else {
-            if (Vector3.Distance(transform.position, harvesterPosition) < outOfScreenThreshold*0.75)
+            if (Vector3.Distance(transform.position, harvesterPosition) < outOfScreenThreshold)
             {
                 moveSpeed = baseSpeed;
                 isSpeeding = false;

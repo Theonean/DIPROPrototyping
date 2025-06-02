@@ -240,6 +240,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
         // unlock cursor so user can click
         Cursor.lockState = CursorLockMode.None;
+        Shader.SetGlobalFloat("_isTopDown", 1);
     }
 
     public void EnableTopDownPreview(bool enable)
