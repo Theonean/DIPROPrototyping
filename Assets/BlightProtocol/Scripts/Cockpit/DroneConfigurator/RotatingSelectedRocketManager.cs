@@ -48,7 +48,11 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
     private void OnPerspectiveSwitched()
     {
-        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV) rocketSelected.Invoke(selectedRocket);
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
+        {
+            rocketSelected.Invoke(selectedRocket);
+            LoadResearchFieldsOfActiveRocket();
+        }
     }
 
     private void Start()
@@ -105,9 +109,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         barrel.transform.localRotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y + amount, startRotation.eulerAngles.z);
         isRotating = false;
 
-        UpdateResearchFields(selectedRocket.frontComponent, RocketComponentType.FRONT);
-        UpdateResearchFields(selectedRocket.bodyComponent, RocketComponentType.BODY);
-        UpdateResearchFields(selectedRocket.propulsionComponent, RocketComponentType.PROPULSION);
+        LoadResearchFieldsOfActiveRocket();
 
         UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
         UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
@@ -142,14 +144,15 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         }
         rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
         screenRocket.SetComponent(componentType, dummyObject);
-
-
     }
 
     private void UpdateDescription(RocketComponentType type, ACRocketComponent newComponent)
     {
         string description = newComponent.componentDescription;
         descriptionDisplayer.SetText(type, description);
+        
+        GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
+        screenRocket.SetComponent(type, dummyObject);
     }
 
     public void ApplySelectionToAll(Button button)
