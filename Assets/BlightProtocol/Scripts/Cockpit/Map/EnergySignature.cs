@@ -1,3 +1,4 @@
+using System.Collections;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -9,17 +10,29 @@ public class EnergySignature : MonoBehaviour
     public int areaSize;
     public EnergySignatureDisplayer displayer;
 
-    public UnityEvent onDestroy;
+    public UnityEvent onDisable;
 
-    void OnDestroy() {
-        onDestroy.Invoke();
+    void OnDestroy()
+    {
+        onDisable.Invoke();
     }
 
     public void FlashSignature()
     {
-        if(displayer)
+        if (displayer)
         {
             displayer.FlashSignature();
         }
+    }
+
+    public void DestroyWithDelay(float delay)
+    {
+        StartCoroutine(DestroyWithDelayCoroutine(delay));
+    }
+
+    private IEnumerator DestroyWithDelayCoroutine(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Destroy(gameObject);
     }
 }

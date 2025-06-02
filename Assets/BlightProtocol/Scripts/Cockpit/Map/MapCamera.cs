@@ -87,7 +87,6 @@ public class MapCamera : MonoBehaviour
         // Set the target height instead of directly setting yPos
         float height = Mathf.Lerp(minYPos, maxYPos, normalizedValue);
         targetYPos = height;
-        Debug.Log(height);
     }
 
     public void Move(Vector2 delta)

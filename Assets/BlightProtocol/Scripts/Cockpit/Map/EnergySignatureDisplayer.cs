@@ -10,7 +10,7 @@ public class EnergySignatureDisplayer : MonoBehaviour
 
     public void DisplaySignature(EnergySignature signature)
     {
-        signature.onDestroy.AddListener(DestroyThis);
+        signature.onDisable.AddListener(DestroyThis);
         signature.displayer = this;
 
         GameObject baseSprite = baseSprites.FirstOrDefault(b => b.GetComponent<EnergySignatureBase>().type == signature.baseType);
