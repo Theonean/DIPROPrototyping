@@ -11,10 +11,10 @@ public enum TutorialProgress
     WASD,
     DASH,
     SHOOTROCKET,
+    RETRACTROCKET,
     SHOOTROCKET2,
     SHOOTROCKET3,
     EXPLODROCKET,
-    RETRACTROCKET,
     PERSPECTIVESWITCHTOFPV,
     SETFIRSTMAPPOINT,
     SETSPEED,
@@ -151,10 +151,13 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Move to target position using WASD";
                 break;
             case TutorialProgress.DASH:
-                currentTutorialText.text = "[ ] Dash using spacebar";
+                currentTutorialText.text = "[ ] Dash by moving and pressing spacebar";
                 break;
             case TutorialProgress.SHOOTROCKET:
                 currentTutorialText.text = "[ ] Shoot a rocket to target 1 using left-click";
+                break;
+            case TutorialProgress.RETRACTROCKET:
+                currentTutorialText.text = "[ ] Pull back a rocket using right-click";
                 break;
             case TutorialProgress.SHOOTROCKET2:
                 currentTutorialText.text = "[ ] Shoot a rocket to target 2 using left-click";
@@ -164,9 +167,6 @@ public class TutorialManager : MonoBehaviour
                 break;
             case TutorialProgress.EXPLODROCKET:
                 currentTutorialText.text = "[ ] Explode a rocket by clicking it";
-                break;
-            case TutorialProgress.RETRACTROCKET:
-                currentTutorialText.text = "[ ] Pull back a rocket using right-click";
                 break;
             case TutorialProgress.PERSPECTIVESWITCHTOFPV:
                 currentTutorialText.text = "[ ] Move into Exit zone";
@@ -214,10 +214,10 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Interact with the drone configurator";
                 break;
             case TutorialProgress.UPGRADENEWCOMPONENT:
-                currentTutorialText.text = "[ ] upgrade your Straight line propulsion";
+                currentTutorialText.text = "[ ] upgrade your direct line propulsion";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
-                currentTutorialText.text = "[ ] Tutorial Completed, go back to the main menu to play the main game!";
+                currentTutorialText.text = "[ ] Drive to the white balloon (save-point) to complete the tutorial";
                 break;
             default:
                 currentTutorialText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
@@ -361,7 +361,18 @@ public class TutorialManager : MonoBehaviour
             return;
 
         NextTutorialStep();
+        RocketAimController.Instance.OnRocketRetract.AddListener(CompleteRETRACTROCKET);
     }
+
+    public void CompleteRETRACTROCKET()
+    {
+        if (progressState != TutorialProgress.RETRACTROCKET)
+            return;
+
+        RocketAimController.Instance.OnRocketRetract.RemoveListener(CompleteRETRACTROCKET);
+        NextTutorialStep();
+    }
+
     public void CompleteSHOOTROCKET_TWO()
     {
         if (progressState != TutorialProgress.SHOOTROCKET2)
@@ -384,16 +395,6 @@ public class TutorialManager : MonoBehaviour
             return;
 
         RocketAimController.Instance.OnRocketShot.RemoveListener(CompleteEXPLODEROCKET);
-        NextTutorialStep();
-        RocketAimController.Instance.OnRocketRetract.AddListener(CompleteRETRACTROCKET);
-    }
-
-    public void CompleteRETRACTROCKET()
-    {
-        if (progressState != TutorialProgress.RETRACTROCKET)
-            return;
-
-        RocketAimController.Instance.OnRocketRetract.RemoveListener(CompleteRETRACTROCKET);
         NextTutorialStep();
     }
     public void CompleteFIRSTSWITCHTOFPV()
