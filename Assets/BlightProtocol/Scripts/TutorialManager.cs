@@ -57,6 +57,8 @@ public class TutorialManager : MonoBehaviour
     public int crystalsToCollectForUpgrade = 20;
     private int crystalsCollected = 0;
 
+    public GameObject minimap;
+
     [Header("Segment Doors")]
     [SerializeField] private TutorialDoor MOVEMENT_SEGMENT_EXIT;
     [SerializeField] private TutorialDoor ROCKET_SEGMENT_EXIT;
@@ -127,6 +129,7 @@ public class TutorialManager : MonoBehaviour
 
         progressState = TutorialProgress.INACTIVE;
 
+        minimap.SetActive(false);
 
         NextTutorialStep();
     }
@@ -399,6 +402,7 @@ public class TutorialManager : MonoBehaviour
             return;
 
         NextTutorialStep();
+        minimap.SetActive(true);
     }
     public void CompleteSETFIRSTMAPPOINT()
     {

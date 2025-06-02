@@ -3393,7 +3393,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlZone: {fileID: 2095316635}
   m_GameState: 0
-  startWithTutorial: 0
+  startWithTutorial: 1
   m_TotalGameTime: 0
 --- !u!1 &1967032504
 GameObject:
@@ -3726,6 +3726,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca543c0bb21c2294cb02b1d66a81d637, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2141367040 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1037031579169144346, guid: 94c580c3465cbd842a1304a6e5068e65,
+    type: 3}
+  m_PrefabInstance: {fileID: 5328846699306707342}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1467073742422388475
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6041,6 +6047,11 @@ PrefabInstance:
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2402130139162731919, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
+        type: 3}
+      propertyPath: minimap
+      value: 
+      objectReference: {fileID: 2141367040}
     - target: {fileID: 2428703975743484767, guid: 8a234b1dd70aa7f43b2b14ecb3b8afc2,
         type: 3}
       propertyPath: m_LocalPosition.x
