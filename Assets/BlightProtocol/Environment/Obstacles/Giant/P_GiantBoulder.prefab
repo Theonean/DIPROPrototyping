@@ -1,5 +1,101 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &985588746665349266
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1961323432474637670}
+  - component: {fileID: 6025025627774837443}
+  m_Layer: 24
+  m_Name: NavMeshObstacles01 (3)
+  m_TagString: Obstacle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &1961323432474637670
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985588746665349266}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.40449515, z: -0, w: 0.91454023}
+  m_LocalPosition: {x: -7.1123, y: 0.00000010431, z: 25.158}
+  m_LocalScale: {x: 1.1688132, y: 1.1688132, z: 1.1688132}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8808503284862076636}
+  m_LocalEulerAnglesHint: {x: 0, y: 47.719, z: 0}
+--- !u!208 &6025025627774837443
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985588746665349266}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 13.1, y: 6.75, z: 23.4}
+  m_MoveThreshold: 0.13
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
+--- !u!1 &2298629308015869961
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4769758913109429106}
+  - component: {fileID: 9013454840373344271}
+  m_Layer: 24
+  m_Name: NavMeshObstacles01 (4)
+  m_TagString: Obstacle
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 1
+--- !u!4 &4769758913109429106
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2298629308015869961}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: 0.03751053, z: -0, w: 0.99929625}
+  m_LocalPosition: {x: -19.969, y: 0.00000010431, z: 2.0164}
+  m_LocalScale: {x: 1.1688132, y: 1.1688132, z: 1.1688132}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8808503284862076636}
+  m_LocalEulerAnglesHint: {x: 0, y: 4.299, z: 0}
+--- !u!208 &9013454840373344271
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2298629308015869961}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 13.1, y: 6.75, z: 11.445}
+  m_MoveThreshold: 0.13
+  m_Carve: 1
+  m_CarveOnlyStationary: 0
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5
 --- !u!1 &4142559565800769753
 GameObject:
   m_ObjectHideFlags: 0
@@ -122,13 +218,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4764609270964923424}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 15, y: 0, z: -18}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.084463514, z: -0, w: 0.9964266}
+  m_LocalPosition: {x: 8.7828, y: 0.00000010431, z: -15.281}
+  m_LocalScale: {x: 1.1688132, y: 1.1688132, z: 1.1688132}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8808503284862076636}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -9.69, z: 0}
 --- !u!208 &864421417251746625
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -139,7 +235,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 20, y: 1, z: 40}
+  m_Extents: {x: 19.745, y: 11.3, z: 31.5}
   m_MoveThreshold: 0.13
   m_Carve: 1
   m_CarveOnlyStationary: 0
@@ -265,13 +361,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6765712523169106109}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -20.2, y: 0, z: -1.6}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0.3165481, z: -0, w: 0.9485765}
+  m_LocalPosition: {x: -7.6968, y: 0.00000010431, z: -23.346}
+  m_LocalScale: {x: 1.1688132, y: 1.1688132, z: 1.1688132}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8808503284862076636}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -36.909, z: 0}
 --- !u!208 &5211689810111361042
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -282,7 +378,7 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 20, y: 1, z: 40}
+  m_Extents: {x: 13.1, y: 6.75, z: 23.4}
   m_MoveThreshold: 0.13
   m_Carve: 1
   m_CarveOnlyStationary: 0
@@ -411,8 +507,8 @@ Transform:
   m_GameObject: {fileID: 8208861979253256017}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -0.45042, y: 0.00000010431, z: -12.663}
+  m_LocalScale: {x: 1.1688132, y: 1.1688132, z: 1.1688132}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8808503284862076636}
@@ -427,11 +523,11 @@ NavMeshObstacle:
   m_Enabled: 1
   serializedVersion: 3
   m_Shape: 1
-  m_Extents: {x: 20, y: 1, z: 20}
+  m_Extents: {x: 11.05, y: 12.7, z: 20.14}
   m_MoveThreshold: 0.13
   m_Carve: 1
   m_CarveOnlyStationary: 0
-  m_Center: {x: 10.71, y: 0, z: 37.88}
+  m_Center: {x: 10.71, y: 0, z: 35.99}
   m_TimeToStationary: 0.5
 --- !u!1 &8462809618294767473
 GameObject:
@@ -465,6 +561,8 @@ Transform:
   - {fileID: 8125952288109180536}
   - {fileID: 771400814690244194}
   - {fileID: 3621524619595509973}
+  - {fileID: 1961323432474637670}
+  - {fileID: 4769758913109429106}
   m_Father: {fileID: 4810008336700526577}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2429302643088587294
