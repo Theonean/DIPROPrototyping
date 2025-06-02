@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class HarvesterTrailTracker : MonoBehaviour
 {
-    [SerializeField] private LineRenderer lineRenderer;
+    [SerializeField] private GameObject lineRendererPrefab;
+    private LineRenderer lineRenderer;
     private Transform harvester;
     [SerializeField] private float recordInterval = 0.1f; // How often to record positions
     [SerializeField] private int maxPositions = 1000; // Max points before trimming
@@ -15,12 +16,16 @@ public class HarvesterTrailTracker : MonoBehaviour
     void Start()
     {
         harvester = Harvester.Instance.transform;
-        if (lineRenderer == null)
-            lineRenderer = GetComponent<LineRenderer>();
-
-        lineRenderer.positionCount = 0;
-        StartCoroutine(RecordPath());
+        CreateNewPath();
         Harvester.Instance.changedState.AddListener(ToggleRecording);
+    }
+
+    public void CreateNewPath()
+    {
+        lineRenderer = Instantiate(lineRendererPrefab, gameObject.transform, false).GetComponent<LineRenderer>();
+        lineRenderer.positionCount = 0;
+        _pathPositions = new List<Vector3>();
+        StartCoroutine(RecordPath());
     }
 
     private void ToggleRecording(HarvesterState zoneState)

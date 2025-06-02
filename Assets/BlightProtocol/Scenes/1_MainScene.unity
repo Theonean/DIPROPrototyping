@@ -3487,6 +3487,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1972872355 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7723201259638873640, guid: f3a507f078a762347a2c64ff7721474d,
+    type: 3}
+  m_PrefabInstance: {fileID: 1362755937}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5ada9bf6312e884da3beeb64064e9be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2052527777 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 603975856083052020, guid: 0b57e7b70314eaf479534b60bc1982ce,
@@ -3562,6 +3574,7 @@ MonoBehaviour:
   gameOverGroup: {fileID: 5328846699306707345}
   resourcesHarvestedText: {fileID: 5328846699306707344}
   resetText: {fileID: 5328846699306707343}
+  trailTracker: {fileID: 1972872355}
   gameOverFadeDuration: 20
   respawnAnimationDuration: 2
   respawnCurve:

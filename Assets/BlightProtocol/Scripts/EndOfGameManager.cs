@@ -13,6 +13,7 @@ namespace Assets.BlightProtocol.Scripts
 		[SerializeField] private CanvasGroup gameOverGroup;
 		[SerializeField] private TextMeshProUGUI resourcesHarvestedText;
 		[SerializeField] private TextMeshProUGUI resetText;
+		[SerializeField] private HarvesterTrailTracker trailTracker;
 
 		[Header("Timings & Curves")]
 		[SerializeField] private float gameOverFadeDuration = 20f;
@@ -177,6 +178,9 @@ namespace Assets.BlightProtocol.Scripts
 			// re-enable player
 			PlayerCore.Instance.enabled = true;
 			CameraTracker.Instance.objectToTrack = PlayerCore.Instance.gameObject;
+
+			// create new player trail
+			trailTracker.CreateNewPath();
         }
         private void PlayerKilledEnemy(EnemyType type)
 		{ 
