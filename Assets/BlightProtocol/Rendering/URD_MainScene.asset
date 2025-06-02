@@ -194,14 +194,16 @@ MonoBehaviour:
   - {fileID: 1752997818480444186}
   - {fileID: 7137455469320322611}
   - {fileID: 8232084954699276091}
-  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0bef506354e7e4bd5ea789fdb43a83738afafddb8bdcb99bed51ac38f663ae6531833be01f9ee550d633b1fb09da63d3e72
+  - {fileID: 1379963177123210218}
+  - {fileID: 214098550871002927}
+  m_RendererFeatureMap: 5e66c713fe86f98e62e2d995579cd0bef506354e7e4bd5ea789fdb43a83738afafddb8bdcb99bed51ac38f663ae6531833be01f9ee550d633b1fb09da63d3e72ea638cbf329d26132f8f97677fa1f802
   m_UseNativeRenderPass: 0
   xrSystemData: {fileID: 11400000, guid: 60e1133243b97e347b653163a8c01b64, type: 2}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
   m_AssetVersion: 2
   m_OpaqueLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 2078277759
   m_TransparentLayerMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -220,6 +222,90 @@ MonoBehaviour:
   m_DepthTextureFormat: 0
   m_AccurateGbufferNormals: 0
   m_IntermediateTextureMode: 1
+--- !u!114 &214098550871002927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: ShowVisibleEnemies
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: ShowVisibleEnemies
+    Event: 300
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 67108864
+      PassNames: []
+    overrideMaterial: {fileID: 0}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 1
+    depthCompareFunction: 4
+    enableWrite: 1
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
+--- !u!114 &1379963177123210218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b3d386ba5cd94485973aee1479b272e, type: 3}
+  m_Name: ShowHiddenEnemies
+  m_EditorClassIdentifier: 
+  m_Active: 1
+  settings:
+    passTag: ShowHiddenEnemies
+    Event: 300
+    filterSettings:
+      RenderQueueType: 0
+      LayerMask:
+        serializedVersion: 2
+        m_Bits: 67108864
+      PassNames: []
+    overrideMaterial: {fileID: 2100000, guid: ea3e6b52e55ad9046a152936821613da, type: 2}
+    overrideMaterialPassIndex: 0
+    overrideShader: {fileID: 0}
+    overrideShaderPassIndex: 0
+    overrideMode: 1
+    overrideDepthState: 1
+    depthCompareFunction: 5
+    enableWrite: 0
+    stencilSettings:
+      overrideStencilState: 0
+      stencilReference: 0
+      stencilCompareFunction: 8
+      passOperation: 0
+      failOperation: 0
+      zFailOperation: 0
+    cameraSettings:
+      overrideCamera: 0
+      restoreCamera: 1
+      offset: {x: 0, y: 0, z: 0, w: 0}
+      cameraFieldOfView: 60
 --- !u!114 &1752997818480444186
 MonoBehaviour:
   m_ObjectHideFlags: 0
