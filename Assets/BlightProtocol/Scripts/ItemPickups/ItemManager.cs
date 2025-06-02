@@ -15,6 +15,7 @@ public class ItemManager : MonoBehaviour
     public UnityEvent<int> gasAmountChanged;
     public UnityEvent notEnoughCrystals;
     public UnityEvent notEnoughGas;
+    public UnityEvent<string> onNewComponentUnlocked;
     private bool FREEMONEYMODEENGAGED = false;
 
     private void Awake()
@@ -162,6 +163,7 @@ public class ItemManager : MonoBehaviour
         if (entry == null)
         {
             entry = new ComponentEntry(componentName);
+            onNewComponentUnlocked.Invoke(componentName);
             components.Add(entry);
         }
         return entry;
