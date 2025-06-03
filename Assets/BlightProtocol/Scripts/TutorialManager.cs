@@ -500,7 +500,7 @@ public class TutorialManager : MonoBehaviour
     }
     public void CompletePERSPECTIVESWITCHTODRONE()
     {
-        if (progressState != TutorialProgress.PERSPECTIVESWITCHTODRONE)
+        if (progressState != TutorialProgress.PERSPECTIVESWITCHTODRONE && PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.DRONE)
             return;
 
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(CompletePERSPECTIVESWITCHTODRONE);
