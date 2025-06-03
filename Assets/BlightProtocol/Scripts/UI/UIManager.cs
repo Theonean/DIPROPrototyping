@@ -9,6 +9,9 @@ public class UIHandler : MonoBehaviour
     public GameObject fpvUI;
     public GameObject switchingUI;
     public GameObject generalUI;
+    public CanvasGroup howToWinGroup;
+    private bool howToWinActive = false;
+    public float howToWinFadeTime = 1f;
 
     public static UIHandler Instance { get; private set; }
 
@@ -29,6 +32,18 @@ public class UIHandler : MonoBehaviour
         perspectiveSwitcher = PerspectiveSwitcher.Instance;
         SwitchUI();
         perspectiveSwitcher.onPerspectiveSwitched.AddListener(SwitchUI);
+        if (!TutorialManager.Instance.IsTutorialOngoing())
+        {
+            ShowHowToWin(true);
+        }
+    }
+
+    void Update()
+    {
+        if (howToWinActive && Input.GetMouseButtonDown(0))
+        {
+            ShowHowToWin(false);
+        }
     }
 
     void OnEnable()
@@ -74,5 +89,25 @@ public class UIHandler : MonoBehaviour
                 generalUI.SetActive(true);
                 break;
         }
+    }
+
+    public void ShowHowToWin(bool show)
+    {
+        float alphaTarget = show ? 1f : 0f;
+        howToWinActive = show;
+        StartCoroutine(FadeHowToWin(alphaTarget));
+    }
+
+    private IEnumerator FadeHowToWin(float target)
+    {
+        float startA = howToWinGroup.alpha;
+        float elapsedTime = 0f;
+        while (elapsedTime < howToWinFadeTime)
+        {
+            howToWinGroup.alpha = Mathf.Lerp(startA, target, elapsedTime / howToWinFadeTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        howToWinGroup.alpha = target;
     }
 }

@@ -572,6 +572,7 @@ public class TutorialManager : MonoBehaviour
         if (progressState != TutorialProgress.DRIVETOCHECKPOINT)
             return;
 
+        UIHandler.Instance.ShowHowToWin(true);
         NextTutorialStep();
     }
 

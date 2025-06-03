@@ -34,7 +34,7 @@ public class SeismographVisualizer : ACScreenValueDisplayer
         UpdateValue(Seismograph.Instance.GetTotalVibration());
         Seismograph.Instance.vibrationChanged.AddListener(OnVibrationChanged);
         int dangerLevel = Seismograph.Instance.GetCurrentDangerLevel();
-        lineRenderer.material.SetColor("_Color", Seismograph.Instance.vibrationDangerLevels[dangerLevel].color);
+        lineRenderer.material.SetColor("_BaseColor", Seismograph.Instance.vibrationDangerLevels[dangerLevel].color);
     }
 
     private void InitializeSeismograph()
@@ -78,7 +78,7 @@ public class SeismographVisualizer : ACScreenValueDisplayer
         int dangerLevel = Seismograph.Instance.GetCurrentDangerLevel();
         Color newColor = Seismograph.Instance.vibrationDangerLevels[dangerLevel].color;
         triangle.color = newColor;
-        lineRenderer.material.SetColor("_Color", newColor);
+        lineRenderer.material.SetColor("_BaseColor", newColor);
     }
 
     protected override void UpdateValue(float targetValue)
