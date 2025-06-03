@@ -36,6 +36,7 @@ public class WaveManager : MonoBehaviour
     public GameObject regularEnemyPrefab;
     public GameObject chargerEnemyPrefab;
     public GameObject tankEnemyPrefab;
+    [SerializeField] private SOEnemySpawnPattern[] ambushPatterns;
 
     [Header("Difficulty Settings")]
     public DifficultySettings difficultySettings;
@@ -58,7 +59,7 @@ public class WaveManager : MonoBehaviour
             Instance = this;
         }
 
-        spawners = spawners.OrderBy(x => UnityEngine.Random.value).ToArray();
+        spawners = spawners.OrderBy(x => UnityEngine.Random.value).ToArray(); 
         foreach (EnemySpawner spawner in spawners)
         {
             m_InactiveSpawners.Enqueue(spawner);
@@ -253,10 +254,24 @@ public class WaveManager : MonoBehaviour
 
     void ActivateSpawners(int numberOfSpawners)
     {
-        for (int i = 0; i < numberOfSpawners; i++)
-        {
+        int spawnersFound = 0;
+        int i = 0;
+        while(spawnersFound < numberOfSpawners) 
+        { 
             EnemySpawner spawner = m_InactiveSpawners.Dequeue();
-            spawner.StartWave(difficultyLevel);
+            if (spawner.IsGroundUnderSpawnerApproximate())
+            {
+                spawner.StartWave(difficultyLevel);
+                spawnersFound++;
+            }
+            else
+            {
+                m_InactiveSpawners.Enqueue(spawner);
+            }
+            i++;
+
+            if (i == spawners.Length)
+                break;
         }
     }
 

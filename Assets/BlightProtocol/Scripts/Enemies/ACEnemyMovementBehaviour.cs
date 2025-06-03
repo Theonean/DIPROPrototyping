@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -13,6 +13,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
 {
     protected Harvester harvester;
     public NavMeshAgent navMeshAgent { get; protected set; }
+    public LayerMask environmentLayer;
     protected bool isMoving = true;
 
     [Header("Knockback settings")]
@@ -32,6 +33,26 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     
 
     protected GameObject target;
+
+    void Awake()
+    {
+        // 1) Overlap‐check: if we’re already inside some non‐ground collider, self‐destruct
+        const float overlapRadius = 0.1f;
+        Collider[] overlaps = Physics.OverlapSphere(transform.position, overlapRadius, environmentLayer);
+        foreach (var col in overlaps)
+        {
+            // If the collider isn’t tagged “Ground”, assume we’re stuck inside an unwanted object
+            if (!col.CompareTag("Ground"))
+            {
+                Destroy(gameObject);
+                return;
+            }
+        }
+
+        harvester = Harvester.Instance;
+        navMeshAgent = GetComponent<NavMeshAgent>();
+        SetSpeed(moveSpeed);
+    }
 
     protected void Update()
     {
@@ -79,14 +100,6 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
 
     protected abstract void CustomMovementUpdate();
 
-    //NOTE: navMeshAgent.SetDestination forces a path recalculation, maybe in future add only do it every x frames
-
-    void Awake()
-    {
-        harvester = Harvester.Instance;
-        navMeshAgent = GetComponent<NavMeshAgent>();
-        SetSpeed(moveSpeed);
-    }
     public bool CanMove()
     {
         return isMoving && harvester != null && harvester.GetZoneState() != HarvesterState.DIED;

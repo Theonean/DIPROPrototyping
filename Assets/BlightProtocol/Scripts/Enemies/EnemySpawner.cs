@@ -24,6 +24,7 @@ public class EnemySpawner : MonoBehaviour
     [HideInInspector] public UnityEvent AllEnemiesDead = new UnityEvent();
     [HideInInspector] public UnityEvent spawnedEnemy = new UnityEvent();
 
+    [SerializeField] public LayerMask layerToHit;
     [SerializeField] private const SpawnType enemyTypesToSpawn = SpawnType.ALL_RANDOM;
     public SOEnemySpawnPattern[] enemySpawnPatterns = new SOEnemySpawnPattern[0];
     public bool FiresOnce = false;
@@ -81,7 +82,7 @@ public class EnemySpawner : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, spawnRadius);
     }
 
-    public void SpawnEnemy()
+    public void SpawnEnemy(bool overrideCollisionCheck = false)
     {
         // Early exit if FiresOnce and already spawning
         if (FiresOnce && isSpawningEnemies) return;
@@ -164,7 +165,7 @@ public class EnemySpawner : MonoBehaviour
         Logger.Log("Spawner creating " + spawnRate + " enemies per second at an interval of " + spawnEnemyInNSeconds, LogLevel.INFO, LogType.WAVEMANAGEMENT);
     }
 
-    public void StartWave(int waveNumber)
+    public void StartWave(int waveNumber, bool overrideCollisionCheck = false)
     {
         SetSpawnRate(waveNumber);
 
@@ -183,4 +184,23 @@ public class EnemySpawner : MonoBehaviour
     {
         m_SpawnState = SpawnState.WAITING;
     }
+
+    public bool IsGroundUnderSpawnerApproximate()
+    {
+        float startingHeight = 150f;
+        Vector3 origin = transform.position + Vector3.up * startingHeight;
+        float maxDistance = startingHeight * 2f;
+
+        if (Physics.Raycast(origin, Vector3.down, out RaycastHit hit, maxDistance, layerToHit))
+        {
+            // If the first hit was tagged "Ground", treat it as no hit
+            if (hit.collider.CompareTag("Ground"))
+                return true;
+
+            return false;
+        }
+
+        return true;
+    }
+
 }
