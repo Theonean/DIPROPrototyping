@@ -1326,6 +1326,11 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 8473871707231192779, guid: 0b57e7b70314eaf479534b60bc1982ce,
+        type: 3}
+      propertyPath: maxVibration
+      value: 12
+      objectReference: {fileID: 0}
     - target: {fileID: 8516375477223714312, guid: 0b57e7b70314eaf479534b60bc1982ce,
         type: 3}
       propertyPath: m_Mesh
@@ -3585,11 +3590,11 @@ MonoBehaviour:
   tankEnemyPrefab: {fileID: 2318980918978960584, guid: 0cf7139c56e24d84092d5810a861707c,
     type: 3}
   difficultySettings:
-    spawnRadius: 70
+    spawnRadius: 180
     baseEnemyCount: 3
     ambushEnemyMultiplier: 1
-    ambushRangeScale: 70
-    ambushWaveDelayRange: {x: 30, y: 60}
+    ambushRangeScale: 120
+    ambushWaveDelayRange: {x: 15, y: 22}
   difficultyLevel: 3
 --- !u!4 &2134228161
 Transform:

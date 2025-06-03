@@ -69,7 +69,7 @@ public class Radar : MonoBehaviour
             StartCoroutine(DisplayPulseRing(modifier));
         }
 
-        Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 1f);
+        Seismograph.Instance.SetOtherEmission("Radar Pulse", pulseSeismoEmission, 5f);
     }
 
     private IEnumerator DisplayPulseMarkers(Collider[] colliders, float modifier)
