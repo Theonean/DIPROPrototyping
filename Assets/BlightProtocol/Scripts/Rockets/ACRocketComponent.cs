@@ -96,13 +96,14 @@ public abstract class ACRocketComponent : MonoBehaviour
     public int GetResearchCost()
     {
         if(componentLevel == 0) return unlockCostCrystal;
-        else return researchCostCrystal[componentLevel - 1];
+        else if (componentLevel <= maxComponentLevel - 1) return researchCostCrystal[componentLevel - 1];
+        else return 0;
     }
     public int GetResearchCost(int customLevel)
     {
         if (customLevel == 0) return unlockCostCrystal;
-        else if (customLevel <= maxComponentLevel) return researchCostCrystal[customLevel - 1];
-        else return -1;
+        else if (customLevel <= maxComponentLevel - 1) return researchCostCrystal[customLevel - 1];
+        else return 0;
     }
 
     /// <summary>

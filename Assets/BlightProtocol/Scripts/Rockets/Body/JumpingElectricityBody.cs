@@ -9,7 +9,7 @@ public class JumpingElectricityBody : ACRocketBody
 
     protected override void SetStatsToLevel()
     {
-        electricityJumpsBase = electricityJumpsPerLevel[componentLevel];
+        electricityJumpsBase = electricityJumpsPerLevel[componentLevel - 1];
 
         Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel + 1}. Explosion radius: {explosionRadius}", LogLevel.INFO, LogType.ROCKETS);
     }
@@ -32,22 +32,22 @@ public class JumpingElectricityBody : ACRocketBody
         }
         else
         {
-            return upgradeDescription + " " + electricityJumpsBase + " -> " + electricityJumpsPerLevel[componentLevel + 1];
+            return upgradeDescription + " " + electricityJumpsBase + " -> " + electricityJumpsPerLevel[componentLevel];
         }
     }
     public override string GetResearchDescription(int customLevel)
     {
-        if (componentLevel == 0)
+        if (customLevel == 0)
         {
             return "Unlock component";
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel];
+            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel - 1];
         }
         else
         {
-            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel] + " -> " + electricityJumpsPerLevel[customLevel + 1];
+            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel - 1] + " -> " + electricityJumpsPerLevel[customLevel];
         }
     }
 }

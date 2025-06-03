@@ -191,7 +191,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         string componentName = rocketComponent.DescriptiveName;
 
         ComponentEntry entry = ItemManager.Instance.GetComponentEntry(componentName);
-        if (ItemManager.Instance.GetCrystal() >= researchCosts && entry.highestLevelUpgraded < rocketComponent.maxComponentLevel)
+        if (ItemManager.Instance.GetCrystal() >= researchCosts && entry.highestLevelUpgraded <= rocketComponent.maxComponentLevel - 1)
         {
             if(entry.highestLevelUpgraded == 0)
             {

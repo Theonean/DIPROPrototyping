@@ -51,7 +51,7 @@ public abstract class ACRocketBody : ACRocketComponent
 
     protected override void SetStatsToLevel()
     {
-        explosionRadiusBase = explosionRadiusPerLevel[componentLevel];
+        explosionRadiusBase = explosionRadiusPerLevel[componentLevel - 1];
         explosionRadius = explosionRadiusBase;
         canExplode = true;
 
@@ -70,22 +70,22 @@ public abstract class ACRocketBody : ACRocketComponent
         }
         else
         {
-            return upgradeDescription + " " + explosionRadius + " -> " + explosionRadiusPerLevel[componentLevel + 1];
+            return upgradeDescription + " " + explosionRadius + " -> " + explosionRadiusPerLevel[componentLevel];
         }
     }
     public override string GetResearchDescription(int customLevel)
     {
-        if (componentLevel == 0)
+        if (customLevel == 0)
         {
             return "Unlock component";
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel];
+            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel - 1];
         }
         else
         {
-            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel] + " -> " + explosionRadiusPerLevel[customLevel + 1];
+            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel - 1] + " -> " + explosionRadiusPerLevel[customLevel];
         }
     }
 }

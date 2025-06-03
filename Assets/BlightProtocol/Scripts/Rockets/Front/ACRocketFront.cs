@@ -36,7 +36,7 @@ public abstract class ACRocketFront : ACRocketComponent
     #region Level Up
     protected override void SetStatsToLevel()
     {
-        maxAbilityUses = abilityUsesPerLevel[componentLevel];
+        maxAbilityUses = abilityUsesPerLevel[componentLevel - 1 ];
         abilityUsesLeft = maxAbilityUses;
         Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel}. Max ability uses: {maxAbilityUses}", LogLevel.INFO, LogType.ROCKETS);
     }
@@ -99,22 +99,22 @@ public abstract class ACRocketFront : ACRocketComponent
         }
         else
         {
-            return upgradeDescription + " " + maxAbilityUses + " -> " + abilityUsesPerLevel[componentLevel + 1];
+            return upgradeDescription + " " + maxAbilityUses + " -> " + abilityUsesPerLevel[componentLevel];
         }
     }
     public override string GetResearchDescription(int customLevel)
     {
-        if (componentLevel == 0)
+        if (customLevel == 0)
         {
             return "Unlock component";
         }
-        else if (customLevel == maxComponentLevel - 1)
+        else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + abilityUsesPerLevel[customLevel];
+            return upgradeDescription + " " + abilityUsesPerLevel[customLevel - 1];
         }
         else
         {
-            return upgradeDescription + " " + abilityUsesPerLevel[customLevel] + " -> " + abilityUsesPerLevel[customLevel + 1];
+            return upgradeDescription + " " + abilityUsesPerLevel[customLevel - 1] + " -> " + abilityUsesPerLevel[customLevel];
         }
     }
 

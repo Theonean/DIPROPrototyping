@@ -60,7 +60,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
 
     protected override void SetStatsToLevel()
     {
-        targetMoveStep = targetMoveStepPerSecondPerLevel[componentLevel];
+        targetMoveStep = targetMoveStepPerSecondPerLevel[componentLevel - 1];
         Logger.Log($"Leveling up {DescriptiveName} to level {componentLevel}. Degree move to mouse: {targetMoveStep}", LogLevel.INFO, LogType.ROCKETS);
     }
 
@@ -205,22 +205,22 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         }
         else
         {
-            return upgradeDescription + " " + targetMoveStep + " -> " + targetMoveStepPerSecondPerLevel[componentLevel+1];
+            return upgradeDescription + " " + targetMoveStep + " -> " + targetMoveStepPerSecondPerLevel[componentLevel];
         }
     }
     public override string GetResearchDescription(int customLevel)
     {
-        if (componentLevel == 0)
+        if (customLevel == 0)
         {
             return "Unlock component";
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel];
+            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel - 1];
         }
         else
         {
-            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel] + " -> " + targetMoveStepPerSecondPerLevel[customLevel + 1];
+            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel - 1] + " -> " + targetMoveStepPerSecondPerLevel[customLevel];
         }
     }
 }
