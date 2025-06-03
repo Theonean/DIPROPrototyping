@@ -131,7 +131,6 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     {
         ACRocketComponent rocketComponent = newComponent.GetComponent<ACRocketComponent>();
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
-
         if (unlocked)
         {
             switch (componentType)
@@ -140,6 +139,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
                     rockets[index].SetFront(newComponent);
                     break;
                 case RocketComponentType.BODY:
+
                     rockets[index].SetBody(newComponent);
                     break;
                 case RocketComponentType.PROPULSION:
@@ -152,7 +152,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
         if (index == selectedRocketIndex)
         {
-            // show lock
+            // update panels and dummy rockets
             descriptionDisplayer.ShowLock(componentType, !unlocked);
 
             screenRocket.SetComponent(componentType, dummyObject);
@@ -172,18 +172,28 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
     public void LevelUpComponent(RocketComponentType componentType)
     {
+        GameObject componentPrefab = null;
         ACRocketComponent rocketComponent = null;
         switch (componentType)
         {
             case RocketComponentType.FRONT:
-                rocketComponent = rockets[selectedRocketIndex].frontComponent;
+                componentPrefab = ComponentSelectorManager.Instance.frontSelector.GetCurrentSelectionPrefab(out bool frontUnlocked);
+                rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
                 break;
             case RocketComponentType.BODY:
-                rocketComponent = rockets[selectedRocketIndex].bodyComponent;
+                componentPrefab = ComponentSelectorManager.Instance.bodySelector.GetCurrentSelectionPrefab(out bool bodyUnlocked);
+                rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
                 break;
             case RocketComponentType.PROPULSION:
-                rocketComponent = rockets[selectedRocketIndex].propulsionComponent;
+                componentPrefab = ComponentSelectorManager.Instance.propSelector.GetCurrentSelectionPrefab(out bool propUnlocked);
+                rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
                 break;
+        }
+
+        if (rocketComponent == null || componentPrefab == null)
+        {
+            Logger.Log("component to upgrade not found!", LogLevel.ERROR, LogType.ROCKETS);
+            return;
         }
 
         //First validate if we have enough resources for an upgrade
@@ -193,9 +203,24 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         ComponentEntry entry = ItemManager.Instance.GetComponentEntry(componentName);
         if (ItemManager.Instance.GetCrystal() >= researchCosts && entry.highestLevelUpgraded <= rocketComponent.maxComponentLevel - 1)
         {
-            if(entry.highestLevelUpgraded == 0)
+            if (entry.highestLevelUpgraded == 0)
             {
                 entry.isUnlocked = true;
+                descriptionDisplayer.ShowLock(componentType, false);
+
+                // set the new component on the selected rocket
+                switch (componentType)
+                {
+                    case RocketComponentType.FRONT:
+                        ChangeComponent(selectedRocketIndex, componentType, componentPrefab, true);
+                        break;
+                    case RocketComponentType.BODY:
+                        ChangeComponent(selectedRocketIndex, componentType, componentPrefab, true);
+                        break;
+                    case RocketComponentType.PROPULSION:
+                        ChangeComponent(selectedRocketIndex, componentType, componentPrefab, true);
+                        break;
+                }
             }
 
             ItemManager.Instance.RemoveCrystal(researchCosts);
@@ -214,16 +239,18 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         UpdateResearchFields(selectedRocket.propulsionComponent, RocketComponentType.PROPULSION);
     }
 
-    public void UpdateResearchFields(ACRocketComponent componentToUpgrade, RocketComponentType componentType)
+    public void UpdateResearchFields(ACRocketComponent component, RocketComponentType componentType)
     {
         ResearchManager researchManager = ComponentSelectorManager.Instance.GetResearchManager(componentType);
 
-        int researchCosts = componentToUpgrade.GetResearchCost(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
+        int componentLevel = ItemManager.Instance.GetItemLevel(component.DescriptiveName);
+
+        int researchCosts = component.GetResearchCost(componentLevel);
 
         int ownedCrystals = ItemManager.Instance.GetCrystal();
 
         string crystalCostsText = ownedCrystals + " / " + researchCosts;
-        string upgradeText = componentToUpgrade.GetResearchDescription(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
+        string upgradeText = component.GetResearchDescription(componentLevel);
 
         researchManager.SetText(crystalCostsText, upgradeText);
     }

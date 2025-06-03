@@ -11,7 +11,7 @@ public class ComponentSelectorManager : MonoBehaviour
     [SerializeField] private DroneConfigurator droneConfigurator;
     [SerializeField] private RotatingSelectedRocketManager selectedRocketManager;
     [SerializeField] private Button applyToAllButton;
-    [SerializeField] private RocketComponentSelector[] componentSelectors = new RocketComponentSelector[3];
+    [SerializeField] public RocketComponentSelector frontSelector, bodySelector, propSelector;
     [SerializeField] private ResearchManager[] researchManagers = new ResearchManager[3];
     [Header("Screens")]
     [SerializeField] private Button showDescriptionButton;
@@ -37,10 +37,11 @@ public class ComponentSelectorManager : MonoBehaviour
 
     void OnEnable()
     {
-        foreach (var componentSelector in componentSelectors)
-        {
-            ConnectSelector(componentSelector);
-        }
+        
+        ConnectSelector(frontSelector);
+        ConnectSelector(bodySelector);
+        ConnectSelector(propSelector);
+        
 
         ResearchManager.OnResearched.AddListener(selectedRocketManager.LevelUpComponent);
 
@@ -53,10 +54,10 @@ public class ComponentSelectorManager : MonoBehaviour
 
     void OnDisable()
     {
-        foreach (var componentSelector in componentSelectors)
-        {
-            DisconnectSelector(componentSelector);
-        }
+
+        DisconnectSelector(frontSelector);
+        DisconnectSelector(bodySelector);
+        DisconnectSelector(propSelector);
 
         ResearchManager.OnResearched.RemoveListener(selectedRocketManager.LevelUpComponent);
 
@@ -89,17 +90,20 @@ public class ComponentSelectorManager : MonoBehaviour
     {
         for (int i = 0; i < selectedRocketManager.rockets.Length; i++)
         {
-            if (componentSelectors[0].GetCurrentSelectionPrefab(out GameObject frontPrefab))
+            GameObject frontPrefab = frontSelector.GetCurrentSelectionPrefab(out bool frontUnlocked);
+            if (frontUnlocked)
             {
                 selectedRocketManager.ChangeComponent(i, RocketComponentType.FRONT, frontPrefab, true);
             }
-            if (componentSelectors[1].GetCurrentSelectionPrefab(out GameObject body))
+            GameObject bodyPrefab = bodySelector.GetCurrentSelectionPrefab(out bool bodyUnlocked);
+            if (bodyUnlocked)
             {
-                selectedRocketManager.ChangeComponent(i, RocketComponentType.BODY, body, true);
+                selectedRocketManager.ChangeComponent(i, RocketComponentType.BODY, bodyPrefab, true);
             }
-            if (componentSelectors[2].GetCurrentSelectionPrefab(out GameObject prop))
+            GameObject propPrefab = propSelector.GetCurrentSelectionPrefab(out bool propUnlocked);
+            if (propUnlocked)
             {
-                selectedRocketManager.ChangeComponent(i, RocketComponentType.PROPULSION, prop, true);
+                selectedRocketManager.ChangeComponent(i, RocketComponentType.PROPULSION, propPrefab, true);
             }
         }
     }

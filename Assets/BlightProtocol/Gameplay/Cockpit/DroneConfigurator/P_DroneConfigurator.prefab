@@ -1073,10 +1073,9 @@ MonoBehaviour:
   droneConfigurator: {fileID: 6052216447555843161}
   selectedRocketManager: {fileID: 2319508120963644126}
   applyToAllButton: {fileID: 3076248148868766798}
-  componentSelectors:
-  - {fileID: 7971184011311927509}
-  - {fileID: 644363841582015450}
-  - {fileID: 1034556837033301862}
+  frontSelector: {fileID: 7971184011311927509}
+  bodySelector: {fileID: 644363841582015450}
+  propSelector: {fileID: 1034556837033301862}
   researchManagers:
   - {fileID: 5077996388166428343}
   - {fileID: 3193620996577474495}
@@ -1880,18 +1879,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ed9126a4737ab2547877a3b2ee1bc3c4, type: 3}
---- !u!114 &438447006105457778 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 49503197237842683, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 484827315355010697}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!224 &2162592875252357140 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1781561904751271581, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
@@ -2221,11 +2208,6 @@ PrefabInstance:
       propertyPath: researchCostCrystalText
       value: 
       objectReference: {fileID: 4222148374913267550}
-    - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
-        type: 3}
-      propertyPath: researchCostComponentText
-      value: 
-      objectReference: {fileID: 5196080356904975668}
     - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
         type: 3}
       propertyPath: researchResultDescriptionText
@@ -2693,18 +2675,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 4508375434433069257}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4485349347074019890 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 49503197237842683, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 4508375434433069257}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &5529034310291986520 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8226920911087704209, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
@@ -2842,6 +2812,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5173258803198988954, guid: ccdb8a7246d24744ea21d16b3a0d4bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2890,11 +2865,6 @@ PrefabInstance:
       propertyPath: researchCostCrystalText
       value: 
       objectReference: {fileID: 5529034310291986520}
-    - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
-        type: 3}
-      propertyPath: researchCostComponentText
-      value: 
-      objectReference: {fileID: 4485349347074019890}
     - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
         type: 3}
       propertyPath: researchResultDescriptionText
@@ -3116,18 +3086,6 @@ MonoBehaviour:
 --- !u!114 &4222148374913267550 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8226920911087704209, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
-    type: 3}
-  m_PrefabInstance: {fileID: 5238796223748452303}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &5196080356904975668 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 49503197237842683, guid: ed9126a4737ab2547877a3b2ee1bc3c4,
     type: 3}
   m_PrefabInstance: {fileID: 5238796223748452303}
   m_PrefabAsset: {fileID: 0}
@@ -3466,6 +3424,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5173258803198988954, guid: ccdb8a7246d24744ea21d16b3a0d4bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3613,6 +3576,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5173258803198988954, guid: ccdb8a7246d24744ea21d16b3a0d4bb3,
+        type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3879,11 +3847,6 @@ PrefabInstance:
       propertyPath: researchCostCrystalText
       value: 
       objectReference: {fileID: 8399660964684357144}
-    - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
-        type: 3}
-      propertyPath: researchCostComponentText
-      value: 
-      objectReference: {fileID: 438447006105457778}
     - target: {fileID: 68066841978428060, guid: e9cc41fa278592c4598158184f0f0859,
         type: 3}
       propertyPath: researchResultDescriptionText
