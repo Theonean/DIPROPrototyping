@@ -11,7 +11,6 @@ public class ResearchManager : MonoBehaviour
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI researchCostCrystalText;
-    [SerializeField] private TextMeshProUGUI researchCostComponentText;
     [SerializeField] private TextMeshProUGUI researchResultDescriptionText;
 
     void OnEnable()
@@ -30,9 +29,8 @@ public class ResearchManager : MonoBehaviour
         OnResearched.Invoke(componentType);
     }
 
-    public void SetText(string crystal, string component, string description) {
+    public void SetText(string crystal, string description) {
         researchCostCrystalText.text = crystal;
-        researchCostComponentText.text = component;
         researchResultDescriptionText.text = description;
     }
 }

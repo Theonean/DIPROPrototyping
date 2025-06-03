@@ -23,8 +23,9 @@ public abstract class ACRocketComponent : MonoBehaviour
         }
     }
     public int componentLevel { get; private set; } = 0;
-    private int[] researchCostCrystal = { 20, 30, 40, 50 };
-    private int[] researchCostComponent = { 5, 10, 15, 20 };
+
+    [SerializeField] private int unlockCostCrystal = 50;
+    [SerializeField] private int[] researchCostCrystal = { 20, 30, 40, 50 };
     protected int maxComponentLevel = 5;
     public string DescriptiveName;
     public string componentDescription = "Description here please uwu";
@@ -92,13 +93,16 @@ public abstract class ACRocketComponent : MonoBehaviour
     /// 
     /// </summary>
     /// <returns>returns the cost to upgrade at current level (CRYSTAL, COMPONENT)</returns>
-    public (int, int) GetResearchCost()
+    public int GetResearchCost()
     {
-        return (researchCostCrystal[componentLevel], researchCostComponent[componentLevel]);
+        if(componentLevel == 0) return unlockCostCrystal;
+        else return researchCostCrystal[componentLevel - 1];
     }
-    public (int, int) GetResearchCost(int customLevel)
+    public int GetResearchCost(int customLevel)
     {
-        return (researchCostCrystal[customLevel], researchCostComponent[customLevel]);
+        if (customLevel == 0) return unlockCostCrystal;
+        else if (customLevel <= maxComponentLevel) return researchCostCrystal[customLevel - 1];
+        else return -1;
     }
 
     /// <summary>

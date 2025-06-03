@@ -187,14 +187,18 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         }
 
         //First validate if we have enough resources for an upgrade
-        (int, int) researchCosts = rocketComponent.GetResearchCost();
+        int researchCosts = rocketComponent.GetResearchCost();
         string componentName = rocketComponent.DescriptiveName;
 
-        if (ItemManager.Instance.GetCrystal() >= researchCosts.Item1
-            && ItemManager.Instance.GetComponentAmount(componentName) >= researchCosts.Item2)
+        if (ItemManager.Instance.GetCrystal() >= researchCosts)
         {
-            ItemManager.Instance.RemoveCrystal(researchCosts.Item1);
-            ItemManager.Instance.RemoveComponent(componentName, researchCosts.Item2);
+            ComponentEntry entry = ItemManager.Instance.GetComponentEntry(componentName);
+            if(entry.highestLevelUpgraded == 0)
+            {
+                entry.isUnlocked = true;
+            }
+
+            ItemManager.Instance.RemoveCrystal(researchCosts);
             ItemManager.Instance.IncreaseItemLevel(componentName);
 
             rocketComponent.LevelUpComponent();
@@ -214,16 +218,14 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     {
         ResearchManager researchManager = ComponentSelectorManager.Instance.GetResearchManager(componentType);
 
-        (int, int) researchCosts = componentToUpgrade.GetResearchCost(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
+        int researchCosts = componentToUpgrade.GetResearchCost(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
 
         int ownedCrystals = ItemManager.Instance.GetCrystal();
-        int ownedComponents = ItemManager.Instance.GetComponentAmount(componentToUpgrade.DescriptiveName);
 
-        string crystalCostsText = ownedCrystals + " / " + researchCosts.Item1;
-        string componentCostsText = ownedComponents + " / " + researchCosts.Item2;
+        string crystalCostsText = ownedCrystals + " / " + researchCosts;
         string upgradeText = componentToUpgrade.GetResearchDescription(ItemManager.Instance.GetItemLevel(componentToUpgrade.DescriptiveName));
 
-        researchManager.SetText(crystalCostsText, componentCostsText, upgradeText);
+        researchManager.SetText(crystalCostsText, upgradeText);
     }
 
     private void LoadDummyRockets()

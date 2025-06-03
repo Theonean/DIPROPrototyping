@@ -4,8 +4,6 @@ using UnityEngine;
 public class ItemDropper : MonoBehaviour
 {
     public SOItem itemToSpawn; // Prefab of the item  to spawn
-    public SOItem[] itemsToSpawn;
-    public bool spawnSingle = true;
 
     public int numberOfItems = 1; // Number of items to spawn
     public float spawnRadius = 5f; // Radius around the object to spawn items
@@ -26,7 +24,7 @@ public class ItemDropper : MonoBehaviour
 
     private IEnumerator DropItems(int count, float radius)
     {
-        itemToSpawn = spawnSingle ? itemToSpawn : itemsToSpawn[Random.Range(0, itemsToSpawn.Length)];
+
         for (int i = 0; i < count; i++)
         {
             Vector3 randomPosition = transform.position + Random.insideUnitSphere * radius;

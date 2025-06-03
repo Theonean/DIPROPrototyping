@@ -84,6 +84,16 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 7.71
       objectReference: {fileID: 0}
+    - target: {fileID: 7274966822664590839, guid: de268f323e646984db6613327e4fc930,
+        type: 3}
+      propertyPath: itemDropper
+      value: 
+      objectReference: {fileID: 7767520970863535435}
+    - target: {fileID: 7356481558058626197, guid: de268f323e646984db6613327e4fc930,
+        type: 3}
+      propertyPath: numberOfItems
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 8052988391124864695, guid: de268f323e646984db6613327e4fc930,
         type: 3}
       propertyPath: m_Name
@@ -169,6 +179,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 998882309488511454}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &7767520970863535435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7356481558058626197, guid: de268f323e646984db6613327e4fc930,
+    type: 3}
+  m_PrefabInstance: {fileID: 998882309488511454}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d389406ca32f804a95f79c169d5c8b8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3226013442885865167
 PrefabInstance:
   m_ObjectHideFlags: 0

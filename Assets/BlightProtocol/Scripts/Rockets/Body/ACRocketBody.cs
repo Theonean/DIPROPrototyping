@@ -60,7 +60,11 @@ public abstract class ACRocketBody : ACRocketComponent
 
     public override string GetResearchDescription()
     {
-        if (componentLevel == maxComponentLevel)
+        if(componentLevel == 0)
+        {
+            return "Unlock component";
+        }
+        else if (componentLevel == maxComponentLevel)
         {
             return upgradeDescription + " " + explosionRadius;
         }
@@ -71,7 +75,11 @@ public abstract class ACRocketBody : ACRocketComponent
     }
     public override string GetResearchDescription(int customLevel)
     {
-        if (customLevel == maxComponentLevel)
+        if (componentLevel == 0)
+        {
+            return "Unlock component";
+        }
+        else if (customLevel == maxComponentLevel)
         {
             return upgradeDescription + " " + explosionRadiusPerLevel[customLevel];
         }

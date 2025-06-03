@@ -10,6 +10,10 @@ public class EnemyHiveManager : MonoBehaviour
     [Header("Enemy settings")]
     [SerializeField] private EnemySpawner[] enemySpawners;
     [SerializeField] private int maxEnemies = 10;
+
+    [Header("ItemDropper")]
+    [SerializeField] ItemDropper itemDropper;
+
     private int spawnedEnemies = 0;
     private bool harvesterInRange = false;
     private bool hasEnemiesLeft = true;
@@ -57,8 +61,7 @@ public class EnemyHiveManager : MonoBehaviour
 
     public void DestroySpawner()
     {
-        // Destroy the spawner game object
-        Destroy(gameObject);
+        itemDropper.DropItems();
     }
 
     public void HarvesterEnteredRange()

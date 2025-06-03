@@ -479,10 +479,6 @@ public class TutorialManager : MonoBehaviour
         foreach (ACEnemyMovementBehaviour enemy in resourcePointSpawner.spawnedEnemies)
         {
             enemy.StopMovement();
-            ItemDropper itemDropper = enemy.GetComponent<ItemDropper>();
-            itemDropper.itemToSpawn = componentDroppedByEnemies;
-            itemDropper.numberOfItems = 1;
-            itemDropper.spawnSingle = true;
 
             enemy.GetComponentInChildren<EnemyDamageHandler>().enemyDestroyed.AddListener(() => 
             { 
