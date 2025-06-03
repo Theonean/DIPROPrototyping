@@ -13,7 +13,10 @@ public class FrankenGameManager : MonoBehaviour
     }
 
     public static FrankenGameManager Instance { get; private set; }
-    public GameObject controlZone;
+    [Header("DEBUG SETTINGS")]
+    public bool DevMode = false;
+
+    [Header("GAME SETTINGS")]
     public GameState m_GameState = GameState.HARVESTER_MOVING;
     
     public bool startWithTutorial = false;
@@ -33,6 +36,11 @@ public class FrankenGameManager : MonoBehaviour
         }
 
         DontDestroyOnLoad(gameObject);
+        
+        if(DevMode)
+        {
+            Debug.LogAssertion("Dev Mode is enabled, gameplay will differ from standard gameplay experience");
+        }
     }
 
     private void Update()

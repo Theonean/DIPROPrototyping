@@ -97,22 +97,30 @@ public class WaveManager : MonoBehaviour
                 }
                 break;
         }
-    
 
-        /*if (Input.GetKeyDown(KeyCode.UpArrow))
+
+        if (FrankenGameManager.Instance.DevMode)
         {
-            difficultyLevel++;
-            Logger.Log("Increased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            difficultyLevel--;
-            if (difficultyLevel < 0)
+            if (Input.GetKeyDown(KeyCode.UpArrow))
             {
-                difficultyLevel = 0;
+                difficultyLevel++;
+                Logger.Log("Increased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
             }
-            Logger.Log("Decreased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
-        }*/
+            else if (Input.GetKeyDown(KeyCode.DownArrow))
+            {
+                difficultyLevel--;
+                if (difficultyLevel < 0)
+                {
+                    difficultyLevel = 0;
+                }
+                Logger.Log("Decreased difficulty level to " + difficultyLevel, LogLevel.FORCE, LogType.WAVEMANAGEMENT);
+
+            }
+            else if(Input.GetKeyDown(KeyCode.E))
+            {
+                TriggerRandomAmbush();
+            }
+        }
     }
 
     public GameObject GetRandomEnemyPrefab()

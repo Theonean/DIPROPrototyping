@@ -109,11 +109,14 @@ public class PerspectiveSwitcher : MonoBehaviour
                 PlayerCore.Instance.transform.position = spawnPosition;
                 SetPerspective(CameraPerspective.DRONE);
             }
-
             // Right‐click: go straight into FPV
             else if (Input.GetMouseButtonDown(1))
             {
                 SetPerspective(CameraPerspective.FPV);
+            }
+            else
+            {
+                PlayerCore.Instance.transform.position = Harvester.Instance.transform.position;
             }
         }
     }
