@@ -44,6 +44,7 @@ public class TutorialManager : MonoBehaviour
 
     public GameObject TutorialMissionGroup;
     public TextMeshProUGUI tutorialText;
+    public GameObject tutorialTextTemplate;
     private TextMeshProUGUI currentTutorialText;
 
     public GameObject droneStartPosition;
@@ -86,14 +87,14 @@ public class TutorialManager : MonoBehaviour
 
     private void Start()
     {
-        if(FrankenGameManager.Instance.startWithTutorial)
+        if (FrankenGameManager.Instance.startWithTutorial)
         {
             StartTutorial();
         }
         else
         {
             TUTORIAL_EXIT.CloseSegmentDoor();
-            tutorialText.enabled = false;
+            TutorialMissionGroup.SetActive(false);
         }
     }
 
@@ -118,7 +119,7 @@ public class TutorialManager : MonoBehaviour
         ResourcePointTargetPosition.SetActive(false);
         CheckPointTargetPosition.SetActive(false);
 
-        tutorialText.text = "SECTION: MOVEMENT";
+        tutorialText.text = "MOVEMENT";
 
         PlayerCore.Instance.transform.position = new Vector3(droneStartPosition.transform.position.x, DroneMovement.Instance.distanceFromGround, droneStartPosition.transform.position.z);
 
@@ -143,7 +144,7 @@ public class TutorialManager : MonoBehaviour
     private void CreateNewcurrentTutorialText(TutorialProgress forTutorialPart)
     {
         if (currentTutorialText == null)
-            currentTutorialText = Instantiate(TutorialMissionGroup.transform.GetChild(0), Vector3.zero, Quaternion.identity, TutorialMissionGroup.transform).GetComponent<TextMeshProUGUI>();
+            currentTutorialText = Instantiate(tutorialTextTemplate, Vector3.zero, Quaternion.identity, TutorialMissionGroup.transform).GetComponent<TextMeshProUGUI>();
 
         switch(forTutorialPart)
         {
@@ -172,19 +173,19 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Move into Exit zone";
                 break;
             case TutorialProgress.SETFIRSTMAPPOINT:
-                currentTutorialText.text = "[ ] Set a waypoint on the map";
+                currentTutorialText.text = "[ ] Set a waypoint by clicking on the map";
                 break;
             case TutorialProgress.SETSPEED:
-                currentTutorialText.text = "[ ] Start driving";
+                currentTutorialText.text = "[ ] Start driving by increasing the throttle";
                 break;
             case TutorialProgress.WAITFORARRIVEATFIRSTPOINT:
                 currentTutorialText.text = "[ ] Enjoy the scenery";
                 break;
             case TutorialProgress.USEFIRSTTIMEPULSE:
-                currentTutorialText.text = "[ ] Use radar button";
+                currentTutorialText.text = "[ ] Use radar button to reveal closeby gas deposits";
                 break;
             case TutorialProgress.SETDESTINATIONTORESOURCEPOINT:
-                currentTutorialText.text = "[ ] Set map waypoint to gas deposit";
+                currentTutorialText.text = "[ ] Set map waypoint to gas deposit by clicking on the symbol on the map";
                 break;
             case TutorialProgress.SETSPEEDRESOURCEPOINT:
                 currentTutorialText.text = "[ ] Start driving";
@@ -217,7 +218,7 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] upgrade your direct line propulsion";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
-                currentTutorialText.text = "[ ] Drive to the white balloon (save-point) to complete the tutorial";
+                currentTutorialText.text = "[ ] Drive to the white balloon (checkpoint) to complete the tutorial";
                 break;
             default:
                 currentTutorialText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
@@ -274,18 +275,18 @@ public class TutorialManager : MonoBehaviour
             case TutorialProgress.DASH:
                 MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
                 WASDTargetPosition.SetActive(false);
-                tutorialText.text = "SECTION: COMBAT";
+                tutorialText.text = "COMBAT";
                 break;
             case TutorialProgress.RETRACTROCKET:
                 MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
                 ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
                 SetMapTargetPosition.SetActive(true);
-                tutorialText.text = "SECTION: NAVIGATION";
+                tutorialText.text = "NAVIGATION";
                 break;
             case TutorialProgress.SETSPEED:
                 ROCKET_SEGMENT_EXIT.CloseSegmentDoor();
                 NAVIGATION_SEGMENT_EXIT.OpenSegmentDoor();
-                tutorialText.text = "SECTION: RESOURCES";
+                tutorialText.text = "RESOURCES";
                 break;
             case TutorialProgress.USEFIRSTTIMEPULSE:
                 NAVIGATION_SEGMENT_EXIT.CloseSegmentDoor();
@@ -294,14 +295,14 @@ public class TutorialManager : MonoBehaviour
                 ResourcePointTargetPosition.SetActive(true);
                 break;
             case TutorialProgress.FIGHT:
-                tutorialText.text = "SECTION: CONFIGURATION";
+                tutorialText.text = "CONFIGURATION";
                 break;
             case TutorialProgress.UPGRADENEWCOMPONENT:
                 PULSE_SEGMENT_EXIT.CloseSegmentDoor();
                 TUTORIAL_EXIT.OpenSegmentDoor();
                 ResourcePointTargetPosition.SetActive(false);
                 CheckPointTargetPosition.SetActive(true);
-                tutorialText.text = "SECTION: SPAWNPOINT";
+                tutorialText.text = "SPAWNPOINT";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
                 TUTORIAL_EXIT.CloseSegmentDoor();
