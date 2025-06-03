@@ -111,6 +111,11 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  rockets:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   rocketHolders:
   - {fileID: 1751832969174365721}
   - {fileID: 8521697631747126231}
@@ -1069,9 +1074,9 @@ MonoBehaviour:
   selectedRocketManager: {fileID: 2319508120963644126}
   applyToAllButton: {fileID: 3076248148868766798}
   componentSelectors:
-  - {fileID: 1034556837033301862}
-  - {fileID: 644363841582015450}
   - {fileID: 7971184011311927509}
+  - {fileID: 644363841582015450}
+  - {fileID: 1034556837033301862}
   researchManagers:
   - {fileID: 5077996388166428343}
   - {fileID: 3193620996577474495}

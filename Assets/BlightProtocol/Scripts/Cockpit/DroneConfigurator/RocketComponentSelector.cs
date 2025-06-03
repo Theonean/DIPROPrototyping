@@ -107,6 +107,31 @@ public class RocketComponentSelector : MonoBehaviour
         Debug.Log($"Selected {componentType} component: {selectedComponentPrefab?.name}");
     }
 
+    public bool GetCurrentSelectionPrefab(out GameObject selectedComponentPrefab)
+    {
+        ACRocketComponent component = components[index];
+
+
+        selectedComponentPrefab = null;
+        switch (componentType)
+        {
+            case RocketComponentType.PROPULSION:
+                selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketPropulsions
+                    .FirstOrDefault(x => x.GetComponent<ACRocketComponent>() == component);
+                break;
+            case RocketComponentType.BODY:
+                selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketBodies
+                    .FirstOrDefault(x => x.GetComponent<ACRocketComponent>() == component);
+                break;
+            case RocketComponentType.FRONT:
+                selectedComponentPrefab = PlayerCore.Instance.GetComponentInChildren<RocketAimController>().rocketFronts
+                    .FirstOrDefault(x => x.GetComponent<ACRocketComponent>() == component);
+                break;
+        }
+
+        return ItemManager.Instance.GetComponentEntry(component.DescriptiveName).isUnlocked;
+    }
+
     public void ApplyCurrentSelection()
     {
         OnValueChanged(index);

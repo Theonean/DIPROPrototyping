@@ -15,7 +15,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     private bool isRotating;
 
     private int selectedRocketIndex = 0;
-    private Rocket[] rockets = new Rocket[4];
+    public Rocket[] rockets = new Rocket[4];
     [SerializeField] private RocketHolder[] rocketHolders = new RocketHolder[4];
     [SerializeField] private ConfiguratorDummyRocket screenRocket;
     [SerializeField] private ComponentDescriptionDisplayer descriptionDisplayer;
@@ -149,13 +149,16 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             // set dummy rocket
             rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
         }
-        // show lock
-        descriptionDisplayer.ShowLock(componentType, !unlocked);
 
+        if (index == selectedRocketIndex)
+        {
+            // show lock
+            descriptionDisplayer.ShowLock(componentType, !unlocked);
 
-        screenRocket.SetComponent(componentType, dummyObject);
-        UpdateResearchFields(rocketComponent, componentType);
-        UpdateDescription(componentType, rocketComponent);
+            screenRocket.SetComponent(componentType, dummyObject);
+            UpdateResearchFields(rocketComponent, componentType);
+            UpdateDescription(componentType, rocketComponent);
+        }
     }
 
     private void UpdateDescription(RocketComponentType type, ACRocketComponent newComponent)
@@ -165,30 +168,6 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
         screenRocket.SetComponent(type, dummyObject);
-    }
-
-    public void ApplySelectionToAll(Button button)
-    {
-        GameObject selectedFront = rockets[selectedRocketIndex].frontComponent.gameObject;
-        GameObject selectedBody = rockets[selectedRocketIndex].bodyComponent.gameObject;
-        GameObject selectedPropulsion = rockets[selectedRocketIndex].propulsionComponent.gameObject;
-        for (int i = 0; i < rockets.Length; i++)
-        {
-            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].frontComponent.DescriptiveName).isUnlocked)
-            {
-                rockets[i].SetFront(selectedFront);
-            }
-
-            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].bodyComponent.DescriptiveName).isUnlocked)
-            {
-                rockets[i].SetBody(selectedBody);
-            }
-
-            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].propulsionComponent.DescriptiveName).isUnlocked)
-            {
-                rockets[i].SetPropulsion(selectedPropulsion);
-            }
-        }
     }
 
     public void LevelUpComponent(RocketComponentType componentType)

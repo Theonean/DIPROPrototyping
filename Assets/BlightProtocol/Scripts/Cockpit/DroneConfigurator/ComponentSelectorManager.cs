@@ -46,7 +46,7 @@ public class ComponentSelectorManager : MonoBehaviour
 
         droneConfigurator.onModeSwitched.AddListener(OnModeSwitched);
 
-        applyToAllButton.OnPressed.AddListener(selectedRocketManager.ApplySelectionToAll);
+        applyToAllButton.OnPressed.AddListener(ApplySelectionToAll);
 
         showDescriptionButton.OnPressed.AddListener(ToggleDescription);
     }
@@ -62,7 +62,7 @@ public class ComponentSelectorManager : MonoBehaviour
 
         droneConfigurator.onModeSwitched.RemoveListener(OnModeSwitched);
 
-        applyToAllButton.OnPressed.RemoveListener(selectedRocketManager.ApplySelectionToAll);
+        applyToAllButton.OnPressed.RemoveListener(ApplySelectionToAll);
 
         showDescriptionButton.OnPressed.RemoveListener(ToggleDescription);
     }
@@ -83,6 +83,25 @@ public class ComponentSelectorManager : MonoBehaviour
     {
         OnComponentSelectionChanged?.Invoke();
         selectedRocketManager.ChangeActiveRocketSelectedComponent(componentType, componentPrefab, unlocked);
+    }
+
+    private void ApplySelectionToAll(Button button)
+    {
+        for (int i = 0; i < selectedRocketManager.rockets.Length; i++)
+        {
+            if (componentSelectors[0].GetCurrentSelectionPrefab(out GameObject frontPrefab))
+            {
+                selectedRocketManager.ChangeComponent(i, RocketComponentType.FRONT, frontPrefab, true);
+            }
+            if (componentSelectors[1].GetCurrentSelectionPrefab(out GameObject body))
+            {
+                selectedRocketManager.ChangeComponent(i, RocketComponentType.BODY, body, true);
+            }
+            if (componentSelectors[2].GetCurrentSelectionPrefab(out GameObject prop))
+            {
+                selectedRocketManager.ChangeComponent(i, RocketComponentType.PROPULSION, prop, true);
+            }
+        }
     }
 
     public ResearchManager GetResearchManager(RocketComponentType type)
