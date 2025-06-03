@@ -79,10 +79,10 @@ public class ComponentSelectorManager : MonoBehaviour
         selectedRocketManager.rocketSelected.RemoveListener(selector.LoadActiveComponent);
     }
 
-    private void ComponentSelectionChanged(RocketComponentType componentType, GameObject componentPrefab)
+    private void ComponentSelectionChanged(RocketComponentType componentType, GameObject componentPrefab, bool unlocked)
     {
         OnComponentSelectionChanged?.Invoke();
-        selectedRocketManager.ChangeActiveRocketComponent(componentType, componentPrefab);
+        selectedRocketManager.ChangeActiveRocketSelectedComponent(componentType, componentPrefab, unlocked);
     }
 
     public ResearchManager GetResearchManager(RocketComponentType type)

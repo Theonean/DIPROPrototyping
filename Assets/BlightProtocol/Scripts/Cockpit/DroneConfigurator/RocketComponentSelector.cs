@@ -17,7 +17,7 @@ public class RocketComponentSelector : MonoBehaviour
     [SerializeField] private Image componentIcon;
     [SerializeField] private TextMeshProUGUI componentNameText;
 
-    public UnityEvent<RocketComponentType, GameObject> SelectedComponentChanged;
+    public UnityEvent<RocketComponentType, GameObject, bool> SelectedComponentChanged;
     public UnityEvent<RocketComponentType> SelectedComponentApplied;
 
     void Start()
@@ -69,7 +69,7 @@ public class RocketComponentSelector : MonoBehaviour
     private void OnValueChanged(int selectedIndex)
     {
         ACRocketComponent component = components[selectedIndex];
-        Debug.Log(component);
+
 
         GameObject selectedComponentPrefab = null;
         switch (componentType)
@@ -91,7 +91,14 @@ public class RocketComponentSelector : MonoBehaviour
 
         if (selectedComponentPrefab != null)
         {
-            SelectedComponentChanged?.Invoke(componentType, selectedComponentPrefab);
+            if (ItemManager.Instance.GetComponentEntry(component.DescriptiveName).isUnlocked)
+            {
+                SelectedComponentChanged?.Invoke(componentType, selectedComponentPrefab, true);
+            }
+            else
+            {
+                SelectedComponentChanged?.Invoke(componentType, selectedComponentPrefab, false);
+            }
         }
         else
         {

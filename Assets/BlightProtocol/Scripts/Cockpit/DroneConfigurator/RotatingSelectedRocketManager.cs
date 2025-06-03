@@ -68,6 +68,10 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
         UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
         UpdateDescription(RocketComponentType.PROPULSION, selectedRocket.propulsionComponent);
+
+        descriptionDisplayer.ShowLock(RocketComponentType.FRONT, !ItemManager.Instance.GetComponentEntry(selectedRocket.frontComponent.DescriptiveName).isUnlocked);
+        descriptionDisplayer.ShowLock(RocketComponentType.BODY, !ItemManager.Instance.GetComponentEntry(selectedRocket.bodyComponent.DescriptiveName).isUnlocked);
+        descriptionDisplayer.ShowLock(RocketComponentType.PROPULSION, !ItemManager.Instance.GetComponentEntry(selectedRocket.propulsionComponent.DescriptiveName).isUnlocked);
     }
 
     public void RotateBarrel(Button button)
@@ -118,39 +122,47 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         rocketSelected.Invoke(selectedRocket);
     }
 
-    public void ChangeActiveRocketComponent(RocketComponentType componentType, GameObject newComponent)
+    public void ChangeActiveRocketSelectedComponent(RocketComponentType componentType, GameObject newComponent, bool unlocked)
     {
-        ChangeComponent(selectedRocketIndex, componentType, newComponent);
+        ChangeComponent(selectedRocketIndex, componentType, newComponent, unlocked);
     }
 
-    public void ChangeComponent(int index, RocketComponentType componentType, GameObject newComponent)
+    public void ChangeComponent(int index, RocketComponentType componentType, GameObject newComponent, bool unlocked)
     {
         ACRocketComponent rocketComponent = newComponent.GetComponent<ACRocketComponent>();
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
+
+        if (unlocked)
+        {
+            switch (componentType)
+            {
+                case RocketComponentType.FRONT:
+                    rockets[index].SetFront(newComponent);
+                    break;
+                case RocketComponentType.BODY:
+                    rockets[index].SetBody(newComponent);
+                    break;
+                case RocketComponentType.PROPULSION:
+                    rockets[index].SetPropulsion(newComponent);
+                    break;
+            }
+            // set dummy rocket
+            rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
+        }
+        // show lock
+        descriptionDisplayer.ShowLock(componentType, !unlocked);
+
+
+        screenRocket.SetComponent(componentType, dummyObject);
         UpdateResearchFields(rocketComponent, componentType);
         UpdateDescription(componentType, rocketComponent);
-
-        switch (componentType)
-        {
-            case RocketComponentType.FRONT:
-                rockets[index].SetFront(newComponent);
-                break;
-            case RocketComponentType.BODY:
-                rockets[index].SetBody(newComponent);
-                break;
-            case RocketComponentType.PROPULSION:
-                rockets[index].SetPropulsion(newComponent);
-                break;
-        }
-        rocketHolders[index].dummyRocket.SetComponent(componentType, dummyObject);
-        screenRocket.SetComponent(componentType, dummyObject);
     }
 
     private void UpdateDescription(RocketComponentType type, ACRocketComponent newComponent)
     {
         string description = newComponent.componentDescription;
         descriptionDisplayer.SetText(type, description);
-        
+
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
         screenRocket.SetComponent(type, dummyObject);
     }
@@ -162,9 +174,20 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         GameObject selectedPropulsion = rockets[selectedRocketIndex].propulsionComponent.gameObject;
         for (int i = 0; i < rockets.Length; i++)
         {
-            ChangeComponent(i, RocketComponentType.FRONT, selectedFront);
-            ChangeComponent(i, RocketComponentType.BODY, selectedBody);
-            ChangeComponent(i, RocketComponentType.PROPULSION, selectedPropulsion);
+            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].frontComponent.DescriptiveName).isUnlocked)
+            {
+                rockets[i].SetFront(selectedFront);
+            }
+
+            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].bodyComponent.DescriptiveName).isUnlocked)
+            {
+                rockets[i].SetBody(selectedBody);
+            }
+
+            if (ItemManager.Instance.GetComponentEntry(rockets[selectedRocketIndex].propulsionComponent.DescriptiveName).isUnlocked)
+            {
+                rockets[i].SetPropulsion(selectedPropulsion);
+            }
         }
     }
 

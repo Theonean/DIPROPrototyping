@@ -165,7 +165,7 @@ public class ItemManager : MonoBehaviour
         return entry != null;
     }
 
-    private ComponentEntry GetComponentEntry(string componentName)
+    public ComponentEntry GetComponentEntry(string componentName)
     {
         ComponentEntry entry = components.Where(Component => Component.name == componentName).FirstOrDefault();
         if (entry == null)
