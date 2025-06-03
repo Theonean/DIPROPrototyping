@@ -58,7 +58,6 @@ public class RocketComponentSelector : MonoBehaviour
     public void Scroll(int direction)
     {
         index += direction;
-        Debug.Log(index + " " + direction);
         if (index > maxValue) index = 0;
         else if (index < 0) index = maxValue;
 
@@ -107,12 +106,11 @@ public class RocketComponentSelector : MonoBehaviour
         Debug.Log($"Selected {componentType} component: {selectedComponentPrefab?.name}");
     }
 
-    public bool GetCurrentSelectionPrefab(out GameObject selectedComponentPrefab)
+    public GameObject GetCurrentSelectionPrefab(out bool isUnlocked)
     {
         ACRocketComponent component = components[index];
 
-
-        selectedComponentPrefab = null;
+        GameObject selectedComponentPrefab = null;
         switch (componentType)
         {
             case RocketComponentType.PROPULSION:
@@ -129,7 +127,9 @@ public class RocketComponentSelector : MonoBehaviour
                 break;
         }
 
-        return ItemManager.Instance.GetComponentEntry(component.DescriptiveName).isUnlocked;
+        isUnlocked = ItemManager.Instance.GetComponentEntry(component.DescriptiveName).isUnlocked;
+
+        return selectedComponentPrefab;
     }
 
     public void ApplyCurrentSelection()
