@@ -29,9 +29,17 @@ public class ItemManager : MonoBehaviour
             Instance = this;
         }
 
-        components.Add(new ComponentEntry("BouncingFront"));
-        components.Add(new ComponentEntry("ExplosiveBody"));
-        components.Add(new ComponentEntry("DirectlinePropulsion"));
+        components.Add(new ComponentEntry("BouncingFront", true));
+        components.Add(new ComponentEntry("ExplosiveBody", true));
+        components.Add(new ComponentEntry("DirectlinePropulsion", true));
+
+        components.Add(new ComponentEntry("ShrapnelshotFront"));
+        components.Add(new ComponentEntry("ImplosionBody"));
+        components.Add(new ComponentEntry("ArcingPropulsion"));
+
+        components.Add(new ComponentEntry("PenetrativeFront"));
+        components.Add(new ComponentEntry("ElectricityBody"));
+        components.Add(new ComponentEntry("BoomerangPropulsion"));
     }
 
     private void Update()
@@ -202,11 +210,13 @@ public class ComponentEntry
     public string name;
     public int amountHeld;
     public int highestLevelUpgraded;
+    public bool isUnlocked;
 
-    public ComponentEntry(string name)
+    public ComponentEntry(string name, bool unlockedFromStart = false)
     {
         this.name = name;
         amountHeld = 0;
         highestLevelUpgraded = 0;
+        isUnlocked = unlockedFromStart;
     }
 }
