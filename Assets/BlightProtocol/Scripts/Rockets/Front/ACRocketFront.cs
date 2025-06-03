@@ -108,7 +108,7 @@ public abstract class ACRocketFront : ACRocketComponent
         {
             return "Unlock component";
         }
-        else if (customLevel == maxComponentLevel)
+        else if (customLevel == maxComponentLevel - 1)
         {
             return upgradeDescription + " " + abilityUsesPerLevel[customLevel];
         }

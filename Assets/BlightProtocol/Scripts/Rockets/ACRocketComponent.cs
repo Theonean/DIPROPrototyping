@@ -26,7 +26,7 @@ public abstract class ACRocketComponent : MonoBehaviour
 
     [SerializeField] private int unlockCostCrystal = 50;
     [SerializeField] private int[] researchCostCrystal = { 20, 30, 40, 50 };
-    protected int maxComponentLevel = 5;
+    public int maxComponentLevel { get; private set; } = 5;
     public string DescriptiveName;
     public string componentDescription = "Description here please uwu";
     public string upgradeDescription;

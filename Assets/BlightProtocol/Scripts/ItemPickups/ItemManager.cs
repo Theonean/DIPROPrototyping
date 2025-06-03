@@ -216,7 +216,7 @@ public class ComponentEntry
     {
         this.name = name;
         amountHeld = 0;
-        highestLevelUpgraded = 0;
         isUnlocked = unlockedFromStart;
+        highestLevelUpgraded = unlockedFromStart ? 1 : 0;
     }
 }
