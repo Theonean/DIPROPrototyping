@@ -191,6 +191,7 @@ public class RocketAimController : MonoBehaviour
             outOfLegsGroup.alpha = outOfLegsFlashCurve.Evaluate(t / outOfLegsFlashDuration);
             yield return null;
         }
+        outOfLegsGroup.alpha = 0;
     }
 
     private void HandleRocketScrollInput()

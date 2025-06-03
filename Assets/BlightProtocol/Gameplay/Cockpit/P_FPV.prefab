@@ -1439,6 +1439,9 @@ MonoBehaviour:
   frontInfo: {fileID: 0}
   bodyInfo: {fileID: 0}
   propInfo: {fileID: 0}
+  frontLock: {fileID: 0}
+  bodyLock: {fileID: 0}
+  propLock: {fileID: 0}
 --- !u!1001 &2902596620176446803
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2301,7 +2304,7 @@ PrefabInstance:
     - target: {fileID: 3626476725963130399, guid: 3bdd1785eb6b0074b988eb0290704bda,
         type: 3}
       propertyPath: speedSteps.Array.data[1].speed
-      value: 20
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3626476725963130399, guid: 3bdd1785eb6b0074b988eb0290704bda,
         type: 3}

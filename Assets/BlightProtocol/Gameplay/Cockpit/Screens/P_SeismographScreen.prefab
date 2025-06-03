@@ -187,6 +187,9 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -216,7 +219,7 @@ LineRenderer:
   - {x: 509.75, y: 59.11, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 200
+    widthMultiplier: 300
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -234,8 +237,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0, g: 0, b: 0, a: 1}
-      key1: {r: 0, g: 0, b: 0, a: 1}
+      key0: {r: 0.9058824, g: 0.5176471, b: 0.3529412, a: 1}
+      key1: {r: 0.278, g: 0.15838246, b: 0.10854182, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -259,7 +262,7 @@ LineRenderer:
       atime6: 0
       atime7: 0
       m_Mode: 0
-      m_ColorSpace: -1
+      m_ColorSpace: 0
       m_NumColorKeys: 2
       m_NumAlphaKeys: 2
     numCornerVertices: 0
@@ -326,6 +329,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9174b90d3a36db44da9fa65042472251, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  displayText: {fileID: 0}
   feedbackImage: {fileID: 0}
   flashCurve:
     serializedVersion: 2
@@ -334,16 +338,15 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   flashDuration: 0.5
-  maxVibration: 20
+  maxVibration: 12
   adjustDuration: 0.5
   lineRenderer: {fileID: 2904916796394887659}
   boundsStart: {fileID: 7667905334250144206}
   boundsEnd: {fileID: 6038335579160168160}
-  pointAmount: 100
-  vibrationFrequency: 80
-  overlay1Frequency: 30
+  pointAmount: 50
+  vibrationFrequency: 50
+  overlay1Frequency: 20
   noiseFrequency: 2
-  background: {fileID: 3092026179531659672}
   triangle: {fileID: 4587416953195219365}
 --- !u!1 &8139146221415716297
 GameObject:
@@ -362,7 +365,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7712674700982185792
 RectTransform:
   m_ObjectHideFlags: 0

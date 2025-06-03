@@ -100,7 +100,7 @@ public class ComponentSelectorManager : MonoBehaviour
 
     private void ToggleDescription(Button button = null)
     {
-        descriptionDisplayer.gameObject.SetActive(!descriptionVisible);
+        descriptionDisplayer.ShowText(!descriptionVisible);
         screenDummyRocket.gameObject.SetActive(descriptionVisible);
         descriptionVisible = !descriptionVisible;
     }

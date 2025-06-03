@@ -21,7 +21,6 @@ public class SeismographVisualizer : ACScreenValueDisplayer
     [SerializeField] private float noiseFrequency = 2f;
 
     [Header("Color")]
-    [SerializeField] private Image background;
     [SerializeField] private Image triangle;
 
     private float width;
@@ -34,6 +33,8 @@ public class SeismographVisualizer : ACScreenValueDisplayer
         InitializeSeismograph();
         UpdateValue(Seismograph.Instance.GetTotalVibration());
         Seismograph.Instance.vibrationChanged.AddListener(OnVibrationChanged);
+        int dangerLevel = Seismograph.Instance.GetCurrentDangerLevel();
+        lineRenderer.material.SetColor("_BaseColor", Seismograph.Instance.vibrationDangerLevels[dangerLevel].color);
     }
 
     private void InitializeSeismograph()
@@ -75,8 +76,9 @@ public class SeismographVisualizer : ACScreenValueDisplayer
         StartCoroutine(AdjustVibrationOverTime(adjustDuration));
 
         int dangerLevel = Seismograph.Instance.GetCurrentDangerLevel();
-        background.color = Seismograph.Instance.vibrationDangerLevels[dangerLevel].color;
-        triangle.color = Seismograph.Instance.vibrationDangerLevels[dangerLevel].color;
+        Color newColor = Seismograph.Instance.vibrationDangerLevels[dangerLevel].color;
+        triangle.color = newColor;
+        lineRenderer.material.SetColor("_BaseColor", newColor);
     }
 
     protected override void UpdateValue(float targetValue)
