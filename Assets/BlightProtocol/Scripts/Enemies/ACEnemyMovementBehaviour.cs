@@ -35,8 +35,8 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
     protected GameObject target;
 
     void Awake()
-    {
-        // 1) Overlap‐check: if we’re already inside some non‐ground collider, self‐destruct
+    { 
+        //Overlap‐check: if we’re already inside some non‐ground collider, self‐destruct
         const float overlapRadius = 0.1f;
         Collider[] overlaps = Physics.OverlapSphere(transform.position, overlapRadius, environmentLayer);
         foreach (var col in overlaps)
@@ -52,6 +52,19 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         harvester = Harvester.Instance;
         navMeshAgent = GetComponent<NavMeshAgent>();
         SetSpeed(moveSpeed);
+    }
+
+    private void Start()
+    {
+        // Check if a complete path exists to that destination
+        Vector3 destination = harvester.transform.position;
+        NavMeshPath path = new NavMeshPath();
+        bool pathFound = navMeshAgent.CalculatePath(destination, path);
+        if (!pathFound || path.status != NavMeshPathStatus.PathComplete)
+        {
+            Destroy(gameObject);
+            return;
+        }
     }
 
     protected void Update()
