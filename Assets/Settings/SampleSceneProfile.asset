@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b2db86121404754db890f4c8dfe81b2, type: 3}
   m_Name: Bloom
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   skipIterations:
     m_OverrideState: 0
     m_Value: 1
   threshold:
     m_OverrideState: 1
-    m_Value: 1.21
+    m_Value: 1.3
   intensity:
     m_OverrideState: 1
-    m_Value: 2.5
+    m_Value: 1
   scatter:
     m_OverrideState: 0
     m_Value: 0.569
@@ -29,8 +29,8 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 65472
   tint:
-    m_OverrideState: 0
-    m_Value: {r: 1, g: 1, b: 1, a: 1}
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 0.850695, b: 0.8066038, a: 1}
   highQualityFiltering:
     m_OverrideState: 0
     m_Value: 0
@@ -59,16 +59,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01700fd266d6914ababb731e09af2eb, type: 3}
   m_Name: DepthOfField
   m_EditorClassIdentifier: 
-  active: 0
+  active: 1
   mode:
     m_OverrideState: 1
     m_Value: 1
   gaussianStart:
     m_OverrideState: 1
-    m_Value: 200
+    m_Value: 800
   gaussianEnd:
     m_OverrideState: 1
-    m_Value: 300
+    m_Value: 1000
   gaussianMaxRadius:
     m_OverrideState: 1
     m_Value: 0.5
@@ -132,6 +132,7 @@ MonoBehaviour:
   - {fileID: 3362214979651628687}
   - {fileID: -415786326579986784}
   - {fileID: -4124313359114462800}
+  - {fileID: 8431428939072797996}
 --- !u!114 &3362214979651628687
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -366,3 +367,23 @@ MonoBehaviour:
         m_PreInfinity: 2
         m_PostInfinity: 2
         m_RotationOrder: 4
+--- !u!114 &8431428939072797996
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e021b4c809a781e468c2988c016ebbea, type: 3}
+  m_Name: ColorLookup
+  m_EditorClassIdentifier: 
+  active: 1
+  texture:
+    m_OverrideState: 0
+    m_Value: {fileID: 0}
+    dimension: 1
+  contribution:
+    m_OverrideState: 0
+    m_Value: 0

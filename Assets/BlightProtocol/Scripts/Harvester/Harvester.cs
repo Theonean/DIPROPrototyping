@@ -133,14 +133,14 @@ public class Harvester : MonoBehaviour
     {
         if (activeResourcePoint != null && activeResourcePoint.resourceAmount <= 0f)
         {
-            Destroy(activeResourcePoint.gameObject);
+            activeResourcePoint.FinishHarvest();
             activeResourcePoint = null;
         }
         drillingVFX.Stop();
         StartCoroutine(ReduceWaveTimerOverTimeIDontKnowHowToNameThis(1f));
     }
     public bool HasCompletedHarvest() => harvestingTimer >= timeUntilResourcePointEmpty;
-    public bool HasArrivedAtTarget() => Vector3.Distance(transform.position, mover.targetPosObject.transform.position) < 0.5f;
+    public bool HasArrivedAtTarget() => Vector3.Distance(new(transform.position.x, 0, transform.position.z), new(mover.targetPosObject.transform.position.x, 0, mover.targetPosObject.transform.position.z)) < 5f;
 
     IEnumerator ReduceWaveTimerOverTimeIDontKnowHowToNameThis(float time)
     {

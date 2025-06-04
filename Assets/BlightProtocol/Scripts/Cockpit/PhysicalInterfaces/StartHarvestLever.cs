@@ -22,7 +22,7 @@ public class StartHarvestLever : ACLever
     }
 
     protected void Update() {
-        if (elapsedTime >= checkForResourcePointInterval) {
+        /*if (elapsedTime >= checkForResourcePointInterval) {
             if (GetClosestResourcePoint() != null) {
                 isOnResourcePoint = true;
                 isOnResourcePointImage.color = onRPColor;
@@ -31,7 +31,7 @@ public class StartHarvestLever : ACLever
                 isOnResourcePoint = false;
                 isOnResourcePointImage.color = offRPColor;
             }
-        }
+        }*/
     }
 
     protected void OnEnable()
