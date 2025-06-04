@@ -7,6 +7,9 @@ public class ResourcePoint : MonoBehaviour
     private float gasHarvested = 0f;
 
     [SerializeField] private VisualEffect[] smokeVFX;
+    [SerializeField] private GameObject glowingPlane;
+    [SerializeField] private EnergySignature energySignature;
+    [SerializeField] private Collider _collider;
 
     public bool HarvestResource(float amount)
     {
@@ -32,5 +35,16 @@ public class ResourcePoint : MonoBehaviour
         }
 
         return true;
+    }
+
+    public void FinishHarvest()
+    {
+        glowingPlane.SetActive(false);
+        if (energySignature != null)
+        {
+            Destroy(energySignature.gameObject);
+        }
+        _collider.enabled = false;
+        enabled = false;
     }
 }

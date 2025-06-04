@@ -28,7 +28,7 @@ public class HarvesterMover : MonoBehaviour
         {
             navMeshAgent.angularSpeed = Mathf.Lerp(0, maxAngularRotationSpeed, navMeshAgent.velocity.magnitude / moveSpeed);
             DrawLineToTarget();
-            if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+            if (harvester.HasArrivedAtTarget())
             {
                 isMoving = false;
                 navMeshAgent.isStopped = true;
@@ -90,6 +90,10 @@ public class HarvesterMover : MonoBehaviour
         if (harvester.GetZoneState() == HarvesterState.DIED || harvester.GetZoneState() == HarvesterState.END_HARVESTING) return;
         moveSpeed = newSpeed;
         navMeshAgent.speed = moveSpeed;
+        if (moveSpeed < 0.1f)
+        {
+            isMoving = false;
+        }
     }
 
     void DrawLineToTarget()
