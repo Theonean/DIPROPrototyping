@@ -10,19 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R4_AmbushPoint
+  m_Name: SO_R2_ResourcePointM1
   m_EditorClassIdentifier: 
   worldEntityPrefabs:
-  - {fileID: 7640250503402135300, guid: c3dd710e4bdd4f34a9a861d045fe5f52, type: 3}
-  numEntities: 3
+  - {fileID: 4249527825523963752, guid: 5a56ee59ec39f58488c10299b71bf03e, type: 3}
+  numEntities: 2
   spawnStrategy: 2
   customSpawnAreaBoundsX: {x: -500, y: 500}
-  customSpawnAreaBoundsZ: {x: -200, y: 1200}
-  voronoiSiteCount: 3
+  customSpawnAreaBoundsZ: {x: -100, y: 1100}
+  voronoiSiteCount: 4
   siteSpreadRadius: 10
-  siteJitter: 0
+  siteJitter: 0.2
   minRotation: 0
   maxRotation: 360
   scaleVariance: {x: 1, y: 1}
-  boundingRadius: 94.0683
+  boundingRadius: 69.29828
   boundRadiusMargin: 0
