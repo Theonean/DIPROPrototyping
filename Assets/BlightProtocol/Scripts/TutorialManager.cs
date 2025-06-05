@@ -235,6 +235,8 @@ public class TutorialManager : MonoBehaviour
         if (_isTransitioning)
             return;
 
+        IncrementProgress(); // calls CreateNewcurrentTutorialText and sets fontStyle = Normal
+
         StartCoroutine(TransitionTutorialStep());
     }
 
@@ -311,7 +313,8 @@ public class TutorialManager : MonoBehaviour
 
         // 3. advance state & instantiate the new line
         currentTutorialText = null;
-        IncrementProgress(); // calls CreateNewcurrentTutorialText and sets fontStyle = Normal
+
+        CreateNewcurrentTutorialText(progressState);
 
         // 4. scale the new text up from zero
         var newRT = currentTutorialText.rectTransform;
@@ -341,10 +344,6 @@ public class TutorialManager : MonoBehaviour
         if (progressState == TutorialProgress.DONE) 
         {
             tutorialText.enabled = false;
-        }
-        else
-        {
-            CreateNewcurrentTutorialText(progressState);
         }
     }
 
