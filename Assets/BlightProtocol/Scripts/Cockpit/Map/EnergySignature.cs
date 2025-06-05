@@ -5,7 +5,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class EnergySignature : MonoBehaviour
 {
-    public EnergySignatureBaseType baseType;
+    [SerializeField] public GameObject pingPrefab;
     public int eMagnitude;
     public int areaSize;
     public EnergySignatureDisplayer displayer;

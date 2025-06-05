@@ -230,16 +230,16 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1977220602319214955}
-        m_TargetAssemblyTypeName: EnemySpawner, Assembly-CSharp
+        m_TargetAssemblyTypeName: EnemySpawner, BlightProtocol.Runtime
         m_MethodName: SpawnEnemy
-        m_Mode: 1
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 3
           m_FloatArgument: 0
           m_StringArgument: 
-          m_BoolArgument: 0
+          m_BoolArgument: 1
         m_CallState: 2
       - m_Target: {fileID: 3785761657284009069}
         m_TargetAssemblyTypeName: EnergySignature, BlightProtocol.Runtime
@@ -893,6 +893,12 @@ PrefabInstance:
       propertyPath: eMagnitude
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
+        type: 3}
+      propertyPath: pingPrefab
+      value: 
+      objectReference: {fileID: 2225017910341546495, guid: 67e900ce8c0f7bc448943c8ca8446c1c,
+        type: 3}
     - target: {fileID: 5708434429562760145, guid: 05524a7b9e069ea44827e0333e802075,
         type: 3}
       propertyPath: onDestroy.m_PersistentCalls.m_Calls.Array.size

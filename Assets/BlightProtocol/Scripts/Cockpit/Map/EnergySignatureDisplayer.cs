@@ -5,17 +5,14 @@ using UnityEngine;
 
 public class EnergySignatureDisplayer : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> baseSprites;
     [SerializeField] private GameObject areaRing;
 
     public void DisplaySignature(EnergySignature signature)
     {
         signature.onDisable.AddListener(DestroyThis);
         signature.displayer = this;
-
-        GameObject baseSprite = baseSprites.FirstOrDefault(b => b.GetComponent<EnergySignatureBase>().type == signature.baseType);
         
-        GameObject  instantiatedBase = Instantiate(baseSprite, transform);
+        GameObject  instantiatedBase = Instantiate(signature.pingPrefab, transform);
         EnergySignatureBase baseComponent = instantiatedBase.GetComponent<EnergySignatureBase>();
 
         if (signature.eMagnitude > 0)
