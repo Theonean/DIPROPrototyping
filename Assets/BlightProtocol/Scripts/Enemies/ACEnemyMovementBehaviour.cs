@@ -36,19 +36,6 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
 
     void Awake()
     { 
-        //Overlap‐check: if we’re already inside some non‐ground collider, self‐destruct
-        const float overlapRadius = 0.1f;
-        Collider[] overlaps = Physics.OverlapSphere(transform.position, overlapRadius, environmentLayer);
-        foreach (var col in overlaps)
-        {
-            // If the collider isn’t tagged “Ground”, assume we’re stuck inside an unwanted object
-            if (!col.CompareTag("Ground"))
-            {
-                Destroy(gameObject);
-                return;
-            }
-        }
-
         harvester = Harvester.Instance;
         navMeshAgent = GetComponent<NavMeshAgent>();
         SetSpeed(moveSpeed);

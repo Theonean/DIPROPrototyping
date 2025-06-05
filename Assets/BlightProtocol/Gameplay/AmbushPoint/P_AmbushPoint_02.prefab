@@ -135,6 +135,9 @@ MonoBehaviour:
   spawnedEnemy:
     m_PersistentCalls:
       m_Calls: []
+  layerToHit:
+    serializedVersion: 2
+    m_Bits: 16777216
   enemySpawnPatterns:
   - {fileID: 11400000, guid: 11aff4200e79e944f96da15d84671fc5, type: 2}
   - {fileID: 11400000, guid: df17579fbc82caf469aa918fa318fbf9, type: 2}
@@ -149,6 +152,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1ea25bef7a5f6ab4a869e4ef3ed2871a, type: 2}
   FiresOnce: 1
   AutoSpawnOverride: 0
+  overrideIsGroundUnderSpawner: 1
   spawnRadius: 5
   enemyScale: 1
   spawnedEnemies: []
