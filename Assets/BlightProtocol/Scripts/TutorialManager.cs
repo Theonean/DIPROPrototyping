@@ -361,8 +361,8 @@ public class TutorialManager : MonoBehaviour
         if (progressState != TutorialProgress.SHOOTROCKET)
             return;
 
-        NextTutorialStep();
         RocketAimController.Instance.OnRocketRetract.AddListener(CompleteRETRACTROCKET);
+        NextTutorialStep();
     }
 
     public void CompleteRETRACTROCKET()
@@ -569,6 +569,7 @@ public class TutorialManager : MonoBehaviour
             return;
 
         UIHandler.Instance.ShowHowToWin(true);
+        TutorialMissionGroup.SetActive(false);
         NextTutorialStep();
     }
 
