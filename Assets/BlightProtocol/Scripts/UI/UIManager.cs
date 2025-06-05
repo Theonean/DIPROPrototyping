@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Assets.BlightProtocol.Scripts;
 using UnityEngine;
 
 public class UIHandler : MonoBehaviour
@@ -42,7 +43,14 @@ public class UIHandler : MonoBehaviour
     {
         if (howToWinActive && Input.GetMouseButtonDown(0))
         {
-            ShowHowToWin(false);
+            if (EndOfGameManager.Instance.isPaused)
+            {
+                ShowHowToWinInstant(false);
+            }
+            else
+            {
+                ShowHowToWin(false);
+            }
         }
     }
 
@@ -96,6 +104,12 @@ public class UIHandler : MonoBehaviour
         float alphaTarget = show ? 1f : 0f;
         howToWinActive = show;
         StartCoroutine(FadeHowToWin(alphaTarget));
+    }
+
+    public void ShowHowToWinInstant(bool show)
+    {
+        howToWinActive = show;
+        howToWinGroup.alpha = show ? 1f : 0f;
     }
 
     private IEnumerator FadeHowToWin(float target)
