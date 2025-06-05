@@ -219,7 +219,7 @@ public class PerspectiveSwitcher : MonoBehaviour
         playerCore.transform.parent = dronePositionInHarvester;
         playerCore.transform.localPosition = Vector3.zero;
         playerCore.transform.localRotation = Quaternion.identity;
-        playerCore.transform.localScale = Vector3.one * 0.6f;
+        playerCore.transform.localScale = Vector3.one;
         playerCore.shield.SetActive(false);
 
         // disable colliders so UI clicks go through

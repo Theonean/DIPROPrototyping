@@ -692,10 +692,14 @@ MonoBehaviour:
   spawnedEnemy:
     m_PersistentCalls:
       m_Calls: []
+  layerToHit:
+    serializedVersion: 2
+    m_Bits: 0
   enemySpawnPatterns:
   - {fileID: 11400000, guid: a844bf7b2a9adec4d847c450e8476c52, type: 2}
   FiresOnce: 0
   AutoSpawnOverride: 0
+  overrideIsGroundUnderSpawner: 0
   spawnRadius: 5
   enemyScale: 1
   spawnedEnemies: []
@@ -2338,8 +2342,8 @@ MonoBehaviour:
   componentDroppedByEnemies: {fileID: 11400000, guid: 9a4021c8008b6464e9b1a0c9e577c457,
     type: 2}
   resourcePointSpawner: {fileID: 1197344695369321444}
-  tutorialResourcePoint: {fileID: 4865695392221408539}
-  crystalsToCollectForUpgrade: 20
+  tutorialResourcePointCollider: {fileID: 6473275952464036577}
+  crystalsToCollectForUpgrade: 30
   minimap: {fileID: 0}
   MOVEMENT_SEGMENT_EXIT: {fileID: 3093272498608895407}
   ROCKET_SEGMENT_EXIT: {fileID: 5854121306448740288}
@@ -5097,6 +5101,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 5596249107790298927}
     m_Modifications:
+    - target: {fileID: 161734278656125179, guid: 51462b056de77c74e94acbafd17416bf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 1696047659254544069, guid: 51462b056de77c74e94acbafd17416bf,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5185,18 +5194,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 6623434229004888602}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4865695392221408539 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1760140524580456193, guid: 51462b056de77c74e94acbafd17416bf,
+--- !u!1 &6473275952464036577 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 161734278656125179, guid: 51462b056de77c74e94acbafd17416bf,
     type: 3}
   m_PrefabInstance: {fileID: 6623434229004888602}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abf87226061035541a335dad1cad9201, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &6656806566758710204
 PrefabInstance:
   m_ObjectHideFlags: 0

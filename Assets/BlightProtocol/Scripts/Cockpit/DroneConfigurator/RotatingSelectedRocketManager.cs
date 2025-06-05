@@ -22,6 +22,8 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     private Rocket selectedRocket;
     public UnityEvent<Rocket> rocketSelected;
 
+    private ResearchManager frontResearchManager, bodyResearchManager, propResearchManager;
+
     private void Awake()
     {
         if (Instance != null && Instance != this)
@@ -51,13 +53,17 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
         {
             rocketSelected.Invoke(selectedRocket);
-            LoadResearchFieldsOfActiveRocket();
+            UpdateAllResearchFields();
         }
     }
 
     private void Start()
     {
         rockets = PlayerCore.Instance.GetComponentsInChildren<Rocket>();
+
+        frontResearchManager = ComponentSelectorManager.Instance.GetResearchManager(RocketComponentType.FRONT);
+        bodyResearchManager = ComponentSelectorManager.Instance.GetResearchManager(RocketComponentType.BODY);
+        propResearchManager = ComponentSelectorManager.Instance.GetResearchManager(RocketComponentType.PROPULSION);
 
         LoadDummyRockets();
         ActivateSelectedHolder();
@@ -113,7 +119,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         barrel.transform.localRotation = Quaternion.Euler(startRotation.eulerAngles.x, startRotation.eulerAngles.y + amount, startRotation.eulerAngles.z);
         isRotating = false;
 
-        LoadResearchFieldsOfActiveRocket();
+        UpdateAllResearchFields(true);
 
         UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
         UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
@@ -156,7 +162,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             descriptionDisplayer.ShowLock(componentType, !unlocked);
 
             screenRocket.SetComponent(componentType, dummyObject);
-            UpdateResearchFields(rocketComponent, componentType);
+            UpdateResearchFields(componentType);
             UpdateDescription(componentType, rocketComponent);
         }
     }
@@ -228,20 +234,58 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
             rocketComponent.LevelUpComponent();
 
-            UpdateResearchFields(rocketComponent, componentType);
+            UpdateAllResearchFields();
         }
     }
 
-    public void LoadResearchFieldsOfActiveRocket()
+    public void UpdateAllResearchFields(bool useSelectedRocket = false)
     {
-        UpdateResearchFields(selectedRocket.frontComponent, RocketComponentType.FRONT);
-        UpdateResearchFields(selectedRocket.bodyComponent, RocketComponentType.BODY);
-        UpdateResearchFields(selectedRocket.propulsionComponent, RocketComponentType.PROPULSION);
+        UpdateResearchFields(RocketComponentType.FRONT, useSelectedRocket);
+        UpdateResearchFields(RocketComponentType.BODY, useSelectedRocket);
+        UpdateResearchFields(RocketComponentType.PROPULSION, useSelectedRocket);
     }
 
-    public void UpdateResearchFields(ACRocketComponent component, RocketComponentType componentType)
+    public void UpdateResearchFields(RocketComponentType componentType, bool useSelectedRocket = false)
     {
-        ResearchManager researchManager = ComponentSelectorManager.Instance.GetResearchManager(componentType);
+        ACRocketComponent component = null;
+        ResearchManager researchManager = null;
+        switch (componentType)
+        {
+            case RocketComponentType.FRONT:
+                if (useSelectedRocket)
+                {
+                    component = selectedRocket.frontComponent;
+                }
+                else
+                {
+                    component = ComponentSelectorManager.Instance.frontSelector.GetCurrentSelectionPrefab(out bool frontUnlocked).GetComponent<ACRocketComponent>();
+                }
+                researchManager = frontResearchManager;
+                break;
+            case RocketComponentType.BODY:
+                if (useSelectedRocket)
+                {
+                    component = selectedRocket.bodyComponent;
+                }
+                else
+                {
+                    component = ComponentSelectorManager.Instance.bodySelector.GetCurrentSelectionPrefab(out bool bodyUnlocked).GetComponent<ACRocketComponent>();
+                }
+                researchManager = bodyResearchManager;
+                break;
+            case RocketComponentType.PROPULSION:
+                if (useSelectedRocket)
+                {
+                    component = selectedRocket.propulsionComponent;
+                }
+                else
+                {
+                    component = ComponentSelectorManager.Instance.propSelector.GetCurrentSelectionPrefab(out bool propUnlocked).GetComponent<ACRocketComponent>();
+                }
+                researchManager = propResearchManager;
+                break;
+
+        }
 
         int componentLevel = ItemManager.Instance.GetItemLevel(component.DescriptiveName);
 

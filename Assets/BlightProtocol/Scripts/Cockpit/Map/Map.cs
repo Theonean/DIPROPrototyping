@@ -110,7 +110,6 @@ public class Map : ACInteractable
                     targetPos.y = 0;
 
                     Harvester.Instance.mover.SetDestination(targetPos);
-                    hit.collider.enabled = false;
                     TutorialManager.Instance.CompleteSETDESTINATIONTORESOURCEPOINT();
                 }
                 else

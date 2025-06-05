@@ -54,7 +54,7 @@ public class TutorialManager : MonoBehaviour
     public EnemySpawner resourcePointSpawner;
     private int deadEnemyCounter = 0;
 
-    public ResourcePoint tutorialResourcePoint;
+    public GameObject tutorialResourcePointCollider;
     public int crystalsToCollectForUpgrade = 20;
     private int crystalsCollected = 0;
 
@@ -277,7 +277,7 @@ public class TutorialManager : MonoBehaviour
                 WASDTargetPosition.SetActive(false);
                 tutorialText.text = "COMBAT";
                 break;
-            case TutorialProgress.RETRACTROCKET:
+            case TutorialProgress.EXPLODROCKET:
                 MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
                 ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
                 SetMapTargetPosition.SetActive(true);
@@ -466,6 +466,7 @@ public class TutorialManager : MonoBehaviour
         Harvester.Instance.changedState.RemoveListener(CompleteDRIVETORESOURCEPOINT);
         NextTutorialStep();
         Harvester.Instance.changedState.AddListener(CompleteHARVEST);
+        tutorialResourcePointCollider.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
     public void CompleteHARVEST(HarvesterState harvesterState)
     {
@@ -486,8 +487,6 @@ public class TutorialManager : MonoBehaviour
                 if(deadEnemyCounter == resourcePointSpawner.spawnedEnemies.Count()) CompleteFIGHT();
             });
         }
-        
-        tutorialResourcePoint.gameObject.layer = LayerMask.NameToLayer("Ignore Raycast");
     }
 
     public void CompleteSWITCHDIRECTION_A_D()

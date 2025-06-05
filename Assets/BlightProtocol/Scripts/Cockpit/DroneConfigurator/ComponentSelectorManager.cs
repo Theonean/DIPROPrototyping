@@ -117,7 +117,7 @@ public class ComponentSelectorManager : MonoBehaviour
     {
         if (droneConfigurator.configurationMode == ConfigurationMode.RESEARCH)
         {
-            selectedRocketManager.LoadResearchFieldsOfActiveRocket();
+            selectedRocketManager.UpdateAllResearchFields();
         }
     }
 

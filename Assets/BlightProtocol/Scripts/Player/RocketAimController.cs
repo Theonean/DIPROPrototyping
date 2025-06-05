@@ -37,7 +37,7 @@ public class RocketAimController : MonoBehaviour
     public UnityEvent OnRocketShot = new UnityEvent();
     public UnityEvent OnRocketExplode = new UnityEvent();
     public UnityEvent OnRocketRetract = new UnityEvent();
-    
+
     private Rocket[] allRockets;
     private int currentRocketIndex = 0;
 
@@ -52,6 +52,16 @@ public class RocketAimController : MonoBehaviour
         {
             Instance = this;
         }
+    }
+
+    void OnEnable()
+    {
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
+    }
+
+    void OnDisable()
+    {
+        PerspectiveSwitcher.Instance.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
     }
 
     private void Start()
@@ -69,8 +79,8 @@ public class RocketAimController : MonoBehaviour
     //Detect if a click happens, then call "LegClicked", when released call "LegReleased" on the same Rocket
     void Update()
     {
-        if (playerCore.isDead 
-            || EndOfGameManager.Instance.isPaused 
+        if (playerCore.isDead
+            || EndOfGameManager.Instance.isPaused
             || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE
             || perspectiveSwitcher.cooldownTimer > 1.5f)
         {
@@ -79,7 +89,7 @@ public class RocketAimController : MonoBehaviour
 
         HandleRocketScrollInput();
 
-        if(activeRocket == null || activeRocket.state != RocketState.ATTACHED)
+        if (activeRocket == null || activeRocket.state != RocketState.ATTACHED)
         {
             activeRocket = GetLowestIndexAttachedRocket();
         }
@@ -232,6 +242,19 @@ public class RocketAimController : MonoBehaviour
             }
         }
         return null;
+    }
+
+    void OnPerspectiveSwitched()
+    {
+        if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
+        {
+            ResetRotation();
+        }
+    }
+
+    private void ResetRotation()
+    {
+        transform.rotation = Quaternion.identity;
     }
 
 

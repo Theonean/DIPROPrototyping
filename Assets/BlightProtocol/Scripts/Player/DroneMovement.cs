@@ -64,6 +64,14 @@ public class DroneMovement : MonoBehaviour
         FMODAudioManagement.instance.PlaySound(out movementSFXInstance, movementSFXPath, gameObject);
         playerCore = PlayerCore.Instance;
         perspectiveSwitcher = PerspectiveSwitcher.Instance;
+        perspectiveSwitcher.onPerspectiveSwitched.AddListener(OnPerspectiveSwitched);
+    }
+
+    private void OnPerspectiveSwitched() {
+        if (perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
+        {
+            StopAllCoroutines();
+        }
     }
 
     // Update is called once per frame
