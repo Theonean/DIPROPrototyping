@@ -30,6 +30,7 @@ public class EnemySpawner : MonoBehaviour
     public bool FiresOnce = false;
     private bool isSpawningEnemies = false;
     public bool AutoSpawnOverride = false;
+    public bool overrideIsGroundUnderSpawner = false;
 
     //How many enemies per second this spawner generates
     float spawnRate = 0.1f;
@@ -187,6 +188,9 @@ public class EnemySpawner : MonoBehaviour
 
     public bool IsGroundUnderSpawnerApproximate()
     {
+        if (overrideIsGroundUnderSpawner)
+            return true;
+
         float startingHeight = 150f;
         Vector3 origin = transform.position + Vector3.up * startingHeight;
         float maxDistance = startingHeight * 2f;
