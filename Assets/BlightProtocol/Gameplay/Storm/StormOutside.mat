@@ -55,29 +55,35 @@ Material:
     - _AlphaFactor: 0
     - _Curvature_Radius: 0
     - _DepthCutoff: 0
-    - _DispFalloff: 50
-    - _DispFalloffHeight: 87.89
-    - _Displacement: 0.2
+    - _DispFalloff: 5.16
+    - _DispFalloffHeight: -0.38
+    - _Displacement: -0.25
     - _EmissionFalloff: 1
-    - _Emission_Strength: 0.8
+    - _Emission_Strength: 0.81
     - _Float: 0
     - _Fresnel_Opacity: 0
     - _Fresnel_Power: 0
-    - _Noise_Edge1: 0.39
-    - _Noise_Edge2: 2.18
-    - _Noise_Power: -0.74
-    - _Noise_Scale: 20
+    - _GradientNoiseRemapp: 0.3
+    - _Noise_Edge1: 1.23
+    - _Noise_Edge2: 2.09
+    - _Noise_Power: -0.45
+    - _Noise_Scale: 14.81
     - _Noise_Speed: 0.04
+    - _OVerlayNoiseScale: 54.54
+    - _OverlayNoiseOpacity: 1.82
     - _QueueControl: 0
     - _QueueOffset: 0
+    - _VoronoiAngleOffset: 5
+    - _VoronoiDensity: 8.9
     m_Colors:
-    - _Color_A: {r: 1, g: 0.8736559, b: 0.7783019, a: 1}
-    - _Color_B: {r: 0.8, g: 0.19908561, b: 0, a: 1}
-    - _Fresnel_Color: {r: 55.715244, g: 6.720128, b: 0, a: 1}
+    - _Color_A: {r: 1.3177748, g: 0.20669259, b: 0, a: 1}
+    - _Color_B: {r: 1.6055588, g: 0.8686008, b: 0.100872815, a: 1}
+    - _Fresnel_Color: {r: 1.6055588, g: 0.7814666, b: 0.099459335, a: 1}
     - _Noise_Direction: {r: 0, g: -1, b: 0, a: 0}
-    - _Noise_Remap: {r: -0.23, g: 1.08, b: -0.7, a: 0.81}
+    - _Noise_Remap: {r: -0.23, g: 1.08, b: -0.7, a: 1.02}
     - _Rotate_projection: {r: 150.1, g: 0, b: 0, a: 82.87}
-    - _Tiling: {r: 1.89, g: 1, b: 0, a: 0}
+    - _SpeedOffset: {r: 1, g: 0.2, b: 0.1, a: 0}
+    - _Tiling: {r: 2, g: 1, b: 0, a: 0}
     - _Tiling_2: {r: 1.33, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
