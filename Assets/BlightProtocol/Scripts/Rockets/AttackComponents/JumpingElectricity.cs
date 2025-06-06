@@ -14,6 +14,7 @@ public class JumpingElectricity : MonoBehaviour
     public void Activate(int jumpsLeft, ACRocketComponent owner)
     {
         this.jumpsLeft = jumpsLeft;
+        this.owner = owner;
         active = true;
     }
 
