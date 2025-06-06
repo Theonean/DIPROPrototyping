@@ -208,9 +208,9 @@ public class Rocket : MonoBehaviour
 
     private void HandleBouncingFrontException(Collider other)
     {
-        switch (frontComponent.GetType().Name)
+        switch (frontComponent.DescriptiveName)
         {
-            case "BouncingFront":
+            case "Ricochet":
                 frontComponent.ActivateAbility(other);
                 break;
             default:
