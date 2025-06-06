@@ -70,7 +70,10 @@ public class DroneMovement : MonoBehaviour
     private void OnPerspectiveSwitched() {
         if (perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE)
         {
-            StopAllCoroutines();
+            // End dash
+            currentState = moveDirection != Vector3.zero ? DroneMovementState.Moving : DroneMovementState.Idle;
+            movementSFXInstance.setParameterByName("Dash", 0f);
+            dashEffect.Stop();
         }
     }
 
