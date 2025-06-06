@@ -140,21 +140,7 @@ public class RocketComponentSelector : MonoBehaviour
 
     private void UpdateDisplay(int index)
     {
-        // Get the selected component's name and icon to display
-        string stringToReplace = "";
-        switch (componentType)
-        {
-            case RocketComponentType.PROPULSION:
-                stringToReplace = "Propulsion";
-                break;
-            case RocketComponentType.BODY:
-                stringToReplace = "Body";
-                break;
-            case RocketComponentType.FRONT:
-                stringToReplace = "Front";
-                break;
-        }
-        componentNameText.text = components[index].name.Replace(stringToReplace, "");
+        componentNameText.text = components[index].DescriptiveName;
     }
 
     public int GetComponentIndex(ACRocketComponent component)
