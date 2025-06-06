@@ -79,7 +79,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
             }
         }
         else {
-            if (Vector3.Distance(transform.position, harvesterPosition) < outOfScreenThreshold)
+            if (Vector3.Distance(transform.position, harvesterPosition) < outOfScreenThreshold && PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.DRONE)
             {
                 moveSpeed = baseSpeed;
                 isSpeeding = false;
