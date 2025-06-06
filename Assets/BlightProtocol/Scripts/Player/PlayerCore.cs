@@ -126,6 +126,8 @@ public class PlayerCore : MonoBehaviour
         m_RespawnTimer = 0f;
         shieldVFX.ToggleShield(true);
 
+        RocketAimController.Instance.ExplodeUnattachedRockets();
+
         ToggleDisplayDrone(false);
 
         PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
@@ -183,6 +185,8 @@ public class PlayerCore : MonoBehaviour
             m_RespawnTimer = 0f;
             shieldVFX.ToggleShield(true);
             StartCoroutine(FadeDroneDied(true));
+
+            RocketAimController.Instance.ExplodeUnattachedRockets();
 
             PerspectiveSwitcher.Instance.SetPerspective(CameraPerspective.SWITCHING);
 
