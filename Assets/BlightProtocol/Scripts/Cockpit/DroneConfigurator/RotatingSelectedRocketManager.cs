@@ -19,7 +19,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     [SerializeField] private RocketHolder[] rocketHolders = new RocketHolder[4];
     [SerializeField] private ConfiguratorDummyRocket screenRocket;
     [SerializeField] private ComponentDescriptionDisplayer descriptionDisplayer;
-    private Rocket selectedRocket;
+    public Rocket selectedRocket;
     public UnityEvent<Rocket> rocketSelected;
 
     private ResearchManager frontResearchManager, bodyResearchManager, propResearchManager;

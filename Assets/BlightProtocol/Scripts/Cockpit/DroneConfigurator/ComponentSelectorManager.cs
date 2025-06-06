@@ -88,6 +88,10 @@ public class ComponentSelectorManager : MonoBehaviour
 
     private void ApplySelectionToAll(Button button)
     {
+        frontSelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
+        bodySelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
+        propSelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
+
         for (int i = 0; i < selectedRocketManager.rockets.Length; i++)
         {
             GameObject frontPrefab = frontSelector.GetCurrentSelectionPrefab(out bool frontUnlocked);
