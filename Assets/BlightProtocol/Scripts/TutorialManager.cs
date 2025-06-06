@@ -209,7 +209,7 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Shoot crystal structures to collect some: " + crystalsCollected + "/" + crystalsToCollectForUpgrade;
                 break;
             case TutorialProgress.FINALSWITCHTOFPV:
-                currentTutorialText.text = "[ ] Enter Harvester from the back";
+                currentTutorialText.text = "[ ] Enter the Harvester";
                 break;
             case TutorialProgress.SELECTNEWCOMPONENT:
                 currentTutorialText.text = "[ ] Interact with the drone configurator";
@@ -274,39 +274,39 @@ public class TutorialManager : MonoBehaviour
         // 2. segment‐door & target‐marker logic based on the *old* state
         switch (progressState)
         {
-            case TutorialProgress.DASH:
+            case TutorialProgress.SHOOTROCKET:
                 MOVEMENT_SEGMENT_EXIT.OpenSegmentDoor();
                 WASDTargetPosition.SetActive(false);
                 tutorialText.text = "COMBAT";
                 break;
-            case TutorialProgress.EXPLODROCKET:
+            case TutorialProgress.PERSPECTIVESWITCHTOFPV:
                 MOVEMENT_SEGMENT_EXIT.CloseSegmentDoor();
                 ROCKET_SEGMENT_EXIT.OpenSegmentDoor();
                 SetMapTargetPosition.SetActive(true);
                 tutorialText.text = "NAVIGATION";
                 break;
-            case TutorialProgress.SETSPEED:
+            case TutorialProgress.WAITFORARRIVEATFIRSTPOINT:
                 ROCKET_SEGMENT_EXIT.CloseSegmentDoor();
                 NAVIGATION_SEGMENT_EXIT.OpenSegmentDoor();
                 tutorialText.text = "RESOURCES";
                 break;
-            case TutorialProgress.USEFIRSTTIMEPULSE:
+            case TutorialProgress.SETDESTINATIONTORESOURCEPOINT:
                 NAVIGATION_SEGMENT_EXIT.CloseSegmentDoor();
                 PULSE_SEGMENT_EXIT.OpenSegmentDoor();
                 SetMapTargetPosition.SetActive(false);
                 ResourcePointTargetPosition.SetActive(true);
                 break;
-            case TutorialProgress.FIGHT:
+            case TutorialProgress.COLLECTCRYSTALS:
                 tutorialText.text = "CONFIGURATION";
                 break;
-            case TutorialProgress.UPGRADENEWCOMPONENT:
+            case TutorialProgress.DRIVETOCHECKPOINT:
                 PULSE_SEGMENT_EXIT.CloseSegmentDoor();
                 TUTORIAL_EXIT.OpenSegmentDoor();
                 ResourcePointTargetPosition.SetActive(false);
                 CheckPointTargetPosition.SetActive(true);
                 tutorialText.text = "SPAWNPOINT";
                 break;
-            case TutorialProgress.DRIVETOCHECKPOINT:
+            case TutorialProgress.DONE:
                 TUTORIAL_EXIT.CloseSegmentDoor();
                 break;
         }
@@ -511,8 +511,8 @@ public class TutorialManager : MonoBehaviour
     public void CompleteFIGHT()
     {
         crystalsCollected = ItemManager.Instance.GetCrystal();
-        NextTutorialStep();
         ItemManager.Instance.crystalAmountChanged.AddListener(CompleteCOLLECTCRYSTALS);
+        NextTutorialStep();
     }
     public void CompleteCOLLECTCRYSTALS(int amount)
     {
