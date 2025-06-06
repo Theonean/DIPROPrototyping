@@ -185,14 +185,26 @@ public class RotatingSelectedRocketManager : MonoBehaviour
             case RocketComponentType.FRONT:
                 componentPrefab = ComponentSelectorManager.Instance.frontSelector.GetCurrentSelectionPrefab(out bool frontUnlocked);
                 rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
+                if (ItemManager.Instance.GetComponentEntry(rocketComponent.DescriptiveName).isUnlocked)
+                {
+                    rocketComponent = selectedRocket.frontComponent;
+                }
                 break;
             case RocketComponentType.BODY:
                 componentPrefab = ComponentSelectorManager.Instance.bodySelector.GetCurrentSelectionPrefab(out bool bodyUnlocked);
                 rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
+                if (ItemManager.Instance.GetComponentEntry(rocketComponent.DescriptiveName).isUnlocked)
+                {
+                    rocketComponent = selectedRocket.bodyComponent;
+                }
                 break;
             case RocketComponentType.PROPULSION:
                 componentPrefab = ComponentSelectorManager.Instance.propSelector.GetCurrentSelectionPrefab(out bool propUnlocked);
                 rocketComponent = componentPrefab.GetComponent<ACRocketComponent>();
+                if (ItemManager.Instance.GetComponentEntry(rocketComponent.DescriptiveName).isUnlocked)
+                {
+                    rocketComponent = selectedRocket.propulsionComponent;
+                }
                 break;
         }
 
@@ -293,7 +305,17 @@ public class RotatingSelectedRocketManager : MonoBehaviour
 
         int ownedCrystals = ItemManager.Instance.GetCrystal();
 
-        string crystalCostsText = ownedCrystals + " / " + researchCosts;
+        string crystalCostsText;
+
+        if (componentLevel == component.maxComponentLevel)
+        {
+            crystalCostsText = "MAX LEVEL";
+        }
+        else
+        {
+            crystalCostsText = ownedCrystals + " / " + researchCosts;
+        }
+        
         string upgradeText = component.GetResearchDescription(componentLevel);
 
         researchManager.SetText(crystalCostsText, upgradeText);

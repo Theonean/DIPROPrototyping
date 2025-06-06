@@ -66,7 +66,7 @@ public abstract class ACRocketBody : ACRocketComponent
         }
         else if (componentLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + explosionRadius;
+            return maxLevelDescription + " " + explosionRadius;
         }
         else
         {
@@ -81,7 +81,7 @@ public abstract class ACRocketBody : ACRocketComponent
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + explosionRadiusPerLevel[customLevel - 1];
+            return maxLevelDescription + " " + explosionRadiusPerLevel[customLevel - 1];
         }
         else
         {

@@ -28,7 +28,7 @@ public class JumpingElectricityBody : ACRocketBody
         }
         else if (componentLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + electricityJumpsBase;
+            return maxLevelDescription + " " + electricityJumpsBase;
         }
         else
         {
@@ -43,7 +43,7 @@ public class JumpingElectricityBody : ACRocketBody
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + electricityJumpsPerLevel[customLevel - 1];
+            return maxLevelDescription + " " + electricityJumpsPerLevel[customLevel - 1];
         }
         else
         {

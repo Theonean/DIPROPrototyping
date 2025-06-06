@@ -95,7 +95,7 @@ public abstract class ACRocketFront : ACRocketComponent
         }
         else if (componentLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + maxAbilityUses;
+            return maxLevelDescription + " " + maxAbilityUses;
         }
         else
         {
@@ -110,7 +110,7 @@ public abstract class ACRocketFront : ACRocketComponent
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + abilityUsesPerLevel[customLevel - 1];
+            return maxLevelDescription + " " + abilityUsesPerLevel[customLevel - 1];
         }
         else
         {
