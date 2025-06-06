@@ -98,7 +98,7 @@ public class EnemySpawner : MonoBehaviour
         int difficultyRegion = DifficultyManager.Instance.difficultyLevel;
 
         SOEnemySpawnPattern[] elligiblePatterns = enemySpawnPatterns.Where(pattern => pattern.minimumdifficultyRegion <= difficultyRegion).ToArray();
-        SOEnemySpawnPattern spawnPattern = elligiblePatterns[Random.Range(0, elligiblePatterns.Length - 1)];
+        SOEnemySpawnPattern spawnPattern = elligiblePatterns[Random.Range(0, elligiblePatterns.Length)];
         if (spawnPattern == null)
         {
             Debug.LogError("Could not find valid spawn pattern for spawner");
