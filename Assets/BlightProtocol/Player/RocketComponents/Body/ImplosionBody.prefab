@@ -180,6 +180,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
+  unlockCostCrystal: 50
+  researchCostCrystal: 140000001e0000002800000032000000
   DescriptiveName: ImplosionBody
   componentDescription: Implodes in a radius, pulling all enemies caught towards
     the center
@@ -190,7 +192,7 @@ MonoBehaviour:
   debugExplosionSphere: 0
   explosionMaterial: {fileID: -876546973899608171, guid: d7bb4ce55c91ff04ea33066515b56160,
     type: 3}
-  explosionPrefab: {fileID: 5046904564476020034, guid: 333655b8339314b4480d81389ec9372f,
+  explosionPrefab: {fileID: 5046904564476020034, guid: 783bd0b038c24d2448848e3d0439f477,
     type: 3}
   explosionRadius: 15
   explosionRadiusPerLevel:
