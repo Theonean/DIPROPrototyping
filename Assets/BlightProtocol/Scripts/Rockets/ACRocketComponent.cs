@@ -30,6 +30,7 @@ public abstract class ACRocketComponent : MonoBehaviour
     public string DescriptiveName;
     public string componentDescription = "Description here please uwu";
     public string upgradeDescription;
+    public string maxLevelDescription = "MAX LEVEL:";
     public UnityEvent<RocketComponentType, int> OnKilledEnemy = new UnityEvent<RocketComponentType, int>();
     public static UnityEvent<Type, int> OnAnyComponentLevelUp = new UnityEvent<Type, int>();
 

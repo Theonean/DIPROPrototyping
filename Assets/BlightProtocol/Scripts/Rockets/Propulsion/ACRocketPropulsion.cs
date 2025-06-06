@@ -201,7 +201,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         }
         else if (componentLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + targetMoveStep;
+            return maxLevelDescription + " " + targetMoveStep;
         }
         else
         {
@@ -216,7 +216,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         }
         else if (customLevel == maxComponentLevel)
         {
-            return upgradeDescription + " " + targetMoveStepPerSecondPerLevel[customLevel - 1];
+            return maxLevelDescription + " " + targetMoveStepPerSecondPerLevel[customLevel - 1];
         }
         else
         {
