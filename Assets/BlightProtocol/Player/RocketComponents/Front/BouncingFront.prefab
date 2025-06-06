@@ -137,6 +137,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
+  unlockCostCrystal: 50
+  researchCostCrystal: 140000001e0000002800000032000000
   DescriptiveName: BouncingFront
   componentDescription: Bounces away when hitting a target
   upgradeDescription: Increase bounces
@@ -145,7 +147,7 @@ MonoBehaviour:
       m_Calls: []
   abilityUsesLeft: 1
   maxAbilityUses: 3
-  abilityUsesPerLevel: 0300000006000000080000000a0000000f000000
+  abilityUsesPerLevel: 020000000500000007000000090000000d000000
   hasAbilityCooldown: 1
   abilityCooldown: 0.2
   depletionAnimationCurve:
