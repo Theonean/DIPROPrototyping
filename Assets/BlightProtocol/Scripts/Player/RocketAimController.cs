@@ -130,6 +130,15 @@ public class RocketAimController : MonoBehaviour
         }
     }
 
+    public void ExplodeUnattachedRockets()
+    {
+        foreach(Rocket rocket in allRockets)
+        {
+            if (rocket.CanExplode())
+                rocket.Explode();
+        }
+    }
+
     private void FixedUpdate()
     {
         // Rotate the object towards the mouse, but only if allowed
@@ -248,14 +257,7 @@ public class RocketAimController : MonoBehaviour
     {
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
         {
-            ResetRotation();
+            transform.rotation = Quaternion.identity;
         }
     }
-
-    private void ResetRotation()
-    {
-        transform.rotation = Quaternion.identity;
-    }
-
-
 }
