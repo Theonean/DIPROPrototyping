@@ -94,6 +94,7 @@ namespace Assets.BlightProtocol.Scripts
                 StopCoroutine(pauseFadeRoutine);
             }
 			pauseGroup.interactable = isPaused;
+			pauseGroup.blocksRaycasts = isPaused;
             pauseFadeRoutine = StartCoroutine(FadeUI(pauseGroup, isPaused, 0.5f));
         }
 
