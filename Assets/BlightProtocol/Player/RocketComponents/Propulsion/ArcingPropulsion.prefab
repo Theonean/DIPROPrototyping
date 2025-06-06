@@ -182,10 +182,9 @@ MonoBehaviour:
   unlockCostCrystal: 50
   researchCostCrystal: 140000001e0000002800000032000000
   DescriptiveName: Comet
-  componentDescription: Flies toward the clicked position in an arc through the air,
-    creates a small explosion when landing
+  componentDescription: Flies in an arc, creates a small explosion on impact
   upgradeDescription: Increase mouse-follow
-  maxLevelDescription: 'mouse-follow:'
+  maxLevelDescription: 'Mouse-Follow:'
   OnKilledEnemy:
     m_PersistentCalls:
       m_Calls: []

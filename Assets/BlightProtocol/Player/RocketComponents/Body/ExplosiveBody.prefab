@@ -178,10 +178,9 @@ MonoBehaviour:
   unlockCostCrystal: 50
   researchCostCrystal: 140000001e0000002800000032000000
   DescriptiveName: Blast
-  componentDescription: Explodes in a radius, destroying all enemies within. Does
-    not penetrate armor
+  componentDescription: Explodes, destroying all enemies in its radius
   upgradeDescription: Increase explosion range
-  maxLevelDescription: 'explosion range:'
+  maxLevelDescription: 'Range:'
   OnKilledEnemy:
     m_PersistentCalls:
       m_Calls: []
