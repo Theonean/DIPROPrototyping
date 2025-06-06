@@ -181,9 +181,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   parentRocket: {fileID: 0}
-  DescriptiveName: ElectricityBody
-  componentDescription: Spawns a bolt of electricity  which jumps from enemy to enemy
-  upgradeDescription: increase amount of electricity jumps
+  unlockCostCrystal: 50
+  researchCostCrystal: 140000001e0000002800000032000000
+  DescriptiveName: Zip-Zap
+  componentDescription: Spawns a bolt of electricity, which jumps from enemy to enemy
+  upgradeDescription: Increase amount of jumps
   OnKilledEnemy:
     m_PersistentCalls:
       m_Calls: []

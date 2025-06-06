@@ -10,6 +10,8 @@ public class ItemManager : MonoBehaviour
     public int crystals = 40;
     public int totalCrystalsCollected = 0;
     public int gas = 0;
+    public List<ACRocketComponent> aCRocketComponentsLocked = new List<ACRocketComponent>();
+    public List<ACRocketComponent> aCRocketComponentsUnlocked = new List<ACRocketComponent>();
     public List<ComponentEntry> components = new List<ComponentEntry>();
     public UnityEvent<int> crystalAmountChanged;
     public UnityEvent<int> gasAmountChanged;
@@ -29,17 +31,15 @@ public class ItemManager : MonoBehaviour
             Instance = this;
         }
 
-        components.Add(new ComponentEntry("BouncingFront", true));
-        components.Add(new ComponentEntry("ExplosiveBody", true));
-        components.Add(new ComponentEntry("DirectlinePropulsion", true));
+        foreach (ACRocketComponent component in aCRocketComponentsUnlocked)
+        {
+            components.Add(new ComponentEntry(component.DescriptiveName, true));
+        }
 
-        components.Add(new ComponentEntry("ShrapnelshotFront"));
-        components.Add(new ComponentEntry("ImplosionBody"));
-        components.Add(new ComponentEntry("ArcingPropulsion"));
-
-        components.Add(new ComponentEntry("PenetrativeFront"));
-        components.Add(new ComponentEntry("ElectricityBody"));
-        components.Add(new ComponentEntry("BoomerangPropulsion"));
+        foreach (ACRocketComponent component in aCRocketComponentsLocked)
+        {
+            components.Add(new ComponentEntry(component.DescriptiveName));
+        }
     }
 
     private void Update()
