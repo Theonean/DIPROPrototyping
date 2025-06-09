@@ -148,7 +148,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     public void OnDroneEnterSetSwitching()
     {
-            SetPerspective(CameraPerspective.SWITCHING);
+        SetPerspective(CameraPerspective.SWITCHING);
     }
 
     public void OverrideToFPV()
@@ -204,9 +204,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         PlayerCore.Instance.ToggleDisplayDrone(true);
 
         var playerCore = PlayerCore.Instance;
-        var rb = playerCore.GetComponent<Rigidbody>();
-        rb.linearVelocity = Vector3.zero;
-        rb.isKinematic = false;
 
         // reattach rockets
         var rocketCtrl = playerCore.GetComponentInChildren<RocketAimController>();
@@ -214,13 +211,6 @@ public class PerspectiveSwitcher : MonoBehaviour
         rocketCtrl.Rocket2.ReattachRocketToDrone();
         rocketCtrl.Rocket3.ReattachRocketToDrone();
         rocketCtrl.Rocket4.ReattachRocketToDrone();
-
-        // parent into Harvester
-        playerCore.transform.parent = dronePositionInHarvester;
-        playerCore.transform.localPosition = Vector3.zero;
-        playerCore.transform.localRotation = Quaternion.identity;
-        playerCore.transform.localScale = Vector3.one;
-        playerCore.shield.SetActive(false);
 
         // disable colliders so UI clicks go through
         foreach (var c in playerCore.GetComponentsInChildren<Collider>())

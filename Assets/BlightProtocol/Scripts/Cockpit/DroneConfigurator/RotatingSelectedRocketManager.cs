@@ -53,7 +53,15 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         if (PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.FPV)
         {
             rocketSelected.Invoke(selectedRocket);
-            UpdateAllResearchFields();
+
+            if (selectedRocket != null)
+            {
+                UpdateAllResearchFields();
+                UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
+                UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
+                UpdateDescription(RocketComponentType.PROPULSION, selectedRocket.propulsionComponent);
+            }
+
         }
     }
 
@@ -68,8 +76,11 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         LoadDummyRockets();
         ActivateSelectedHolder();
 
+
         selectedRocket = rockets[selectedRocketIndex];
         rocketSelected.Invoke(selectedRocket);
+
+        UpdateAllResearchFields();
 
         UpdateDescription(RocketComponentType.FRONT, selectedRocket.frontComponent);
         UpdateDescription(RocketComponentType.BODY, selectedRocket.bodyComponent);
@@ -171,6 +182,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
     {
         string description = newComponent.componentDescription;
         descriptionDisplayer.SetText(type, description);
+        descriptionDisplayer.ShowLock(type, !ItemManager.Instance.GetComponentEntry(newComponent.DescriptiveName).isUnlocked);
 
         GameObject dummyObject = newComponent.GetComponentInChildren<MeshRenderer>().gameObject;
         screenRocket.SetComponent(type, dummyObject);
@@ -315,7 +327,7 @@ public class RotatingSelectedRocketManager : MonoBehaviour
         {
             crystalCostsText = ownedCrystals + " / " + researchCosts;
         }
-        
+
         string upgradeText = component.GetResearchDescription(componentLevel);
 
         researchManager.SetText(crystalCostsText, upgradeText);

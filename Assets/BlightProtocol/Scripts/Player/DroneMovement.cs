@@ -74,6 +74,7 @@ public class DroneMovement : MonoBehaviour
             currentState = moveDirection != Vector3.zero ? DroneMovementState.Moving : DroneMovementState.Idle;
             movementSFXInstance.setParameterByName("Dash", 0f);
             dashEffect.Stop();
+            rb.linearVelocity = Vector3.zero;
         }
     }
 

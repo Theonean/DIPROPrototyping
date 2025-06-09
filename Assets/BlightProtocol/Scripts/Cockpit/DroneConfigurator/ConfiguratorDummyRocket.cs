@@ -24,6 +24,7 @@ public class ConfiguratorDummyRocket : MonoBehaviour
                 frontComponent.transform.localPosition = new Vector3(0, yOffsetFront, 0);
                 frontComponent.transform.localRotation = Quaternion.identity;
                 frontComponent.layer = gameObject.layer;
+                frontComponent.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
             case RocketComponentType.BODY:
                 if (bodyComponent != null) Destroy(bodyComponent);
@@ -32,6 +33,7 @@ public class ConfiguratorDummyRocket : MonoBehaviour
                 bodyComponent.transform.localPosition = new Vector3(0, -yOffsetBody, 0);
                 bodyComponent.transform.localRotation = Quaternion.identity;
                 bodyComponent.layer = gameObject.layer;
+                bodyComponent.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
             case RocketComponentType.PROPULSION:
                 if (propulsionComponent != null) Destroy(propulsionComponent);
@@ -40,6 +42,7 @@ public class ConfiguratorDummyRocket : MonoBehaviour
                 propulsionComponent.transform.localPosition = new Vector3(0, yOffsetProp, 0);
                 propulsionComponent.transform.localRotation = Quaternion.identity;
                 propulsionComponent.layer = gameObject.layer;
+                propulsionComponent.GetComponentInChildren<MeshRenderer>().enabled = true;
                 break;
         }
     }

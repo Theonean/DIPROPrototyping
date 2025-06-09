@@ -215,7 +215,7 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "[ ] Interact with the drone configurator";
                 break;
             case TutorialProgress.UPGRADENEWCOMPONENT:
-                currentTutorialText.text = "[ ] upgrade your direct line propulsion";
+                currentTutorialText.text = "[ ] upgrade your lancer";
                 break;
             case TutorialProgress.DRIVETOCHECKPOINT:
                 currentTutorialText.text = "[ ] Drive to the white balloon (checkpoint) to complete the tutorial";
@@ -233,7 +233,9 @@ public class TutorialManager : MonoBehaviour
     {
         // nothing else will fire until the current animation is done
         if (_isTransitioning)
-            return;
+        {
+            StopAllCoroutines();
+        }
 
         IncrementProgress(); // calls CreateNewcurrentTutorialText and sets fontStyle = Normal
 
@@ -498,7 +500,7 @@ public class TutorialManager : MonoBehaviour
     }
     public void CompletePERSPECTIVESWITCHTODRONE()
     {
-        if (progressState != TutorialProgress.PERSPECTIVESWITCHTODRONE && PerspectiveSwitcher.Instance.currentPerspective == CameraPerspective.DRONE)
+        if (progressState != TutorialProgress.PERSPECTIVESWITCHTODRONE || PerspectiveSwitcher.Instance.currentPerspective != CameraPerspective.DRONE)
             return;
 
         PerspectiveSwitcher.Instance.onPerspectiveSwitched.RemoveListener(CompletePERSPECTIVESWITCHTODRONE);
@@ -512,6 +514,9 @@ public class TutorialManager : MonoBehaviour
     {
         crystalsCollected = ItemManager.Instance.GetCrystal();
         ItemManager.Instance.crystalAmountChanged.AddListener(CompleteCOLLECTCRYSTALS);
+        if (crystalsCollected >= crystalsToCollectForUpgrade) {
+
+        }
         NextTutorialStep();
     }
     public void CompleteCOLLECTCRYSTALS(int amount)

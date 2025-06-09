@@ -37,11 +37,11 @@ public class ComponentSelectorManager : MonoBehaviour
 
     void OnEnable()
     {
-        
+
         ConnectSelector(frontSelector);
         ConnectSelector(bodySelector);
         ConnectSelector(propSelector);
-        
+
 
         ResearchManager.OnResearched.AddListener(selectedRocketManager.LevelUpComponent);
 
@@ -122,6 +122,9 @@ public class ComponentSelectorManager : MonoBehaviour
         if (droneConfigurator.configurationMode == ConfigurationMode.RESEARCH)
         {
             selectedRocketManager.UpdateAllResearchFields();
+            frontSelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
+            bodySelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
+            propSelector.LoadActiveComponent(selectedRocketManager.selectedRocket);
         }
     }
 
