@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Camera))]
@@ -11,6 +12,14 @@ public class CameraTracker : MonoBehaviour
     public Vector3 cameraOffset;
 
     private Camera topDownCamera;
+    [Header("Cinematic overrides")]
+    public bool doMapFlyOver = false;
+    public float flyUpTime = 4f;
+    public AnimationCurve flyUpCurve;
+    public float flyOverTime = 40f;
+    public AnimationCurve flyOverCurve;
+    public Vector3 flyOverDestination = new Vector3 (0, 0, 3000);
+    public float cameraOffsetMultiplier = 2f;
 
     private void Awake()
     {
@@ -24,11 +33,14 @@ public class CameraTracker : MonoBehaviour
         }
 
         topDownCamera = GetComponent<Camera>();
+
+        if (doMapFlyOver)
+            StartCoroutine(FlyOverMap());
     }
 
     void FixedUpdate()
     {
-        if (objectToTrack != null)
+        if (objectToTrack != null && !doMapFlyOver)
         {
             Vector3 targetPosition = objectToTrack.transform.position + cameraOffset;
 
@@ -47,4 +59,51 @@ public class CameraTracker : MonoBehaviour
             }
         }
     }
+    private IEnumerator FlyOverMap()
+    {
+        Vector3 flyUpStartPos = transform.position;
+        Vector3 flyUpEndPos = cameraOffset * cameraOffsetMultiplier;
+
+        topDownCamera.farClipPlane = 3000;
+
+        float t = 0f;
+
+        while (t < flyUpTime)
+        {
+            float progress = t / flyUpTime;
+            float eased = flyUpCurve.Evaluate(progress);
+
+            // Animate position with easing
+            transform.position = Vector3.Lerp(flyUpStartPos, flyUpEndPos, eased);
+
+            // Animate near clip plane
+            topDownCamera.nearClipPlane = Mathf.Lerp(50, 300, eased);
+
+            // Keep camera facing the object
+            transform.LookAt(objectToTrack.transform);
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+
+        // Smooth transition: now from flyUpEndPos to flyOverEndPos
+        Vector3 flyOverStartPos = flyUpEndPos;
+        Vector3 flyOverEndPos = flyOverStartPos + flyOverDestination;
+
+        t = 0f;
+        while (t < flyOverTime)
+        {
+            float progress = t / flyOverTime;
+
+            // Optional: use same or a new curve for continuity
+            float eased = flyOverCurve.Evaluate(progress);
+
+            transform.position = Vector3.Lerp(flyOverStartPos, flyOverEndPos, eased);
+
+            t += Time.deltaTime;
+            yield return null;
+        }
+    }
+
+
 }
