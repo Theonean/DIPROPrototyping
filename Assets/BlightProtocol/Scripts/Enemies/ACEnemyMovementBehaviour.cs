@@ -39,6 +39,15 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         harvester = Harvester.Instance;
         navMeshAgent = GetComponent<NavMeshAgent>();
         SetSpeed(moveSpeed);
+
+        Vector3 harvesterPosition = harvester.transform.position;
+        Vector3 playerPosition = PlayerCore.Instance.transform.position;
+
+        float distanceToHarvester = Vector3.Distance(transform.position, harvesterPosition);
+        float distanceToPlayer = Vector3.Distance(transform.position, playerPosition);
+        target = distanceToHarvester > distanceToPlayer ? PlayerCore.Instance.gameObject : harvester.gameObject;
+
+        transform.LookAt(target.transform);
     }
 
     private void Start()
@@ -54,7 +63,7 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
         }
     }
 
-    protected void Update()
+        protected void Update()
     {
         Vector3 harvesterPosition = harvester.transform.position;
         Vector3 playerPosition = PlayerCore.Instance.transform.position;
@@ -64,14 +73,15 @@ public abstract class ACEnemyMovementBehaviour : MonoBehaviour
 
         target = distanceToHarvester > distanceToPlayer ? PlayerCore.Instance.gameObject : harvester.gameObject;
         
-        if(distanceToHarvester > tooFarAwayFromTargetSelfDestruct || distanceToPlayer > tooFarAwayFromTargetSelfDestruct)
+        if(movementType == EnemyMovementType.CUSTOM && 
+            (distanceToHarvester > tooFarAwayFromTargetSelfDestruct && distanceToPlayer > tooFarAwayFromTargetSelfDestruct))
         {
             Destroy(gameObject);
             return;
         }
 
-        if (!isSpeeding) {
-            if (Vector3.Distance(transform.position, harvesterPosition) > outOfScreenThreshold)
+        if (!isSpeeding && movementType == EnemyMovementType.CUSTOM) {
+            if (Vector3.Distance(transform.position, harvesterPosition) > outOfScreenThreshold && Vector3.Distance(transform.position, playerPosition) > outOfScreenThreshold)
             {
                 moveSpeed = outOfScreenSpeed;
                 isSpeeding = true;
