@@ -112,6 +112,11 @@ public class DistortionZone : MonoBehaviour
         Vector3 enemySpawnPosition = transform.position + UnityEngine.Random.insideUnitSphere * innerZoneCollider.radius;
         enemySpawnPosition.y = 0f;
 
+        if(Vector3.Distance(transform.position, enemySpawnPosition) < centerDespawnRadius)
+        {
+            enemySpawnPosition *= centerDespawnRadius;
+        }
+
         return enemySpawnPosition;
     }
 
