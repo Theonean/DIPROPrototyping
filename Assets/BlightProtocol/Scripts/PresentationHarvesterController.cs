@@ -7,6 +7,7 @@ public class PresentationHarvesterController : MonoBehaviour
     [SerializeField] private CanvasGroup[] textGroups = new CanvasGroup[1];
     private int index = 0;
     [SerializeField] private float moveSpeed = 10f;
+    private bool isMoving =false;
 
     void Start()
     {
@@ -16,17 +17,19 @@ public class PresentationHarvesterController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F) && !isMoving)
         {
             StartCoroutine(FadeAlpha(textGroups[index], 0));
             index++;
             Harvester.Instance.mover.SetDestination(targetPositions[index].position);
             Harvester.Instance.mover.SetMoveSpeed(moveSpeed);
+            isMoving = true;
         }
 
         if (Harvester.Instance.HasArrivedAtTarget() && textGroups[index].alpha == 0)
         {
             StartCoroutine(FadeAlpha(textGroups[index], 1));
+            isMoving = false;
         }
     }
 
