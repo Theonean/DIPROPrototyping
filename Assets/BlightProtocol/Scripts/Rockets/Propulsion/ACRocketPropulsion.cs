@@ -83,6 +83,7 @@ public abstract class ACRocketPropulsion : ACRocketComponent
         if (parentRocket.state == RocketState.FLYING && componentLevel >= 1)
         {
             MoveTargetPositionToMouse();
+            rocketTransform.LookAt(targetPosition);
         }
     }
     
