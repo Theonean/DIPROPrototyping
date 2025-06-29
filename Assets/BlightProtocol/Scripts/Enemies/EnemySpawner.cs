@@ -166,7 +166,12 @@ public class EnemySpawner : MonoBehaviour
         Logger.Log("Spawner creating " + spawnRate + " enemies per second at an interval of " + spawnEnemyInNSeconds, LogLevel.INFO, LogType.WAVEMANAGEMENT);
     }
 
-    public void StartWave(int waveNumber, bool overrideCollisionCheck = false)
+    public void StartWave()
+    {
+        StartWave(DifficultyManager.Instance.difficultyLevel);
+    }
+
+    public void StartWave(int waveNumber)
     {
         SetSpawnRate(waveNumber);
 
