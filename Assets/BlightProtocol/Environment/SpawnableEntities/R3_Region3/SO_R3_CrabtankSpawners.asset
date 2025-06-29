@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 814195aecd10bee44b04d93f66c61a1e, type: 3}
-  m_Name: SO_R2_ResourcePointM1
+  m_Name: SO_R3_CrabtankSpawners
   m_EditorClassIdentifier: 
   isGamePlayRelevant: 1
   worldEntityPrefabs:
-  - {fileID: 4249527825523963752, guid: 5a56ee59ec39f58488c10299b71bf03e, type: 3}
-  numEntities: 2
-  spawnStrategy: 2
+  - {fileID: 7069886625113409385, guid: 6763986f3cc6885418bcc240400653f2, type: 3}
+  numEntities: 1
+  spawnStrategy: 0
   customSpawnAreaBoundsX: {x: -500, y: 500}
-  customSpawnAreaBoundsZ: {x: -100, y: 1100}
-  voronoiSiteCount: 4
+  customSpawnAreaBoundsZ: {x: -200, y: 1200}
+  voronoiSiteCount: 5
   siteSpreadRadius: 10
-  siteJitter: 0.2
+  siteJitter: 0
   minRotation: 0
   maxRotation: 360
   scaleVariance: {x: 1, y: 1}
-  boundingRadius: 69.29828
+  boundingRadius: 15.479284
   boundRadiusMargin: 0

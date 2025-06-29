@@ -13,6 +13,8 @@ public enum SpawnStrategy
 [CreateAssetMenu(menuName = "World/SpawnableEntity")]
 public class SpawnableEntity : ScriptableObject
 {
+    [Header("Tick this box to make this object be spawned in the first wave of world creation")]
+    public bool isGamePlayRelevant = false;
     public GameObject[] worldEntityPrefabs;
     public int numEntities = 1;
     public SpawnStrategy spawnStrategy = SpawnStrategy.Random;
