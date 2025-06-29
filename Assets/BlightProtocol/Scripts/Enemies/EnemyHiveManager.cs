@@ -64,6 +64,9 @@ public class EnemyHiveManager : MonoBehaviour
         itemDropper.DropItems();
     }
 
+    /// <summary>
+    /// Starts spawner in Hive spawning enemies when entering range. Called over editor with EntityDetector component
+    /// </summary>
     public void HarvesterEnteredRange()
     {
         if (!hasEnemiesLeft) return;
@@ -72,10 +75,13 @@ public class EnemyHiveManager : MonoBehaviour
         // Start spawning enemies
         foreach (EnemySpawner spawner in enemySpawners)
         {
-            spawner.StartWave(1);
+            spawner.StartWave();
         }
     }
 
+    /// <summary>
+    /// Stops spawner in Hive from spawning enemies when leaving range. Called over editor with EntityDetector component
+    /// </summary>
     public void HarvesterExitedRange()
     {
         harvesterInRange = false;
@@ -90,8 +96,7 @@ public class EnemyHiveManager : MonoBehaviour
         currentHealth--;
         if (currentHealth <= 0)
         {
-            Destroy(gameObject);
-            GetComponent<ItemDropper>().DropItems();
+            DestroySpawner();
             return;
         }
 

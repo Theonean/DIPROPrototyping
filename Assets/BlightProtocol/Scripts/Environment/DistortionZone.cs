@@ -11,8 +11,8 @@ public class DistortionZone : MonoBehaviour
         HARVESTER_INNERLAYER
     }
 
+    
     private float enemyMinDistanceToTargetBeforeRecalculation = 10f;
-    private int enemiesToSpawnPerDifficultyRegion = 30;
     private List<ACEnemyMovementBehaviour> enemyBehaviours = new List<ACEnemyMovementBehaviour>();
     private const float timeToRecalculateDestionations = 1f;
     private float recalculateDestionationsTimer = 0f;
@@ -22,18 +22,67 @@ public class DistortionZone : MonoBehaviour
     [SerializeField] private SphereCollider innerZoneCollider;
     [SerializeField] private SphereCollider outerZoneCollider;
 
+    [Header("Enemy Settings")]
     [SerializeField] private float outerLayerEnemySpawnInterval = 5f;
     [SerializeField] private int maxOuterEnemies = 10;
+    [SerializeField] private int enemiesToSpawnPerDifficultyRegion = 30;
     [SerializeField] private float centerDespawnRadius = 5f;
 
     private float outerEnemySpawnTimer = 0f;
     private List<GameObject> outerLayerEnemies = new List<GameObject>();
 
+    [Header("Health")]
+    public Color damagedColor = Color.red;
+    public int maxHealth = 2;
+    private int currentHealth = 2;
+
+    [Header("Spawner Settings")]
+    [SerializeField] private GameObject RegularHive;
+    [SerializeField] private GameObject ChargerHive;
+    [SerializeField] private GameObject CrabtankHive;
+    [SerializeField] private int hivesPerDifficultyRegion;
+    private int difficultyLevel;
+    private EnemyHiveManager[] spawners;
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawSphere(transform.position, centerDespawnRadius);
+    }
+
     private void Start()
     {
-        int enemiesToSpawn = enemiesToSpawnPerDifficultyRegion; //TODO add GetDifficultyRegion(Vector3 fromPosition) to difficulty manager so that distortion zones scale
+        currentHealth = maxHealth;
+        difficultyLevel = WorldComposer.Instance.GetDifficultyLevelFromZ(transform.position.z);
 
-        for (int i = 0; i < enemiesToSpawnPerDifficultyRegion; i++)
+        int spawnersToSpawn = hivesPerDifficultyRegion * difficultyLevel;
+        spawners = new EnemyHiveManager[spawnersToSpawn];
+
+        //Guarantee at least one spawner of same difficulty region inside a zone
+        switch(difficultyLevel)
+        {
+            case 0:
+                CreateSpawner(RegularHive, 0);
+                break;
+                case 1:
+                CreateSpawner(ChargerHive, 0);
+                break;
+                case 2:
+                CreateSpawner(CrabtankHive, 0);
+                break;
+            default:
+                CreateSpawner(GetRandomSpawnerPrefab(), 0);
+                break;
+
+        }
+
+        for (int i = 0; i < spawnersToSpawn - 1; i++)
+        {
+            CreateSpawner(GetRandomSpawnerPrefab(), i);
+        }
+
+        int enemiesToSpawn = enemiesToSpawnPerDifficultyRegion * difficultyLevel + 1;
+            
+        for (int i = 0; i < enemiesToSpawn; i++)
         {
             Vector3 enemySpawnPosition = GetRandomPositionInZone();
 
@@ -95,11 +144,21 @@ public class DistortionZone : MonoBehaviour
         {
             enemyBehaviour.SetMovementType(EnemyMovementType.CUSTOM);
         }
+
+        foreach (EnemyHiveManager spawnerManager in spawners)
+        {
+            spawnerManager.HarvesterEnteredRange();
+        }
     }
 
     public void HarvesterEnteredOuterLayer()
     {
         distortionZoneState = DistortionZoneState.HARVESTER_OUTERLAYER;
+
+        foreach (EnemyHiveManager spawnerManager in spawners)
+        {
+            spawnerManager.HarvesterExitedRange();
+        }
     }
 
     public void HarvesterExited()
@@ -109,12 +168,12 @@ public class DistortionZone : MonoBehaviour
 
     private Vector3 GetRandomPositionInZone()
     {
-        Vector3 enemySpawnPosition = transform.position + UnityEngine.Random.insideUnitSphere * innerZoneCollider.radius;
-        enemySpawnPosition.y = 0f;
+        Vector3 enemySpawnPosition = Vector3.zero;
 
-        if(Vector3.Distance(transform.position, enemySpawnPosition) < centerDespawnRadius)
+        while (Vector3.Distance(enemySpawnPosition, Harvester.Instance.transform.position) < 50 || Vector3.Distance(transform.position, enemySpawnPosition) < centerDespawnRadius)
         {
-            enemySpawnPosition *= centerDespawnRadius;
+            enemySpawnPosition = transform.position + (UnityEngine.Random.insideUnitSphere * (innerZoneCollider.radius * 0.8f));
+            enemySpawnPosition.y = 0f;
         }
 
         return enemySpawnPosition;
@@ -161,4 +220,68 @@ public class DistortionZone : MonoBehaviour
         }
     }
 
+    public void TakeDamage()
+    {
+        currentHealth--;
+        if (currentHealth <= 0)
+        {
+            Destroy(gameObject);
+            GetComponent<ItemDropper>().DropItems();
+            return;
+        }
+
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        foreach (Renderer renderer in renderers)
+        {
+            Material[] materials = renderer.materials;
+            foreach (Material material in materials)
+            {
+                material.color = damagedColor;
+            }
+        }
+    }
+    public GameObject GetRandomSpawnerPrefab()
+    {
+        int randomValue = UnityEngine.Random.Range(0, 100);
+
+        if (difficultyLevel == 0)
+        {
+            return RegularHive;
+        }
+        if (difficultyLevel == 1)
+        {
+            if (randomValue < 30)
+            {
+                return ChargerHive;
+            }
+            else
+            {
+                return RegularHive;
+            }
+        }
+        else
+        {
+            if (randomValue < 20)
+            {
+                return CrabtankHive;
+            }
+            else if (randomValue < 50)
+            {
+                return ChargerHive;
+            }
+            else
+            {
+                return RegularHive;
+            }
+        }
+    }
+
+    private void CreateSpawner(GameObject spawnerPrefab, int spawnerIndex)
+    {
+        Vector3 spawnPosition = GetRandomPositionInZone();
+
+        GameObject spawner = Instantiate(spawnerPrefab, spawnPosition, Quaternion.identity);
+        EnemyHiveManager spawnerManager = spawner.GetComponent<EnemyHiveManager>();
+        spawners[spawnerIndex] = spawnerManager;
+    }
 }
