@@ -47,6 +47,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject tutorialTextTemplate;
     private TextMeshProUGUI currentTutorialText;
 
+    public GameObject hideTutorialWall;
     public GameObject droneStartPosition;
     public GameObject HarvesterStartPosition;
 
@@ -89,12 +90,12 @@ public class TutorialManager : MonoBehaviour
     {
         if (FrankenGameManager.Instance.startWithTutorial)
         {
+            hideTutorialWall.SetActive(false);
             StartTutorial();
         }
         else
         {
-            TUTORIAL_EXIT.CloseSegmentDoor();
-            TutorialMissionGroup.SetActive(false);
+            HideTutorial();
         }
     }
 
@@ -224,6 +225,15 @@ public class TutorialManager : MonoBehaviour
                 currentTutorialText.text = "Upsie daisy, this state is not implemented yet" + forTutorialPart.ToString();
                 break;
         }
+    }
+
+    private void HideTutorial(bool displayWall = true)
+    {
+        TUTORIAL_EXIT.CloseSegmentDoor();
+        TutorialMissionGroup.SetActive(false);
+        CheckPointTargetPosition.SetActive(false);
+        ResourcePointTargetPosition.SetActive(false);
+        hideTutorialWall.SetActive(displayWall);
     }
 
     #region Tutorial Progress Functions
@@ -575,6 +585,8 @@ public class TutorialManager : MonoBehaviour
         UIHandler.Instance.ShowHowToWin(true);
         TutorialMissionGroup.SetActive(false);
         NextTutorialStep();
+
+        HideTutorial(false);
     }
 
     #endregion
