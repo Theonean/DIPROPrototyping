@@ -2448,6 +2448,7 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  EButtonGroup: {fileID: 0}
   droneCamera: {fileID: 1324875725}
   gogglesCamera: {fileID: 7993880}
   fpCamera: {fileID: 582618420}
@@ -5545,6 +5546,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 941165976389275562, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 1048810226452356294, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: animationCurve.m_Curve.Array.size
@@ -5697,7 +5703,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
@@ -5707,9 +5723,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1125150883}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1125150883}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
@@ -5717,13 +5743,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnDroneLeave
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OnDroneEnterSetSwitching
+      value: OnDroneNear
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: PerspectiveSwitcher, BlightProtocol.Runtime
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}
       propertyPath: OnAgentEnter.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: PerspectiveSwitcher, BlightProtocol.Runtime
+      objectReference: {fileID: 0}
+    - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
+        type: 3}
+      propertyPath: OnAgentExit.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2192300478668478604, guid: cede008015de04a46bf480a2b3b76a5e,
         type: 3}

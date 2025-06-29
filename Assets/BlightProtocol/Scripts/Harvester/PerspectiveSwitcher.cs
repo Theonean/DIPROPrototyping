@@ -17,6 +17,7 @@ public class PerspectiveSwitcher : MonoBehaviour
     [Header("Animation Settings")]
     [SerializeField] private float animationDuration = 1f;
     [SerializeField] private AnimationCurve animationCurve;
+    [SerializeField] private CanvasGroup EButtonGroup;
 
     [Header("Cameras")]
     [SerializeField] private Camera droneCamera;
@@ -37,6 +38,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     private float switchingCooldownTime = .5f;
     public float cooldownTimer = 0f;
+    private bool droneNear = false;
 
     public CameraPerspective currentPerspective { get; private set; } = CameraPerspective.DRONE;
     public UnityEvent onPerspectiveSwitched;
@@ -49,6 +51,7 @@ public class PerspectiveSwitcher : MonoBehaviour
 
     private void Start()
     {
+        OnDroneLeave();
         SetTopDownPerspective();
     }
 
@@ -119,6 +122,12 @@ public class PerspectiveSwitcher : MonoBehaviour
                 PlayerCore.Instance.transform.position = Harvester.Instance.transform.position;
             }
         }
+
+        if(droneNear && Input.GetKeyDown(KeyCode.E))
+        {
+            SetPerspective(CameraPerspective.SWITCHING);
+            OnDroneLeave();
+        }
     }
 
     /// <summary>
@@ -146,9 +155,16 @@ public class PerspectiveSwitcher : MonoBehaviour
         }
     }
 
-    public void OnDroneEnterSetSwitching()
+    public void OnDroneNear()
     {
-        SetPerspective(CameraPerspective.SWITCHING);
+        droneNear = true;
+        EButtonGroup.alpha = 1;
+    }
+
+    public void OnDroneLeave()
+    {
+        droneNear = false;
+        EButtonGroup.alpha = 0;
     }
 
     public void OverrideToFPV()
