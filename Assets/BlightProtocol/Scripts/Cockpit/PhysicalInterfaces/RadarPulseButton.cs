@@ -31,7 +31,10 @@ public class RadarPulseButton : ACTimedButton
         else
         {
             if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState != TutorialProgress.USEFIRSTTIMEPULSE)
+            {
+                TutorialManager.Instance.FlashBackGround();
                 return;
+            }
 
             if (ItemManager.Instance.RemoveCrystal(radarData.pulseCost))
             {

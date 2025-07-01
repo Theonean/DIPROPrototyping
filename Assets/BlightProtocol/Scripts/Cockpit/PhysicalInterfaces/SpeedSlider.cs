@@ -20,6 +20,7 @@ public class SpeedSlider : ACSlider
             and not TutorialProgress.SETSPEEDRESOURCEPOINT 
             and not TutorialProgress.DRIVETOCHECKPOINT)
         {
+            TutorialManager.Instance.FlashBackGround();
             return;
         }
 

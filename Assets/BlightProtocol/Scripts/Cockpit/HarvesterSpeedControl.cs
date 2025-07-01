@@ -127,7 +127,11 @@ public class HarvesterSpeedControl : MonoBehaviour
     public void SetSpeed(int index)
     {
         TutorialManager tM = TutorialManager.Instance;
-        if (tM.IsTutorialOngoing() && tM.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT) return;
+        if (tM.IsTutorialOngoing() && tM.progressState is not TutorialProgress.SETSPEED and not TutorialProgress.SETSPEEDRESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT)
+        {
+            TutorialManager.Instance.FlashBackGround();
+            return;
+        }
 
         if (index >= 0 && index < speedSteps.Count)
         {

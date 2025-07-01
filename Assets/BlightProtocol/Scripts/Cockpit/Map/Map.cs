@@ -89,8 +89,11 @@ public class Map : ACInteractable
 
     public void SetTarget()
     {
-        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETFIRSTMAPPOINT and not TutorialProgress.SETDESTINATIONTORESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT) 
+        if (TutorialManager.Instance.IsTutorialOngoing() && TutorialManager.Instance.progressState is not TutorialProgress.SETFIRSTMAPPOINT and not TutorialProgress.SETDESTINATIONTORESOURCEPOINT and not TutorialProgress.DRIVETOCHECKPOINT)
+        {
+            TutorialManager.Instance.FlashBackGround();
             return;
+        }
 
         if (Physics.Raycast(targetRay, out hit, Mathf.Infinity, hitMask))
         {

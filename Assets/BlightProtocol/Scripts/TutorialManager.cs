@@ -4,6 +4,7 @@ using System.Collections;
 using UnityEngine.Events;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public enum TutorialProgress
 {
@@ -42,6 +43,12 @@ public class TutorialManager : MonoBehaviour
     public TutorialProgress progressState = TutorialProgress.INACTIVE;
     public UnityEvent<TutorialProgress> OnProgressChanged = new UnityEvent<TutorialProgress>();
 
+    [Header("Wrong action cockpit animation")]
+    public float flashDuration = 0.5f;
+    public float flashIntensityDivider = 2;
+    public AnimationCurve flashCurve;
+
+    [Header("UI & Text References")]
     public GameObject TutorialMissionGroup;
     public TextMeshProUGUI tutorialText;
     public GameObject tutorialTextTemplate;
@@ -51,7 +58,7 @@ public class TutorialManager : MonoBehaviour
     public GameObject droneStartPosition;
     public GameObject HarvesterStartPosition;
 
-    public SOItem componentDroppedByEnemies;
+    [Header("Resource Point Segment")]
     public EnemySpawner resourcePointSpawner;
     private int deadEnemyCounter = 0;
 
@@ -590,5 +597,36 @@ public class TutorialManager : MonoBehaviour
     }
 
     #endregion
+    public void FlashBackGround() => StartCoroutine(FlashTutorialText());
+    private IEnumerator FlashTutorialText()
+    {
+        Color originalColor = new Color(0, 0, 0, 0);
+        Color flashColor = Color.white / flashIntensityDivider;
+        Image tutorialTextBackground = currentTutorialText.GetComponentInChildren<Image>();
+        Debug.Log("Flashing tutorial text for attention");
+
+        // Lerp to flashColor
+        float elapsed = 0f;
+        while (elapsed < flashDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / flashDuration;
+            tutorialTextBackground.color = Color.Lerp(originalColor, flashColor, flashCurve.Evaluate(t));
+            yield return null;
+        }
+
+        // Lerp back to originalColor
+        elapsed = 0f;
+        while (elapsed < flashDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = elapsed / flashDuration;
+            tutorialTextBackground.color = Color.Lerp(flashColor, originalColor, flashCurve.Evaluate(t));
+            yield return null;
+        }
+
+        // Ensure exact original color at end
+        tutorialTextBackground.color = originalColor;
+    }
 
 }
