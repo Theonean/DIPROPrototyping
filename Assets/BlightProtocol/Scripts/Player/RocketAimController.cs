@@ -82,7 +82,7 @@ public class RocketAimController : MonoBehaviour
         if (playerCore.isDead
             || EndOfGameManager.Instance.isPaused
             || perspectiveSwitcher.currentPerspective != CameraPerspective.DRONE
-            || perspectiveSwitcher.cooldownTimer > 1.5f)
+            || perspectiveSwitcher.cooldownTimer > 0.3f)
         {
             return;
         }
