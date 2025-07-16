@@ -52,7 +52,15 @@ public class PerspectiveSwitcher : MonoBehaviour
     private void Start()
     {
         OnDroneLeave();
-        SetTopDownPerspective();
+
+        if(FrankenGameManager.Instance.overrideStartInDrone || FrankenGameManager.Instance.startWithTutorial)
+        {
+            SetPerspective(CameraPerspective.DRONE);
+        }
+        else
+        {
+            SetPerspective(CameraPerspective.FPV);
+        }
     }
 
     private void Update()

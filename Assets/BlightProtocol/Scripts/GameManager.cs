@@ -15,6 +15,7 @@ public class FrankenGameManager : MonoBehaviour
     public static FrankenGameManager Instance { get; private set; }
     [Header("DEBUG SETTINGS")]
     public bool DevMode = false;
+    public bool overrideStartInDrone = false;
 
     [Header("GAME SETTINGS")]
     public GameState m_GameState = GameState.HARVESTER_MOVING;
